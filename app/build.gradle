@@ -1,0 +1,92 @@
+apply plugin: 'com.android.application'
+
+/* kotlin plugin */
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    defaultConfig {
+        applicationId 'com.apx5.apx4'
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 20
+        versionName "52.1903.06"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$rootProject.appcompat"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayout"
+    implementation "androidx.browser:browser:$rootProject.browser"
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.legacy_support_v4"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerview"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle"
+
+    /* FCM*/
+    implementation "com.google.firebase:firebase-core:$rootProject.firebase_core"
+    implementation "com.google.firebase:firebase-messaging:$rootProject.firebase_messaging"
+    implementation "com.android.volley:volley:$rootProject.volley"
+
+    /* 카카오 로그인 */
+    implementation group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+
+    /* Material*/
+    implementation "com.google.android.material:material:$rootProject.material"
+
+    /* Ripple Effect*/
+    implementation "com.balysv:material-ripple:$rootProject.material_ripple"
+
+    /* API Access*/
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.converterGson"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.adapterRxjava"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.loggingInterceptor"
+
+    /* RxJava*/
+    implementation "io.reactivex:rxjava:$rootProject.rxjava"
+    implementation "io.reactivex:rxandroid:$rootProject.rxandroid"
+
+    /* Glide*/
+    implementation "com.github.bumptech.glide:glide:$rootProject.glide"
+
+    /* joda time*/
+    implementation "net.danlew:android.joda:$rootProject.joda"
+
+    /* Kotlin MVVM*/
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+
+    /* PreferenceManager*/
+    implementation "androidx.preference:preference-ktx:$preference_ktx_version"
+
+    /* Test*/
+    androidTestImplementation "androidx.test:runner:$rootProject.testRunner"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCore"
+    testImplementation "junit:junit:$rootProject.junit"
+}
+
+apply plugin: 'com.google.gms.google-services'
+

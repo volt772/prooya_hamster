@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.apx5.apx5.ui.team.TeamActivity">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.apx5.apx5.ui.team.TeamViewModel"/>
+    </data>
+
+    <!-- Toolbar-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/team_toolbar" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- 안내문구-->
+        <LinearLayout
+            android:id="@+id/lyt_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/md_10" >
+
+            <TextView
+                android:id="@+id/tv_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_400"
+                android:textSize="@dimen/md_15"
+                android:text="@string/team_info" />
+        </LinearLayout>
+
+        <!-- 팀 리스트-->
+        <ListView
+            android:id="@+id/rv_team"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:layout_marginBottom="@dimen/md_10"
+            android:scrollingCache="true" />
+    </LinearLayout>
+</layout>

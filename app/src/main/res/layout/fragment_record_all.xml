@@ -1,0 +1,81 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.apx5.apx5.ui.recordall.RecordAllViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/p_white_10"
+        android:layout_margin="@dimen/md_8">
+
+        <TextView
+            android:id="@+id/tvSearchYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/md_15"
+            android:layout_marginTop="@dimen/md_15"
+            android:clickable="true"
+            android:paddingTop="@dimen/md_4"
+            android:paddingBottom="@dimen/md_4"
+            android:paddingLeft="@dimen/md_8"
+            android:paddingRight="@dimen/md_8"
+            android:text="@string/season_2019"
+            android:textColor="@color/p_white_10"
+            android:background="@drawable/btn_rounded_navy"
+            android:textSize="@dimen/md_16" />
+
+        <RelativeLayout
+            android:id="@+id/rlPlayLists"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tvSearchYear"
+            android:visibility="gone"
+            tools:showIn="@layout/fragment_record_all">
+
+            <ListView
+                android:id="@+id/lvPlayLists"
+                android:background="@color/p_white_10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+        <!-- Empty-->
+        <RelativeLayout
+            android:id="@+id/rlEmptyList"
+            android:layout_width="match_parent"
+            android:background="@color/p_white_10"
+            android:layout_below="@id/tvSearchYear"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="@dimen/md_300"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:paddingBottom="@dimen/md_80"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="@dimen/md_170"
+                    android:layout_height="@dimen/md_170"
+                    android:src="@drawable/ic_info_type_b" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/md_15"
+                    android:text="@string/no_outdoor_seeing"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/grey_700" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

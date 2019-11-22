@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.apx5.apx5">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:name=".ProoyaClient"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/prooya_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/prooya_logo"
+        android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:theme="@style/AppTheme" >
+
+        <!-- Splash-->
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.splash.SplashActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- DialogActivity-->
+        <activity android:name=".ui.dialogs.DialogActivity" />
+
+        <!-- Kakao Login API Key-->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+
+        <!-- Kakao Login-->
+        <activity android:name=".ui.login.kakao.KakaoSignupActivity" />
+
+        <!-- 팀선택-->
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.team.TeamActivity">
+        </activity>
+
+        <!-- 오픈라이선스-->
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.setting.LicenseActivity">
+        </activity>
+
+        <!-- 로그인-->
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.login.LoginActivity">
+        </activity>
+
+        <!-- 메인-->
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.dashboard.DashBoardActivity">
+        </activity>
+
+        <!-- Google FCM-->
+        <service
+            android:name=".fcm.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

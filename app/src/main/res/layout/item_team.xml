@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/lyt_parent"
+    style="@style/RippleStyleBlack"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@android:color/white"
+    android:focusable="false"
+    android:descendantFocusability="blocksDescendants"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/grey_300" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/md_0"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="@dimen/md_15"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_team_emblem"
+                android:layout_width="@dimen/md_35"
+                android:layout_height="@dimen/md_35"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_info_type_b" />
+
+            <View
+                android:layout_width="@dimen/md_15"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_team_name"
+                android:layout_width="@dimen/md_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/blue_grey_800" />
+
+            <View
+                android:layout_width="@dimen/md_15"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

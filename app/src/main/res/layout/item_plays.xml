@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/lv_play_list"
+    android:paddingTop="@dimen/md_10"
+    android:paddingBottom="@dimen/md_10"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
+
+        <View
+            android:layout_width="@dimen/md_15"
+            android:layout_height="@dimen/md_0" />
+
+        <ImageView
+            android:id="@+id/iv_team_emblem_my"
+            android:layout_width="@dimen/md_35"
+            android:layout_height="@dimen/md_35"
+            android:layout_marginEnd="@dimen/md_5"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_info_type_c" />
+
+        <TextView
+            android:id="@+id/tv_my_score"
+            android:layout_width="@dimen/md_20"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:layout_gravity="end|center_vertical"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/grey_700" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/md_15"
+            android:layout_marginRight="@dimen/md_15"
+            android:text="@string/versus"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/grey_700" />
+
+        <TextView
+            android:id="@+id/tv_versus_score"
+            android:layout_width="@dimen/md_20"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/grey_700" />
+
+        <ImageView
+            android:id="@+id/iv_team_emblem_versus"
+            android:layout_width="@dimen/md_35"
+            android:layout_height="@dimen/md_35"
+            android:layout_marginStart="@dimen/md_5"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_info_type_c" />
+
+        <TextView
+            android:id="@+id/tv_play_date"
+            android:layout_width="@dimen/md_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="right"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="@color/grey_500"
+            tools:ignore="RtlHardcoded" />
+
+        <View
+            android:layout_width="@dimen/md_15"
+            android:layout_height="@dimen/md_0" />
+    </LinearLayout>
+</LinearLayout>

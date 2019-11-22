@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/lv_play_detail"
+    android:paddingTop="@dimen/md_5"
+    android:paddingBottom="@dimen/md_5"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/md_10"
+        android:weightSum="5" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical" >
+
+            <ImageView
+                android:id="@+id/iv_team_emblem"
+                android:layout_width="@dimen/md_35"
+                android:layout_height="@dimen/md_35"
+                android:src="@drawable/ic_info_type_b"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/md_5"
+            android:weightSum="7" >
+
+            <TextView
+                android:id="@+id/tv_get_score"
+                android:layout_width="@dimen/md_0"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_marginEnd="@dimen/md_5"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_500"
+                android:layout_weight="1"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:layout_width="@dimen/md_0"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_marginEnd="@dimen/md_5"
+                android:text="@string/to_point"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_500"
+                android:layout_weight="1"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/tv_lost_score"
+                android:layout_width="@dimen/md_0"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_marginEnd="@dimen/md_5"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_500"
+                android:layout_weight="1"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/tv_result"
+                android:layout_width="@dimen/md_0"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_marginEnd="@dimen/md_15"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_500"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="@dimen/md_0"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_marginEnd="@dimen/md_20"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_500"
+                android:layout_weight="3"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

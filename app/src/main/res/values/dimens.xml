@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom Dimens-->
+    <dimen name="md_0">0dp</dimen>
+    <dimen name="md_1">1dp</dimen>
+    <dimen name="md_2">2dp</dimen>
+    <dimen name="md_3">3dp</dimen>
+    <dimen name="md_4">4dp</dimen>
+    <dimen name="md_5">5dp</dimen>
+    <dimen name="md_6">6dp</dimen>
+    <dimen name="md_7">7dp</dimen>
+    <dimen name="md_8">8dp</dimen>
+    <dimen name="md_9">9dp</dimen>
+    <dimen name="md_10">10dp</dimen>
+
+    <dimen name="md_11">11dp</dimen>
+    <dimen name="md_12">12dp</dimen>
+    <dimen name="md_13">13dp</dimen>
+    <dimen name="md_14">14dp</dimen>
+    <dimen name="md_15">15dp</dimen>
+    <dimen name="md_16">16dp</dimen>
+    <dimen name="md_17">17dp</dimen>
+    <dimen name="md_18">18dp</dimen>
+    <dimen name="md_19">19dp</dimen>
+    <dimen name="md_20">20dp</dimen>
+
+    <dimen name="md_21">21dp</dimen>
+    <dimen name="md_22">22dp</dimen>
+    <dimen name="md_23">23dp</dimen>
+    <dimen name="md_24">24dp</dimen>
+    <dimen name="md_25">25dp</dimen>
+    <dimen name="md_26">26dp</dimen>
+    <dimen name="md_27">27dp</dimen>
+    <dimen name="md_28">28dp</dimen>
+    <dimen name="md_29">29dp</dimen>
+    <dimen name="md_30">30dp</dimen>
+
+    <dimen name="md_31">31dp</dimen>
+    <dimen name="md_32">32dp</dimen>
+    <dimen name="md_33">33dp</dimen>
+    <dimen name="md_34">34dp</dimen>
+    <dimen name="md_35">35dp</dimen>
+    <dimen name="md_36">36dp</dimen>
+    <dimen name="md_37">37dp</dimen>
+    <dimen name="md_38">38dp</dimen>
+    <dimen name="md_39">39dp</dimen>
+    <dimen name="md_40">40dp</dimen>
+
+    <dimen name="md_41">41dp</dimen>
+    <dimen name="md_42">42dp</dimen>
+    <dimen name="md_43">43dp</dimen>
+    <dimen name="md_44">44dp</dimen>
+    <dimen name="md_45">45dp</dimen>
+    <dimen name="md_46">46dp</dimen>
+    <dimen name="md_47">47dp</dimen>
+    <dimen name="md_48">48dp</dimen>
+    <dimen name="md_49">49dp</dimen>
+    <dimen name="md_50">50dp</dimen>
+
+    <dimen name="md_51">51dp</dimen>
+    <dimen name="md_52">52dp</dimen>
+    <dimen name="md_53">53dp</dimen>
+    <dimen name="md_54">54dp</dimen>
+    <dimen name="md_55">55dp</dimen>
+    <dimen name="md_56">56dp</dimen>
+    <dimen name="md_57">57dp</dimen>
+    <dimen name="md_58">58dp</dimen>
+    <dimen name="md_59">59dp</dimen>
+    <dimen name="md_60">60dp</dimen>
+
+    <dimen name="md_61">61dp</dimen>
+    <dimen name="md_62">62dp</dimen>
+    <dimen name="md_63">63dp</dimen>
+    <dimen name="md_64">64dp</dimen>
+    <dimen name="md_65">65dp</dimen>
+    <dimen name="md_66">66dp</dimen>
+    <dimen name="md_67">67dp</dimen>
+    <dimen name="md_68">68dp</dimen>
+    <dimen name="md_69">69dp</dimen>
+    <dimen name="md_70">70dp</dimen>
+
+    <dimen name="md_71">71dp</dimen>
+    <dimen name="md_72">72dp</dimen>
+    <dimen name="md_73">73dp</dimen>
+    <dimen name="md_74">74dp</dimen>
+    <dimen name="md_75">75dp</dimen>
+    <dimen name="md_76">76dp</dimen>
+    <dimen name="md_77">77dp</dimen>
+    <dimen name="md_78">78dp</dimen>
+    <dimen name="md_79">79dp</dimen>
+    <dimen name="md_80">80dp</dimen>
+
+    <dimen name="md_81">81dp</dimen>
+    <dimen name="md_82">82dp</dimen>
+    <dimen name="md_83">83dp</dimen>
+    <dimen name="md_84">84dp</dimen>
+    <dimen name="md_85">85dp</dimen>
+    <dimen name="md_86">86dp</dimen>
+    <dimen name="md_87">87dp</dimen>
+    <dimen name="md_88">88dp</dimen>
+    <dimen name="md_89">89dp</dimen>
+    <dimen name="md_90">90dp</dimen>
+
+    <dimen name="md_91">91dp</dimen>
+    <dimen name="md_92">92dp</dimen>
+    <dimen name="md_93">93dp</dimen>
+    <dimen name="md_94">94dp</dimen>
+    <dimen name="md_95">95dp</dimen>
+    <dimen name="md_96">96dp</dimen>
+    <dimen name="md_97">97dp</dimen>
+    <dimen name="md_98">98dp</dimen>
+    <dimen name="md_99">99dp</dimen>
+    <dimen name="md_100">100dp</dimen>
+
+    <dimen name="md_110">110dp</dimen>
+    <dimen name="md_120">120dp</dimen>
+    <dimen name="md_170">170dp</dimen>
+    <dimen name="md_200">200dp</dimen>
+    <dimen name="md_220">220dp</dimen>
+    <dimen name="md_260">260dp</dimen>
+    <dimen name="md_278">278dp</dimen>
+    <dimen name="md_300">300dp</dimen>
+    <dimen name="md_558">558dp</dimen>
+</resources>

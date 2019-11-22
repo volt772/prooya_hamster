@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">Prooya\n직관기록</string>
+    <string name="app_name_title">Prooya 직관기록</string>
+    <string name="errorServerIsOff">연결상태가 좋지 않습니다.\n잠시후 다시 시도해 주시기 바랍니다.</string>
+    <string name="errorComm">오류가 발생했습니다.\n앱을 다시 실행해 주세요.</string>
+    <string name="empty">없음</string>
+
+    <string name="team_select">팀선택</string>
+    <string name="team_info">prooya는 자신의 팀을 기준으로 기록을 계산합니다.\n응원하는 팀을 선택해 주세요.</string>
+    <string name="team_select_dialog">팀 수정시, 올해 기록은 초기화\n됩니다. 진행하시겠습니까?</string>
+
+    <string name="dlg_continue">계속</string>
+    <string name="dlg_close">닫기</string>
+    <string name="dlg_cancel">취소</string>
+
+    <string name="day_game_score">%s : %s</string>
+    <string name="day_game_date_single">%s</string>
+    <string name="day_game_date_with_starttime">%s</string>
+
+    <string name="season_label">%d 시즌</string>
+
+    <string name="winning_rate">%d %%</string>
+    <string name="w_d_l">%d승 %d무 %d패</string>
+    <string name="seeing_count">%s회 (통산 %s회)</string>
+
+    <string name="notification_format">%s - %s(%s) vs %s(%s)</string>
+
+    <string name="team_kat">기아타이거즈</string>
+    <string name="team_dsb">두산베어스</string>
+    <string name="team_ssl">삼성라이온즈</string>
+    <string name="team_hhe">한화이글스</string>
+    <string name="team_ltg">롯데자이언트</string>
+    <string name="team_ncd">NC다이노스</string>
+    <string name="team_skw">SK와이번스</string>
+    <string name="team_ktw">KT위즈</string>
+    <string name="team_nxh">키움히어로즈</string>
+    <string name="team_lgt">LG트윈스</string>
+
+    <string name="win">승</string>
+    <string name="draw">무</string>
+    <string name="lose">패</string>
+
+    <string name="season_2017">2017시즌</string>
+    <string name="season_2018">2018시즌</string>
+    <string name="season_2019">2019시즌</string>
+    <string name="season_2020">2020시즌</string>
+
+    <string name="no_outdoor_seeing">직관을 한번도 안갔어요.</string>
+    <string name="history_delete">직관기록이 삭제됩니다.\n계속하시겠습니까?</string>
+    <string name="change_season">시즌변경</string>
+    <string name="my_team">나의팀</string>
+    <string name="possible_change_team">응원하는팀을 변경할 수 있습니다.</string>
+    <string name="save">저장</string>
+    <string name="saved">저장되었습니다.</string>
+    <string name="ask_for_delete_all_histories">모든 기록이 삭제됩니다.\n계속하시겠습니까?</string>
+    <string name="today_match">오늘경기</string>
+    <string name="more">더보기</string>
+    <string name="no_match_up">경기가 없어요.</string>
+    <string name="init_all_histories">직관기록초기화</string>
+    <string name="delete_all_with_login">로그인정보 및 모든 직관기록을 삭제합니다.</string>
+    <string name="notification">알림</string>
+    <string name="receive_notification">알림수신</string>
+    <string name="versus">vs</string>
+    <string name="to_point">대</string>
+    <string name="app">앱</string>
+    <string name="version">버전</string>
+    <string name="open_license">오픈라이선스</string>
+
+    <string name="winning_rate_season">시즌승률</string>
+    <string name="winning_rate_total">통산승률</string>
+    <string name="recent_watching">최근직관</string>
+    <string name="watching_count">직관횟수</string>
+    <string name="recent_5plays">올해 최근 5경기</string>
+    <string name="no_plays">직관을 한번도 안갔어요.</string>
+</resources>
