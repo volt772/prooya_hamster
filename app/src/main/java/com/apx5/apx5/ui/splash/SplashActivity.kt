@@ -1,6 +1,7 @@
 package com.apx5.apx5.ui.splash
 
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
@@ -51,6 +52,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(), S
             /* 앱종료*/
             dialogForServerIsDead()
         }
+    }
+
+    /* SpinKit 제거*/
+    override fun cancelSpinKit() {
+        getViewDataBinding().skLoading.visibility = View.GONE
     }
 
     /* 로그인 > DashBoard*/
