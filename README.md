@@ -1,2 +1,6 @@
 # prooya_hamster
-Superhamster Prooya (Client) MainVersion : 53 | Codename : hamster
+
+. Project : APX5 SuperHamster
+. MainVersion : 53
+. CodeName : Hamster
+. Product : Prooya - KBO Live Game Analyzer
