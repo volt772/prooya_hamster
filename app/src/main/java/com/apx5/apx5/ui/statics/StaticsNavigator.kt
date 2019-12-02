@@ -8,4 +8,5 @@ import com.apx5.apx5.db.entity.PrPlayEntity
  */
 interface StaticsNavigator {
     fun showRecentPlayList(playList: List<PrPlayEntity>)
+    fun cancelSpinKit()
 }

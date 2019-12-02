@@ -14,4 +14,5 @@ interface RecordTeamNavigator {
     fun showDetailLists(plays: List<HashMap<String, String>>)
     fun setTeamRecord(teams: List<PrTeamEntity>)
     fun setHeaderSummary(summary: HashMap<String, Int>)
+    fun cancelSpinKit()
 }

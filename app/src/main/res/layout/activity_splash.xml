@@ -18,21 +18,55 @@
         android:layout_height="match_parent"
         android:background="@color/grey_10" >
 
-        <ImageView
-            android:id="@+id/iv_logo"
+        <!-- 로그인 이미지-->
+        <RelativeLayout
+            android:id="@+id/ryt_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            app:srcCompat="@drawable/ic_info_type_a" />
+            android:layout_centerInParent="true" >
 
-        <ImageView
-            android:id="@+id/iv_app_name"
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_info_type_a" />
+        </RelativeLayout>
+
+        <!-- 로딩중-->
+        <RelativeLayout
+            android:id="@+id/ryt_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
-            android:layout_marginBottom="@dimen/md_30"
-            app:srcCompat="@drawable/txt_appname" />
+            android:layout_below="@id/ryt_logo" >
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/sk_loading"
+                style="@style/SpinKitView.Large.ThreeBounce"
+                android:layout_width="@dimen/md_40"
+                android:layout_height="@dimen/md_40"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/red_400" />
+        </RelativeLayout>
+
+        <!-- 앱이름-->
+        <RelativeLayout
+            android:id="@+id/ryt_appname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/ryt_loading" >
+
+            <ImageView
+                android:id="@+id/iv_app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/md_30"
+                app:srcCompat="@drawable/txt_appname" />
+        </RelativeLayout>
     </RelativeLayout>
 </layout>
 

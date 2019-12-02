@@ -137,6 +137,7 @@ class DashBoardActivity : BaseActivity<ActivityDashboardBinding, DashBoardViewMo
 
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frame_layout, selectedFragment)
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 
@@ -150,6 +151,11 @@ class DashBoardActivity : BaseActivity<ActivityDashboardBinding, DashBoardViewMo
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        this.finish()
     }
 
     companion object {

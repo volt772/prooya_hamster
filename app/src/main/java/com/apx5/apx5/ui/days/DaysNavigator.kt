@@ -12,4 +12,5 @@ interface DaysNavigator {
     fun setRemoteGameData(game: ResourceGame)
     fun noGameToday()
     fun showSuccessDialog()
+    fun cancelSpinKit()
 }

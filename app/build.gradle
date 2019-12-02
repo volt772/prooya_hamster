@@ -82,6 +82,9 @@ dependencies {
     /* PreferenceManager*/
     implementation "androidx.preference:preference-ktx:$preference_ktx_version"
 
+    /* Loading spin kit*/
+    implementation "com.github.ybq:Android-SpinKit:$spinkit"
+
     /* Test*/
     androidTestImplementation "androidx.test:runner:$rootProject.testRunner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCore"

@@ -46,6 +46,7 @@ class SplashViewModel(application: Application) : BaseViewModel<SplashNavigator>
             .subscribe(object : Subscriber<RemoteService.Ping>() {
                 override fun onCompleted() {
                     getNavigator()?.getServerWorkResult(true)
+                    getNavigator()?.cancelSpinKit()
                 }
 
                 override fun onError(e: Throwable) {

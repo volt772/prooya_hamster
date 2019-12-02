@@ -9,206 +9,226 @@
             type="com.apx5.apx5.ui.recordteam.RecordTeamViewModel"/>
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_200"
-        android:orientation="vertical">
+        android:background="@color/grey_10" >
 
-        <!-- 2019년 시즌-->
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nested_scroll_view"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:scrollbars="none"
-            android:scrollingCache="true">
+            android:background="@color/grey_200"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <!-- 2019년 시즌-->
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nested_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:descendantFocusability="blocksDescendants"
-                android:orientation="vertical">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_15" />
+                android:fillViewport="true"
+                android:scrollbars="none"
+                android:scrollingCache="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/md_10" >
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/md_0"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/md_2"
-                        android:layout_marginLeft="@dimen/md_2"
-                        android:layout_marginRight="@dimen/md_2"
-                        android:layout_marginTop="@dimen/md_2"
-                        android:layout_weight="1"
-                        android:visibility="visible"
-                        app:cardCornerRadius="@dimen/md_2"
-                        app:cardElevation="@dimen/md_2">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/md_100"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/md_15">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center_vertical|left"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/tv_team_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                    android:textColor="@color/grey_700"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/tv_season_label"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                                    android:textColor="@color/grey_500" />
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:layout_marginTop="@dimen/md_5" >
-
-                                    <TextView
-                                        android:id="@+id/tv_season_static"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                        android:textColor="@color/grey_500" />
-
-                                    <androidx.appcompat.widget.AppCompatButton
-                                        android:id="@+id/bt_change_season"
-                                        android:layout_width="@dimen/md_65"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="@dimen/md_10"
-                                        android:background="@drawable/btn_rounded_navy"
-                                        android:text="@string/change_season"
-                                        android:textColor="@color/p_white_10" />
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="@dimen/md_80"
-                                android:layout_height="@dimen/md_80"
-                                android:layout_alignParentEnd="true"
-                                android:orientation="vertical" >
-
-                                <ImageView
-                                    android:id="@+id/iv_team_emblem"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    app:srcCompat="@drawable/ic_info_type_d" />
-                            </LinearLayout>
-
-                        </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="blocksDescendants"
+                    android:orientation="vertical">
 
                     <View
-                        android:layout_width="@dimen/md_10"
-                        android:layout_height="@dimen/md_0" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_10" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/md_10"
-                    android:paddingRight="@dimen/md_10">
-
-                    <!-- 최근 직관경기-->
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/md_0"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/md_2"
-                        android:layout_marginLeft="@dimen/md_2"
-                        android:layout_marginRight="@dimen/md_2"
-                        android:layout_marginTop="@dimen/md_2"
-                        android:layout_weight="1"
-                        android:visibility="visible"
-                        app:cardCornerRadius="@dimen/md_2"
-                        app:cardElevation="@dimen/md_2"/>
-
-                    <View
-                        android:layout_width="@dimen/md_10"
-                        android:layout_height="@dimen/md_0" />
-
-                    <!-- 직관횟수-->
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/md_0"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/md_2"
-                        android:layout_marginLeft="@dimen/md_2"
-                        android:layout_marginRight="@dimen/md_2"
-                        android:layout_marginTop="@dimen/md_2"
-                        android:layout_weight="1"
-                        android:visibility="visible"
-                        app:cardCornerRadius="@dimen/md_2"
-                        app:cardElevation="@dimen/md_2"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/md_10"
-                    android:paddingRight="@dimen/md_10">
-
-                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/md_2"
-                        android:layout_marginTop="@dimen/md_2"
-                        android:layout_marginRight="@dimen/md_2"
-                        android:layout_marginBottom="@dimen/md_2"
-                        android:visibility="visible"
-                        app:cardCornerRadius="@dimen/md_2"
-                        app:cardElevation="@dimen/md_2">
+                        android:layout_height="@dimen/md_15" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/md_10" >
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="@dimen/md_0"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/md_2"
+                            android:layout_marginLeft="@dimen/md_2"
+                            android:layout_marginRight="@dimen/md_2"
+                            android:layout_marginTop="@dimen/md_2"
+                            android:layout_weight="1"
+                            android:visibility="visible"
+                            app:cardCornerRadius="@dimen/md_2"
+                            app:cardElevation="@dimen/md_2">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/md_558"
-                                tools:showIn="@layout/fragment_statics">
+                                android:layout_height="@dimen/md_100"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/md_15">
 
-                                <ListView
-                                    android:id="@+id/lvTeamLists"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent" />
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical|left"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_team_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                                        android:textColor="@color/grey_700"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tv_season_label"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                                        android:textColor="@color/grey_500" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:layout_marginTop="@dimen/md_5" >
+
+                                        <TextView
+                                            android:id="@+id/tv_season_static"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                                            android:textColor="@color/grey_500" />
+
+                                        <androidx.appcompat.widget.AppCompatButton
+                                            android:id="@+id/bt_change_season"
+                                            android:layout_width="@dimen/md_65"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="@dimen/md_10"
+                                            android:background="@drawable/btn_rounded_navy"
+                                            android:text="@string/change_season"
+                                            android:textColor="@color/p_white_10" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="@dimen/md_80"
+                                    android:layout_height="@dimen/md_80"
+                                    android:layout_alignParentEnd="true"
+                                    android:orientation="vertical" >
+
+                                    <ImageView
+                                        android:id="@+id/iv_team_emblem"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        app:srcCompat="@drawable/ic_info_type_d" />
+                                </LinearLayout>
+
                             </RelativeLayout>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                        </androidx.cardview.widget.CardView>
+
+                        <View
+                            android:layout_width="@dimen/md_10"
+                            android:layout_height="@dimen/md_0" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/md_10" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/md_10"
+                        android:paddingRight="@dimen/md_10">
+
+                        <!-- 최근 직관경기-->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="@dimen/md_0"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/md_2"
+                            android:layout_marginLeft="@dimen/md_2"
+                            android:layout_marginRight="@dimen/md_2"
+                            android:layout_marginTop="@dimen/md_2"
+                            android:layout_weight="1"
+                            android:visibility="visible"
+                            app:cardCornerRadius="@dimen/md_2"
+                            app:cardElevation="@dimen/md_2"/>
+
+                        <View
+                            android:layout_width="@dimen/md_10"
+                            android:layout_height="@dimen/md_0" />
+
+                        <!-- 직관횟수-->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="@dimen/md_0"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/md_2"
+                            android:layout_marginLeft="@dimen/md_2"
+                            android:layout_marginRight="@dimen/md_2"
+                            android:layout_marginTop="@dimen/md_2"
+                            android:layout_weight="1"
+                            android:visibility="visible"
+                            app:cardCornerRadius="@dimen/md_2"
+                            app:cardElevation="@dimen/md_2"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/md_10"
+                        android:paddingRight="@dimen/md_10">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/md_2"
+                            android:layout_marginTop="@dimen/md_2"
+                            android:layout_marginRight="@dimen/md_2"
+                            android:layout_marginBottom="@dimen/md_2"
+                            android:visibility="visible"
+                            app:cardCornerRadius="@dimen/md_2"
+                            app:cardElevation="@dimen/md_2">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/md_558"
+                                    tools:showIn="@layout/fragment_statics">
+
+                                    <ListView
+                                        android:id="@+id/lvTeamLists"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </RelativeLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/md_10" />
                 </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_10" />
-            </LinearLayout>
+        <!-- 로딩중-->
+        <RelativeLayout
+            android:id="@+id/ryt_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" >
 
-        </androidx.core.widget.NestedScrollView>
-
-    </LinearLayout>
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/sk_loading"
+                style="@style/SpinKitView.Large.ThreeBounce"
+                android:layout_width="@dimen/md_40"
+                android:layout_height="@dimen/md_40"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/red_400" />
+        </RelativeLayout>
+    </RelativeLayout>
 </layout>

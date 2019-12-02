@@ -26,7 +26,7 @@ class RecordTeamViewModel(application: Application) : BaseViewModel<RecordTeamNa
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Subscriber<RemoteService.TeamDetail>() {
-                override fun onCompleted() {}
+                override fun onCompleted() { }
 
                 override fun onError(e: Throwable) { }
 
@@ -46,7 +46,9 @@ class RecordTeamViewModel(application: Application) : BaseViewModel<RecordTeamNa
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Subscriber<RemoteService.TeamsSummary>() {
-                override fun onCompleted() {}
+                override fun onCompleted() {
+                    getNavigator()?.cancelSpinKit()
+                }
 
                 override fun onError(e: Throwable) { }
 
