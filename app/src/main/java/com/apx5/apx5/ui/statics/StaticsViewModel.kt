@@ -99,7 +99,9 @@ class StaticsViewModel(application: Application) : BaseViewModel<StaticsNavigato
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Subscriber<RemoteService.Statics>() {
-                override fun onCompleted() {}
+                override fun onCompleted() {
+                    getNavigator()?.cancelSpinKit()
+                }
 
                 override fun onError(e: Throwable) { }
 

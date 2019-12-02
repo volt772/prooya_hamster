@@ -9,257 +9,279 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/grey_10" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/md_8">
+            android:layout_height="match_parent">
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/md_13"
-                android:layout_marginRight="@dimen/md_13"
-                android:layout_marginTop="@dimen/md_20"
-                android:visibility="visible"
-                app:cardCornerRadius="@dimen/md_2"
-                app:cardElevation="@dimen/md_2">
+                android:orientation="vertical"
+                android:layout_margin="@dimen/md_8">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="@dimen/md_15"
-                            android:layout_height="@dimen/md_0" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/today_match"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/grey_700"
-                            android:textStyle="bold" />
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/bt_search_more"
-                            android:layout_width="@dimen/md_60"
-                            android:layout_height="@dimen/md_30"
-                            android:layout_marginStart="@dimen/md_10"
-                            android:background="@drawable/btn_rounded_navy"
-                            android:textColor="@color/p_white_10"
-                            android:onClick="@{(v) -> viewModel.searchOtherGame()}"
-                            android:text="@string/more" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/md_1"
-                        android:background="@color/grey_300" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- 경기 스코어-->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_score_board"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/md_10"
-                android:layout_marginLeft="@dimen/md_13"
-                android:layout_marginRight="@dimen/md_13"
-                android:visibility="gone"
-                app:cardCornerRadius="@dimen/md_2"
-                app:cardElevation="@dimen/md_2">
-
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="@dimen/md_13"
+                    android:layout_marginRight="@dimen/md_13"
+                    android:layout_marginTop="@dimen/md_20"
+                    android:visibility="visible"
+                    app:cardCornerRadius="@dimen/md_2"
+                    app:cardElevation="@dimen/md_2">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="8" >
-
-                        <!-- 원정팀-->
-                        <LinearLayout
-                            android:id="@+id/lyt_team_away"
-                            android:layout_width="@dimen/md_0"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="3" >
-
-                            <ImageView
-                                android:id="@+id/iv_team_away"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/md_200"
-                                android:src="@drawable/ic_info_type_b" />
-
-                            <TextView
-                                android:id="@+id/tv_team_away"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                android:textColor="@color/p_white_10"
-                                android:textStyle="bold"
-                                android:background="@color/hhe"
-                                android:paddingTop="@dimen/md_15"
-                                android:paddingBottom="@dimen/md_15"
-                                android:text="@{viewModel.awayTeam}" />
-                        </LinearLayout>
-
-                        <!-- 경기정보-->
-                        <LinearLayout
-                            android:layout_width="@dimen/md_0"
-                            android:layout_height="match_parent"
-                            android:background="@color/grey_1000"
-                            android:layout_gravity="center_vertical"
-                            android:orientation="vertical"
-                            android:layout_weight="2" >
-
-                            <TextView
-                                android:id="@+id/tv_score"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="75dp"
-                                android:gravity="center"
-                                android:textStyle="bold"
-                                android:textColor="@color/p_white_10"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                                android:text="@{viewModel.gameStatus}" />
-
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/bt_save_play"
-                                android:layout_width="@dimen/md_50"
-                                android:layout_height="@dimen/md_30"
-                                android:layout_marginTop="@dimen/md_10"
-                                android:layout_gravity="center"
-                                android:background="@drawable/btn_rectangle_white"
-                                android:onClick="@{(v) -> viewModel.saveGameToRemote()}"
-                                android:text="@string/save" />
-                        </LinearLayout>
-
-                        <!-- 홈팀-->
-                        <LinearLayout
-                            android:id="@+id/lyt_team_home"
-                            android:layout_width="@dimen/md_0"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="3" >
-
-                            <ImageView
-                                android:id="@+id/iv_team_home"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/md_200"
-                                android:src="@drawable/ic_info_type_b" />
-
-                            <TextView
-                                android:id="@+id/tv_team_home"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                android:textColor="@color/p_white_10"
-                                android:textStyle="bold"
-                                android:background="@color/dsb"
-                                android:paddingTop="@dimen/md_15"
-                                android:paddingBottom="@dimen/md_15"
-                                android:text="@{viewModel.homeTeam}" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:id="@+id/tv_play_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingEnd="@dimen/md_10"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                            android:gravity="center"
-                            android:textColor="@color/p_white_10"
-                            android:paddingTop="@dimen/md_15"
-                            android:background="@color/grey_700"
-                            android:textStyle="bold"
-                            android:text="@{viewModel.gameDate}" />
-
-                        <!-- 경기장-->
-                        <TextView
-                            android:id="@+id/tv_stadium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/p_white_10"
-                            android:paddingTop="@dimen/md_15"
-                            android:paddingBottom="@dimen/md_15"
-                            android:gravity="center"
-                            android:textStyle="bold"
-                            android:background="@color/grey_700"
-                            android:text="@{viewModel.gameStadium}" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- 경기없음-->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_empty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/md_10"
-                android:layout_marginLeft="@dimen/md_13"
-                android:layout_marginRight="@dimen/md_13"
-                android:visibility="gone"
-                app:cardCornerRadius="@dimen/md_2"
-                app:cardElevation="@dimen/md_2">
-
-                <!-- Empty-->
-                <RelativeLayout
-                    android:id="@+id/rlEmptyList"
-                    android:layout_width="match_parent"
-                    android:background="@color/p_white_10"
-                    android:layout_below="@id/tvSearchYear"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:paddingTop="100dp"
-                        android:paddingBottom="80dp"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/image"
-                            android:layout_width="@dimen/md_170"
-                            android:layout_height="@dimen/md_170"
-                            android:src="@drawable/ic_info_type_b" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/md_15"
-                            android:text="@string/no_match_up"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/grey_700" />
+                            <View
+                                android:layout_width="@dimen/md_15"
+                                android:layout_height="@dimen/md_0" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/today_match"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_700"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/bt_search_more"
+                                android:layout_width="@dimen/md_60"
+                                android:layout_height="@dimen/md_30"
+                                android:layout_marginStart="@dimen/md_10"
+                                android:background="@drawable/btn_rounded_navy"
+                                android:textColor="@color/p_white_10"
+                                android:onClick="@{(v) -> viewModel.searchOtherGame()}"
+                                android:text="@string/more" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/md_1"
+                            android:background="@color/grey_300" />
                     </LinearLayout>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 경기 스코어-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_score_board"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/md_10"
+                    android:layout_marginLeft="@dimen/md_13"
+                    android:layout_marginRight="@dimen/md_13"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/md_2"
+                    app:cardElevation="@dimen/md_2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="8" >
+
+                            <!-- 원정팀-->
+                            <LinearLayout
+                                android:id="@+id/lyt_team_away"
+                                android:layout_width="@dimen/md_0"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_weight="3" >
+
+                                <ImageView
+                                    android:id="@+id/iv_team_away"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/md_200"
+                                    android:src="@drawable/ic_info_type_b" />
+
+                                <TextView
+                                    android:id="@+id/tv_team_away"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                                    android:textColor="@color/p_white_10"
+                                    android:textStyle="bold"
+                                    android:background="@color/hhe"
+                                    android:paddingTop="@dimen/md_15"
+                                    android:paddingBottom="@dimen/md_15"
+                                    android:text="@{viewModel.awayTeam}" />
+                            </LinearLayout>
+
+                            <!-- 경기정보-->
+                            <LinearLayout
+                                android:layout_width="@dimen/md_0"
+                                android:layout_height="match_parent"
+                                android:background="@color/grey_1000"
+                                android:layout_gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:layout_weight="2" >
+
+                                <TextView
+                                    android:id="@+id/tv_score"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="75dp"
+                                    android:gravity="center"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/p_white_10"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                    android:text="@{viewModel.gameStatus}" />
+
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/bt_save_play"
+                                    android:layout_width="@dimen/md_50"
+                                    android:layout_height="@dimen/md_30"
+                                    android:layout_marginTop="@dimen/md_10"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/btn_rectangle_white"
+                                    android:onClick="@{(v) -> viewModel.saveGameToRemote()}"
+                                    android:text="@string/save" />
+                            </LinearLayout>
+
+                            <!-- 홈팀-->
+                            <LinearLayout
+                                android:id="@+id/lyt_team_home"
+                                android:layout_width="@dimen/md_0"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_weight="3" >
+
+                                <ImageView
+                                    android:id="@+id/iv_team_home"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/md_200"
+                                    android:src="@drawable/ic_info_type_b" />
+
+                                <TextView
+                                    android:id="@+id/tv_team_home"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                                    android:textColor="@color/p_white_10"
+                                    android:textStyle="bold"
+                                    android:background="@color/dsb"
+                                    android:paddingTop="@dimen/md_15"
+                                    android:paddingBottom="@dimen/md_15"
+                                    android:text="@{viewModel.homeTeam}" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/tv_play_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingEnd="@dimen/md_10"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                                android:gravity="center"
+                                android:textColor="@color/p_white_10"
+                                android:paddingTop="@dimen/md_15"
+                                android:background="@color/grey_700"
+                                android:textStyle="bold"
+                                android:text="@{viewModel.gameDate}" />
+
+                            <!-- 경기장-->
+                            <TextView
+                                android:id="@+id/tv_stadium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/p_white_10"
+                                android:paddingTop="@dimen/md_15"
+                                android:paddingBottom="@dimen/md_15"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:background="@color/grey_700"
+                                android:text="@{viewModel.gameStadium}" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 경기없음-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/md_10"
+                    android:layout_marginLeft="@dimen/md_13"
+                    android:layout_marginRight="@dimen/md_13"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/md_2"
+                    app:cardElevation="@dimen/md_2">
+
+                    <!-- Empty-->
+                    <RelativeLayout
+                        android:id="@+id/rlEmptyList"
+                        android:layout_width="match_parent"
+                        android:background="@color/p_white_10"
+                        android:layout_below="@id/tvSearchYear"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="300dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:paddingTop="100dp"
+                            android:paddingBottom="80dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/image"
+                                android:layout_width="@dimen/md_170"
+                                android:layout_height="@dimen/md_170"
+                                android:src="@drawable/ic_info_type_b" />
+
+                            <TextView
+                                android:id="@+id/title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/md_15"
+                                android:text="@string/no_match_up"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_700" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- 로딩중-->
+        <RelativeLayout
+            android:id="@+id/ryt_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" >
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/sk_loading"
+                style="@style/SpinKitView.Large.ThreeBounce"
+                android:layout_width="@dimen/md_40"
+                android:layout_height="@dimen/md_40"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/red_400" />
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

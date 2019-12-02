@@ -56,6 +56,11 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
         subscriber(year)
     }
 
+    /* SpinKit 제거*/
+    override fun cancelSpinKit() {
+        getViewDataBinding().skLoading.visibility = View.GONE
+    }
+
     /* UI 초기화*/
     private fun initView() {
         val playListView = getViewDataBinding().lvPlayLists

@@ -82,9 +82,11 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Subscriber<RemoteService.Plays>() {
-            override fun onCompleted() {}
+            override fun onCompleted() {
+                getNavigator()?.cancelSpinKit()
+            }
 
-            override fun onError(e: Throwable) { }
+                override fun onError(e: Throwable) { }
 
             override fun onNext(play: RemoteService.Plays) {
                 if (play.res.id == 0)  {
@@ -115,7 +117,7 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Subscriber<RemoteService.NewPlay>() {
-                override fun onCompleted() {}
+                override fun onCompleted() { }
 
                 override fun onError(e: Throwable) {}
 

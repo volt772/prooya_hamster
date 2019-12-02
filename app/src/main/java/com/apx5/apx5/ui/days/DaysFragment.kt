@@ -93,6 +93,11 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
         dialog.show()
     }
 
+    /* SpinKit 제거*/
+    override fun cancelSpinKit() {
+        getViewDataBinding().skLoading.visibility = View.GONE
+    }
+
     /* 경기저장(Remote)*/
     override fun saveGameToRemote() {
         val lostScore: Int

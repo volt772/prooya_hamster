@@ -78,6 +78,11 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
         }
     }
 
+    /* SpinKit 제거*/
+    override fun cancelSpinKit() {
+        getViewDataBinding().skLoading.visibility = View.GONE
+    }
+
     /* 시즌선택*/
     override fun selectSeasonYear(year: Int) {
         subscriber(year)

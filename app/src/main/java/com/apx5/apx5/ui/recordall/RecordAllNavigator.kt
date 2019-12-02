@@ -10,4 +10,5 @@ interface RecordAllNavigator {
     fun selectYear(year: Int)
     fun setHistory(plays: List<PrPlayEntity>, year: Int)
     fun delHistoryItem(playId: String, playSeason: String, playVersus: String, playResult: String)
+    fun cancelSpinKit()
 }

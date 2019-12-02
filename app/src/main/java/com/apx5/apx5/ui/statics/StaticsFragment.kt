@@ -80,6 +80,11 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding, StaticsViewModel>()
         recentPlayAdapter.notifyDataSetChanged()
     }
 
+    /* SpinKit 제거*/
+    override fun cancelSpinKit() {
+        getViewDataBinding().skLoading.visibility = View.GONE
+    }
+
     /* 최근경기 리스트*/
     override fun showRecentPlayList(plays: List<PrPlayEntity>) {
         if (plays.isNotEmpty()) {

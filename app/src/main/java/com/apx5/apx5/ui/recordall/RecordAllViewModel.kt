@@ -24,7 +24,7 @@ class RecordAllViewModel(application: Application) : BaseViewModel<RecordAllNavi
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Subscriber<RemoteService.DelPlay>() {
-                override fun onCompleted() {}
+                override fun onCompleted() { }
 
                 override fun onError(e: Throwable) {}
 
@@ -41,7 +41,9 @@ class RecordAllViewModel(application: Application) : BaseViewModel<RecordAllNavi
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Subscriber<RemoteService.Histories>() {
-                override fun onCompleted() {}
+                override fun onCompleted() {
+                    getNavigator()?.cancelSpinKit()
+                }
 
                 override fun onError(e: Throwable) { }
 
