@@ -7,3 +7,5 @@
 . CodeName : Hamster
 
 . Product : Prooya - KBO Live Game Analyzer
+
+. Usage : For Client (Android)
