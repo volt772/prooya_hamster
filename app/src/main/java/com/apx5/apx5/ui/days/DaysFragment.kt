@@ -12,7 +12,11 @@ import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrGameStatus
+import com.apx5.apx5.constants.PrStadium
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentDaysBinding
+import com.apx5.apx5.datum.GameInfo
 import com.apx5.apx5.model.ResourceGame
 import com.apx5.apx5.model.ResourceGetPlay
 import com.apx5.apx5.model.ResourcePostPlay
@@ -148,23 +152,17 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
         showTeamEmblem(game.awayTeam, game.homeTeam)
 
         /* 스코어 데이터*/
-        val awayTeam = PrConstants.Teams.FULL[game.awayTeam]?: ""
-        val homeTeam = PrConstants.Teams.FULL[game.homeTeam]?: ""
-        val playStatus = PrConstants.Codes.PLAYCODE[game.status]
-        val playStadium = PrConstants.Teams.STADIUM[game.stadium]?: ""
-        val playDate = UiUtils.getDateToFull(game.playDate.toString())
-        val playTime = UiUtils.getTime(game.startTime.toString())
-
-        val gameInfo = HashMap<String, String>()
-        gameInfo[PrConstants.Game.AWAYSCORE] = game.awayScore.toString()
-        gameInfo[PrConstants.Game.HOMESCORE] = game.homeScore.toString()
-        gameInfo[PrConstants.Game.AWAYTEAM] = awayTeam
-        gameInfo[PrConstants.Game.HOMETEAM] = homeTeam
-        gameInfo[PrConstants.Game.PLAYDATE] = playDate
-        gameInfo[PrConstants.Game.STADIUM] = playStadium
-        gameInfo[PrConstants.Game.PLAYTIME] = playTime
-        gameInfo[PrConstants.Game.STATUSCODE] = game.status.toString()
-        gameInfo[PrConstants.Game.STATUS] = playStatus?: ""
+        val gameInfo = GameInfo(
+            awayScore = game.awayScore,
+            homeScore = game.homeScore,
+            awayTeam = PrTeam.getTeamByCode(game.awayTeam),
+            homeTeam = PrTeam.getTeamByCode(game.homeTeam),
+            playDate = UiUtils.getDateToFull(game.playDate.toString()),
+            stadium = PrStadium.getStadiumByCode(game.stadium),
+            playTime = UiUtils.getTime(game.startTime.toString()),
+            statusCode = game.status,
+            status = PrGameStatus.getStatsByCode(game.status)
+        )
 
         getViewModel().makeGameItem(gameInfo)
     }

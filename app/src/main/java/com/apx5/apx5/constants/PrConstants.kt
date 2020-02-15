@@ -14,18 +14,6 @@ object PrConstants {
         const val HOMESCORE = "hscore"
     }
 
-    object Game {
-        const val AWAYSCORE = "awayscore"
-        const val HOMESCORE = "homescore"
-        const val AWAYTEAM = "awayteam"
-        const val HOMETEAM = "hometeam"
-        const val PLAYDATE = "playdate"
-        const val PLAYTIME = "starttime"
-        const val STADIUM = "stadium"
-        const val STATUSCODE = "statusCode"
-        const val STATUS = "status"
-    }
-
     object Codes {
         const val STANDBY = 998
         const val ONPLAY = 997
@@ -34,11 +22,6 @@ object PrConstants {
         const val WIN = "승"
         const val DRAW = "무"
         const val LOSE = "패"
-        val PLAYCODE: Map<Int, String> = mapOf(
-            Pair(997, "진행중"),
-            Pair(998, "경기전"),
-            Pair(999, "취소")
-        )
     }
 
     object Teams {
@@ -92,21 +75,6 @@ object PrConstants {
             Pair("hheSub", "#3D4142"),
             Pair("sslSub", "#BDBEC3"),
             Pair("ktwSub", "#ED1C24")
-        )
-
-        val STADIUM: Map<String, String> = mapOf(
-            Pair("kjc", "광주"),
-            Pair("soj", "잠실"),
-            Pair("bss", "사직"),
-            Pair("msg", "창원"),
-            Pair("ich", "인천"),
-            Pair("sog", "고척"),
-            Pair("dje", "대전"),
-            Pair("dgl", "대구"),
-            Pair("sww", "수원"),
-            Pair("cjj", "청주"),
-            Pair("poh", "포항"),
-            Pair("uls", "울산")
         )
     }
 }

@@ -5,6 +5,8 @@ import androidx.databinding.ObservableField
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrGameStatus
+import com.apx5.apx5.datum.GameInfo
 import com.apx5.apx5.model.RemoteService
 import com.apx5.apx5.model.ResourceGame
 import com.apx5.apx5.model.ResourceGetPlay
@@ -39,41 +41,31 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
     }
 
     /* 경기 데이터*/
-    internal fun makeGameItem(game: HashMap<String, String>) {
+    internal fun makeGameItem(game: GameInfo) {
         /* 원정팀명*/
-        awayTeam.set(game[PrConstants.Game.AWAYTEAM])
+        awayTeam.set(game.awayTeam.fullName)
 
         /* 홈팀명*/
-        homeTeam.set(game[PrConstants.Game.HOMETEAM])
+        homeTeam.set(game.homeTeam.fullName)
 
         /* 게임상태*/
-        val status = game[PrConstants.Game.STATUSCODE]
-        if (status != null && !status.equalsExt("")) {
-            if (Integer.parseInt(status) == PrConstants.Codes.FINE) {
-                gameStatus.set(
-                        String.format(Locale.getDefault(),
+        if (game.status == PrGameStatus.FINE) {
+            gameStatus.set(String.format(Locale.getDefault(),
                             getApplication<Application>().resources.getString(R.string.day_game_score),
-                            game[PrConstants.Game.AWAYSCORE], game[PrConstants.Game.HOMESCORE]))
-            } else {
-                gameStatus.set(game[PrConstants.Game.STATUS])
-            }
+                            game.awayScore, game.homeScore))
+        } else {
+            gameStatus.set(game.status.displayCode)
         }
 
         /* 게임일자*/
-        if (game[PrConstants.Game.PLAYTIME].equalsExt("")) {
-            gameDate.set(
-                    String.format(Locale.getDefault(),
-                        getApplication<Application>().resources.getString(R.string.day_game_date_single),
-                        game[PrConstants.Game.PLAYDATE]))
+        if (game.playTime.equalsExt("")) {
+            gameDate.set(String.format(Locale.getDefault(), getApplication<Application>().resources.getString(R.string.day_game_date_single), game.playDate))
         } else {
-            gameDate.set(
-                    String.format(Locale.getDefault(),
-                        getApplication<Application>().resources.getString(R.string.day_game_date_with_starttime),
-                        game[PrConstants.Game.PLAYDATE], game[PrConstants.Game.PLAYTIME]))
+            gameDate.set(String.format(Locale.getDefault(), getApplication<Application>().resources.getString(R.string.day_game_date_with_starttime), game.playDate, game.playTime))
         }
 
         /* 게임장소*/
-        gameStadium.set(game[PrConstants.Game.STADIUM])
+        gameStadium.set(game.stadium.displayName)
     }
 
     /* 경기정보*/
