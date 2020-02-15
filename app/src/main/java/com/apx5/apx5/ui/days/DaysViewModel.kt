@@ -123,10 +123,10 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
     /* 경기 상태 코드*/
     private fun getPlayStatusCode(code: Int): Int {
         return when (code) {
-            PrConstants.Codes.CANCELED -> PrConstants.Codes.CANCELED
-            PrConstants.Codes.STANDBY -> PrConstants.Codes.STANDBY
-            PrConstants.Codes.ONPLAY -> PrConstants.Codes.ONPLAY
-            else -> PrConstants.Codes.FINE
+            999 -> PrGameStatus.CANCELED.code
+            998 -> PrGameStatus.STANDBY.code
+            997 -> PrGameStatus.ONPLAY.code
+            else -> PrGameStatus.FINE.code
         }
     }
 }

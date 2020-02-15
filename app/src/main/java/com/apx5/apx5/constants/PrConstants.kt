@@ -15,9 +15,6 @@ object PrConstants {
     }
 
     object Codes {
-        const val STANDBY = 998
-        const val ONPLAY = 997
-        const val CANCELED = 999
         const val FINE = 1000
         const val WIN = "승"
         const val DRAW = "무"
