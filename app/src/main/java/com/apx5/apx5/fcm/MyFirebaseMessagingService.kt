@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import com.apx5.apx5.R
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.splash.SplashActivity
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -46,8 +47,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         /* 메시지 형식 : 07월01일 - 기아(4) vs 두산(5) */
         val fcmMsg = String.format(resources.getString(R.string.notification_format),
             fcmData[PrConstants.Fcm.DATE].toString(),
-            PrConstants.Teams.ABBR[fcmData[PrConstants.Fcm.AWAYCODE].toString()],
-            PrConstants.Teams.ABBR[fcmData[PrConstants.Fcm.HOMECODE].toString()],
+            PrTeam.getTeamByCode(fcmData[PrConstants.Fcm.AWAYCODE].toString()).abbrName,
+            PrTeam.getTeamByCode(fcmData[PrConstants.Fcm.HOMECODE].toString()).abbrName,
             fcmData[PrConstants.Fcm.AWAYSCORE].toString(),
             fcmData[PrConstants.Fcm.HOMESCORE].toString()
         )

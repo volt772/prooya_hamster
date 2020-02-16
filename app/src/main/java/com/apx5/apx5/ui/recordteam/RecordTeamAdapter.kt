@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.apx5.apx5.R
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.ui.model.TeamLists
 import kotlinx.android.synthetic.main.item_team_record.view.*
 
@@ -79,7 +80,7 @@ class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigato
             holder.teamEmblem.setImageResource(teamItems.emblem)
 
             /* 팀 이름*/
-            holder.teamName.text = PrConstants.Teams.FULL[teamItems.teamName]
+            holder.teamName.text = PrTeam.getTeamByCode(teamItems.teamName).fullName
 
             /* 승*/
             holder.winCount.text = teamItems.win

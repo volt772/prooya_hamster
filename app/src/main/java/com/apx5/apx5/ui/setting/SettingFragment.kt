@@ -10,6 +10,7 @@ import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentSettingBinding
 import com.apx5.apx5.model.ResourceDelUser
 import com.apx5.apx5.storage.PrefManager
@@ -55,7 +56,9 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>()
 
         /* 팀명*/
         val teamCode = PrefManager.getInstance(requireContext()).getString(PrPrefKeys.MYTEAM, "")
-        viewTeam.text = PrConstants.Teams.FULL[teamCode]
+        teamCode?.let { code ->
+            viewTeam.text = PrTeam.getTeamByCode(code).fullName
+        }
 
         /* 버전*/
         try {

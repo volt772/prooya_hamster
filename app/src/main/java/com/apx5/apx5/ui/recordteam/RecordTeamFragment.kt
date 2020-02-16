@@ -10,6 +10,7 @@ import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordTeamBinding
 import com.apx5.apx5.db.entity.PrTeamEntity
 import com.apx5.apx5.storage.PrefManager
@@ -168,7 +169,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
         val userSummary = String.format(Locale.getDefault(), resources.getString(R.string.w_d_l), summary["win"], summary["draw"], summary["lose"])
         getViewDataBinding().tvSeasonStatic.text = userSummary
 
-        val teamName = PrConstants.Teams.FULL[teamCode]
+        val teamName = PrTeam.getTeamByCode(teamCode).fullName
         val teamEmblem = resources.getIdentifier(PrConstants.Teams.EMBLEM_PREFIX.plus(teamCode), "drawable", requireActivity().packageName)
 
         getViewDataBinding().tvTeamName.text = teamName

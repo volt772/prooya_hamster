@@ -5,6 +5,7 @@ import androidx.databinding.ObservableField
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.db.entity.PrPlayEntity
 import com.apx5.apx5.db.entity.PrStaticEntity
 import com.apx5.apx5.model.RemoteService
@@ -42,7 +43,7 @@ class StaticsViewModel(application: Application) : BaseViewModel<StaticsNavigato
 
     /* 최근직관팀 표기*/
     private fun getRecentPlayTeamText(versusTeam: String): String? {
-        return PrConstants.Teams.ABBR[versusTeam]
+        return PrTeam.getTeamByCode(versusTeam).abbrName
     }
 
     /* 최근직관일 표기*/

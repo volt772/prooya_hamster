@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
-import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.ui.model.PlayLists
 import com.apx5.apx5.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.item_plays_all.view.*
@@ -80,25 +80,9 @@ class RecordAllAdapter internal constructor(private val ctx: Context, private va
         holder.playDate.text = UiUtils.getDateToFull(playItems.playDate)
 
         /* 경기결과*/
-        var result = ""
-        when (playItems.playResult) {
-            "w" -> {
-                result = PrConstants.Codes.WIN
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.green_A700))
-            }
-            "d" -> {
-                result = PrConstants.Codes.DRAW
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.brown_800))
-            }
-            "l" -> {
-                result = PrConstants.Codes.LOSE
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.red_85))
-            }
-            else -> {
-            }
-        }
-
-        holder.playResult.text = result
+        val result = PrResultCode.getResultByDisplayCode(playItems.playResult)
+        holder.playResult.text = result.displayCode
+        holder.playResult.setTextColor(ContextCompat.getColor(ctx, result.color))
 
         /* 삭제*/
         holder.recordAll.setOnLongClickListener {

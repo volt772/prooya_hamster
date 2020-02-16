@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
-import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.ui.model.DetailLists
 import com.apx5.apx5.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.item_record_detail.view.*
@@ -76,25 +76,9 @@ class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseA
         holder.lostScore.text = detailItems.ptLost
 
         /* 결과*/
-        var result = ""
-        when (detailItems.playResult) {
-            "w" -> {
-                result = PrConstants.Codes.WIN
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.green_A700))
-            }
-            "d" -> {
-                result = PrConstants.Codes.DRAW
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.brown_800))
-            }
-            "l" -> {
-                result = PrConstants.Codes.LOSE
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.red_85))
-            }
-            else -> {
-            }
-        }
-
-        holder.playResult.text = result
+        val result = PrResultCode.getResultByDisplayCode(detailItems.playResult)
+        holder.playResult.text = result.displayCode
+        holder.playResult.setTextColor(ContextCompat.getColor(ctx, result.color))
 
         /* 일자*/
         holder.playDate.text = UiUtils.replaceText(detailItems.playDate, "-", ".")

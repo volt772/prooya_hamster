@@ -11,10 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.PrConstants
-import com.apx5.apx5.constants.PrGameStatus
-import com.apx5.apx5.constants.PrStadium
-import com.apx5.apx5.constants.PrTeam
+import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentDaysBinding
 import com.apx5.apx5.datum.GameInfo
 import com.apx5.apx5.model.ResourceGame
@@ -205,7 +202,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
 
     /* 저장버튼노출 (경기종료시에만 저장)*/
     private fun showSaveButton(playStatus: Int) {
-        if (playStatus == PrConstants.Codes.FINE) {
+        if (playStatus == PrResultCode.FINE.code) {
             save.visibility = View.VISIBLE
         } else {
             save.visibility = View.GONE
@@ -231,8 +228,8 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
         emblemHome.setImageResource(resources.getIdentifier(PrConstants.Teams.EMBLEM_PREFIX.plus(home), "drawable", requireContext().packageName))
 
         /* 팀컬러*/
-        val awayColor = PrConstants.Teams.BICOLOR[away]
-        val homeColor = PrConstants.Teams.BICOLOR[home]
+        val awayColor = PrTeam.getTeamByCode(away).mainColor
+        val homeColor = PrTeam.getTeamByCode(home).mainColor
         awayName.setBackgroundColor(Color.parseColor(awayColor))
         homeName.setBackgroundColor(Color.parseColor(homeColor))
     }
