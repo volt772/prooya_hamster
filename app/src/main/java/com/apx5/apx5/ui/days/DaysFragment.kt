@@ -11,7 +11,10 @@ import androidx.cardview.widget.CardView
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.*
+import com.apx5.apx5.constants.PrGameStatus
+import com.apx5.apx5.constants.PrResultCode
+import com.apx5.apx5.constants.PrStadium
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentDaysBinding
 import com.apx5.apx5.datum.GameInfo
 import com.apx5.apx5.model.ResourceGame
@@ -146,7 +149,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
         showSaveButton(game.status)
 
         /* 팀 엠블럼*/
-        showTeamEmblem(game.awayTeam, game.homeTeam)
+        showTeamEmblem(PrTeam.getTeamByCode(game.awayTeam), PrTeam.getTeamByCode(game.homeTeam))
 
         /* 스코어 데이터*/
         val gameInfo = GameInfo(
@@ -221,17 +224,14 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
     }
 
     /* 팀 엠블럼 및 팀컬러*/
-    private fun showTeamEmblem(away: String, home: String) {
-
+    private fun showTeamEmblem(away: PrTeam, home: PrTeam) {
         /* 엠블럼*/
-        emblemAway.setImageResource(resources.getIdentifier(PrConstants.Teams.EMBLEM_PREFIX.plus(away), "drawable", requireContext().packageName))
-        emblemHome.setImageResource(resources.getIdentifier(PrConstants.Teams.EMBLEM_PREFIX.plus(home), "drawable", requireContext().packageName))
+        emblemAway.setImageResource(resources.getIdentifier(away.emblem, "drawable", requireContext().packageName))
+        emblemHome.setImageResource(resources.getIdentifier(home.emblem, "drawable", requireContext().packageName))
 
         /* 팀컬러*/
-        val awayColor = PrTeam.getTeamByCode(away).mainColor
-        val homeColor = PrTeam.getTeamByCode(home).mainColor
-        awayName.setBackgroundColor(Color.parseColor(awayColor))
-        homeName.setBackgroundColor(Color.parseColor(homeColor))
+        awayName.setBackgroundColor(Color.parseColor(away.mainColor))
+        homeName.setBackgroundColor(Color.parseColor(home.mainColor))
     }
 
     companion object {
