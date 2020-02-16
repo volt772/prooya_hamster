@@ -11,6 +11,7 @@ import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.db.entity.PrPlayEntity
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
+import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -88,13 +89,11 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding, StaticsViewModel>()
     /* 최근경기 리스트*/
     override fun showRecentPlayList(plays: List<PrPlayEntity>) {
         if (plays.isNotEmpty()) {
-            playListView.visibility = View.VISIBLE
-            emptyView.visibility = View.GONE
             setRecentPlayLists(plays)
-        } else {
-            playListView.visibility = View.GONE
-            emptyView.visibility = View.VISIBLE
         }
+
+        playListView.visibility = CommonUtils.setVisibility(plays.isNotEmpty())
+        emptyView.visibility = CommonUtils.setVisibility(plays.isEmpty())
     }
 
     private fun subscriber() {

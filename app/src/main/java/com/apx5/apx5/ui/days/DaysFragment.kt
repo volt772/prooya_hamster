@@ -23,6 +23,7 @@ import com.apx5.apx5.model.ResourcePostPlay
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
+import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -205,22 +206,13 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
 
     /* 저장버튼노출 (경기종료시에만 저장)*/
     private fun showSaveButton(playStatus: Int) {
-        if (playStatus == PrResultCode.FINE.code) {
-            save.visibility = View.VISIBLE
-        } else {
-            save.visibility = View.GONE
-        }
+        save.visibility = CommonUtils.setVisibility(playStatus == PrResultCode.FINE.code)
     }
 
     /* 스코어 보드*/
     private fun showScoreBoard(gameExist: Boolean) {
-        if (gameExist) {
-            scoreLayout.visibility = View.VISIBLE
-            emptyLayout.visibility = View.GONE
-        } else {
-            scoreLayout.visibility = View.GONE
-            emptyLayout.visibility = View.VISIBLE
-        }
+        scoreLayout.visibility = CommonUtils.setVisibility(gameExist)
+        emptyLayout.visibility = CommonUtils.setVisibility(!gameExist)
     }
 
     /* 팀 엠블럼 및 팀컬러*/

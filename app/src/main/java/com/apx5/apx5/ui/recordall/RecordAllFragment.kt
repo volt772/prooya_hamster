@@ -14,6 +14,7 @@ import com.apx5.apx5.model.ResourceDelHistory
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
+import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -97,13 +98,8 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
 
     /* 리스트 분기*/
     private fun isListExists(exists: Boolean) {
-        if (exists) {
-            playLists.visibility = View.VISIBLE
-            emptyView.visibility = View.GONE
-        } else {
-            playLists.visibility = View.GONE
-            emptyView.visibility = View.VISIBLE
-        }
+        playLists.visibility = CommonUtils.setVisibility(exists)
+        emptyView.visibility = CommonUtils.setVisibility(!exists)
     }
 
     /* 기록 리스트 생성*/
