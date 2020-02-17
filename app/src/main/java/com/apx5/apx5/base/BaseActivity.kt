@@ -78,7 +78,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         viewDataBinding.executePendingBindings()
     }
 
-    fun getViewDataBinding() : T {
+    fun binding() : T {
         return viewDataBinding
     }
 

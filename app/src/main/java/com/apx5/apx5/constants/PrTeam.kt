@@ -6,12 +6,13 @@ package com.apx5.apx5.constants
  */
 
 enum class PrTeam(
-        val code: String,
-        val fullName: String,
-        val abbrName: String,
-        val mainColor: String,
-        val subColor: String,
-        val emblem: String) {
+    val code: String,
+    val fullName: String,
+    val abbrName: String,
+    val mainColor: String,
+    val subColor: String,
+    val emblem: String) {
+
     KAT("kat", "기아타이거즈", "기아", "#AF1D2B", "#0B203F", "ic_team_kat"),
     DSB("dsb", "두산베어스", "두산", "#131230", "#838585", "ic_team_dsb"),
     LTG("ltg", "롯데자이언츠", "롯데", "#DD0330", "#DD0330", "ic_team_ltg"),

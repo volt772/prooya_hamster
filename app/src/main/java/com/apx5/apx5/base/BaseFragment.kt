@@ -54,7 +54,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         viewDataBinding.executePendingBindings()
     }
 
-    fun getViewDataBinding() : T {
+    fun binding() : T {
         return viewDataBinding
     }
 

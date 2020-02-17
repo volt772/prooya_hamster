@@ -64,7 +64,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
     /* UI 초기화*/
     private fun initView() {
         /* 팀리스트*/
-        val teamList = getViewDataBinding().lvTeamLists
+        val teamList = binding().lvTeamLists
         recordTeamAdapter = RecordTeamAdapter(this)
         teamList.adapter = recordTeamAdapter
 
@@ -72,7 +72,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
         recordDetailAdapter = RecordDetailAdapter(requireContext())
 
         /* 시즌변경 버튼*/
-        val seasonChange = getViewDataBinding().btChangeSeason
+        val seasonChange = binding().btChangeSeason
         seasonChange.setOnClickListener {
             val seasonSelectDialog = SeasonSelectDialog.getInstance(this)
             seasonSelectDialog.show(childFragmentManager, "selectSeason")
@@ -81,7 +81,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
 
     /* SpinKit 제거*/
     override fun cancelSpinKit() {
-        getViewDataBinding().skLoading.visibility = View.GONE
+        binding().skLoading.visibility = View.GONE
     }
 
     /* 시즌선택*/
@@ -167,14 +167,14 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
     /* 상단 헤더 요약*/
     override fun setHeaderSummary(summary: HashMap<String, Int>) {
         val userSummary = String.format(Locale.getDefault(), resources.getString(R.string.w_d_l), summary["win"], summary["draw"], summary["lose"])
-        getViewDataBinding().tvSeasonStatic.text = userSummary
+        binding().tvSeasonStatic.text = userSummary
 
         val teamName = PrTeam.getTeamByCode(teamCode).fullName
         val teamEmblem = resources.getIdentifier(PrConstants.Teams.EMBLEM_PREFIX.plus(teamCode), "drawable", requireActivity().packageName)
 
-        getViewDataBinding().tvTeamName.text = teamName
-        getViewDataBinding().tvSeasonLabel.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), summary["year"])
-        getViewDataBinding().ivTeamEmblem.setImageResource(teamEmblem)
+        binding().tvTeamName.text = teamName
+        binding().tvSeasonLabel.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), summary["year"])
+        binding().ivTeamEmblem.setImageResource(teamEmblem)
     }
 
     /* Observers*/

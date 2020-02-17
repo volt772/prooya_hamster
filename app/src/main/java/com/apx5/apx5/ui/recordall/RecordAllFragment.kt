@@ -59,15 +59,15 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
 
     /* SpinKit 제거*/
     override fun cancelSpinKit() {
-        getViewDataBinding().skLoading.visibility = View.GONE
+        binding().skLoading.visibility = View.GONE
     }
 
     /* UI 초기화*/
     private fun initView() {
-        val playListView = getViewDataBinding().lvPlayLists
-        searchYear = getViewDataBinding().tvSearchYear
-        playLists = getViewDataBinding().rlPlayLists
-        emptyView = getViewDataBinding().rlEmptyList
+        val playListView = binding().lvPlayLists
+        searchYear = binding().tvSearchYear
+        playLists = binding().rlPlayLists
+        emptyView = binding().rlEmptyList
 
         recordAdapter = RecordAllAdapter(requireContext(), this)
         playListView.adapter = recordAdapter

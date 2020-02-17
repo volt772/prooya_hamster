@@ -100,7 +100,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
 
     /* SpinKit 제거*/
     override fun cancelSpinKit() {
-        getViewDataBinding().skLoading.visibility = View.GONE
+        binding().skLoading.visibility = View.GONE
     }
 
     /* 경기저장(Remote)*/
@@ -181,14 +181,14 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
         if (email.equalsExt("") || teamCode.equalsExt("")) {
             DialogActivity.dialogError(requireContext())
         } else {
-            awayName = getViewDataBinding().tvTeamAway
-            homeName = getViewDataBinding().tvTeamHome
-            emblemAway = getViewDataBinding().ivTeamAway
-            emblemHome = getViewDataBinding().ivTeamHome
-            save = getViewDataBinding().btSavePlay
+            awayName = binding().tvTeamAway
+            homeName = binding().tvTeamHome
+            emblemAway = binding().ivTeamAway
+            emblemHome = binding().ivTeamHome
+            save = binding().btSavePlay
 
-            scoreLayout = getViewDataBinding().cvScoreBoard
-            emptyLayout = getViewDataBinding().cvEmpty
+            scoreLayout = binding().cvScoreBoard
+            emptyLayout = binding().cvEmpty
 
             resourceGame = ResourceGame()
 

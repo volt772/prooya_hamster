@@ -47,12 +47,12 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>()
 
     /* UI 초기화*/
     private fun initView() {
-        val viewTeam = getViewDataBinding().tvTeam
-        val viewNoti = getViewDataBinding().swtNoti
-        val viewVersion = getViewDataBinding().tvVersion
-        val viewChangeTeam = getViewDataBinding().lytChangeTeam
-        val viewDelUser = getViewDataBinding().lytDelUser
-        val viewLicense = getViewDataBinding().lytLicense
+        val viewTeam = binding().tvTeam
+        val viewNoti = binding().swtNoti
+        val viewVersion = binding().tvVersion
+        val viewChangeTeam = binding().lytChangeTeam
+        val viewDelUser = binding().lytDelUser
+        val viewLicense = binding().lytLicense
 
         /* 팀명*/
         val teamCode = PrefManager.getInstance(requireContext()).getString(PrPrefKeys.MYTEAM, "")

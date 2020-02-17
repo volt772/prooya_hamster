@@ -62,7 +62,7 @@ class TeamActivity : BaseActivity<ActivityTeamBinding, TeamViewModel>(), TeamNav
 
     /* Components*/
     private fun initComponent() {
-        val teamView = getViewDataBinding().rvTeam
+        val teamView = binding().rvTeam
 
         teamListAdapter = TeamListAdapter(getAppContext(), this)
         teamView.adapter = teamListAdapter

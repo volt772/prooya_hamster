@@ -56,7 +56,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(), S
 
     /* SpinKit 제거*/
     override fun cancelSpinKit() {
-        getViewDataBinding().skLoading.visibility = View.GONE
+        binding().skLoading.visibility = View.GONE
     }
 
     /* 로그인 > DashBoard*/

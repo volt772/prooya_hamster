@@ -51,12 +51,12 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding, StaticsViewModel>()
 
     /* UI 초기화*/
     private fun initView() {
-        getViewDataBinding()
-        playListView = getViewDataBinding().rytPlayList
-        emptyView = getViewDataBinding().rytEmptyList
+        binding()
+        playListView = binding().rytPlayList
+        emptyView = binding().rytEmptyList
 
         /* 최근기록 리스트*/
-        val recentPlayList = getViewDataBinding().lvPlayLists
+        val recentPlayList = binding().lvPlayLists
         recentPlayAdapter = RecentPlayAdapter()
         recentPlayList.adapter = recentPlayAdapter
     }
@@ -83,7 +83,7 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding, StaticsViewModel>()
 
     /* SpinKit 제거*/
     override fun cancelSpinKit() {
-        getViewDataBinding().skLoading.visibility = View.GONE
+        binding().skLoading.visibility = View.GONE
     }
 
     /* 최근경기 리스트*/
