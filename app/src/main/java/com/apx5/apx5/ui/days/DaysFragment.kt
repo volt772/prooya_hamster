@@ -1,13 +1,8 @@
 package com.apx5.apx5.ui.days
 
-import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
@@ -26,13 +21,21 @@ import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 /**
  * DaysFragment
  */
 
 class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNavigator {
+
+    private var email: String = ""
+    private var teamCode: String = ""
+
+    private var resourceGame: ResourceGame
+
+    /* 캘린더 핸들러 */
+    private val listener = DaysCalendar.datePickerListener(searchPlay = ::searchPlayByDate)
+
     private val daysViewModel: DaysViewModel by viewModel()
 
     override fun getLayoutId(): Int {
@@ -48,41 +51,8 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
         return BR.viewModel
     }
 
-    private lateinit var awayName: TextView
-    private lateinit var homeName: TextView
-    private lateinit var emblemAway: ImageView
-    private lateinit var emblemHome: ImageView
-    private lateinit var save: Button
-
-    private lateinit var scoreLayout: CardView
-    private lateinit var emptyLayout: CardView
-
-    private var email: String = ""
-    private var teamCode: String = ""
-
-    private var resourceGame: ResourceGame
-    private var todayYear: Int
-    private var todayMonth: Int
-    private var todayDay: Int
-
     init {
-        todayYear = 0
-        todayMonth = 0
-        todayDay = 0
         resourceGame = ResourceGame()
-    }
-
-
-    /* 캘린더 핸들러 */
-    private val listener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-        var month = monthOfYear
-        month += 1
-        todayYear = year
-        todayMonth = month
-        todayDay = dayOfMonth
-
-        val searchDate = String.format(Locale.getDefault(), "%d%02d%02d", todayYear, todayMonth, todayDay)
-        searchPlayByDate(searchDate)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,8 +64,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
 
     /* 다른 경기 검색 (캘린더)*/
     override fun searchOtherGame() {
-        val dialog = DatePickerDialog(requireActivity(), R.style.ProoyaDatePickerTheme, listener, todayYear, todayMonth - 1, todayDay)
-        dialog.show()
+        DaysCalendar.datePickerDialog(requireActivity(), listener).show()
     }
 
     /* SpinKit 제거*/
@@ -181,20 +150,11 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
         if (email.equalsExt("") || teamCode.equalsExt("")) {
             DialogActivity.dialogError(requireContext())
         } else {
-            awayName = binding().tvTeamAway
-            homeName = binding().tvTeamHome
-            emblemAway = binding().ivTeamAway
-            emblemHome = binding().ivTeamHome
-            save = binding().btSavePlay
-
-            scoreLayout = binding().cvScoreBoard
-            emptyLayout = binding().cvEmpty
-
             resourceGame = ResourceGame()
 
-            todayYear = UiUtils.getTodaySeparate("year")
-            todayMonth = UiUtils.getTodaySeparate("month")
-            todayDay = UiUtils.getTodaySeparate("day")
+            DaysCalendar.todayYear = UiUtils.getTodaySeparate("year")
+            DaysCalendar.todayMonth = UiUtils.getTodaySeparate("month")
+            DaysCalendar.todayDay = UiUtils.getTodaySeparate("day")
         }
     }
 
@@ -206,24 +166,24 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
 
     /* 저장버튼노출 (경기종료시에만 저장)*/
     private fun showSaveButton(playStatus: Int) {
-        save.visibility = CommonUtils.setVisibility(playStatus == PrResultCode.FINE.code)
+        binding().btSavePlay.visibility = CommonUtils.setVisibility(playStatus == PrResultCode.FINE.code)
     }
 
     /* 스코어 보드*/
     private fun showScoreBoard(gameExist: Boolean) {
-        scoreLayout.visibility = CommonUtils.setVisibility(gameExist)
-        emptyLayout.visibility = CommonUtils.setVisibility(!gameExist)
+        binding().cvScoreBoard.visibility = CommonUtils.setVisibility(gameExist)
+        binding().cvEmpty.visibility = CommonUtils.setVisibility(!gameExist)
     }
 
     /* 팀 엠블럼 및 팀컬러*/
     private fun showTeamEmblem(away: PrTeam, home: PrTeam) {
         /* 엠블럼*/
-        emblemAway.setImageResource(resources.getIdentifier(away.emblem, "drawable", requireContext().packageName))
-        emblemHome.setImageResource(resources.getIdentifier(home.emblem, "drawable", requireContext().packageName))
+        binding().ivTeamAway.setImageResource(resources.getIdentifier(away.emblem, "drawable", requireContext().packageName))
+        binding().ivTeamHome.setImageResource(resources.getIdentifier(home.emblem, "drawable", requireContext().packageName))
 
         /* 팀컬러*/
-        awayName.setBackgroundColor(Color.parseColor(away.mainColor))
-        homeName.setBackgroundColor(Color.parseColor(home.mainColor))
+        binding().tvTeamAway.setBackgroundColor(Color.parseColor(away.mainColor))
+        binding().tvTeamHome.setBackgroundColor(Color.parseColor(home.mainColor))
     }
 
     companion object {
