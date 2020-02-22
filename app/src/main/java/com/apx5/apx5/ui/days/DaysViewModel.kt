@@ -7,7 +7,7 @@ import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.datum.DailyGame
+import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.model.RemoteService
 import com.apx5.apx5.model.ResourceGetPlay
 import com.apx5.apx5.model.ResourcePostPlay
@@ -30,9 +30,9 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
 
     private val app: Application = getApplication()
 
-    private lateinit var _game: DailyGame
+    private lateinit var _game: DtDailyGame
 
-    val dailyGame: DailyGame
+    val dailyGame: DtDailyGame
         get() = _game
 
     private val rmts: RemoteService = remoteService
@@ -108,7 +108,7 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
             override fun onNext(play: RemoteService.Plays) {
                 play.res.run {
                     if (id > 0) {
-                        _game = DailyGame(
+                        _game = DtDailyGame(
                             gameId = id,
                             awayScore = awayscore,
                             homeScore = homescore,

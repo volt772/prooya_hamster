@@ -2,13 +2,12 @@ package com.apx5.apx5.ui.recordall
 
 import android.os.Bundle
 import android.view.View
-import android.widget.RelativeLayout
-import android.widget.TextView
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.databinding.FragmentRecordAllBinding
+import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.db.entity.PrPlayEntity
 import com.apx5.apx5.model.ResourceDelHistory
 import com.apx5.apx5.storage.PrefManager
@@ -39,10 +38,6 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
         return BR.viewModel
     }
 
-    private lateinit var searchYear: TextView
-    private lateinit var playLists: RelativeLayout
-    private lateinit var emptyView: RelativeLayout
-
     private lateinit var recordAdapter: RecordAllAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,23 +59,23 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
 
     /* UI 초기화*/
     private fun initView() {
-        val playListView = binding().lvPlayLists
-        searchYear = binding().tvSearchYear
-        playLists = binding().rlPlayLists
-        emptyView = binding().rlEmptyList
-
         recordAdapter = RecordAllAdapter(requireContext(), this)
-        playListView.adapter = recordAdapter
+        binding().lvPlayLists.adapter = recordAdapter
 
         /* 시즌 변경*/
-        searchYear.setOnClickListener {
+        binding().tvSearchYear.setOnClickListener {
             val seasonSelectDialog = YearSelectDialog.getInstance(this)
             seasonSelectDialog.show(childFragmentManager, "selectYear")
         }
     }
 
     /* 기록삭제*/
-    override fun delHistoryItem(playId: String, playSeason: String, playVersus: String, playResult: String) {
+    override fun delHistoryItem(
+        playId: String,
+        playSeason: String,
+        playVersus: String,
+        playResult: String) {
+
         val email = PrefManager.getInstance(requireContext()).userEmail?: ""
 
         if (!email.equalsExt("")) {
@@ -98,8 +93,8 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
 
     /* 리스트 분기*/
     private fun isListExists(exists: Boolean) {
-        playLists.visibility = CommonUtils.setVisibility(exists)
-        emptyView.visibility = CommonUtils.setVisibility(!exists)
+        binding().rlPlayLists.visibility = CommonUtils.setVisibility(exists)
+        binding().rlEmptyList.visibility = CommonUtils.setVisibility(!exists)
     }
 
     /* 기록 리스트 생성*/
@@ -117,21 +112,27 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
             val myTeamCode = PrefManager.getInstance(requireContext()).userTeam
 
             recordAdapter.addItem(
-                    play.playId,
-                    play.playSeason,
-                    play.playVersus,
-                    play.playResult,
-                    play.playDate,
-                    play.playPtGet,
-                    play.playPtLost,
-                    resources.getIdentifier(PrConstants.Teams.EMBLEM_PREFIX.plus(myTeamCode), "drawable", requireActivity().packageName),
-                    resources.getIdentifier(PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVersus), "drawable", requireActivity().packageName)
+                AdtPlayLists(
+                    playVersus = play.playVersus,
+                    playId = play.playId,
+                    playSeason = play.playSeason,
+                    playResult = play.playResult,
+                    playDate = play.playDate,
+                    scoreMy = play.playPtGet,
+                    scoreVs = play.playPtLost,
+                    emblemMy = UiUtils.getDrawableByName(
+                        requireContext(),
+                        PrConstants.Teams.EMBLEM_PREFIX.plus(myTeamCode)),
+                    emblemVs = UiUtils.getDrawableByName(
+                        requireContext(),
+                        PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVersus))
+                )
             )
         }
 
         recordAdapter.notifyDataSetChanged()
 
-        searchYear.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), year)
+        binding().tvSearchYear.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), year)
     }
 
     /* Observers*/

@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
 import com.apx5.apx5.constants.PrResultCode
-import com.apx5.apx5.ui.model.DetailLists
+import com.apx5.apx5.datum.adapter.AdtDetailLists
 import com.apx5.apx5.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.item_record_detail.view.*
 
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.item_record_detail.view.*
  */
 
 class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseAdapter() {
-    private val detailList = mutableListOf<DetailLists>()
+    private val detailList = mutableListOf<AdtDetailLists>()
 
     /* 리스트 초기화*/
     internal fun clearItems() {
@@ -96,7 +96,7 @@ class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseA
 
     /* 아이템 추가*/
     internal fun addItem(emblemTeam: Int, ptGet: String, ptLost: String, playDate: String, playResult: String, playVs: String) {
-        val item = DetailLists()
+        val item = AdtDetailLists()
         item.emblemTeam = emblemTeam
         item.ptGet = ptGet
         item.ptLost = ptLost

@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
 import com.apx5.apx5.constants.PrResultCode
-import com.apx5.apx5.ui.model.PlayLists
+import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.item_plays_all.view.*
 
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.item_plays_all.view.*
 
 class RecordAllAdapter internal constructor(private val ctx: Context, private val nav: RecordAllNavigator) : BaseAdapter() {
 
-    private val playList = mutableListOf<PlayLists>()
+    private val playList = mutableListOf<AdtPlayLists>()
 
     internal fun clearItems() {
         playList.clear()
@@ -102,26 +102,7 @@ class RecordAllAdapter internal constructor(private val ctx: Context, private va
     }
 
     /* 아이템 추가*/
-    internal fun addItem(
-            playId: String,
-            playYear: String,
-            playVs: String,
-            playResult: String,
-            playDate: String,
-            ptGet: String,
-            ptLost: String,
-            emblemMy: Int,
-            emblemVs: Int) {
-        val item = PlayLists()
-        item.playId = playId
-        item.playSeason = playYear
-        item.playVersus = playVs
-        item.playResult = playResult
-        item.playDate = playDate
-        item.scoreMy = ptGet
-        item.scoreVs = ptLost
-        item.emblemMy = emblemMy
-        item.emblemVs = emblemVs
-        playList.add(item)
+    internal fun addItem(play: AdtPlayLists) {
+        playList.add(play)
     }
 }

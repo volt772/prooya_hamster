@@ -8,9 +8,11 @@ import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.databinding.FragmentStaticsBinding
+import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.db.entity.PrPlayEntity
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
+import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -68,13 +70,21 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding, StaticsViewModel>()
 
         for (play in plays) {
             recentPlayAdapter.addItem(
-                    play.playVersus,
-                    play.playResult,
-                    play.playDate,
-                    play.playPtGet,
-                    play.playPtLost,
-                    resources.getIdentifier(PrConstants.Teams.EMBLEM_PREFIX.plus(myTeamCode), "drawable", requireActivity().packageName),
-                    resources.getIdentifier(PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVersus), "drawable", requireActivity().packageName)
+                AdtPlayLists(
+                    playVersus = play.playVersus,
+                    playId = play.playId,
+                    playSeason = play.playSeason,
+                    playResult = play.playResult,
+                    playDate = play.playDate,
+                    scoreMy = play.playPtGet,
+                    scoreVs = play.playPtLost,
+                    emblemMy = UiUtils.getDrawableByName(
+                        requireContext(),
+                        PrConstants.Teams.EMBLEM_PREFIX.plus(myTeamCode)),
+                    emblemVs = UiUtils.getDrawableByName(
+                        requireContext(),
+                        PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVersus))
+                )
             )
         }
 

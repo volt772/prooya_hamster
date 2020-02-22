@@ -1,13 +1,13 @@
-package com.apx5.apx5.ui.model
+package com.apx5.apx5.datum.adapter
 
-class PlayLists {
-    var playVersus: String = ""
-    var playId: String = ""
-    var playSeason: String = ""
-    var playResult: String = ""
-    var playDate: String = ""
-    var scoreMy: String = ""
-    var scoreVs: String = ""
-    var emblemMy: Int = 0
-    var emblemVs: Int = 0
-}
+data class AdtPlayLists (
+    val playVersus: String,
+    val playId: String,
+    val playSeason: String,
+    val playResult: String,
+    val playDate: String,
+    val scoreMy: String,
+    val scoreVs: String,
+    val emblemMy: Int,
+    val emblemVs: Int
+)

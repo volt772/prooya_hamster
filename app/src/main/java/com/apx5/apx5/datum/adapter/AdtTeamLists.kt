@@ -1,7 +1,7 @@
-package com.apx5.apx5.ui.model
+package com.apx5.apx5.datum.adapter
 
 
-class TeamLists {
+class AdtTeamLists {
     var teamName: String = ""
     var emblem: Int = 0
     var year: String = ""

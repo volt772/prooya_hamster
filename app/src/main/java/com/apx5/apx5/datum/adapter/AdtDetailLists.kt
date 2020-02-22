@@ -1,7 +1,7 @@
-package com.apx5.apx5.ui.model
+package com.apx5.apx5.datum.adapter
 
 
-class DetailLists {
+class AdtDetailLists {
     var emblemTeam: Int = 0
     var ptGet: String = ""
     var ptLost: String = ""

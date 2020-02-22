@@ -1,5 +1,6 @@
 package com.apx5.apx5.ui.utils
 
+import android.content.Context
 import android.text.TextUtils
 import com.apx5.apx5.utils.equalsExt
 import com.apx5.apx5.utils.splitExt
@@ -110,6 +111,13 @@ class UiUtils {
             return if (text.equalsExt("")) {
                 ""
             } else text.replace(from, to)
+        }
+
+        /**
+         * Drawable Int
+         */
+        fun getDrawableByName(context: Context, name: String): Int {
+            return context.resources.getIdentifier(name, "drawable", context.packageName)
         }
     }
 }

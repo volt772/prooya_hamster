@@ -8,9 +8,8 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.apx5.apx5.R
-import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.ui.model.TeamLists
+import com.apx5.apx5.datum.adapter.AdtTeamLists
 import kotlinx.android.synthetic.main.item_team_record.view.*
 
 /**
@@ -18,7 +17,7 @@ import kotlinx.android.synthetic.main.item_team_record.view.*
  */
 
 class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigator) : BaseAdapter() {
-    private val teamList = mutableListOf<TeamLists>()
+    private val teamList = mutableListOf<AdtTeamLists>()
     private val prefix = "FIELD"
 
     /* 리스트 초기화*/
@@ -111,7 +110,7 @@ class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigato
 
     /* 아이템 추가*/
     internal fun addItem(year: String, team: String, win: String, draw: String, lose: String, rate: String, teamEmblem: Int) {
-        val item = TeamLists()
+        val item = AdtTeamLists()
         item.year = year
         item.teamName = team
         item.win = win
@@ -125,7 +124,7 @@ class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigato
 
     internal fun addItem() {
         val labelCode = LABEL_CODE
-        val item = TeamLists()
+        val item = AdtTeamLists()
         item.year = ""
         item.teamName = ""
         item.win = prefix

@@ -4,7 +4,7 @@ import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 
-data class GameInfo(
+data class DtGameInfo(
     var awayScore: Int,
     var homeScore: Int,
     var awayTeam: PrTeam,

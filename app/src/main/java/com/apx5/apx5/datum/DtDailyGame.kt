@@ -1,10 +1,10 @@
 package com.apx5.apx5.datum
 
 /**
- * DailyGame
+ * DtDailyGame
  */
 
-data class DailyGame(
+data class DtDailyGame(
     val gameId: Int,
     val awayScore: Int,
     val homeScore: Int,
