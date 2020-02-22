@@ -6,13 +6,9 @@ import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrResultCode
-import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentDaysBinding
-import com.apx5.apx5.datum.GameInfo
-import com.apx5.apx5.model.ResourceGame
 import com.apx5.apx5.model.ResourceGetPlay
 import com.apx5.apx5.model.ResourcePostPlay
 import com.apx5.apx5.storage.PrefManager
@@ -31,28 +27,23 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
     private var email: String = ""
     private var teamCode: String = ""
 
-    private var resourceGame: ResourceGame
 
     /* 캘린더 핸들러 */
-    private val listener = DaysCalendar.datePickerListener(searchPlay = ::searchPlayByDate)
+    private val calListener = DaysCalendar.datePickerListener(searchPlay = ::searchPlayByDate)
 
-    private val daysViewModel: DaysViewModel by viewModel()
+    private val dv: DaysViewModel by viewModel()
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_days
     }
 
     override fun getViewModel(): DaysViewModel {
-        daysViewModel.setNavigator(this)
-        return daysViewModel
+        dv.setNavigator(this)
+        return dv
     }
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
-    }
-
-    init {
-        resourceGame = ResourceGame()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,7 +55,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
 
     /* 다른 경기 검색 (캘린더)*/
     override fun searchOtherGame() {
-        DaysCalendar.datePickerDialog(requireActivity(), listener).show()
+        DaysCalendar.datePickerDialog(requireActivity(), calListener).show()
     }
 
     /* SpinKit 제거*/
@@ -74,67 +65,74 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
 
     /* 경기저장(Remote)*/
     override fun saveGameToRemote() {
-        val lostScore: Int
-        val getScore: Int
-        val result: String
-        val playYear = UiUtils.getYear(resourceGame.playDate.toString())
-        val playDate = UiUtils.getDateToAbbr(resourceGame.playDate.toString(), "-")
-        val versus: String?
+        val dailyGame = dv.dailyGame
+        val gameResult = getPlayResultByTeamSide()
 
-        val awayScore = resourceGame.awayScore
-        val homeScore = resourceGame.homeScore
-
-        if (teamCode.equalsExt(resourceGame.awayTeam)) {
-            /* 원정일경우*/
-            versus = resourceGame.homeTeam
-            getScore = resourceGame.awayScore
-            lostScore = resourceGame.homeScore
-            result = if (awayScore < homeScore) "l" else if (awayScore > homeScore) "w" else "d"
-        } else {
-            /* 홈일경우*/
-            versus = resourceGame.awayTeam
-            getScore = resourceGame.homeScore
-            lostScore = resourceGame.awayScore
-            result = if (awayScore > homeScore) "l" else if (awayScore < homeScore) "w" else "d"
-        }
-
-        getViewModel().saveNewPlay(ResourcePostPlay(
-                result, playYear, playDate, email, lostScore.toString(), versus, getScore.toString()))
+        getViewModel().saveNewPlay(
+            ResourcePostPlay(
+                result = gameResult.result,
+                year = UiUtils.getYear(dailyGame.playDate.toString()),
+                regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
+                pid = email,
+                lostscore = gameResult.lostScore,
+                versus = gameResult.versus,
+                getscore = gameResult.getScore
+            )
+        )
     }
 
-    /* 해당일 경기없음*/
-    override fun noGameToday() {
-        showScoreBoard(false)
+    /**
+     * 홈/원정 결과 구분
+     */
+    private fun getPlayResultByTeamSide(): ResultBySide {
+        val dailyGame = dv.dailyGame
+        val isAwayTeam = teamCode.equalsExt(dailyGame.awayTeam)
+
+        val awayScore = dailyGame.awayScore
+        val homeScore = dailyGame.homeScore
+
+        if (isAwayTeam) {
+            /* 원정경기*/
+            return ResultBySide(
+                versus = dailyGame.homeTeam,
+                getScore = awayScore.toString(),
+                lostScore = homeScore.toString() ,
+                result = when {
+                    awayScore < homeScore -> PrResultCode.LOSE.codeAbbr
+                    awayScore > homeScore -> PrResultCode.WIN.codeAbbr
+                    else -> PrResultCode.DRAW.codeAbbr
+                }
+            )
+        } else {
+            /* 홈경기*/
+            return ResultBySide(
+                versus = dailyGame.awayTeam,
+                getScore = homeScore.toString(),
+                lostScore = awayScore.toString() ,
+                result = when {
+                    awayScore > homeScore -> PrResultCode.LOSE.codeAbbr
+                    awayScore < homeScore -> PrResultCode.WIN.codeAbbr
+                    else -> PrResultCode.DRAW.codeAbbr
+                }
+            )
+        }
     }
 
     /* 경기 가져오기(From Remote)*/
-    override fun setRemoteGameData(game: ResourceGame) {
-        /* 데이터 저장*/
-        resourceGame = game
+    override fun setRemoteGameData(show: Boolean) {
+        showScoreBoard(show)
 
-        /* 점수판 화면노출*/
-        showScoreBoard(true)
+        if (show) {
+            /* 저장버튼 노출유무*/
+            showSaveButton(dv.dailyGame.status)
 
-        /* 저장버튼 노출유무*/
-        showSaveButton(game.status)
+            /* 팀 엠블럼*/
+            val awayTeam = dv.dailyGame.awayTeam
+            val homeTeam = dv.dailyGame.homeTeam
+            showTeamEmblem(PrTeam.getTeamByCode(awayTeam), PrTeam.getTeamByCode(homeTeam))
 
-        /* 팀 엠블럼*/
-        showTeamEmblem(PrTeam.getTeamByCode(game.awayTeam), PrTeam.getTeamByCode(game.homeTeam))
-
-        /* 스코어 데이터*/
-        val gameInfo = GameInfo(
-            awayScore = game.awayScore,
-            homeScore = game.homeScore,
-            awayTeam = PrTeam.getTeamByCode(game.awayTeam),
-            homeTeam = PrTeam.getTeamByCode(game.homeTeam),
-            playDate = UiUtils.getDateToFull(game.playDate.toString()),
-            stadium = PrStadium.getStadiumByCode(game.stadium),
-            playTime = UiUtils.getTime(game.startTime.toString()),
-            statusCode = game.status,
-            status = PrGameStatus.getStatsByCode(game.status)
-        )
-
-        getViewModel().makeGameItem(gameInfo)
+            dv.makeGameItem()
+        }
     }
 
     /* 완료 Dialog*/
@@ -150,8 +148,6 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
         if (email.equalsExt("") || teamCode.equalsExt("")) {
             DialogActivity.dialogError(requireContext())
         } else {
-            resourceGame = ResourceGame()
-
             DaysCalendar.todayYear = UiUtils.getTodaySeparate("year")
             DaysCalendar.todayMonth = UiUtils.getTodaySeparate("month")
             DaysCalendar.todayDay = UiUtils.getTodaySeparate("day")
@@ -178,8 +174,10 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
     /* 팀 엠블럼 및 팀컬러*/
     private fun showTeamEmblem(away: PrTeam, home: PrTeam) {
         /* 엠블럼*/
-        binding().ivTeamAway.setImageResource(resources.getIdentifier(away.emblem, "drawable", requireContext().packageName))
-        binding().ivTeamHome.setImageResource(resources.getIdentifier(home.emblem, "drawable", requireContext().packageName))
+        binding().ivTeamAway.setImageResource(
+            resources.getIdentifier(away.emblem, "drawable", requireContext().packageName))
+        binding().ivTeamHome.setImageResource(
+            resources.getIdentifier(home.emblem, "drawable", requireContext().packageName))
 
         /* 팀컬러*/
         binding().tvTeamAway.setBackgroundColor(Color.parseColor(away.mainColor))
@@ -187,6 +185,12 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
     }
 
     companion object {
+        data class ResultBySide(
+            val versus: String,
+            val getScore: String,
+            val lostScore: String,
+            val result: String
+        )
 
         fun newInstance(): DaysFragment {
             val args = Bundle()

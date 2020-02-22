@@ -4,14 +4,14 @@ import android.app.Application
 import androidx.databinding.ObservableField
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrGameStatus
-import com.apx5.apx5.datum.GameInfo
+import com.apx5.apx5.constants.PrStadium
+import com.apx5.apx5.constants.PrTeam
+import com.apx5.apx5.datum.DailyGame
 import com.apx5.apx5.model.RemoteService
-import com.apx5.apx5.model.ResourceGame
 import com.apx5.apx5.model.ResourceGetPlay
 import com.apx5.apx5.model.ResourcePostPlay
-import com.apx5.apx5.utils.equalsExt
+import com.apx5.apx5.ui.utils.UiUtils
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -28,6 +28,13 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
     var gameDate = ObservableField<String>()
     var gameStadium = ObservableField<String>()
 
+    private val app: Application = getApplication()
+
+    private lateinit var _game: DailyGame
+
+    val dailyGame: DailyGame
+        get() = _game
+
     private val rmts: RemoteService = remoteService
 
     /* 경기검색 (캘린더)*/
@@ -41,31 +48,49 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
     }
 
     /* 경기 데이터*/
-    internal fun makeGameItem(game: GameInfo) {
+    internal fun makeGameItem() {
         /* 원정팀명*/
-        awayTeam.set(game.awayTeam.fullName)
+        awayTeam.set(PrTeam.getTeamByCode(_game.awayTeam).fullName)
 
         /* 홈팀명*/
-        homeTeam.set(game.homeTeam.fullName)
+        homeTeam.set(PrTeam.getTeamByCode(_game.homeTeam).fullName)
 
         /* 게임상태*/
-        if (game.status == PrGameStatus.FINE) {
-            gameStatus.set(String.format(Locale.getDefault(),
-                            getApplication<Application>().resources.getString(R.string.day_game_score),
-                            game.awayScore, game.homeScore))
+        val status = PrGameStatus.getStatsByCode(_game.status)
+        if (status == PrGameStatus.FINE) {
+            gameStatus.set(
+                String.format(
+                    Locale.getDefault(),
+                    app.resources.getString(R.string.day_game_score),
+                    _game.awayScore,
+                    _game.homeScore)
+            )
         } else {
-            gameStatus.set(game.status.displayCode)
+            gameStatus.set(status.displayCode)
         }
 
         /* 게임일자*/
-        if (game.playTime.equalsExt("")) {
-            gameDate.set(String.format(Locale.getDefault(), getApplication<Application>().resources.getString(R.string.day_game_date_single), game.playDate))
+        val _playDate = UiUtils.getDateToFull(_game.playDate.toString())
+        val _startTime = UiUtils.getTime(_game.startTime.toString())
+
+        if (_game.startTime == 0) {
+            gameDate.set(
+                String.format(
+                    Locale.getDefault(),
+                    app.resources.getString(R.string.day_game_date_single), _playDate)
+            )
         } else {
-            gameDate.set(String.format(Locale.getDefault(), getApplication<Application>().resources.getString(R.string.day_game_date_with_starttime), game.playDate, game.playTime))
+            gameDate.set(
+                String.format(
+                    Locale.getDefault(),
+                    app.resources.getString(R.string.day_game_date_with_starttime),
+                    _playDate,
+                    _startTime)
+            )
         }
 
         /* 게임장소*/
-        gameStadium.set(game.stadium.displayName)
+        gameStadium.set(PrStadium.getStadiumByCode(_game.stadium).displayName)
     }
 
     /* 경기정보*/
@@ -81,24 +106,23 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
                 override fun onError(e: Throwable) { }
 
             override fun onNext(play: RemoteService.Plays) {
-                if (play.res.id == 0)  {
-                    getNavigator()?.noGameToday()
-                } else {
-                    val game = ResourceGame()
-                    play.res.run {
-                        game.gameId = id
-                        game.awayScore = awayscore
-                        game.homeScore = homescore
-                        game.awayTeam = awayteam
-                        game.homeTeam = hometeam
-                        game.playDate = playdate
-                        game.startTime = starttime
-                        game.stadium = stadium
-                        game.status = getPlayStatusCode(awayscore)
+                play.res.run {
+                    if (id > 0) {
+                        _game = DailyGame(
+                            gameId = id,
+                            awayScore = awayscore,
+                            homeScore = homescore,
+                            awayTeam = awayteam,
+                            homeTeam = hometeam,
+                            playDate = playdate,
+                            startTime = starttime,
+                            stadium = stadium,
+                            status = getPlayStatusCode(awayscore)
+                        )
                     }
-
-                    getNavigator()?.setRemoteGameData(game)
                 }
+
+                getNavigator()?.setRemoteGameData(play.res.id != 0)
             }
         })
     }
