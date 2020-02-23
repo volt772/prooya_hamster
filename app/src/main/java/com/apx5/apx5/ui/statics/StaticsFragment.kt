@@ -38,11 +38,7 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding, StaticsViewModel>()
         return BR.viewModel
     }
 
-    private lateinit var playListView: RelativeLayout
-    private lateinit var emptyView: RelativeLayout
-
     private lateinit var recentPlayAdapter: RecentPlayAdapter
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,14 +49,8 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding, StaticsViewModel>()
 
     /* UI 초기화*/
     private fun initView() {
-        binding()
-        playListView = binding().rytPlayList
-        emptyView = binding().rytEmptyList
-
-        /* 최근기록 리스트*/
-        val recentPlayList = binding().lvPlayLists
         recentPlayAdapter = RecentPlayAdapter()
-        recentPlayList.adapter = recentPlayAdapter
+        binding().lvPlayLists.adapter = recentPlayAdapter
     }
 
     /* 최근 5경기 리스트 생성*/
@@ -102,8 +92,8 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding, StaticsViewModel>()
             setRecentPlayLists(plays)
         }
 
-        playListView.visibility = CommonUtils.setVisibility(plays.isNotEmpty())
-        emptyView.visibility = CommonUtils.setVisibility(plays.isEmpty())
+        binding().rytPlayList.visibility = CommonUtils.setVisibility(plays.isNotEmpty())
+        binding().rytEmptyList.visibility = CommonUtils.setVisibility(plays.isEmpty())
     }
 
     private fun subscriber() {

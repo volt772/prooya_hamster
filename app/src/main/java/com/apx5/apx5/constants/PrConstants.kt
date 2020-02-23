@@ -17,4 +17,14 @@ object PrConstants {
     object Teams {
         const val EMBLEM_PREFIX = "ic_team_"
     }
+
+    object Play {
+        const val ID = "playId"
+        const val GAIN = "ptGet"
+        const val LOST = "ptLost"
+        const val SEASON = "playSeason"
+        const val DATE = "playDate"
+        const val RESULT = "playResult"
+        const val VERSUS = "playVs"
+    }
 }

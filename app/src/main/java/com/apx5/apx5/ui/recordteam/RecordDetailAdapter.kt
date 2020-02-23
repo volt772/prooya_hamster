@@ -95,15 +95,7 @@ class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseA
     }
 
     /* 아이템 추가*/
-    internal fun addItem(emblemTeam: Int, ptGet: String, ptLost: String, playDate: String, playResult: String, playVs: String) {
-        val item = AdtDetailLists()
-        item.emblemTeam = emblemTeam
-        item.ptGet = ptGet
-        item.ptLost = ptLost
-        item.playDate = playDate
-        item.playResult = playResult
-        item.playVs = playVs
-
-        detailList.add(item)
+    internal fun addItem(details: AdtDetailLists) {
+        detailList.add(details)
     }
 }

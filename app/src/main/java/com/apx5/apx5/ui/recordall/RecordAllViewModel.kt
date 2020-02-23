@@ -2,6 +2,7 @@ package com.apx5.apx5.ui.recordall
 
 import android.app.Application
 import com.apx5.apx5.base.BaseViewModel
+import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.db.entity.PrPlayEntity
 import com.apx5.apx5.model.RemoteService
 import com.apx5.apx5.model.ResourceDelHistory
@@ -59,13 +60,13 @@ class RecordAllViewModel(application: Application) : BaseViewModel<RecordAllNavi
         if (plays != null) {
             for (play in plays) {
                 val playEntity = PrPlayEntity()
-                playEntity.playId = play["playId"]?: ""
-                playEntity.playPtGet = play["ptGet"]?: ""
-                playEntity.playPtLost = play["ptLost"]?: ""
-                playEntity.playSeason = play["playSeason"]?: ""
-                playEntity.playDate = play["playDate"]?: ""
-                playEntity.playResult = play["playResult"]?: ""
-                playEntity.playVersus = play["playVs"]?: ""
+                playEntity.playId = play[PrConstants.Play.ID]?: ""
+                playEntity.playPtGet = play[PrConstants.Play.GAIN]?: ""
+                playEntity.playPtLost = play[PrConstants.Play.LOST]?: ""
+                playEntity.playSeason = play[PrConstants.Play.SEASON]?: ""
+                playEntity.playDate = play[PrConstants.Play.DATE]?: ""
+                playEntity.playResult = play[PrConstants.Play.RESULT]?: ""
+                playEntity.playVersus = play[PrConstants.Play.VERSUS]?: ""
 
                 listPlay.add(playEntity)
             }

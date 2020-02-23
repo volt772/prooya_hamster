@@ -76,10 +76,10 @@ class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigato
             holder.winningRate.text = "%"
         } else {
             /* 팀 엠블럼*/
-            holder.teamEmblem.setImageResource(teamItems.emblem)
+            holder.teamEmblem.setImageResource(teamItems.teamEmblem)
 
             /* 팀 이름*/
-            holder.teamName.text = PrTeam.getTeamByCode(teamItems.teamName).fullName
+            holder.teamName.text = PrTeam.getTeamByCode(teamItems.team).fullName
 
             /* 승*/
             holder.winCount.text = teamItems.win
@@ -95,7 +95,7 @@ class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigato
         }
 
         /* 상세보기*/
-        cv.setOnClickListener { nav.getDetailLists(teamItems.year, teamItems.teamName) }
+        cv.setOnClickListener { nav.getDetailLists(teamItems.year, teamItems.team) }
 
         return cv
     }
@@ -109,31 +109,24 @@ class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigato
     }
 
     /* 아이템 추가*/
-    internal fun addItem(year: String, team: String, win: String, draw: String, lose: String, rate: String, teamEmblem: Int) {
-        val item = AdtTeamLists()
-        item.year = year
-        item.teamName = team
-        item.win = win
-        item.draw = draw
-        item.lose = lose
-        item.rate = rate
-        item.emblem = teamEmblem
-
-        teamList.add(item)
+    internal fun addItem(recordItem: AdtTeamLists) {
+        teamList.add(recordItem)
     }
 
     internal fun addItem() {
         val labelCode = LABEL_CODE
-        val item = AdtTeamLists()
-        item.year = ""
-        item.teamName = ""
-        item.win = prefix
-        item.draw = prefix
-        item.lose = prefix
-        item.rate = prefix
-        item.emblem = labelCode
 
-        teamList.add(item)
+        teamList.add(
+            AdtTeamLists(
+                year = "",
+                team = "",
+                win = prefix,
+                draw = prefix,
+                lose = prefix,
+                rate = prefix,
+                teamEmblem = labelCode
+            )
+        )
     }
 
     companion object {

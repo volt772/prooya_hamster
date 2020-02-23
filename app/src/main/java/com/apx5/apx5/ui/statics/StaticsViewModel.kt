@@ -137,13 +137,13 @@ class StaticsViewModel(application: Application) : BaseViewModel<StaticsNavigato
         if (recentPlays != null) {
             for (play in recentPlays) {
                 val playEntity = PrPlayEntity()
-                playEntity.playId = play["playId"]?: ""
-                playEntity.playPtGet = play["ptGet"]?: ""
-                playEntity.playPtLost = play["ptLost"]?: ""
-                playEntity.playSeason = play["playSeason"]?: ""
-                playEntity.playDate = play["playDate"]?: ""
-                playEntity.playResult = play["playResult"]?: ""
-                playEntity.playVersus = play["playVs"]?: ""
+                playEntity.playId = play[PrConstants.Play.ID]?: ""
+                playEntity.playPtGet = play[PrConstants.Play.GAIN]?: ""
+                playEntity.playPtLost = play[PrConstants.Play.LOST]?: ""
+                playEntity.playSeason = play[PrConstants.Play.SEASON]?: ""
+                playEntity.playDate = play[PrConstants.Play.DATE]?: ""
+                playEntity.playResult = play[PrConstants.Play.RESULT]?: ""
+                playEntity.playVersus = play[PrConstants.Play.VERSUS]?: ""
 
                 listPlay.add(playEntity)
             }
