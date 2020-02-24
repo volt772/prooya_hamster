@@ -11,6 +11,7 @@ import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.model.RemoteService
 import com.apx5.apx5.model.ResourceGetPlay
 import com.apx5.apx5.model.ResourcePostPlay
+import com.apx5.apx5.remote.RemoteDailyPlay
 import com.apx5.apx5.ui.utils.UiUtils
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
@@ -103,28 +104,42 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
                 getNavigator()?.cancelSpinKit()
             }
 
-                override fun onError(e: Throwable) { }
+            override fun onError(e: Throwable) { }
 
             override fun onNext(play: RemoteService.Plays) {
-                play.res.run {
-                    if (id > 0) {
-                        _game = DtDailyGame(
-                            gameId = id,
-                            awayScore = awayscore,
-                            homeScore = homescore,
-                            awayTeam = awayteam,
-                            homeTeam = hometeam,
-                            playDate = playdate,
-                            startTime = starttime,
-                            stadium = stadium,
-                            status = getPlayStatusCode(awayscore)
-                        )
-                    }
-                }
-
-                getNavigator()?.setRemoteGameData(play.res.id != 0)
+                makePlayBoard(play.res)
             }
         })
+    }
+
+    private fun makePlayBoard(dailyPlays: List<RemoteDailyPlay>) {
+        val playList = mutableListOf<DtDailyGame>()
+
+        for (play in dailyPlays) {
+            if (play.id == 0) {
+                getNavigator()?.setRemoteGameData(false)
+                break
+            }
+
+            play.run {
+                playList.add(
+                    DtDailyGame(
+                        gameId = id,
+                        awayScore = awayscore,
+                        homeScore = homescore,
+                        awayTeam = awayteam,
+                        homeTeam = hometeam,
+                        playDate = playdate,
+                        startTime = starttime,
+                        stadium = stadium,
+                        status = getPlayStatusCode(awayscore)
+                    )
+                )
+            }
+        }
+
+        /* 사이즈가 2이상이면 > 더블헤더 다이얼로그 (0 or 1) > 선택된 index를 _game에 집어넣고 setRemoteGameData(true)
+        * 사이즈가 1이면 > _game에 리스트 0번 집어넣고 > setRemoteGameData(true)*/
     }
 
     /* 새기록 저장*/

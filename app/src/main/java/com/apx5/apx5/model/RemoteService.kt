@@ -1,5 +1,6 @@
 package com.apx5.apx5.model
 
+import com.apx5.apx5.remote.RemoteDailyPlay
 import retrofit2.http.Body
 import retrofit2.http.POST
 import rx.Observable
@@ -79,25 +80,13 @@ interface RemoteService {
 
     /* Object - 요약데이터*/
     class TeamsSummary(val res: TeamsSummaryItem) {
-
         inner class TeamsSummaryItem(
-                var teams: List<HashMap<String, String>>,
-                var summary: HashMap<String, Int>)
+            var teams: List<HashMap<String, String>>,
+            var summary: HashMap<String, Int>)
     }
 
     /* Object - 오늘 내팀 경기*/
-    class Plays(val res: PlayItem)
-
-    class PlayItem(
-        val awayscore: Int,
-        val awayteam: String,
-        val homescore: Int,
-        val hometeam: String,
-        val stadium: String,
-        val id: Int,
-        val starttime: Int,
-        val playdate: Int
-    )
+    class Plays(val res: List<RemoteDailyPlay>)
 
     /* Object - 새경기저장*/
     class NewPlay(val res: Int)
