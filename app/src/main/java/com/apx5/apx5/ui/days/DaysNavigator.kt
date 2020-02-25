@@ -10,4 +10,5 @@ interface DaysNavigator {
     fun setRemoteGameData(show: Boolean)
     fun showSuccessDialog()
     fun cancelSpinKit()
+    fun showDialogForDoubleHeader()
 }

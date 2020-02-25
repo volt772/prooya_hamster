@@ -135,6 +135,19 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
         }
     }
 
+    /* 더블헤더 선택 Dialog*/
+    override fun showDialogForDoubleHeader() {
+        DialogActivity.dialogSelectDoubleHeader(
+            requireContext(),
+            ::selectMainGameOfDoubleHeader
+        )
+    }
+
+    /* 더블헤더 선택*/
+    private fun selectMainGameOfDoubleHeader(gameNum: Int) {
+        getViewModel().setMainGameData(gameNum)
+    }
+
     /* 완료 Dialog*/
     override fun showSuccessDialog() {
         DialogActivity.dialogSaveDailyHistory(requireContext())

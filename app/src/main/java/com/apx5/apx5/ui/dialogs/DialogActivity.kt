@@ -179,5 +179,29 @@ class DialogActivity : AppCompatActivity() {
             dialog.show()
             dialog.window?.attributes = lp
         }
+
+        /* Dialog - 더블헤더선택*/
+        fun dialogSelectDoubleHeader(
+                context: Context,
+                selectGame:(Int) -> Unit) {
+
+            val dialog = prDialog(context, R.layout.dlg_select_double_header)
+            val lp = prLayoutParams(dialog)
+
+            /* 선택 : 1경기*/
+            dialog.findViewById<View>(R.id.bt_first_game).setOnClickListener {
+                selectGame(0)
+                dialog.dismiss()
+            }
+
+            /* 선택 : 2경기*/
+            dialog.findViewById<View>(R.id.bt_second_game).setOnClickListener {
+                selectGame(1)
+                dialog.dismiss()
+            }
+
+            dialog.show()
+            dialog.window?.attributes = lp
+        }
     }
 }

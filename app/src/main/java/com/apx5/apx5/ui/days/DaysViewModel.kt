@@ -31,6 +31,7 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
 
     private val app: Application = getApplication()
 
+    private var playList = mutableListOf<DtDailyGame>()
     private lateinit var _game: DtDailyGame
 
     val dailyGame: DtDailyGame
@@ -113,8 +114,7 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
     }
 
     private fun makePlayBoard(dailyPlays: List<RemoteDailyPlay>) {
-        val playList = mutableListOf<DtDailyGame>()
-
+        playList.clear()
         for (play in dailyPlays) {
             if (play.id == 0) {
                 getNavigator()?.setRemoteGameData(false)
@@ -138,8 +138,13 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
             }
         }
 
-        /* 사이즈가 2이상이면 > 더블헤더 다이얼로그 (0 or 1) > 선택된 index를 _game에 집어넣고 setRemoteGameData(true)
-        * 사이즈가 1이면 > _game에 리스트 0번 집어넣고 > setRemoteGameData(true)*/
+        if (playList.size > 1) {
+            /* 더블헤더 선택*/
+            getNavigator()?.showDialogForDoubleHeader()
+        } else {
+            /* 일반*/
+            setMainGameData()
+        }
     }
 
     /* 새기록 저장*/
@@ -157,6 +162,12 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
                     getNavigator()?.showSuccessDialog()
                 }
             })
+    }
+
+    /* 주 게임선택*/
+    fun setMainGameData(gameNum: Int = 0) {
+        _game = playList[gameNum]
+        getNavigator()?.setRemoteGameData(true)
     }
 
     /* 경기 상태 코드*/
