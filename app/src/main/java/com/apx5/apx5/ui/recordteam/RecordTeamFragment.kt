@@ -15,6 +15,7 @@ import com.apx5.apx5.databinding.FragmentRecordTeamBinding
 import com.apx5.apx5.datum.adapter.AdtDetailLists
 import com.apx5.apx5.datum.adapter.AdtTeamLists
 import com.apx5.apx5.db.entity.PrTeamEntity
+import com.apx5.apx5.remote.RemoteTeamDetail
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
@@ -101,23 +102,23 @@ class RecordTeamFragment :
     }
 
     /* 상세정보 Dialog*/
-    override fun showDetailLists(plays: List<HashMap<String, String>>) {
+    override fun showDetailLists(plays: List<RemoteTeamDetail>) {
         recordDetailAdapter.clearItems()
         if (plays.isNotEmpty()) {
             for (play in plays) {
                 val teamEmblem = UiUtils.getDrawableByName(
                     requireContext(),
-                    PrConstants.Teams.EMBLEM_PREFIX.plus(play[PrConstants.Play.VERSUS]?: "")
+                    PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVs)
                 )
 
                 recordDetailAdapter.addItem(
                     AdtDetailLists(
                         emblemTeam = teamEmblem,
-                        ptGet = play[PrConstants.Play.GAIN]?: "",
-                        ptLost = play[PrConstants.Play.LOST]?: "",
-                        playDate = play[PrConstants.Play.DATE]?: "",
-                        playResult = play[PrConstants.Play.RESULT]?: "",
-                        playVs = play[PrConstants.Play.VERSUS]?: ""
+                        ptGet = play.ptGet,
+                        ptLost = play.ptLost,
+                        playDate = play.playDate,
+                        playResult = play.playResult,
+                        playVs = play.playVs
                     )
                 )
             }

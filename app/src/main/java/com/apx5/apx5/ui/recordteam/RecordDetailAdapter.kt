@@ -70,10 +70,10 @@ class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseA
         holder.teamEmblem.setImageResource(detailItems.emblemTeam)
 
         /* 득점*/
-        holder.gotScore.text = detailItems.ptGet
+        holder.gotScore.text = detailItems.ptGet.toString()
 
         /* 실점*/
-        holder.lostScore.text = detailItems.ptLost
+        holder.lostScore.text = detailItems.ptLost.toString()
 
         /* 결과*/
         val result = PrResultCode.getResultByDisplayCode(detailItems.playResult)

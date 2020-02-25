@@ -1,6 +1,7 @@
 package com.apx5.apx5.model
 
 import com.apx5.apx5.remote.RemoteDailyPlay
+import com.apx5.apx5.remote.RemoteTeamDetail
 import retrofit2.http.Body
 import retrofit2.http.POST
 import rx.Observable
@@ -92,9 +93,7 @@ interface RemoteService {
     class NewPlay(val res: Int)
 
     /* Object - 기록 상세*/
-    class TeamDetail(val res: TeamDetailItem)
-
-    class TeamDetailItem(var plays: List<HashMap<String, String>>)
+    class TeamDetail(val plays: List<RemoteTeamDetail>)
 
     /* Object - 기록 전체*/
     class Histories(val res: HistoryItems)

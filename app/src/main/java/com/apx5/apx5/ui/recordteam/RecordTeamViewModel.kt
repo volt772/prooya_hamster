@@ -30,10 +30,9 @@ class RecordTeamViewModel(application: Application) : BaseViewModel<RecordTeamNa
 
                 override fun onError(e: Throwable) { }
 
-
                 override fun onNext(details: RemoteService.TeamDetail) {
                     /* 상세 데이터 생성*/
-                    getNavigator()?.showDetailLists(details.res.plays)
+                    getNavigator()?.showDetailLists(details.plays)
                 }
             })
     }
