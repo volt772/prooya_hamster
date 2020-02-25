@@ -7,8 +7,9 @@ import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.databinding.FragmentRecordAllBinding
+import com.apx5.apx5.datum.DtAllGames
+import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.datum.adapter.AdtPlayLists
-import com.apx5.apx5.db.entity.PrPlayEntity
 import com.apx5.apx5.model.ResourceDelHistory
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
@@ -70,18 +71,19 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
     }
 
     /* 기록삭제*/
-    override fun delHistoryItem(
-        playId: String,
-        playSeason: String,
-        playVersus: String,
-        playResult: String) {
-
+    override fun delHistoryItem(delPlay: AdtPlayDelTarget) {
         val email = PrefManager.getInstance(requireContext()).userEmail?: ""
 
         if (!email.equalsExt("")) {
             DialogActivity.dialogHistoryDelete(
                 requireContext(),
-                ResourceDelHistory(email, playId, playSeason, playVersus, playResult),
+                ResourceDelHistory(
+                    pid = email,
+                    rid = delPlay.id,
+                    year = delPlay.season,
+                    versus = delPlay.versus,
+                    result = delPlay.result
+                ),
                 ::delHistory)
         }
     }
@@ -98,7 +100,7 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
     }
 
     /* 기록 리스트 생성*/
-    override fun setHistory(plays: List<PrPlayEntity>, year: Int) {
+    override fun setHistory(plays: List<DtAllGames>, year: Int) {
         var isVisible = true
 
         recordAdapter.clearItems()

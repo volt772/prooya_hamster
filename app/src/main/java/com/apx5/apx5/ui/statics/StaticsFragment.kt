@@ -58,25 +58,25 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding, StaticsViewModel>()
         recentPlayAdapter.clearItems()
         val myTeamCode = PrefManager.getInstance(requireContext()).userTeam
 
-        for (play in plays) {
-            recentPlayAdapter.addItem(
-                AdtPlayLists(
-                    playVersus = play.playVersus,
-                    playId = play.playId,
-                    playSeason = play.playSeason,
-                    playResult = play.playResult,
-                    playDate = play.playDate,
-                    scoreMy = play.playPtGet,
-                    scoreVs = play.playPtLost,
-                    emblemMy = UiUtils.getDrawableByName(
-                        requireContext(),
-                        PrConstants.Teams.EMBLEM_PREFIX.plus(myTeamCode)),
-                    emblemVs = UiUtils.getDrawableByName(
-                        requireContext(),
-                        PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVersus))
-                )
-            )
-        }
+//        for (play in plays) {
+//            recentPlayAdapter.addItem(
+//                AdtPlayLists(
+//                    playVersus = play.playVersus,
+//                    playId = play.playId,
+//                    playSeason = play.playSeason,
+//                    playResult = play.playResult,
+//                    playDate = play.playDate,
+//                    scoreMy = play.playPtGet,
+//                    scoreVs = play.playPtLost,
+//                    emblemMy = UiUtils.getDrawableByName(
+//                        requireContext(),
+//                        PrConstants.Teams.EMBLEM_PREFIX.plus(myTeamCode)),
+//                    emblemVs = UiUtils.getDrawableByName(
+//                        requireContext(),
+//                        PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVersus))
+//                )
+//            )
+//        }
 
         recentPlayAdapter.notifyDataSetChanged()
     }
