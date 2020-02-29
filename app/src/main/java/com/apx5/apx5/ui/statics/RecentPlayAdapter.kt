@@ -71,8 +71,8 @@ class RecentPlayAdapter internal constructor() : BaseAdapter() {
         holder.otherEmblem.setImageResource(playItems.emblemVs)
 
         /* 팀 스코어*/
-//        holder.myScore.text = playItems.scoreMy
-//        holder.otherScore.text = playItems.scoreVs
+        holder.myScore.text = playItems.scoreMy.toString()
+        holder.otherScore.text = playItems.scoreVs.toString()
 
         /* 경기일*/
         holder.playDate.text = UiUtils.getDateToFull(playItems.playDate)

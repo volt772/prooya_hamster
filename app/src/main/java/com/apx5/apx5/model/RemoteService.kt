@@ -4,7 +4,6 @@ import com.apx5.apx5.remote.*
 import retrofit2.http.Body
 import retrofit2.http.POST
 import rx.Observable
-import java.util.*
 
 /**
  * RemoteService
@@ -73,9 +72,9 @@ interface RemoteService {
     /* Object - 요약데이터*/
     class Statics(val res: StaticsItem) {
         inner class StaticsItem(
-            var allStatics: HashMap<String, Int>,
-            var seasonStatics: HashMap<String, Int>,
-            var recentPlays: List<HashMap<String, String>>)
+            var allStatics: RemoteAllStatics,
+            var seasonStatics: RemoteSeasonStatics,
+            var recentPlays: List<RemoteRecentPlay>)
     }
 
     /* Object - 요약데이터*/
