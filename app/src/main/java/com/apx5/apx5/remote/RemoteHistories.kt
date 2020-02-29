@@ -7,6 +7,7 @@ package com.apx5.apx5.remote
 data class RemoteHistories (
     val playDate: String,
     val playId: Int,
+    val playMyTeam: String,
     val playResult: String,
     val playSeason: Int,
     val playVs: String,

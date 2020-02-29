@@ -67,7 +67,8 @@ class RecordAllViewModel(application: Application) : BaseViewModel<RecordAllNavi
                         playSeason = play.playSeason,
                         playDate = play.playDate,
                         playResult = play.playResult,
-                        playVersus = play.playVs
+                        playVersus = play.playVs,
+                        playMyTeam = play.playMyTeam
                     )
                 )
             }

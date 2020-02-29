@@ -67,6 +67,8 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
     override fun saveGameToRemote() {
         val dailyGame = dv.dailyGame
         val gameResult = getPlayResultByTeamSide()
+        val myTeamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
+
 
         getViewModel().saveNewPlay(
             ResourcePostPlay(
@@ -76,6 +78,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
                 pid = email,
                 lostscore = gameResult.lostScore,
                 versus = gameResult.versus,
+                myteam = myTeamCode,
                 getscore = gameResult.getScore
             )
         )

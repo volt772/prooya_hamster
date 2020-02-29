@@ -7,5 +7,6 @@ data class DtAllGames (
     val playSeason: Int,
     val playDate: String,
     val playResult: String,
-    val playVersus: String
+    val playVersus: String,
+    val playMyTeam: String
 )

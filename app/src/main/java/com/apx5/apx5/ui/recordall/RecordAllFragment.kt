@@ -111,8 +111,6 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
         isListExists(isVisible)
 
         for (play in plays) {
-            val myTeamCode = PrefManager.getInstance(requireContext()).userTeam
-
             recordAdapter.addItem(
                 AdtPlayLists(
                     playVersus = play.playVersus,
@@ -124,7 +122,7 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
                     scoreVs = play.playPtLost,
                     emblemMy = UiUtils.getDrawableByName(
                         requireContext(),
-                        PrConstants.Teams.EMBLEM_PREFIX.plus(myTeamCode)),
+                        PrConstants.Teams.EMBLEM_PREFIX.plus(play.playMyTeam)),
                     emblemVs = UiUtils.getDrawableByName(
                         requireContext(),
                         PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVersus))
