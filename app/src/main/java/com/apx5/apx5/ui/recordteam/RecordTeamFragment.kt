@@ -12,10 +12,11 @@ import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordTeamBinding
+import com.apx5.apx5.datum.DtTeamRecord
 import com.apx5.apx5.datum.adapter.AdtDetailLists
 import com.apx5.apx5.datum.adapter.AdtTeamLists
-import com.apx5.apx5.db.entity.PrTeamEntity
 import com.apx5.apx5.remote.RemoteTeamDetail
+import com.apx5.apx5.remote.RemoteTeamSummary
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
@@ -93,11 +94,11 @@ class RecordTeamFragment :
     }
 
     /* 상세정보 데이터*/
-    override fun getDetailLists(year: String, versus: String) {
+    override fun getDetailLists(year: Int, versus: String) {
         val email = PrefManager.getInstance(requireContext()).userEmail?: ""
 
         if (!email.equalsExt("")) {
-            getViewModel().getDetailList(email, versus, Integer.parseInt(year))
+            getViewModel().getDetailList(email, versus, year)
         }
     }
 
@@ -143,7 +144,7 @@ class RecordTeamFragment :
     }
 
     /* 팀 기록 리스트*/
-    override fun setTeamRecord(teams: List<PrTeamEntity>) {
+    override fun setTeamRecord(teams: List<DtTeamRecord>) {
         recordTeamAdapter.clearItems()
 
         recordTeamAdapter.addItem()
@@ -171,15 +172,15 @@ class RecordTeamFragment :
     }
 
     /* 상단 헤더 요약*/
-    override fun setHeaderSummary(summary: HashMap<String, Int>) {
+    override fun setHeaderSummary(summary: RemoteTeamSummary) {
         binding().tvSeasonStatic.text =
             String.format(
                 Locale.getDefault(),
-                resources.getString(R.string.w_d_l), summary["win"], summary["draw"], summary["lose"]
+                resources.getString(R.string.w_d_l), summary.win, summary.draw, summary.lose
             )
 
         binding().tvTeamName.text = PrTeam.getTeamByCode(teamCode).fullName
-        binding().tvSeasonLabel.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), summary["year"])
+        binding().tvSeasonLabel.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), summary.year)
         binding().ivTeamEmblem.setImageResource(
             UiUtils.getDrawableByName(
                 requireContext(),

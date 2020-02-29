@@ -1,8 +1,6 @@
 package com.apx5.apx5.model
 
-import com.apx5.apx5.remote.RemoteDailyPlay
-import com.apx5.apx5.remote.RemoteHistories
-import com.apx5.apx5.remote.RemoteTeamDetail
+import com.apx5.apx5.remote.*
 import retrofit2.http.Body
 import retrofit2.http.POST
 import rx.Observable
@@ -83,8 +81,8 @@ interface RemoteService {
     /* Object - 요약데이터*/
     class TeamsSummary(val res: TeamsSummaryItem) {
         inner class TeamsSummaryItem(
-            var teams: List<HashMap<String, String>>,
-            var summary: HashMap<String, Int>)
+            var teams: List<RemoteTeamRecords>,
+            var summary: RemoteTeamSummary)
     }
 
     /* Object - 오늘 내팀 경기*/

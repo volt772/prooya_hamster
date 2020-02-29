@@ -69,7 +69,7 @@ class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigato
         val teamItems = teamList[position]
 
         /* 테이블 헤더 레이블*/
-        if (teamItems.win == prefix) {
+        if (teamItems.win == LABEL_CODE) {
             holder.winCount.text = context.resources.getString(R.string.win)
             holder.drawCount.text = context.resources.getString(R.string.draw)
             holder.loseCount.text = context.resources.getString(R.string.lose)
@@ -82,16 +82,16 @@ class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigato
             holder.teamName.text = PrTeam.getTeamByCode(teamItems.team).fullName
 
             /* 승*/
-            holder.winCount.text = teamItems.win
+            holder.winCount.text = teamItems.win.toString()
 
             /* 무*/
-            holder.drawCount.text = teamItems.draw
+            holder.drawCount.text = teamItems.draw.toString()
 
             /* 패*/
-            holder.loseCount.text = teamItems.lose
+            holder.loseCount.text = teamItems.lose.toString()
 
             /* 승률*/
-            holder.winningRate.text = teamItems.rate
+            holder.winningRate.text = teamItems.rate.toString()
         }
 
         /* 상세보기*/
@@ -118,12 +118,12 @@ class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigato
 
         teamList.add(
             AdtTeamLists(
-                year = "",
+                year = 0,
                 team = "",
-                win = prefix,
-                draw = prefix,
-                lose = prefix,
-                rate = prefix,
+                win = labelCode,
+                draw = labelCode,
+                lose = labelCode,
+                rate = labelCode,
                 teamEmblem = labelCode
             )
         )
