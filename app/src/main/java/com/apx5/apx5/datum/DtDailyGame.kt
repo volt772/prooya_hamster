@@ -1,7 +1,9 @@
 package com.apx5.apx5.datum
 
 /**
- * DtDailyGame
+ * Data Class
+ * @desc Tab : 4
+ * @desc 일별데이터
  */
 
 data class DtDailyGame(

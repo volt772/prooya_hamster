@@ -7,7 +7,13 @@ import com.apx5.apx5.R
  * @return PrResultCode
  */
 
-enum class PrResultCode(val code: Int, val codeAbbr: String, val displayCode: String, val color: Int) {
+enum class PrResultCode(
+    val code: Int,
+    val codeAbbr: String,
+    val displayCode: String,
+    val color: Int
+) {
+
     WIN(987, "w", "승", R.color.green_A700),
     DRAW(988, "d", "무", R.color.brown_800),
     LOSE(989, "l", "패", R.color.red_85),
@@ -15,16 +21,6 @@ enum class PrResultCode(val code: Int, val codeAbbr: String, val displayCode: St
     OTHER(0, "", "", 0);
 
     companion object {
-        fun getResultByCode(code: Int): PrResultCode {
-            return when (code) {
-                987 -> WIN
-                988 -> DRAW
-                989 -> LOSE
-                1000 -> FINE
-                else -> OTHER
-            }
-        }
-
         fun getResultByDisplayCode(code: String): PrResultCode {
             return when (code) {
                 "w" -> WIN

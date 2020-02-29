@@ -1,5 +1,10 @@
 package com.apx5.apx5.constants
 
+/**
+ * PrConstants
+ * @desc 상수정의
+ */
+
 object PrConstants {
     object App {
         const val FLK_HOST = "http://prooya772.vps.phps.kr:6100"
@@ -16,15 +21,5 @@ object PrConstants {
 
     object Teams {
         const val EMBLEM_PREFIX = "ic_team_"
-    }
-
-    object Play {
-        const val ID = "playId"
-        const val GAIN = "ptGet"
-        const val LOST = "ptLost"
-        const val SEASON = "playSeason"
-        const val DATE = "playDate"
-        const val RESULT = "playResult"
-        const val VERSUS = "playVs"
     }
 }

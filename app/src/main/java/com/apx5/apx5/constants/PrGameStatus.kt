@@ -5,7 +5,11 @@ package com.apx5.apx5.constants
  * @return PrGameStatus
  */
 
-enum class PrGameStatus(val code: Int, val displayCode: String) {
+enum class PrGameStatus(
+    val code: Int,
+    val displayCode: String
+) {
+
     ONPLAY(997, "경기중"),
     STANDBY(998, "경기전"),
     CANCELED(999, "취소"),

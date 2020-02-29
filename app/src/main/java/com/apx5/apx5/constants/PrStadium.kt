@@ -5,20 +5,23 @@ package com.apx5.apx5.constants
  * @return PrStadium
  */
 
-enum class PrStadium(val code: String, val displayName: String) {
-    SEOUL_JAMSIL("soj", "서울잠실"),
-    SEOUL_GOCHUK("sog", "서울고척"),
-    KWANGJU("kjc", "광주"),
-    BUSAN("bss", "부산"),
-    CHANGWON("msg", "창원"),
-    INCHEON("ich", "인천"),
-    DAEJEON("dje", "대전"),
-    DAEGU("dgl", "대구"),
-    SUWON("sww", "수원"),
-    CHUNGJU("cjj", "청주"),
-    POHANG("poh", "포항"),
-    ULSAN("uls", "울산"),
-    OTHER("", "");
+enum class PrStadium(
+    val displayName: String
+) {
+
+    SEOUL_JAMSIL("서울잠실"),
+    SEOUL_GOCHUK("서울고척"),
+    KWANGJU("광주"),
+    BUSAN("부산"),
+    CHANGWON("창원"),
+    INCHEON("인천"),
+    DAEJEON("대전"),
+    DAEGU("대구"),
+    SUWON("수원"),
+    CHUNGJU("청주"),
+    POHANG("포항"),
+    ULSAN("울산"),
+    OTHER("");
 
     companion object {
         fun getStadiumByCode(code: String): PrStadium {

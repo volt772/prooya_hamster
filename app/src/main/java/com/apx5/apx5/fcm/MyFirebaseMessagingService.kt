@@ -18,8 +18,13 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import java.util.*
 
+/**
+ * FireBase
+ */
 
-class MyFirebaseMessagingService : FirebaseMessagingService() {
+class MyFirebaseMessagingService :
+    FirebaseMessagingService() {
+
     private val fcmData: HashMap<String, String> = hashMapOf()
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
