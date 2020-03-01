@@ -55,12 +55,14 @@
         <!-- 로그인-->
         <activity
             android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
             android:name=".ui.login.LoginActivity">
         </activity>
 
         <!-- 메인-->
         <activity
             android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
             android:name=".ui.dashboard.DashBoardActivity">
         </activity>
 
