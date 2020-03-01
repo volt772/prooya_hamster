@@ -9,8 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
-import com.apx5.apx5.constants.PrConstants
-import com.apx5.apx5.ui.model.PlayLists
+import com.apx5.apx5.constants.PrResultCode
+import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
+import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.item_plays_all.view.*
 
@@ -18,18 +19,19 @@ import kotlinx.android.synthetic.main.item_plays_all.view.*
  * RecordAllAdapter
  */
 
-class RecordAllAdapter internal constructor(private val ctx: Context, private val nav: RecordAllNavigator) : BaseAdapter() {
+class RecordAllAdapter internal constructor(
+    private val ctx: Context,
+    private val nav: RecordAllNavigator
+) : BaseAdapter() {
 
-    private val playList = mutableListOf<PlayLists>()
+    private val playList = mutableListOf<AdtPlayLists>()
 
     internal fun clearItems() {
         playList.clear()
         notifyDataSetChanged()
     }
 
-    override fun getCount(): Int {
-        return playList.size
-    }
+    override fun getCount() = playList.size
 
     private class RecordAllHolder {
         lateinit var recordAll: View
@@ -73,71 +75,37 @@ class RecordAllAdapter internal constructor(private val ctx: Context, private va
         holder.teamEmblemVersus.setImageResource(playItems.emblemVs)
 
         /* 팀 스코어*/
-        holder.myScore.text = playItems.scoreMy
-        holder.versusScore.text = playItems.scoreVs
+        holder.myScore.text = playItems.scoreMy.toString()
+        holder.versusScore.text = playItems.scoreVs.toString()
 
         /* 경기일*/
         holder.playDate.text = UiUtils.getDateToFull(playItems.playDate)
 
         /* 경기결과*/
-        var result = ""
-        when (playItems.playResult) {
-            "w" -> {
-                result = PrConstants.Codes.WIN
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.green_A700))
-            }
-            "d" -> {
-                result = PrConstants.Codes.DRAW
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.brown_800))
-            }
-            "l" -> {
-                result = PrConstants.Codes.LOSE
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.red_85))
-            }
-            else -> {
-            }
-        }
-
-        holder.playResult.text = result
+        val result = PrResultCode.getResultByDisplayCode(playItems.playResult)
+        holder.playResult.text = result.displayCode
+        holder.playResult.setTextColor(ContextCompat.getColor(ctx, result.color))
 
         /* 삭제*/
         holder.recordAll.setOnLongClickListener {
-            nav.delHistoryItem(playItems.playId, playItems.playSeason, playItems.playVersus, playItems.playResult)
+            nav.delHistoryItem(AdtPlayDelTarget(
+                id = playItems.playId,
+                season = playItems.playSeason,
+                versus = playItems.playVersus,
+                result = playItems.playResult
+            ))
             true
         }
 
         return cv
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItemId(position: Int) = position.toLong()
 
-    override fun getItem(position: Int): Any {
-        return playList[position]
-    }
+    override fun getItem(position: Int) = playList[position]
 
     /* 아이템 추가*/
-    internal fun addItem(
-            playId: String,
-            playYear: String,
-            playVs: String,
-            playResult: String,
-            playDate: String,
-            ptGet: String,
-            ptLost: String,
-            emblemMy: Int,
-            emblemVs: Int) {
-        val item = PlayLists()
-        item.playId = playId
-        item.playSeason = playYear
-        item.playVersus = playVs
-        item.playResult = playResult
-        item.playDate = playDate
-        item.scoreMy = ptGet
-        item.scoreVs = ptLost
-        item.emblemMy = emblemMy
-        item.emblemVs = emblemVs
-        playList.add(item)
+    internal fun addItem(play: AdtPlayLists) {
+        playList.add(play)
     }
 }

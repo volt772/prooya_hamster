@@ -8,7 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
-import com.apx5.apx5.ui.model.LicenseLists
+import com.apx5.apx5.datum.adapter.AdtLicenseLists
 import com.apx5.apx5.ui.utils.MaterialTools
 import java.io.IOException
 
@@ -16,16 +16,17 @@ import java.io.IOException
  * LicenseActivity
  */
 
-class LicenseActivity : AppCompatActivity() {
+class LicenseActivity :
+    AppCompatActivity() {
 
     /* 라이센스 데이터 조합 (이름 / 내용)*/
-    private val licenseData: List<LicenseLists>
+    private val licenseData: List<AdtLicenseLists>
         get() {
-            val items = arrayListOf<LicenseLists>()
+            val items = arrayListOf<AdtLicenseLists>()
             val licenses = resources.getStringArray(R.array.licenses)
 
             for (lic in licenses) {
-                val obj = LicenseLists()
+                val obj = AdtLicenseLists()
                 obj.name = lic
                 obj.content = getLicenseContent(lic)
                 items.add(obj)
@@ -80,9 +81,6 @@ class LicenseActivity : AppCompatActivity() {
     }
 
     companion object {
-
-        fun newIntent(context: Context): Intent {
-            return Intent(context, LicenseActivity::class.java)
-        }
+        fun newIntent(context: Context) = Intent(context, LicenseActivity::class.java)
     }
 }

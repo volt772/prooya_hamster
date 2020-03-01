@@ -2,10 +2,11 @@ package com.apx5.apx5.ui.recordall
 
 import android.app.Application
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.db.entity.PrPlayEntity
+import com.apx5.apx5.datum.DtAllGames
 import com.apx5.apx5.model.RemoteService
 import com.apx5.apx5.model.ResourceDelHistory
 import com.apx5.apx5.model.ResourcePostTeams
+import com.apx5.apx5.remote.RemoteHistories
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -15,7 +16,9 @@ import java.util.*
  * RecordAllViewModel
  */
 
-class RecordAllViewModel(application: Application) : BaseViewModel<RecordAllNavigator>(application) {
+class RecordAllViewModel(application: Application) :
+    BaseViewModel<RecordAllNavigator>(application) {
+
     private val rmts: RemoteService = remoteService
 
     /* 기록 삭제*/
@@ -29,7 +32,7 @@ class RecordAllViewModel(application: Application) : BaseViewModel<RecordAllNavi
                 override fun onError(e: Throwable) {}
 
                 override fun onNext(res: RemoteService.DelPlay) {
-                    getNavigator()?.selectYear(Integer.parseInt(play.year))
+                    getNavigator()?.selectYear(play.year)
                 }
             })
     }
@@ -48,26 +51,28 @@ class RecordAllViewModel(application: Application) : BaseViewModel<RecordAllNavi
                 override fun onError(e: Throwable) { }
 
                 override fun onNext(plays: RemoteService.Histories) {
-                    setPlayHistoryItems(plays.res.histories, year)
+                    setPlayHistoryItems(plays.histories, year)
                 }
             })
     }
 
-    private fun setPlayHistoryItems(plays: List<HashMap<String, String>>, year: Int) {
-        var listPlay = ArrayList<PrPlayEntity>()
+    private fun setPlayHistoryItems(plays: List<RemoteHistories>, year: Int) {
+        var listPlay = ArrayList<DtAllGames>()
 
         if (plays != null) {
             for (play in plays) {
-                val playEntity = PrPlayEntity()
-                playEntity.playId = play["playId"]?: ""
-                playEntity.playPtGet = play["ptGet"]?: ""
-                playEntity.playPtLost = play["ptLost"]?: ""
-                playEntity.playSeason = play["playSeason"]?: ""
-                playEntity.playDate = play["playDate"]?: ""
-                playEntity.playResult = play["playResult"]?: ""
-                playEntity.playVersus = play["playVs"]?: ""
-
-                listPlay.add(playEntity)
+                listPlay.add(
+                    DtAllGames(
+                        playId = play.playId,
+                        playPtGet = play.ptGet,
+                        playPtLost = play.ptLost,
+                        playSeason = play.playSeason,
+                        playDate = play.playDate,
+                        playResult = play.playResult,
+                        playVersus = play.playVs,
+                        playMyTeam = play.playMyTeam
+                    )
+                )
             }
         } else {
             listPlay = arrayListOf()

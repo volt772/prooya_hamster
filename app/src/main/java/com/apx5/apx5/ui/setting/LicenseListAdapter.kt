@@ -5,14 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
-import com.apx5.apx5.ui.model.LicenseLists
+import com.apx5.apx5.datum.adapter.AdtLicenseLists
 import kotlinx.android.synthetic.main.item_license.view.*
 
 /**
  * LicenseListAdapter
  */
 
-class LicenseListAdapter internal constructor(private val license: List<LicenseLists>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class LicenseListAdapter internal constructor(
+    private val license: List<AdtLicenseLists>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     inner class LicenseHolder internal constructor(v: View) : RecyclerView.ViewHolder(v) {
         val name = v.tv_license_name
         val content = v.tv_license_content
@@ -34,7 +37,5 @@ class LicenseListAdapter internal constructor(private val license: List<LicenseL
         }
     }
 
-    override fun getItemCount(): Int {
-        return license.size
-    }
+    override fun getItemCount() = license.size
 }

@@ -16,14 +16,16 @@ import com.apx5.apx5.ProoyaClient
  * BaseFragment
  */
 
-abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> :
+    Fragment() {
 
     private lateinit var viewDataBinding: T
+
     private var activity: BaseActivity<*, *>? = null
+
     private val appContext: Context = ProoyaClient.appContext
 
-    @LayoutRes
-    abstract fun getLayoutId(): Int
+    @LayoutRes abstract fun getLayoutId(): Int
 
     abstract fun getBindingVariable(): Int
 
@@ -31,7 +33,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is BaseActivity<*, *>) {
+        if (context is BaseActivity<*, *>) {
             activity = context
             activity?.onFragmentAttached()
         }
@@ -42,7 +44,11 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         setHasOptionsMenu(false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
         return viewDataBinding.root
     }
@@ -54,97 +60,19 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         viewDataBinding.executePendingBindings()
     }
 
-    fun getViewDataBinding() : T {
-        return viewDataBinding
-    }
+    fun binding() = viewDataBinding
 
-    fun getBaseActivity() : BaseActivity<*, *>? {
-        return activity
-    }
+    fun getBaseActivity() = activity
 
-    fun getAppContext() : Context {
-        return appContext
-    }
+    fun getAppContext() = appContext
 
     override fun onDetach() {
         activity = null
         super.onDetach()
     }
 
-    fun hideKeyboard() {
-        if (activity != null) {
-            activity!!.hideKeyboard()
-        }
-    }
-
     interface Callback {
         fun onFragmentAttached()
         fun onFragmentDetached(tag: String)
     }
-//    var baseActivity: BaseActivity<*, *>? = null
-//        private set
-//    private var mRootView: View? = null
-//    var viewDataBinding: T? = null
-//        private set
-//    private var mViewModel: V? = null
-//
-//    /**
-//     * Override for set binding variable
-//     *
-//     * @return variable id
-//     */
-//    abstract val bindingVariable: Int
-//
-//    /**
-//     * @return layout resource id
-//     */
-//    @get:LayoutRes
-//    abstract val layoutId: Int
-//
-//    /**
-//     * Override for set view model
-//     *
-//     * @return view model instance
-//     */
-//    abstract val viewModel: V
-//
-//    val isNetworkConnected: Boolean
-//        get() = baseActivity != null && baseActivity!!.isNetworkConnected
-//
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        if (context is BaseActivity<*, *>) {
-//            this.baseActivity = context
-//            context.onFragmentAttached()
-//        }
-//    }
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        mViewModel = viewModel
-//        setHasOptionsMenu(false)
-//    }
-//
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-//        mRootView = viewDataBinding!!.root
-//        return mRootView
-//    }
-//
-//    override fun onDetach() {
-//        baseActivity = null
-//        super.onDetach()
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        viewDataBinding!!.setVariable(bindingVariable, mViewModel)
-//        viewDataBinding!!.executePendingBindings()
-//    }
-//
-//    interface Callback {
-//        fun onFragmentAttached()
-//        fun onFragmentDetached(tag: String)
-//    }
 }
-

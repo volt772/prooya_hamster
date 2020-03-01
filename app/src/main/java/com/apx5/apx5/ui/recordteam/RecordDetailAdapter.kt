@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
-import com.apx5.apx5.constants.PrConstants
-import com.apx5.apx5.ui.model.DetailLists
+import com.apx5.apx5.constants.PrResultCode
+import com.apx5.apx5.datum.adapter.AdtDetailLists
 import com.apx5.apx5.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.item_record_detail.view.*
 
@@ -18,8 +18,11 @@ import kotlinx.android.synthetic.main.item_record_detail.view.*
  * RecordDetailAdapter
  */
 
-class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseAdapter() {
-    private val detailList = mutableListOf<DetailLists>()
+class RecordDetailAdapter internal constructor(
+    private val ctx: Context
+) : BaseAdapter() {
+
+    private val detailList = mutableListOf<AdtDetailLists>()
 
     /* 리스트 초기화*/
     internal fun clearItems() {
@@ -27,9 +30,7 @@ class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseA
         notifyDataSetChanged()
     }
 
-    override fun getCount(): Int {
-        return detailList.size
-    }
+    override fun getCount() = detailList.size
 
     private class RecordDetailHolder {
         lateinit var detailList: View
@@ -70,31 +71,15 @@ class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseA
         holder.teamEmblem.setImageResource(detailItems.emblemTeam)
 
         /* 득점*/
-        holder.gotScore.text = detailItems.ptGet
+        holder.gotScore.text = detailItems.ptGet.toString()
 
         /* 실점*/
-        holder.lostScore.text = detailItems.ptLost
+        holder.lostScore.text = detailItems.ptLost.toString()
 
         /* 결과*/
-        var result = ""
-        when (detailItems.playResult) {
-            "w" -> {
-                result = PrConstants.Codes.WIN
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.green_A700))
-            }
-            "d" -> {
-                result = PrConstants.Codes.DRAW
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.brown_800))
-            }
-            "l" -> {
-                result = PrConstants.Codes.LOSE
-                holder.playResult.setTextColor(ContextCompat.getColor(ctx, R.color.red_85))
-            }
-            else -> {
-            }
-        }
-
-        holder.playResult.text = result
+        val result = PrResultCode.getResultByDisplayCode(detailItems.playResult)
+        holder.playResult.text = result.displayCode
+        holder.playResult.setTextColor(ContextCompat.getColor(ctx, result.color))
 
         /* 일자*/
         holder.playDate.text = UiUtils.replaceText(detailItems.playDate, "-", ".")
@@ -102,24 +87,12 @@ class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseA
         return cv
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItemId(position: Int) = position.toLong()
 
-    override fun getItem(position: Int): Any {
-        return detailList[position]
-    }
+    override fun getItem(position: Int) = detailList[position]
 
     /* 아이템 추가*/
-    internal fun addItem(emblemTeam: Int, ptGet: String, ptLost: String, playDate: String, playResult: String, playVs: String) {
-        val item = DetailLists()
-        item.emblemTeam = emblemTeam
-        item.ptGet = ptGet
-        item.ptLost = ptLost
-        item.playDate = playDate
-        item.playResult = playResult
-        item.playVs = playVs
-
-        detailList.add(item)
+    internal fun addItem(details: AdtDetailLists) {
+        detailList.add(details)
     }
 }

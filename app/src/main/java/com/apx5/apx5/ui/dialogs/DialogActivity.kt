@@ -13,12 +13,18 @@ import com.apx5.apx5.R
 import com.apx5.apx5.model.ResourceDelHistory
 import com.apx5.apx5.ui.team.TeamList
 
-class DialogActivity : AppCompatActivity() {
+/**
+ * DialogActivity
+ */
 
+class DialogActivity : AppCompatActivity() {
 
     companion object {
         /* Dialog 생성*/
-        fun prDialog(context: Context, layout: Int): Dialog {
+        fun prDialog(
+            context: Context,
+            layout: Int): Dialog {
+
             val dialog = Dialog(context)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(layout)
@@ -28,7 +34,9 @@ class DialogActivity : AppCompatActivity() {
         }
 
         /* Layout Params 생성*/
-        fun prLayoutParams(dialog: Dialog): WindowManager.LayoutParams {
+        fun prLayoutParams(
+            dialog: Dialog): WindowManager.LayoutParams {
+
             val lp = WindowManager.LayoutParams()
             lp.copyFrom(dialog.window?.attributes)
             lp.width = WindowManager.LayoutParams.WRAP_CONTENT
@@ -38,7 +46,10 @@ class DialogActivity : AppCompatActivity() {
         }
 
         /* Dialog - 서버사용불가*/
-        fun dialogNoInternet(context: Context, func:() -> Unit) {
+        fun dialogNoInternet(
+            context: Context,
+            func:() -> Unit) {
+
             val dialog = prDialog(context, R.layout.dialog_no_internet)
             val lp = prLayoutParams(dialog)
 
@@ -51,7 +62,9 @@ class DialogActivity : AppCompatActivity() {
         }
 
         /* Dialog - 일반에러*/
-        fun dialogError(context: Context) {
+        fun dialogError(
+            context: Context) {
+
             val dialog = prDialog(context, R.layout.dialog_comm_error)
             val lp = prLayoutParams(dialog)
 
@@ -64,7 +77,11 @@ class DialogActivity : AppCompatActivity() {
         }
 
         /* Dialog - 팀선택*/
-        fun dialogTeamSelect(context: Context, team: TeamList, func:(String) -> Unit) {
+        fun dialogTeamSelect(
+            context: Context,
+            team: TeamList,
+            func:(String) -> Unit) {
+
             val dialog = prDialog(context, R.layout.dialog_team_select)
             val lp = prLayoutParams(dialog)
 
@@ -95,7 +112,11 @@ class DialogActivity : AppCompatActivity() {
         }
 
         /* Dialog - 기록삭제*/
-        fun dialogHistoryDelete(context: Context, delHistory: ResourceDelHistory, func:(ResourceDelHistory) -> Unit) {
+        fun dialogHistoryDelete(
+            context: Context,
+            delHistory: ResourceDelHistory,
+            func:(ResourceDelHistory) -> Unit) {
+
             val dialog = prDialog(context, R.layout.dlg_history_delete)
             val lp = prLayoutParams(dialog)
 
@@ -113,7 +134,10 @@ class DialogActivity : AppCompatActivity() {
         }
 
         /* Dialog - 사용자삭제*/
-        fun dialogUserDelete(context: Context, func:() -> Unit) {
+        fun dialogUserDelete(
+            context: Context,
+            func:() -> Unit) {
+
             val dialog = prDialog(context, R.layout.dialog_del_user)
             val lp = prLayoutParams(dialog)
 
@@ -131,7 +155,9 @@ class DialogActivity : AppCompatActivity() {
         }
 
         /* Dialog - 기록없음*/
-        fun dialogNoRecordDetail(context: Context) {
+        fun dialogNoRecordDetail(
+            context: Context) {
+
             val dialog = prDialog(context, R.layout.dlg_record_no_detail)
             val lp = prLayoutParams(dialog)
 
@@ -142,11 +168,37 @@ class DialogActivity : AppCompatActivity() {
         }
 
         /* Dialog - 경기없음*/
-        fun dialogSaveDailyHistory(context: Context) {
+        fun dialogSaveDailyHistory(
+            context: Context) {
+
             val dialog = prDialog(context, R.layout.dialog_save_success)
             val lp = prLayoutParams(dialog)
 
             dialog.findViewById<View>(R.id.bt_close).setOnClickListener { dialog.dismiss() }
+
+            dialog.show()
+            dialog.window?.attributes = lp
+        }
+
+        /* Dialog - 더블헤더선택*/
+        fun dialogSelectDoubleHeader(
+                context: Context,
+                selectGame:(Int) -> Unit) {
+
+            val dialog = prDialog(context, R.layout.dlg_select_double_header)
+            val lp = prLayoutParams(dialog)
+
+            /* 선택 : 1경기*/
+            dialog.findViewById<View>(R.id.bt_first_game).setOnClickListener {
+                selectGame(0)
+                dialog.dismiss()
+            }
+
+            /* 선택 : 2경기*/
+            dialog.findViewById<View>(R.id.bt_second_game).setOnClickListener {
+                selectGame(1)
+                dialog.dismiss()
+            }
 
             dialog.show()
             dialog.window?.attributes = lp

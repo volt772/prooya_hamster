@@ -9,7 +9,8 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.apx5.apx5.R
-import com.apx5.apx5.ui.model.PlayLists
+import com.apx5.apx5.constants.PrResultCode
+import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.equalsExt
 import kotlinx.android.synthetic.main.item_plays.view.*
@@ -18,17 +19,17 @@ import kotlinx.android.synthetic.main.item_plays.view.*
  * RecentPlayAdapter
  */
 
-class RecentPlayAdapter internal constructor() : BaseAdapter() {
-    private val playList = mutableListOf<PlayLists>()
+class RecentPlayAdapter internal constructor() :
+    BaseAdapter() {
+
+    private val playList = mutableListOf<AdtPlayLists>()
 
     internal fun clearItems() {
         playList.clear()
         notifyDataSetChanged()
     }
 
-    override fun getCount(): Int {
-        return playList.size
-    }
+    override fun getCount() = playList.size
 
     private class RecentPlayHolder {
         lateinit var playRecent: View
@@ -63,48 +64,36 @@ class RecentPlayAdapter internal constructor() : BaseAdapter() {
             cv = convertView
         }
 
-        val plyaItems = playList[position]
+        val playItems = playList[position]
 
         /* 팀 엠블럼*/
-        holder.myEmblem.setImageResource(plyaItems.emblemMy)
-        holder.otherEmblem.setImageResource(plyaItems.emblemVs)
+        holder.myEmblem.setImageResource(playItems.emblemMy)
+        holder.otherEmblem.setImageResource(playItems.emblemVs)
 
         /* 팀 스코어*/
-        holder.myScore.text = plyaItems.scoreMy
-        holder.otherScore.text = plyaItems.scoreVs
+        holder.myScore.text = playItems.scoreMy.toString()
+        holder.otherScore.text = playItems.scoreVs.toString()
 
         /* 경기일*/
-        holder.playDate.text = UiUtils.getDateToFull(plyaItems.playDate)
+        holder.playDate.text = UiUtils.getDateToFull(playItems.playDate)
 
         /* 경기결과 구분처리 (Bold)*/
-        if (plyaItems.playResult.equalsExt("w")) {
+        if (playItems.playResult.equalsExt(PrResultCode.WIN.codeAbbr)) {
             holder.myScore.setTypeface(null, Typeface.BOLD)
         }
-        if (plyaItems.playResult.equalsExt("l")) {
+        if (playItems.playResult.equalsExt(PrResultCode.LOSE.codeAbbr)) {
             holder.otherScore.setTypeface(null, Typeface.BOLD)
         }
 
         return cv
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItemId(position: Int) = position.toLong()
 
-    override fun getItem(position: Int): Any {
-        return playList[position]
-    }
+    override fun getItem(position: Int) = playList[position]
 
     /* 아이템 추가*/
-    internal fun addItem(playVersus: String, playResult: String, playDate: String, scoreMy: String, scoreVs: String, emblemMy: Int, emblemVs: Int) {
-        val item = PlayLists()
-        item.playVersus = playVersus
-        item.playResult = playResult
-        item.playDate = playDate
-        item.scoreMy = scoreMy
-        item.scoreVs = scoreVs
-        item.emblemMy = emblemMy
-        item.emblemVs = emblemVs
-        playList.add(item)
+    internal fun addItem(play: AdtPlayLists) {
+        playList.add(play)
     }
 }

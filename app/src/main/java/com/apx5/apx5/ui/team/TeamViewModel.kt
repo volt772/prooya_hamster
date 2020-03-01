@@ -14,7 +14,9 @@ import rx.schedulers.Schedulers
  * TeamViewModel
  */
 
-class TeamViewModel(application: Application) : BaseViewModel<TeamNavigator>(application) {
+class TeamViewModel(application: Application) :
+    BaseViewModel<TeamNavigator>(application) {
+
     private val rmts: RemoteService = remoteService
 
     /**

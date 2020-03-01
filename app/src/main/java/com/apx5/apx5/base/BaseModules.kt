@@ -11,6 +11,10 @@ import com.apx5.apx5.ui.team.TeamViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
+/**
+ * ViewModelModules
+ */
+
 val viewModelModule = module {
     viewModel { SplashViewModel(get()) }
     viewModel { TeamViewModel(get()) }
@@ -20,7 +24,6 @@ val viewModelModule = module {
     viewModel { RecordAllViewModel(get()) }
     viewModel { DaysViewModel(get()) }
     viewModel { SettingViewModel(get()) }
-
 }
 
 val appModules = listOf(viewModelModule)

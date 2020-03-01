@@ -10,8 +10,13 @@ import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordTeamBinding
-import com.apx5.apx5.db.entity.PrTeamEntity
+import com.apx5.apx5.datum.DtTeamRecord
+import com.apx5.apx5.datum.adapter.AdtDetailLists
+import com.apx5.apx5.datum.adapter.AdtTeamLists
+import com.apx5.apx5.remote.RemoteTeamDetail
+import com.apx5.apx5.remote.RemoteTeamSummary
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
@@ -23,7 +28,9 @@ import java.util.*
  * RecordTeamFragment
  */
 
-class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamViewModel>(), RecordTeamNavigator {
+class RecordTeamFragment :
+    BaseFragment<FragmentRecordTeamBinding, RecordTeamViewModel>(),
+    RecordTeamNavigator {
 
     private val recordTeamViewModel: RecordTeamViewModel by viewModel()
 
@@ -63,16 +70,14 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
     /* UI 초기화*/
     private fun initView() {
         /* 팀리스트*/
-        val teamList = getViewDataBinding().lvTeamLists
         recordTeamAdapter = RecordTeamAdapter(this)
-        teamList.adapter = recordTeamAdapter
+        binding().lvTeamLists.adapter = recordTeamAdapter
 
         /* 상세리스트*/
         recordDetailAdapter = RecordDetailAdapter(requireContext())
 
         /* 시즌변경 버튼*/
-        val seasonChange = getViewDataBinding().btChangeSeason
-        seasonChange.setOnClickListener {
+        binding().btChangeSeason.setOnClickListener {
             val seasonSelectDialog = SeasonSelectDialog.getInstance(this)
             seasonSelectDialog.show(childFragmentManager, "selectSeason")
         }
@@ -80,7 +85,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
 
     /* SpinKit 제거*/
     override fun cancelSpinKit() {
-        getViewDataBinding().skLoading.visibility = View.GONE
+        binding().skLoading.visibility = View.GONE
     }
 
     /* 시즌선택*/
@@ -89,27 +94,33 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
     }
 
     /* 상세정보 데이터*/
-    override fun getDetailLists(year: String, versus: String) {
+    override fun getDetailLists(year: Int, versus: String) {
         val email = PrefManager.getInstance(requireContext()).userEmail?: ""
 
         if (!email.equalsExt("")) {
-            getViewModel().getDetailList(email, versus, Integer.parseInt(year))
+            getViewModel().getDetailList(email, versus, year)
         }
     }
 
     /* 상세정보 Dialog*/
-    override fun showDetailLists(plays: List<HashMap<String, String>>) {
+    override fun showDetailLists(plays: List<RemoteTeamDetail>) {
         recordDetailAdapter.clearItems()
         if (plays.isNotEmpty()) {
             for (play in plays) {
-                val teamEmblem = getTeamEmblem(play["playVs"]?: "")
+                val teamEmblem = UiUtils.getDrawableByName(
+                    requireContext(),
+                    PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVs)
+                )
+
                 recordDetailAdapter.addItem(
-                    teamEmblem,
-                    play["ptGet"]?: "",
-                    play["ptLost"]?: "",
-                    play["playDate"]?: "",
-                    play["playResult"]?: "",
-                    play["playVs"]?: ""
+                    AdtDetailLists(
+                        emblemTeam = teamEmblem,
+                        ptGet = play.ptGet,
+                        ptLost = play.ptLost,
+                        playDate = play.playDate,
+                        playResult = play.playResult,
+                        playVs = play.playVs
+                    )
                 )
             }
 
@@ -132,30 +143,27 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
         }
     }
 
-    /* 팀 엠블럼*/
-    private fun getTeamEmblem(code: String): Int {
-        if (!code.equalsExt("")) {
-            return resources.getIdentifier(PrConstants.Teams.EMBLEM_PREFIX.plus(code), "drawable", activity!!.packageName)
-        }
-
-        return 0
-    }
-
     /* 팀 기록 리스트*/
-    override fun setTeamRecord(teams: List<PrTeamEntity>) {
+    override fun setTeamRecord(teams: List<DtTeamRecord>) {
         recordTeamAdapter.clearItems()
 
         recordTeamAdapter.addItem()
+
         for (team in teams) {
             if (teamCode != team.team) {
                 recordTeamAdapter.addItem(
-                    team.year,
-                    team.team,
-                    team.win,
-                    team.draw,
-                    team.lose,
-                    team.rate,
-                    getTeamEmblem(team.team)
+                    AdtTeamLists(
+                        year = team.year,
+                        team = team.team,
+                        win = team.win,
+                        draw = team.draw,
+                        lose = team.lose,
+                        rate = team.rate,
+                        teamEmblem = UiUtils.getDrawableByName(
+                            requireContext(),
+                            PrConstants.Teams.EMBLEM_PREFIX.plus(team.team)
+                        )
+                    )
                 )
             }
         }
@@ -164,16 +172,21 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
     }
 
     /* 상단 헤더 요약*/
-    override fun setHeaderSummary(summary: HashMap<String, Int>) {
-        val userSummary = String.format(Locale.getDefault(), resources.getString(R.string.w_d_l), summary["win"], summary["draw"], summary["lose"])
-        getViewDataBinding().tvSeasonStatic.text = userSummary
+    override fun setHeaderSummary(summary: RemoteTeamSummary) {
+        binding().tvSeasonStatic.text =
+            String.format(
+                Locale.getDefault(),
+                resources.getString(R.string.w_d_l), summary.win, summary.draw, summary.lose
+            )
 
-        val teamName = PrConstants.Teams.FULL[teamCode]
-        val teamEmblem = resources.getIdentifier(PrConstants.Teams.EMBLEM_PREFIX.plus(teamCode), "drawable", requireActivity().packageName)
-
-        getViewDataBinding().tvTeamName.text = teamName
-        getViewDataBinding().tvSeasonLabel.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), summary["year"])
-        getViewDataBinding().ivTeamEmblem.setImageResource(teamEmblem)
+        binding().tvTeamName.text = PrTeam.getTeamByCode(teamCode).fullName
+        binding().tvSeasonLabel.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), summary.year)
+        binding().ivTeamEmblem.setImageResource(
+            UiUtils.getDrawableByName(
+                requireContext(),
+                PrConstants.Teams.EMBLEM_PREFIX.plus(teamCode)
+            )
+        )
     }
 
     /* Observers*/
@@ -188,7 +201,6 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding, RecordTeamVie
     }
 
     companion object {
-
         fun newInstance(): RecordTeamFragment {
             val args = Bundle()
             val fragment = RecordTeamFragment()

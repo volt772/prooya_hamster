@@ -1,18 +1,18 @@
 package com.apx5.apx5.ui.recordteam
 
 
-import com.apx5.apx5.db.entity.PrTeamEntity
-
-import java.util.HashMap
+import com.apx5.apx5.datum.DtTeamRecord
+import com.apx5.apx5.remote.RemoteTeamDetail
+import com.apx5.apx5.remote.RemoteTeamSummary
 
 /**
  * RecordTeamNavigator
  */
 interface RecordTeamNavigator {
     fun selectSeasonYear(year: Int)
-    fun getDetailLists(year: String, versus: String)
-    fun showDetailLists(plays: List<HashMap<String, String>>)
-    fun setTeamRecord(teams: List<PrTeamEntity>)
-    fun setHeaderSummary(summary: HashMap<String, Int>)
+    fun getDetailLists(year: Int, versus: String)
+    fun showDetailLists(plays: List<RemoteTeamDetail>)
+    fun setTeamRecord(teams: List<DtTeamRecord>)
+    fun setHeaderSummary(summary: RemoteTeamSummary)
     fun cancelSpinKit()
 }

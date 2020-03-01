@@ -10,6 +10,7 @@ import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentSettingBinding
 import com.apx5.apx5.model.ResourceDelUser
 import com.apx5.apx5.storage.PrefManager
@@ -21,21 +22,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * SettingFragment
  */
-class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>(), SettingNavigator, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+class SettingFragment :
+    BaseFragment<FragmentSettingBinding, SettingViewModel>(),
+    SettingNavigator,
+    View.OnClickListener,
+    CompoundButton.OnCheckedChangeListener {
 
     private val settingViewModel: SettingViewModel by viewModel()
-
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_setting
-    }
-
+    override fun getLayoutId() = R.layout.fragment_setting
+    override fun getBindingVariable() = BR.viewModel
     override fun getViewModel(): SettingViewModel {
         settingViewModel.setNavigator(this)
         return settingViewModel
-    }
-
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,16 +44,18 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>()
 
     /* UI 초기화*/
     private fun initView() {
-        val viewTeam = getViewDataBinding().tvTeam
-        val viewNoti = getViewDataBinding().swtNoti
-        val viewVersion = getViewDataBinding().tvVersion
-        val viewChangeTeam = getViewDataBinding().lytChangeTeam
-        val viewDelUser = getViewDataBinding().lytDelUser
-        val viewLicense = getViewDataBinding().lytLicense
+        val viewTeam = binding().tvTeam
+        val viewNoti = binding().swtNoti
+        val viewVersion = binding().tvVersion
+        val viewChangeTeam = binding().lytChangeTeam
+        val viewDelUser = binding().lytDelUser
+        val viewLicense = binding().lytLicense
 
         /* 팀명*/
         val teamCode = PrefManager.getInstance(requireContext()).getString(PrPrefKeys.MYTEAM, "")
-        viewTeam.text = PrConstants.Teams.FULL[teamCode]
+        teamCode?.let { code ->
+            viewTeam.text = PrTeam.getTeamByCode(code).fullName
+        }
 
         /* 버전*/
         try {
@@ -132,7 +132,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>()
     }
 
     companion object {
-
         fun newInstance(): SettingFragment {
             val args = Bundle()
             val fragment = SettingFragment()

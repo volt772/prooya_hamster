@@ -44,7 +44,9 @@ class PrefManager private constructor(ctx: Context) {
         val dir = File(context.filesDir.parent + "/shared_prefs/")
         val children = dir.list()
         for (child in children) {
-            context.getSharedPreferences(child.replace(".xml", ""), Context.MODE_PRIVATE).edit().clear().commit()
+            context.getSharedPreferences(
+                child.replace(".xml", ""),
+                Context.MODE_PRIVATE).edit().clear().commit()
             File(dir, child).delete()
         }
     }

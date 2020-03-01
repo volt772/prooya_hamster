@@ -14,13 +14,17 @@ import rx.schedulers.Schedulers
  * TemplatesViewModel
  */
 
-class SplashViewModel(application: Application) : BaseViewModel<SplashNavigator>(application) {
+class SplashViewModel(application: Application) :
+    BaseViewModel<SplashNavigator>(application) {
+
     private val rmts: RemoteService = remoteService
 
     /* 화면 표기 및 사용검사*/
     internal fun startSeeding() {
         val SPLASH_DISPLAY_LENGTH = 1000
-        Handler().postDelayed({ checkAccountAndDecideNextActivity() }, SPLASH_DISPLAY_LENGTH.toLong())
+        Handler().postDelayed({
+            checkAccountAndDecideNextActivity()
+        }, SPLASH_DISPLAY_LENGTH.toLong())
     }
 
     /* Next Activity 검사*/

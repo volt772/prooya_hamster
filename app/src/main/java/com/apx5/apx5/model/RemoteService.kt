@@ -1,9 +1,9 @@
 package com.apx5.apx5.model
 
+import com.apx5.apx5.remote.*
 import retrofit2.http.Body
 import retrofit2.http.POST
 import rx.Observable
-import java.util.*
 
 /**
  * RemoteService
@@ -60,7 +60,10 @@ interface RemoteService {
 
     /* Object - 사용자 등록*/
     class PostUser(val res: UserItem) {
-        inner class UserItem(val id: Int, val team: String)
+        inner class UserItem(
+            val id: Int,
+            val team: String
+        )
     }
 
     /* Object - 사용자 삭제*/
@@ -71,44 +74,30 @@ interface RemoteService {
 
     /* Object - 요약데이터*/
     class Statics(val res: StaticsItem) {
-        inner class StaticsItem(
-            var allStatics: HashMap<String, Int>,
-            var seasonStatics: HashMap<String, Int>,
-            var recentPlays: List<HashMap<String, String>>)
+        inner class StaticsItem (
+            var allStatics: RemoteAllStatics,
+            var seasonStatics: RemoteSeasonStatics,
+            var recentPlays: List<RemoteRecentPlay>
+        )
     }
 
     /* Object - 요약데이터*/
     class TeamsSummary(val res: TeamsSummaryItem) {
-
         inner class TeamsSummaryItem(
-                var teams: List<HashMap<String, String>>,
-                var summary: HashMap<String, Int>)
+            var teams: List<RemoteTeamRecords>,
+            var summary: RemoteTeamSummary
+        )
     }
 
     /* Object - 오늘 내팀 경기*/
-    class Plays(val res: PlayItem)
-
-    class PlayItem(
-        val awayscore: Int,
-        val awayteam: String,
-        val homescore: Int,
-        val hometeam: String,
-        val stadium: String,
-        val id: Int,
-        val starttime: Int,
-        val playdate: Int
-    )
+    class Plays(val res: List<RemoteDailyPlay>)
 
     /* Object - 새경기저장*/
     class NewPlay(val res: Int)
 
     /* Object - 기록 상세*/
-    class TeamDetail(val res: TeamDetailItem)
-
-    class TeamDetailItem(var plays: List<HashMap<String, String>>)
+    class TeamDetail(val plays: List<RemoteTeamDetail>)
 
     /* Object - 기록 전체*/
-    class Histories(val res: HistoryItems)
-
-    class HistoryItems(var histories: List<HashMap<String, String>>)
+    class Histories(val histories: List<RemoteHistories>)
 }
