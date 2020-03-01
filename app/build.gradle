@@ -11,8 +11,8 @@ android {
         applicationId 'com.apx5.apx4'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 20
-        versionName "52.1903.06"
+        versionCode 21
+        versionName "52.2002.01"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
