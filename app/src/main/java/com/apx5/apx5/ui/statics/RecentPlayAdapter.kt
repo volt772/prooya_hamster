@@ -19,7 +19,9 @@ import kotlinx.android.synthetic.main.item_plays.view.*
  * RecentPlayAdapter
  */
 
-class RecentPlayAdapter internal constructor() : BaseAdapter() {
+class RecentPlayAdapter internal constructor() :
+    BaseAdapter() {
+
     private val playList = mutableListOf<AdtPlayLists>()
 
     internal fun clearItems() {
@@ -27,9 +29,7 @@ class RecentPlayAdapter internal constructor() : BaseAdapter() {
         notifyDataSetChanged()
     }
 
-    override fun getCount(): Int {
-        return playList.size
-    }
+    override fun getCount() = playList.size
 
     private class RecentPlayHolder {
         lateinit var playRecent: View
@@ -88,13 +88,9 @@ class RecentPlayAdapter internal constructor() : BaseAdapter() {
         return cv
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItemId(position: Int) = position.toLong()
 
-    override fun getItem(position: Int): Any {
-        return playList[position]
-    }
+    override fun getItem(position: Int) = playList[position]
 
     /* 아이템 추가*/
     internal fun addItem(play: AdtPlayLists) {

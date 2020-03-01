@@ -19,7 +19,10 @@ import kotlinx.android.synthetic.main.item_plays_all.view.*
  * RecordAllAdapter
  */
 
-class RecordAllAdapter internal constructor(private val ctx: Context, private val nav: RecordAllNavigator) : BaseAdapter() {
+class RecordAllAdapter internal constructor(
+    private val ctx: Context,
+    private val nav: RecordAllNavigator
+) : BaseAdapter() {
 
     private val playList = mutableListOf<AdtPlayLists>()
 
@@ -28,9 +31,7 @@ class RecordAllAdapter internal constructor(private val ctx: Context, private va
         notifyDataSetChanged()
     }
 
-    override fun getCount(): Int {
-        return playList.size
-    }
+    override fun getCount() = playList.size
 
     private class RecordAllHolder {
         lateinit var recordAll: View
@@ -99,13 +100,9 @@ class RecordAllAdapter internal constructor(private val ctx: Context, private va
         return cv
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItemId(position: Int) = position.toLong()
 
-    override fun getItem(position: Int): Any {
-        return playList[position]
-    }
+    override fun getItem(position: Int) = playList[position]
 
     /* 아이템 추가*/
     internal fun addItem(play: AdtPlayLists) {

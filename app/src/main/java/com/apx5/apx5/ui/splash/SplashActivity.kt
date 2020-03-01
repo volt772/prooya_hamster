@@ -17,21 +17,17 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * SplashActivity
  */
 
-class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(), SplashNavigator {
+class SplashActivity :
+    BaseActivity<ActivitySplashBinding, SplashViewModel>(),
+    SplashNavigator {
 
     private val splashViewModel: SplashViewModel by viewModel()
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_splash
-    }
-
+    override fun getLayoutId() = R.layout.activity_splash
+    override fun getBindingVariable() = BR.viewModel
     override fun getViewModel(): SplashViewModel {
         splashViewModel.setNavigator(this)
         return splashViewModel
-    }
-
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,7 +74,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(), S
     private fun initComponent() {
         /* 상단상태바 색상강제적용*/
         MaterialTools.setSystemBarColor(this, R.color.p_navy_10)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
     }
 
     /* APP 종료*/

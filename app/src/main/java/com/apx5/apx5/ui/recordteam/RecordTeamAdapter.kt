@@ -16,9 +16,11 @@ import kotlinx.android.synthetic.main.item_team_record.view.*
  * RecordTeamAdapter
  */
 
-class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigator) : BaseAdapter() {
+class RecordTeamAdapter internal constructor(
+    private val nav: RecordTeamNavigator
+) : BaseAdapter() {
+
     private val teamList = mutableListOf<AdtTeamLists>()
-    private val prefix = "FIELD"
 
     /* 리스트 초기화*/
     internal fun clearItems() {
@@ -26,9 +28,7 @@ class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigato
         notifyDataSetChanged()
     }
 
-    override fun getCount(): Int {
-        return teamList.size
-    }
+    override fun getCount() = teamList.size
 
     private class RecordTeamHolder {
         lateinit var recordList: View
@@ -100,13 +100,9 @@ class RecordTeamAdapter internal constructor(private val nav: RecordTeamNavigato
         return cv
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItemId(position: Int) = position.toLong()
 
-    override fun getItem(position: Int): Any {
-        return teamList[position]
-    }
+    override fun getItem(position: Int) = teamList[position]
 
     /* 아이템 추가*/
     internal fun addItem(recordItem: AdtTeamLists) {

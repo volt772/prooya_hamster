@@ -18,21 +18,10 @@ object MaterialTools {
     }
 
     fun displayImageRound(ctx: Context, img: ImageView, @DrawableRes drawable: Int) {
-        Glide.with(ctx)
-                .load(drawable)
-                .apply(RequestOptions.circleCropTransform())
-                .into(img)
-//        try {
-//            Glide.with(ctx).load(drawable).asBitmap().centerCrop().into(object : BitmapImageViewTarget(img) {
-//                override fun setResource(resource: Bitmap) {
-//                    val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(ctx.resources, resource)
-//                    circularBitmapDrawable.isCircular = true
-//                    img.setImageDrawable(circularBitmapDrawable)
-//                }
-//            })
-//        } catch (e: Exception) {
-//        }
-
+        Glide
+            .with(ctx)
+            .load(drawable)
+            .apply(RequestOptions.circleCropTransform())
+            .into(img)
     }
-
 }

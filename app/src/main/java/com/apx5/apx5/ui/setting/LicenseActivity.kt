@@ -16,7 +16,8 @@ import java.io.IOException
  * LicenseActivity
  */
 
-class LicenseActivity : AppCompatActivity() {
+class LicenseActivity :
+    AppCompatActivity() {
 
     /* 라이센스 데이터 조합 (이름 / 내용)*/
     private val licenseData: List<AdtLicenseLists>
@@ -80,9 +81,6 @@ class LicenseActivity : AppCompatActivity() {
     }
 
     companion object {
-
-        fun newIntent(context: Context): Intent {
-            return Intent(context, LicenseActivity::class.java)
-        }
+        fun newIntent(context: Context) = Intent(context, LicenseActivity::class.java)
     }
 }

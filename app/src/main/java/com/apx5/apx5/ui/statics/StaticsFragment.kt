@@ -20,21 +20,17 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * StaticsFragment
  */
 
-class StaticsFragment : BaseFragment<FragmentStaticsBinding, StaticsViewModel>(), StaticsNavigator {
+class StaticsFragment :
+    BaseFragment<FragmentStaticsBinding, StaticsViewModel>(),
+    StaticsNavigator {
 
     private val staticsViewModel: StaticsViewModel by viewModel()
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_statics
-    }
-
+    override fun getLayoutId() = R.layout.fragment_statics
+    override fun getBindingVariable() = BR.viewModel
     override fun getViewModel(): StaticsViewModel {
         staticsViewModel.setNavigator(this)
         return staticsViewModel
-    }
-
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
     }
 
     private lateinit var recentPlayAdapter: RecentPlayAdapter
@@ -104,7 +100,6 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding, StaticsViewModel>()
     }
 
     companion object {
-
         fun newInstance(): StaticsFragment {
             val args = Bundle()
             val fragment = StaticsFragment()

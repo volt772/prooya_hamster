@@ -17,7 +17,9 @@ import java.util.*
  * RecordTeamViewModel
  */
 
-class RecordTeamViewModel(application: Application) : BaseViewModel<RecordTeamNavigator>(application) {
+class RecordTeamViewModel(application: Application) :
+    BaseViewModel<RecordTeamNavigator>(application) {
+
     private val rmts: RemoteService = remoteService
 
     /* 팀 상세 데이터*/

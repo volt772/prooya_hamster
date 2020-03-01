@@ -1,8 +1,9 @@
 package com.apx5.apx5.remote
 
 /**
- * Response - 일일경기
- * @desc TAB 4
+ * Response
+ * @desc Tab : 4
+ * @desc 일일경기
  */
 
 data class RemoteDailyPlay (

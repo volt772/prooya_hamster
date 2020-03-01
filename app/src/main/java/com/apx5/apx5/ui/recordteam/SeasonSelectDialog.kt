@@ -13,9 +13,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
  * SeasonSelectDialog
  */
 
-class SeasonSelectDialog : BottomSheetDialogFragment(), View.OnClickListener {
+class SeasonSelectDialog :
+    BottomSheetDialogFragment(),
+    View.OnClickListener {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
         val view = inflater.inflate(R.layout.dialog_season_select, container, false)
 
         val season17 = view.findViewById<LinearLayout>(R.id.lv_2017)
@@ -30,14 +37,13 @@ class SeasonSelectDialog : BottomSheetDialogFragment(), View.OnClickListener {
         return view
     }
 
-
     override fun onClick(view: View) {
-        var searchYear = 2019
-        when (view.id) {
-            R.id.lv_2017 -> searchYear = 2017
-            R.id.lv_2018 -> searchYear = 2018
-            R.id.lv_2019 -> searchYear = 2019
-            R.id.lv_2020 -> searchYear = 2020
+        val searchYear = when (view.id) {
+            R.id.lv_2017 -> 2017
+            R.id.lv_2018 -> 2018
+            R.id.lv_2019 -> 2019
+            R.id.lv_2020 -> 2020
+            else -> 2020
         }
 
         recordNavigator?.selectSeasonYear(searchYear)
@@ -45,7 +51,6 @@ class SeasonSelectDialog : BottomSheetDialogFragment(), View.OnClickListener {
     }
 
     companion object {
-
         private var recordNavigator: RecordTeamNavigator? = null
 
         fun getInstance(navigator: RecordTeamNavigator): SeasonSelectDialog {

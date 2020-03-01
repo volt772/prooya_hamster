@@ -1,8 +1,9 @@
 package com.apx5.apx5.remote
 
 /**
- * Response - 팀기록
- * @desc TAB 2
+ * Response
+ * @desc Tab : 2
+ * @desc 팀기록
  */
 
 data class RemoteTeamRecords(

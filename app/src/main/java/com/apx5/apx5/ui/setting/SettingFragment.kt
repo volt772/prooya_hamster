@@ -22,21 +22,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * SettingFragment
  */
-class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>(), SettingNavigator, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+class SettingFragment :
+    BaseFragment<FragmentSettingBinding, SettingViewModel>(),
+    SettingNavigator,
+    View.OnClickListener,
+    CompoundButton.OnCheckedChangeListener {
 
     private val settingViewModel: SettingViewModel by viewModel()
-
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_setting
-    }
-
+    override fun getLayoutId() = R.layout.fragment_setting
+    override fun getBindingVariable() = BR.viewModel
     override fun getViewModel(): SettingViewModel {
         settingViewModel.setNavigator(this)
         return settingViewModel
-    }
-
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -135,7 +132,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>()
     }
 
     companion object {
-
         fun newInstance(): SettingFragment {
             val args = Bundle()
             val fragment = SettingFragment()

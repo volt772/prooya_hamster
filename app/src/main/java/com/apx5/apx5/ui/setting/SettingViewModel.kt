@@ -14,7 +14,9 @@ import rx.schedulers.Schedulers
  * SettingViewModel
  */
 
-class SettingViewModel(application: Application) : BaseViewModel<SettingNavigator>(application) {
+class SettingViewModel(application: Application) :
+    BaseViewModel<SettingNavigator>(application) {
+
     private val rmts: RemoteService = remoteService
 
     /* 사용자 삭제 (Remote)*/

@@ -12,7 +12,10 @@ import kotlinx.android.synthetic.main.item_license.view.*
  * LicenseListAdapter
  */
 
-class LicenseListAdapter internal constructor(private val license: List<AdtLicenseLists>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class LicenseListAdapter internal constructor(
+    private val license: List<AdtLicenseLists>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     inner class LicenseHolder internal constructor(v: View) : RecyclerView.ViewHolder(v) {
         val name = v.tv_license_name
         val content = v.tv_license_content
@@ -34,7 +37,5 @@ class LicenseListAdapter internal constructor(private val license: List<AdtLicen
         }
     }
 
-    override fun getItemCount(): Int {
-        return license.size
-    }
+    override fun getItemCount() = license.size
 }

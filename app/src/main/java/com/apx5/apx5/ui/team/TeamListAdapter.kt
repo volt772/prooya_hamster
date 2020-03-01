@@ -15,21 +15,16 @@ import kotlinx.android.synthetic.main.item_team.view.*
  * TeamListAdapter
  */
 
-class TeamListAdapter internal constructor(private val ctx: Context, private val nav: TeamNavigator) : BaseAdapter() {
+class TeamListAdapter internal constructor(
+    private val ctx: Context,
+    private val nav: TeamNavigator
+) : BaseAdapter() {
+
     private val teamList = mutableListOf<TeamList>()
 
-    override fun getCount(): Int {
-        return teamList.size
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getItem(position: Int): Any {
-        return teamList[position]
-    }
-
+    override fun getCount() = teamList.size
+    override fun getItemId(position: Int) = position.toLong()
+    override fun getItem(position: Int) = teamList[position]
 
     private class TeamHolder {
         lateinit var lytParent: View

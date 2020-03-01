@@ -1,8 +1,9 @@
 package com.apx5.apx5.remote
 
 /**
- * Response - 팀상세 전적
- * @desc TAB 2
+ * Response
+ * @desc Tab : 2
+ * @desc 팀상세전적
  */
 
 data class RemoteTeamDetail (

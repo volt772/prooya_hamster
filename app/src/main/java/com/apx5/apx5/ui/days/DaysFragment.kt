@@ -22,7 +22,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * DaysFragment
  */
 
-class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNavigator {
+class DaysFragment :
+    BaseFragment<FragmentDaysBinding, DaysViewModel>(),
+    DaysNavigator {
 
     private var email: String = ""
     private var teamCode: String = ""
@@ -32,18 +34,11 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
     private val calListener = DaysCalendar.datePickerListener(searchPlay = ::searchPlayByDate)
 
     private val dv: DaysViewModel by viewModel()
-
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_days
-    }
-
+    override fun getLayoutId() = R.layout.fragment_days
+    override fun getBindingVariable() = BR.viewModel
     override fun getViewModel(): DaysViewModel {
         dv.setNavigator(this)
         return dv
-    }
-
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,7 +63,6 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
         val dailyGame = dv.dailyGame
         val gameResult = getPlayResultByTeamSide()
         val myTeamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
-
 
         getViewModel().saveNewPlay(
             ResourcePostPlay(
@@ -178,7 +172,8 @@ class DaysFragment : BaseFragment<FragmentDaysBinding, DaysViewModel>(), DaysNav
 
     /* 저장버튼노출 (경기종료시에만 저장)*/
     private fun showSaveButton(playStatus: Int) {
-        binding().btSavePlay.visibility = CommonUtils.setVisibility(playStatus == PrResultCode.FINE.code)
+        binding().btSavePlay.visibility =
+            CommonUtils.setVisibility(playStatus == PrResultCode.FINE.code)
     }
 
     /* 스코어 보드*/

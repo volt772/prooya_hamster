@@ -1,5 +1,11 @@
 package com.apx5.apx5.model
 
+/**
+ * Data Class
+ * @desc Tab : 4
+ * @desc 신규경기저장
+ */
+
 class ResourcePostPlay(
     val result: String,
     val year: String,

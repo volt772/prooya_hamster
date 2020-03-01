@@ -23,11 +23,12 @@ class RemoteApplication {
             val client = OkHttpClient.Builder().addInterceptor(logging).build()
 
             val retrofit = Retrofit.Builder()
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .baseUrl(PrConstants.App.FLK_HOST)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(client)
-                    .build()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(PrConstants.App.FLK_HOST)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+
             return retrofit.create(RemoteService::class.java)
         }
 }

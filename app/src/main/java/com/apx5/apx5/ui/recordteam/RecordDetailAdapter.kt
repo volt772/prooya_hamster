@@ -18,7 +18,10 @@ import kotlinx.android.synthetic.main.item_record_detail.view.*
  * RecordDetailAdapter
  */
 
-class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseAdapter() {
+class RecordDetailAdapter internal constructor(
+    private val ctx: Context
+) : BaseAdapter() {
+
     private val detailList = mutableListOf<AdtDetailLists>()
 
     /* 리스트 초기화*/
@@ -27,9 +30,7 @@ class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseA
         notifyDataSetChanged()
     }
 
-    override fun getCount(): Int {
-        return detailList.size
-    }
+    override fun getCount() = detailList.size
 
     private class RecordDetailHolder {
         lateinit var detailList: View
@@ -86,13 +87,9 @@ class RecordDetailAdapter internal constructor(private val ctx: Context) : BaseA
         return cv
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItemId(position: Int) = position.toLong()
 
-    override fun getItem(position: Int): Any {
-        return detailList[position]
-    }
+    override fun getItem(position: Int) = detailList[position]
 
     /* 아이템 추가*/
     internal fun addItem(details: AdtDetailLists) {

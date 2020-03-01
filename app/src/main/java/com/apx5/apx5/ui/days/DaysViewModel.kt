@@ -22,7 +22,9 @@ import java.util.*
  * DaysViewModel
  */
 
-class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(application) {
+class DaysViewModel(application: Application) :
+    BaseViewModel<DaysNavigator>(application) {
+
     var awayTeam = ObservableField<String>()
     var homeTeam = ObservableField<String>()
     var gameStatus = ObservableField<String>()
@@ -105,7 +107,9 @@ class DaysViewModel(application: Application) : BaseViewModel<DaysNavigator>(app
                 getNavigator()?.cancelSpinKit()
             }
 
-            override fun onError(e: Throwable) { }
+            override fun onError(e: Throwable) {
+                getNavigator()?.cancelSpinKit()
+            }
 
             override fun onNext(play: RemoteService.Plays) {
                 makePlayBoard(play.res)

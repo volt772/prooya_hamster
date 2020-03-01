@@ -1,8 +1,9 @@
 package com.apx5.apx5.remote
 
 /**
- * Response - 기록전체
- * @desc TAB 3
+ * Response
+ * @desc Tab : 3
+ * @desc 기록전체
  */
 
 data class RemoteHistories (

@@ -5,41 +5,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
+import com.apx5.apx5.constants.PrTabMenu
 import com.apx5.apx5.databinding.ActivityDashboardBinding
 import com.apx5.apx5.storage.PrefManager
-import com.apx5.apx5.ui.days.DaysFragment
-import com.apx5.apx5.ui.recordall.RecordAllFragment
-import com.apx5.apx5.ui.recordteam.RecordTeamFragment
-import com.apx5.apx5.ui.setting.SettingFragment
-import com.apx5.apx5.ui.statics.StaticsFragment
 import com.apx5.apx5.ui.team.TeamActivity
 import com.apx5.apx5.ui.utils.MaterialTools
 import com.apx5.apx5.utils.equalsExt
-import com.google.android.material.tabs.TabLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * DashBoardActivity
  */
 
-class DashBoardActivity : BaseActivity<ActivityDashboardBinding, DashBoardViewModel>() {
+class DashBoardActivity :
+    BaseActivity<ActivityDashboardBinding, DashBoardViewModel>() {
+
     private val dashBoardViewModel: DashBoardViewModel by viewModel()
-
-    override fun getLayoutId(): Int {
-        return R.layout.activity_dashboard
-    }
-
-    override fun getViewModel(): DashBoardViewModel {
-        return dashBoardViewModel
-    }
-
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
-    }
+    override fun getLayoutId() = R.layout.activity_dashboard
+    override fun getViewModel() = dashBoardViewModel
+    override fun getBindingVariable() = BR.viewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,26 +80,17 @@ class DashBoardActivity : BaseActivity<ActivityDashboardBinding, DashBoardViewMo
      * @param tab TabLayout
      * @return
      */
-    private fun onTabClicked(tab: TabLayout.Tab) {
-        switchPage(tab.position)
+    private fun onTabClicked(tab: PrTabMenu) {
+        switchPage(tab)
     }
 
     /**
      * 페이지 변경
-     * @param pos 탭번호
+     * @param tab PrTabMenu
      */
-    private fun switchPage(pos: Int) {
-        val selectedFragment: Fragment = when (pos) {
-            0 -> StaticsFragment.newInstance()
-            1 -> RecordTeamFragment.newInstance()
-            2 -> RecordAllFragment.newInstance()
-            3 -> DaysFragment.newInstance()
-            4 -> SettingFragment.newInstance()
-            else -> StaticsFragment.newInstance()
-        }
-
+    private fun switchPage(tab: PrTabMenu) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_layout, selectedFragment)
+        transaction.replace(R.id.frame_layout, tab.fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
@@ -132,8 +110,6 @@ class DashBoardActivity : BaseActivity<ActivityDashboardBinding, DashBoardViewMo
     }
 
     companion object {
-        fun newIntent(context: Context): Intent {
-            return Intent(context, DashBoardActivity::class.java)
-        }
+        fun newIntent(context: Context) = Intent(context, DashBoardActivity::class.java)
     }
 }

@@ -21,24 +21,20 @@ import java.util.*
  * TeamActivity
  */
 
-class TeamActivity : BaseActivity<ActivityTeamBinding, TeamViewModel>(), TeamNavigator {
+class TeamActivity :
+    BaseActivity<ActivityTeamBinding, TeamViewModel>(),
+    TeamNavigator {
 
     private lateinit var teamListAdapter: TeamListAdapter
 
     private val teamViewModel: TeamViewModel by viewModel()
-
-    override fun getLayoutId(): Int {
-        return R.layout.activity_team
-    }
-
+    override fun getLayoutId() = R.layout.activity_team
+    override fun getBindingVariable() = BR.viewModel
     override fun getViewModel(): TeamViewModel {
         teamViewModel.setNavigator(this)
         return teamViewModel
     }
 
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +79,7 @@ class TeamActivity : BaseActivity<ActivityTeamBinding, TeamViewModel>(), TeamNav
     }
 
     /* 팀리스트 생성*/
-    fun setTeamList(ctx: Context) {
+    private fun setTeamList(ctx: Context) {
         val items = ArrayList<TeamList>()
         val teamEmblemArr = ctx.resources.obtainTypedArray(R.array.team_images)
         val teamNameArr = ctx.resources.getStringArray(R.array.team_name)
@@ -124,8 +120,6 @@ class TeamActivity : BaseActivity<ActivityTeamBinding, TeamViewModel>(), TeamNav
     }
 
     companion object {
-        fun newIntent(context: Context): Intent {
-            return Intent(context, TeamActivity::class.java)
-        }
+        fun newIntent(context: Context) = Intent(context, TeamActivity::class.java)
     }
 }

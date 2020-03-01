@@ -1,7 +1,11 @@
 package com.apx5.apx5.model
 
 /**
- * ResourcePostUser
+ * Resource Class
+ * @desc Tab : 5
+ * @desc 사용자삭제
  */
 
-class ResourceDelUser(private val pid: String)
+class ResourceDelUser(
+    private val pid: String
+)

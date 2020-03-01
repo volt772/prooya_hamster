@@ -1,5 +1,11 @@
 package com.apx5.apx5.remote
 
+/**
+ * Response
+ * @desc Tab : 1
+ * @desc 통계데이터 > 최근경기
+ */
+
 data class RemoteRecentPlay (
     val playDate: String,
     val playId: Int,

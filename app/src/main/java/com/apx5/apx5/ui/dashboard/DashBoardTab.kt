@@ -23,8 +23,8 @@ class DashBoardTab {
         fun tabLayout(
             context: Context,
             layout: TabLayout,
-            switchPage:(Int) -> Unit,
-            tabClicked:(TabLayout.Tab) -> Unit
+            switchPage:(PrTabMenu) -> Unit,
+            tabClicked:(PrTabMenu) -> Unit
         ) {
             val appContext = context.applicationContext
             layout.run {
@@ -42,7 +42,7 @@ class DashBoardTab {
                     )
                 }
 
-                switchPage(0)
+                switchPage(PrTabMenu.STATICS)
 
                 addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                     override fun onTabSelected(tab: TabLayout.Tab) {
@@ -50,7 +50,7 @@ class DashBoardTab {
                             ContextCompat.getColor(appContext, R.color.red_85),
                             PorterDuff.Mode.SRC_IN
                         )
-                        tabClicked(tab)
+                        tabClicked(PrTabMenu.getTabByOrder(tab.position))
                     }
 
                     override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -60,7 +60,9 @@ class DashBoardTab {
                         )
                     }
 
-                    override fun onTabReselected(tab: TabLayout.Tab) { tabClicked(tab) }
+                    override fun onTabReselected(tab: TabLayout.Tab) {
+                        tabClicked(PrTabMenu.getTabByOrder(tab.position))
+                    }
                 })
             }
         }

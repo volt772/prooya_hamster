@@ -22,7 +22,8 @@ import java.util.*
  * StaticsViewModel
  */
 
-class StaticsViewModel(application: Application) : BaseViewModel<StaticsNavigator>(application) {
+class StaticsViewModel(application: Application) :
+    BaseViewModel<StaticsNavigator>(application) {
 
     private val rmts: RemoteService = remoteService
     var seasonRate = ObservableField<String>()

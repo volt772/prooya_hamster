@@ -54,7 +54,6 @@ class UiUtils {
             return if (dateString.equalsExt("")) {
                 ""
             } else dateString.substring(0, 4)
-
         }
 
         /**

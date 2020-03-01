@@ -23,20 +23,17 @@ import java.util.*
  * RecordAllFragment
  */
 
-class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewModel>(), RecordAllNavigator {
+class RecordAllFragment :
+    BaseFragment<FragmentRecordAllBinding, RecordAllViewModel>(),
+    RecordAllNavigator {
+
     private val recordAllViewModel: RecordAllViewModel by viewModel()
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_record_all
-    }
-
+    override fun getLayoutId() = R.layout.fragment_record_all
+    override fun getBindingVariable() = BR.viewModel
     override fun getViewModel(): RecordAllViewModel {
         recordAllViewModel.setNavigator(this)
         return recordAllViewModel
-    }
-
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
     }
 
     private lateinit var recordAdapter: RecordAllAdapter
@@ -145,7 +142,6 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding, RecordAllViewMo
     }
 
     companion object {
-
         fun newInstance(): RecordAllFragment {
             val args = Bundle()
             val fragment = RecordAllFragment()

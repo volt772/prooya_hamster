@@ -60,7 +60,10 @@ interface RemoteService {
 
     /* Object - 사용자 등록*/
     class PostUser(val res: UserItem) {
-        inner class UserItem(val id: Int, val team: String)
+        inner class UserItem(
+            val id: Int,
+            val team: String
+        )
     }
 
     /* Object - 사용자 삭제*/
@@ -71,17 +74,19 @@ interface RemoteService {
 
     /* Object - 요약데이터*/
     class Statics(val res: StaticsItem) {
-        inner class StaticsItem(
+        inner class StaticsItem (
             var allStatics: RemoteAllStatics,
             var seasonStatics: RemoteSeasonStatics,
-            var recentPlays: List<RemoteRecentPlay>)
+            var recentPlays: List<RemoteRecentPlay>
+        )
     }
 
     /* Object - 요약데이터*/
     class TeamsSummary(val res: TeamsSummaryItem) {
         inner class TeamsSummaryItem(
             var teams: List<RemoteTeamRecords>,
-            var summary: RemoteTeamSummary)
+            var summary: RemoteTeamSummary
+        )
     }
 
     /* Object - 오늘 내팀 경기*/

@@ -16,7 +16,9 @@ import java.util.*
  * RecordAllViewModel
  */
 
-class RecordAllViewModel(application: Application) : BaseViewModel<RecordAllNavigator>(application) {
+class RecordAllViewModel(application: Application) :
+    BaseViewModel<RecordAllNavigator>(application) {
+
     private val rmts: RemoteService = remoteService
 
     /* 기록 삭제*/
