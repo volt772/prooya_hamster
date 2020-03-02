@@ -38,7 +38,7 @@ class TeamViewModel(application: Application) :
 
                         override fun onNext(user: RemoteService.PostUser) {
                             /* 저장 후, 로컬 팀코드 저장*/
-                            getNavigator()?.switchToDashBoard()
+                            getNavigator()?.switchPageBySelectType()
                         }
                     })
         } else {

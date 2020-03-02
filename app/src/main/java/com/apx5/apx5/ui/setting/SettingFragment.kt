@@ -11,6 +11,7 @@ import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrPrefKeys
 import com.apx5.apx5.constants.PrTeam
+import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.FragmentSettingBinding
 import com.apx5.apx5.model.ResourceDelUser
 import com.apx5.apx5.storage.PrefManager
@@ -96,7 +97,7 @@ class SettingFragment :
             R.id.lyt_change_team -> {
                 /* 팀변경*/
                 val intentTeam = TeamActivity.newIntent(requireContext())
-                intentTeam.putExtra("mode", "replaceTeam")
+                intentTeam.putExtra(PrConstants.Teams.TEAM_CHANGE_MODE, PrTeamChangeMode.CHANGE)
                 startActivity(intentTeam)
             }
             R.id.lyt_del_user ->

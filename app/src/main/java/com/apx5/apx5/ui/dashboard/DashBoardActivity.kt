@@ -8,7 +8,9 @@ import android.view.MenuItem
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
+import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrTabMenu
+import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.ActivityDashboardBinding
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.team.TeamActivity
@@ -42,6 +44,7 @@ class DashBoardActivity :
         val team = PrefManager.getInstance(this).userTeam
         if (team.equalsExt("")) {
             val intentTeam = TeamActivity.newIntent(this)
+            intentTeam.putExtra(PrConstants.Teams.TEAM_CHANGE_MODE, PrTeamChangeMode.APPLY)
             startActivity(intentTeam)
             finish()
         }

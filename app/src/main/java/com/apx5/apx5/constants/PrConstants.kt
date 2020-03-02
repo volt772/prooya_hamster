@@ -21,5 +21,6 @@ object PrConstants {
 
     object Teams {
         const val EMBLEM_PREFIX = "ic_team_"
+        const val TEAM_CHANGE_MODE = "team_change_mode"
     }
 }

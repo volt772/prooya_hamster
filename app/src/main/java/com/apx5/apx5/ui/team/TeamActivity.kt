@@ -8,7 +8,9 @@ import androidx.core.content.ContextCompat
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
+import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.ActivityTeamBinding
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dashboard.DashBoardActivity
@@ -25,6 +27,7 @@ class TeamActivity :
     BaseActivity<ActivityTeamBinding, TeamViewModel>(),
     TeamNavigator {
 
+    private var teamSelectMode: PrTeamChangeMode?= null
     private lateinit var teamListAdapter: TeamListAdapter
 
     private val teamViewModel: TeamViewModel by viewModel()
@@ -38,6 +41,10 @@ class TeamActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        with(intent) {
+            teamSelectMode = getSerializableExtra(PrConstants.Teams.TEAM_CHANGE_MODE) as PrTeamChangeMode?
+        }
 
         initToolbar()
         initComponent()
@@ -100,17 +107,29 @@ class TeamActivity :
         teamListAdapter.addItem(items)
     }
 
-    /* DashBoard*/
-    override fun switchToDashBoard() {
-        val intentStatics = DashBoardActivity.newIntent(this@TeamActivity)
-        startActivity(intentStatics)
-        finish()
+    /**
+     * 신규선택 : DashBoardActivity
+     * 기존변경 : 앱재시작
+     */
+    override fun switchPageBySelectType() {
+        when (teamSelectMode) {
+            PrTeamChangeMode.APPLY -> {
+                startActivity(DashBoardActivity.newIntent(this@TeamActivity))
+                finish()
+            }
+            PrTeamChangeMode.CHANGE -> restartApp()
+            else -> restartApp()
+        }
     }
 
     /* 계정삭제후, 앱재시작*/
     override fun vectoredRestart() {
         PrefManager.getInstance(this).setString(PrPrefKeys.MYTEAM, "")
+        restartApp()
+    }
 
+    /* 앱재시작 (등록실패 or 팀변경)*/
+    private fun restartApp() {
         val packageManager = application.packageManager
         val intent = packageManager.getLaunchIntentForPackage(application.packageName)
         val componentName = intent?.component
