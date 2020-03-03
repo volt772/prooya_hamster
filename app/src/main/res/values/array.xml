@@ -1,57 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer-array name="team_images">
-        <item>@drawable/ic_team_kat</item>
-        <item>@drawable/ic_team_dsb</item>
-        <item>@drawable/ic_team_ssl</item>
-        <item>@drawable/ic_team_hhe</item>
-        <item>@drawable/ic_team_ltg</item>
-        <item>@drawable/ic_team_ncd</item>
-        <item>@drawable/ic_team_skw</item>
-        <item>@drawable/ic_team_ktw</item>
-        <item>@drawable/ic_team_nxh</item>
-        <item>@drawable/ic_team_lgt</item>
-    </integer-array>
-
-    <string-array name="team_name">
-        <item>@string/team_kat</item>
-        <item>@string/team_dsb</item>
-        <item>@string/team_ssl</item>
-        <item>@string/team_hhe</item>
-        <item>@string/team_ltg</item>
-        <item>@string/team_ncd</item>
-        <item>@string/team_skw</item>
-        <item>@string/team_ktw</item>
-        <item>@string/team_nxh</item>
-        <item>@string/team_lgt</item>
-    </string-array>
-
-    <string-array name="team_code">
-        <item>kat</item>
-        <item>dsb</item>
-        <item>ssl</item>
-        <item>hhe</item>
-        <item>ltg</item>
-        <item>ncd</item>
-        <item>skw</item>
-        <item>ktw</item>
-        <item>nxh</item>
-        <item>lgt</item>
-    </string-array>
-
-    <array name="team_color">
-        <item>@color/kat</item>
-        <item>@color/dsb</item>
-        <item>@color/ssl</item>
-        <item>@color/hhe</item>
-        <item>@color/ltg</item>
-        <item>@color/ncd</item>
-        <item>@color/skw</item>
-        <item>@color/ktw</item>
-        <item>@color/nxh</item>
-        <item>@color/lgt</item>
-    </array>
-
     <!-- 오픈라이센스 리스트-->
     <string-array name="licenses">
         <item>Kakao.sdk</item>

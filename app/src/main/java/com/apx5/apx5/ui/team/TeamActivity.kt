@@ -2,6 +2,7 @@ package com.apx5.apx5.ui.team
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -10,6 +11,7 @@ import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.ActivityTeamBinding
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
@@ -17,8 +19,8 @@ import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dashboard.DashBoardActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.MaterialTools
+import com.apx5.apx5.ui.utils.UiUtils
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 /**
  * TeamActivity
@@ -88,22 +90,20 @@ class TeamActivity :
 
     /* 팀리스트 생성*/
     private fun setTeamList(ctx: Context) {
-        val teamEmblemArr = ctx.resources.obtainTypedArray(R.array.team_images)
-        val teamNameArr = ctx.resources.getStringArray(R.array.team_name)
-        val teamCodeArr = ctx.resources.getStringArray(R.array.team_code)
-        val teamColorArr = ctx.resources.obtainTypedArray(R.array.team_color)
+        PrTeam.values().forEach { team ->
+            if (team != PrTeam.OTHER) {
+                val teamImage = UiUtils.getDrawableByName(this, team.emblem)
+                teamListAdapter.addItem(
+                    AdtTeamSelection(
+                        teamImage = teamImage,
+                        teamEmblem = ContextCompat.getDrawable(ctx, teamImage),
+                        teamName = team.fullName,
+                        teamCode = team.code,
+                        teamColor = Color.parseColor(team.mainColor)
+                    )
 
-        for (team in 0 until teamEmblemArr.length()) {
-            val teamImage = teamEmblemArr.getResourceId(team, -1)
-            teamListAdapter.addItem(
-                AdtTeamSelection(
-                    teamImage = teamImage,
-                    teamEmblem = ContextCompat.getDrawable(ctx, teamImage),
-                    teamName = teamNameArr[team],
-                    teamCode = teamCodeArr[team],
-                    teamColor = ContextCompat.getColor(ctx, teamColorArr.getResourceId(team, -1))
                 )
-            )
+            }
         }
     }
 
