@@ -111,12 +111,19 @@ class StaticsViewModel(application: Application) :
 
                 override fun onNext(statics: RemoteService.Statics) {
                     /* 요약 데이터 생성*/
+                    setTeamCode(statics.res.team)
                     setStaticItem(statics.res.allStatics, statics.res.seasonStatics)
                     setRecentPlaysItem(statics.res.recentPlays)
                 }
             })
     }
 
+    /* 팀코드 저장*/
+    private fun setTeamCode(teamCode: String) {
+        getNavigator()?.saveMyTeamCode(teamCode)
+    }
+
+    /* 통계수치지정*/
     private fun setStaticItem(all: RemoteAllStatics, season: RemoteSeasonStatics) {
         makeStaticItem(DtStatics(
             countAll = all.count,
@@ -132,6 +139,7 @@ class StaticsViewModel(application: Application) :
         ))
     }
 
+    /* 최근5경기*/
     private fun setRecentPlaysItem(recentPlays: List<RemoteRecentPlay>) {
         val listPlay = ArrayList<DtPlays>()
 

@@ -75,17 +75,18 @@ interface RemoteService {
     /* Object - 요약데이터*/
     class Statics(val res: StaticsItem) {
         inner class StaticsItem (
-            var allStatics: RemoteAllStatics,
-            var seasonStatics: RemoteSeasonStatics,
-            var recentPlays: List<RemoteRecentPlay>
+            val team: String,
+            val allStatics: RemoteAllStatics,
+            val seasonStatics: RemoteSeasonStatics,
+            val recentPlays: List<RemoteRecentPlay>
         )
     }
 
     /* Object - 요약데이터*/
     class TeamsSummary(val res: TeamsSummaryItem) {
         inner class TeamsSummaryItem(
-            var teams: List<RemoteTeamRecords>,
-            var summary: RemoteTeamSummary
+            val teams: List<RemoteTeamRecords>,
+            val summary: RemoteTeamSummary
         )
     }
 

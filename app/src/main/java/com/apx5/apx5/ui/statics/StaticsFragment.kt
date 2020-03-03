@@ -6,6 +6,7 @@ import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrPrefKeys
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtPlays
 import com.apx5.apx5.datum.adapter.AdtPlayLists
@@ -73,6 +74,13 @@ class StaticsFragment :
         }
 
         recentPlayAdapter.notifyDataSetChanged()
+    }
+
+    /* 팀코드 엎어치기*/
+    override fun saveMyTeamCode(teamCode: String) {
+        if (!teamCode.equalsExt("")) {
+            PrefManager.getInstance(requireActivity()).setString(PrPrefKeys.MYTEAM, teamCode)
+        }
     }
 
     /* SpinKit 제거*/

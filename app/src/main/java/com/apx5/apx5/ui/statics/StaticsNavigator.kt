@@ -8,5 +8,6 @@ import com.apx5.apx5.datum.DtPlays
  */
 interface StaticsNavigator {
     fun showRecentPlayList(playList: List<DtPlays>)
+    fun saveMyTeamCode(teamCode: String)
     fun cancelSpinKit()
 }
