@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.apx5.apx5.R
+import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.ui.utils.MaterialTools
 import kotlinx.android.synthetic.main.item_team.view.*
 
@@ -20,7 +21,7 @@ class TeamListAdapter internal constructor(
     private val nav: TeamNavigator
 ) : BaseAdapter() {
 
-    private val teamList = mutableListOf<TeamList>()
+    private val teamList = mutableListOf<AdtTeamSelection>()
 
     override fun getCount() = teamList.size
     override fun getItemId(position: Int) = position.toLong()
@@ -64,16 +65,7 @@ class TeamListAdapter internal constructor(
     }
 
     /* 아이템 추가*/
-    internal fun addItem(teams: ArrayList<TeamList>) {
-        for (team in teams) {
-            val item = TeamList()
-            item.teamImage = team.teamImage
-            item.teamEmblem = team.teamEmblem
-            item.teamName = team.teamName
-            item.teamCode = team.teamCode
-            item.teamColor = team.teamColor
-
-            teamList.add(item)
-        }
+    internal fun addItem(team: AdtTeamSelection) {
+        teamList.add(team)
     }
 }

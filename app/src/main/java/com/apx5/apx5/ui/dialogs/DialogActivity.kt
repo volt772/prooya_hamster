@@ -10,8 +10,8 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
+import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.model.ResourceDelHistory
-import com.apx5.apx5.ui.team.TeamList
 
 /**
  * DialogActivity
@@ -79,7 +79,7 @@ class DialogActivity : AppCompatActivity() {
         /* Dialog - 팀선택*/
         fun dialogTeamSelect(
             context: Context,
-            team: TeamList,
+            team: AdtTeamSelection,
             func:(String) -> Unit) {
 
             val dialog = prDialog(context, R.layout.dialog_team_select)

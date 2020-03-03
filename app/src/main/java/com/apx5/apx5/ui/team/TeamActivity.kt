@@ -12,6 +12,7 @@ import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrPrefKeys
 import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.ActivityTeamBinding
+import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dashboard.DashBoardActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity
@@ -81,30 +82,29 @@ class TeamActivity :
     }
 
     /* 팀선택 최종 확인*/
-    override fun selectMyTeam(team: TeamList) {
+    override fun selectMyTeam(team: AdtTeamSelection) {
         DialogActivity.dialogTeamSelect(this, team, ::finishSetMyTeam)
     }
 
     /* 팀리스트 생성*/
     private fun setTeamList(ctx: Context) {
-        val items = ArrayList<TeamList>()
         val teamEmblemArr = ctx.resources.obtainTypedArray(R.array.team_images)
         val teamNameArr = ctx.resources.getStringArray(R.array.team_name)
         val teamCodeArr = ctx.resources.getStringArray(R.array.team_code)
         val teamColorArr = ctx.resources.obtainTypedArray(R.array.team_color)
 
-        for (i in 0 until teamEmblemArr.length()) {
-            val obj = TeamList()
-            obj.teamImage = teamEmblemArr.getResourceId(i, -1)
-            obj.teamName = teamNameArr[i]
-            obj.teamCode = teamCodeArr[i]
-            obj.teamEmblem = ContextCompat.getDrawable(ctx, obj.teamImage)
-            obj.teamColor = ContextCompat.getColor(ctx, teamColorArr.getResourceId(i, -1))
-            items.add(obj)
+        for (team in 0 until teamEmblemArr.length()) {
+            val teamImage = teamEmblemArr.getResourceId(team, -1)
+            teamListAdapter.addItem(
+                AdtTeamSelection(
+                    teamImage = teamImage,
+                    teamEmblem = ContextCompat.getDrawable(ctx, teamImage),
+                    teamName = teamNameArr[team],
+                    teamCode = teamCodeArr[team],
+                    teamColor = ContextCompat.getColor(ctx, teamColorArr.getResourceId(team, -1))
+                )
+            )
         }
-        items.shuffle()
-
-        teamListAdapter.addItem(items)
     }
 
     /**
