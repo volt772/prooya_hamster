@@ -55,7 +55,11 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:tabGravity="fill"
                 app:tabMode="fixed"
-                android:layout_below="@+id/tb_dashboard"
+                app:tabBackground="@android:color/transparent"
+                app:tabRippleColor="@null"
+                app:tabIndicatorColor="@color/red_85"
+                app:tabSelectedTextColor="@color/red_85"
+                app:tabTextColor="@color/grey_300"
                 app:tabTextAppearance="@style/TextAppearance.Subhead.Bold"
                 app:theme="@style/Toolbar.Light" />
         </com.google.android.material.appbar.AppBarLayout>

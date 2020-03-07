@@ -16,14 +16,15 @@ import com.apx5.apx5.ui.statics.StaticsFragment
 enum class PrTabMenu(
     val iconName: String,
     val color: Int,
+    val menuName: Int,
     val fragment: Fragment) {
 
-    STATICS("ic_tab_0", R.color.red_85, StaticsFragment.newInstance()),
-    RECORD_TEAM("ic_tab_1", R.color.grey_300, RecordTeamFragment.newInstance()),
-    RECORD_ALL("ic_tab_2", R.color.grey_300, RecordAllFragment.newInstance()),
-    DAYS("ic_tab_3", R.color.grey_300, DaysFragment.newInstance()),
-    SETTING("ic_tab_4", R.color.grey_300, SettingFragment.newInstance()),
-    OTHER("", 0, StaticsFragment.newInstance());
+    STATICS("ic_tab_0", R.color.red_85, R.string.menu0, StaticsFragment.newInstance()),
+    RECORD_TEAM("ic_tab_1", R.color.grey_300, R.string.menu1, RecordTeamFragment.newInstance()),
+    RECORD_ALL("ic_tab_2", R.color.grey_300, R.string.menu2, RecordAllFragment.newInstance()),
+    DAYS("ic_tab_3", R.color.grey_300, R.string.menu3, DaysFragment.newInstance()),
+    SETTING("ic_tab_4", R.color.grey_300, R.string.menu4, SettingFragment.newInstance()),
+    OTHER("", 0, 0, StaticsFragment.newInstance());
 
     companion object {
         fun getTabByOrder(order: Int): PrTabMenu {
