@@ -68,6 +68,11 @@
     <string name="app">앱</string>
     <string name="version">버전</string>
     <string name="open_license">오픈라이선스</string>
+    <string name="menu0">통계</string>
+    <string name="menu1">팀기록</string>
+    <string name="menu2">전체기록</string>
+    <string name="menu3">일정</string>
+    <string name="menu4">설정</string>
 
     <string name="winning_rate_season">시즌승률</string>
     <string name="winning_rate_total">통산승률</string>
