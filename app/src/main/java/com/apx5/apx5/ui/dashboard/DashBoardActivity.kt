@@ -49,7 +49,8 @@ class DashBoardActivity :
             finish()
         }
 
-        initTabLayout()
+//        initTabLayout()
+        initBottomNav()
     }
 
     /**
@@ -67,24 +68,15 @@ class DashBoardActivity :
     }
 
     /**
-     * 탭레이아웃 생성
+     * 하단 네비게이션
      */
-    private fun initTabLayout() {
-        DashBoardTab.tabLayout(
-            context = this,
-            layout = binding().tlDashboard,
-            switchPage = ::switchPage,
-            tabClicked = ::onTabClicked
-        )
-    }
+    private fun initBottomNav() {
+        switchPage(PrTabMenu.STATICS)
 
-    /**
-     * 메뉴 탭선택
-     * @param tab TabLayout
-     * @return
-     */
-    private fun onTabClicked(tab: PrTabMenu) {
-        switchPage(tab)
+        DashBoardNav.bottomNavLayout(
+           view = binding().navDashboard,
+           switchPage = ::switchPage
+        )
     }
 
     /**

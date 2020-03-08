@@ -5,71 +5,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.apx5.apx5.ui.dashboard.DashBoardActivity" >
 
-    <data>
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="com.apx5.apx5.ui.dashboard.DashBoardViewModel"/>
-    </data>
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:layout_height="match_parent" >
 
-            <!-- 툴바-->
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/tb_dashboard"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/abl_dashboard"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/p_navy_10"
-                app:contentInsetStartWithNavigation="@dimen/md_0"
-                app:layout_scrollFlags="enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" >
 
-                <TextView
-                    android:id="@+id/tv_app_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name_title"
-                    android:textColor="@color/p_white_10"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:textSize="@dimen/md_18" />
-            </androidx.appcompat.widget.Toolbar>
+                <!-- 툴바-->
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/tb_dashboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/p_navy_10"
+                    app:contentInsetStartWithNavigation="@dimen/md_0"
+                    app:layout_scrollFlags="enterAlways"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
-            <!-- 탭레이아웃-->
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tl_dashboard"
+                    <TextView
+                        android:id="@+id/tv_app_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name_title"
+                        android:textColor="@color/p_white_10"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/md_18" />
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!-- 내용-->
+            <FrameLayout
+                android:id="@+id/frame_layout"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:tabGravity="fill"
-                app:tabMode="fixed"
-                app:tabBackground="@android:color/transparent"
-                app:tabRippleColor="@null"
-                app:tabIndicatorColor="@color/red_85"
-                app:tabSelectedTextColor="@color/red_85"
-                app:tabTextColor="@color/grey_300"
-                app:tabTextAppearance="@style/TextAppearance.Subhead.Bold"
-                app:theme="@style/Toolbar.Light" />
-        </com.google.android.material.appbar.AppBarLayout>
+                android:layout_height="0dp"
+                android:animateLayoutChanges="true"
+                app:layout_constraintBottom_toTopOf="@+id/nav_dashboard"
+                app:layout_constraintTop_toBottomOf="@id/abl_dashboard" />
 
-        <FrameLayout
-            android:id="@+id/frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/md_110"
-            android:layout_below="@+id/tl_dashboard"
-            android:animateLayoutChanges="true" />
+            <!-- 하단 네비게이션바-->
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/nav_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelVisibilityMode="labeled"
+                android:background="@android:color/white"
+                app:itemIconTint="@color/color_state_bottom_nav"
+                app:itemTextColor="@color/color_state_bottom_nav"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:menu="@menu/menu_bottom_navigation" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
