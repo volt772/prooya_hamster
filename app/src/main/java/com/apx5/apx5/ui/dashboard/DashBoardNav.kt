@@ -1,6 +1,7 @@
 package com.apx5.apx5.ui.dashboard
 
 import android.content.Context
+import android.view.MenuItem
 import com.apx5.apx5.R
 import com.apx5.apx5.constants.PrTabMenu
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -23,6 +24,7 @@ class DashBoardNav {
             switchPage: (PrTabMenu) -> Unit
         ) {
             view.setOnNavigationItemSelectedListener { item ->
+                item.isChecked = true
                 val menuSelect = when (item.itemId) {
                     R.id.nav_statics -> PrTabMenu.STATICS
                     R.id.nav_team_record -> PrTabMenu.RECORD_TEAM

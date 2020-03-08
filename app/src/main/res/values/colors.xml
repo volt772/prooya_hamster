@@ -300,5 +300,8 @@
     <color name="p_navy_10">#131230</color>
     <color name="p_navy_20">#18172B</color>
 
+    <color name="p_grey_10">#839484</color>
+    <color name="p_grey_20">#999999</color>
+
     <color name="p_white_10">#FFFFFF</color>
 </resources>
