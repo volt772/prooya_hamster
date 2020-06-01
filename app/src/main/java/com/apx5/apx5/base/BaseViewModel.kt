@@ -3,7 +3,7 @@ package com.apx5.apx5.base
 import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
-import com.apx5.apx5.model.RemoteService
+import com.apx5.apx5.network.PrApi
 import com.apx5.apx5.remote.RemoteApplication
 import java.lang.ref.WeakReference
 
@@ -18,7 +18,7 @@ abstract class BaseViewModel<N>(application: Application) :
 
     private val isLoading = ObservableField<Boolean>(false)
 
-    val remoteService: RemoteService
+    val remoteService: PrApi
         get() {
             val remoteApplication = RemoteApplication()
             return remoteApplication.remoteService

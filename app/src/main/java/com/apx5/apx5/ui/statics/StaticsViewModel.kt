@@ -7,7 +7,7 @@ import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtPlays
 import com.apx5.apx5.datum.DtStatics
-import com.apx5.apx5.model.RemoteService
+import com.apx5.apx5.network.PrApi
 import com.apx5.apx5.model.ResourcePostStatics
 import com.apx5.apx5.remote.RemoteAllStatics
 import com.apx5.apx5.remote.RemoteRecentPlay
@@ -25,7 +25,7 @@ import java.util.*
 class StaticsViewModel(application: Application) :
     BaseViewModel<StaticsNavigator>(application) {
 
-    private val rmts: RemoteService = remoteService
+    private val rmts: PrApi = remoteService
     var seasonRate = ObservableField<String>()
     var seasonPlays = ObservableField<String>()
     var allRate = ObservableField<String>()
@@ -102,14 +102,14 @@ class StaticsViewModel(application: Application) :
         rmts.getStatics(resourcePostStatics)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<RemoteService.Statics>() {
+            .subscribe(object : Subscriber<PrApi.Statics>() {
                 override fun onCompleted() {
                     getNavigator()?.cancelSpinKit()
                 }
 
                 override fun onError(e: Throwable) { }
 
-                override fun onNext(statics: RemoteService.Statics) {
+                override fun onNext(statics: PrApi.Statics) {
                     /* 요약 데이터 생성*/
                     setTeamCode(statics.res.team)
                     setStaticItem(statics.res.allStatics, statics.res.seasonStatics)

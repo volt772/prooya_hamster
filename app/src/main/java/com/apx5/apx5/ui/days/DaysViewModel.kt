@@ -8,7 +8,7 @@ import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtDailyGame
-import com.apx5.apx5.model.RemoteService
+import com.apx5.apx5.network.PrApi
 import com.apx5.apx5.model.ResourceGetPlay
 import com.apx5.apx5.model.ResourcePostPlay
 import com.apx5.apx5.remote.RemoteDailyPlay
@@ -39,7 +39,7 @@ class DaysViewModel(application: Application) :
     val dailyGame: DtDailyGame
         get() = _game
 
-    private val rmts: RemoteService = remoteService
+    private val rmts: PrApi = remoteService
 
     /* 경기검색 (캘린더)*/
     fun searchOtherGame() {
@@ -102,7 +102,7 @@ class DaysViewModel(application: Application) :
         rmts.getDayPlay(play)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<RemoteService.Plays>() {
+            .subscribe(object : Subscriber<PrApi.Plays>() {
             override fun onCompleted() {
                 getNavigator()?.cancelSpinKit()
             }
@@ -111,7 +111,7 @@ class DaysViewModel(application: Application) :
                 getNavigator()?.cancelSpinKit()
             }
 
-            override fun onNext(play: RemoteService.Plays) {
+            override fun onNext(play: PrApi.Plays) {
                 makePlayBoard(play.res)
             }
         })
@@ -156,12 +156,12 @@ class DaysViewModel(application: Application) :
         rmts.saveNewPlay(play)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<RemoteService.NewPlay>() {
+            .subscribe(object : Subscriber<PrApi.NewPlay>() {
                 override fun onCompleted() { }
 
                 override fun onError(e: Throwable) {}
 
-                override fun onNext(res: RemoteService.NewPlay) {
+                override fun onNext(res: PrApi.NewPlay) {
                     /* 완료 Dialog*/
                     getNavigator()?.showSuccessDialog()
                 }

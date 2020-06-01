@@ -3,7 +3,7 @@ package com.apx5.apx5.ui.splash
 import android.app.Application
 import android.os.Handler
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.model.RemoteService
+import com.apx5.apx5.network.PrApi
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.utils.equalsExt
 import rx.Subscriber
@@ -17,7 +17,7 @@ import rx.schedulers.Schedulers
 class SplashViewModel(application: Application) :
     BaseViewModel<SplashNavigator>(application) {
 
-    private val rmts: RemoteService = remoteService
+    private val rmts: PrApi = remoteService
 
     /* 화면 표기 및 사용검사*/
     internal fun startSeeding() {
@@ -47,7 +47,7 @@ class SplashViewModel(application: Application) :
         rmts.appPing()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<RemoteService.Ping>() {
+            .subscribe(object : Subscriber<PrApi.Ping>() {
                 override fun onCompleted() {
                     getNavigator()?.getServerWorkResult(true)
                     getNavigator()?.cancelSpinKit()
@@ -57,7 +57,7 @@ class SplashViewModel(application: Application) :
                     getNavigator()?.getServerWorkResult(false)
                 }
 
-                override fun onNext(ping: RemoteService.Ping) {
+                override fun onNext(ping: PrApi.Ping) {
                     getNavigator()?.getServerWorkResult(ping.res)
                 }
             })

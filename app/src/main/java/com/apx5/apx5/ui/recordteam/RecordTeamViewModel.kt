@@ -3,7 +3,7 @@ package com.apx5.apx5.ui.recordteam
 import android.app.Application
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.datum.DtTeamRecord
-import com.apx5.apx5.model.RemoteService
+import com.apx5.apx5.network.PrApi
 import com.apx5.apx5.model.ResourceGetRecordDetail
 import com.apx5.apx5.model.ResourcePostTeams
 import com.apx5.apx5.remote.RemoteTeamRecords
@@ -20,7 +20,7 @@ import java.util.*
 class RecordTeamViewModel(application: Application) :
     BaseViewModel<RecordTeamNavigator>(application) {
 
-    private val rmts: RemoteService = remoteService
+    private val rmts: PrApi = remoteService
 
     /* 팀 상세 데이터*/
     internal fun getDetailList(email: String, versus: String, year: Int) {
@@ -29,12 +29,12 @@ class RecordTeamViewModel(application: Application) :
         rmts.getRecordDetail(resourceGetRecordDetail)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<RemoteService.TeamDetail>() {
+            .subscribe(object : Subscriber<PrApi.TeamDetail>() {
                 override fun onCompleted() { }
 
                 override fun onError(e: Throwable) { }
 
-                override fun onNext(details: RemoteService.TeamDetail) {
+                override fun onNext(details: PrApi.TeamDetail) {
                     /* 상세 데이터 생성*/
                     getNavigator()?.showDetailLists(details.plays)
                 }
@@ -48,14 +48,14 @@ class RecordTeamViewModel(application: Application) :
         rmts.getTeams(resourcePostTeams)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<RemoteService.TeamsSummary>() {
+            .subscribe(object : Subscriber<PrApi.TeamsSummary>() {
                 override fun onCompleted() {
                     getNavigator()?.cancelSpinKit()
                 }
 
                 override fun onError(e: Throwable) { }
 
-                override fun onNext(summary: RemoteService.TeamsSummary) {
+                override fun onNext(summary: PrApi.TeamsSummary) {
                     /* 요약 데이터 생성*/
                     setTeamSummaryItems(summary.res.teams)
                     setHeaderSummary(summary.res.summary)

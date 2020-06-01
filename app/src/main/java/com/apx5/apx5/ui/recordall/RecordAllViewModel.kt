@@ -3,7 +3,7 @@ package com.apx5.apx5.ui.recordall
 import android.app.Application
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.datum.DtAllGames
-import com.apx5.apx5.model.RemoteService
+import com.apx5.apx5.network.PrApi
 import com.apx5.apx5.model.ResourceDelHistory
 import com.apx5.apx5.model.ResourcePostTeams
 import com.apx5.apx5.remote.RemoteHistories
@@ -19,19 +19,19 @@ import java.util.*
 class RecordAllViewModel(application: Application) :
     BaseViewModel<RecordAllNavigator>(application) {
 
-    private val rmts: RemoteService = remoteService
+    private val rmts: PrApi = remoteService
 
     /* 기록 삭제*/
     internal fun delHistory(play: ResourceDelHistory) {
         rmts.delHistory(play)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<RemoteService.DelPlay>() {
+            .subscribe(object : Subscriber<PrApi.DelPlay>() {
                 override fun onCompleted() { }
 
                 override fun onError(e: Throwable) {}
 
-                override fun onNext(res: RemoteService.DelPlay) {
+                override fun onNext(res: PrApi.DelPlay) {
                     getNavigator()?.selectYear(play.year)
                 }
             })
@@ -43,14 +43,14 @@ class RecordAllViewModel(application: Application) :
         rmts.getHistories(resourcePostTeams)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<RemoteService.Histories>() {
+            .subscribe(object : Subscriber<PrApi.Histories>() {
                 override fun onCompleted() {
                     getNavigator()?.cancelSpinKit()
                 }
 
                 override fun onError(e: Throwable) { }
 
-                override fun onNext(plays: RemoteService.Histories) {
+                override fun onNext(plays: PrApi.Histories) {
                     setPlayHistoryItems(plays.histories, year)
                 }
             })
