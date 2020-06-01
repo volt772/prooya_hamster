@@ -1,9 +1,8 @@
-package com.apx5.apx5.remote
+package com.apx5.apx5.network
 
 import android.util.Log
 
 import com.apx5.apx5.constants.PrConstants
-import com.apx5.apx5.network.PrApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * RemoteApplication
  */
 
-class RemoteApplication {
+class PrRemoteApplication {
     val remoteService: PrApi
         get() {
             val logging = HttpLoggingInterceptor { message -> Log.d("API LOG", message) }
