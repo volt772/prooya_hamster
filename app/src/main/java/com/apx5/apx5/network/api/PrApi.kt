@@ -1,7 +1,8 @@
 package com.apx5.apx5.network.api
 
-import com.apx5.apx5.network.dto.Statics2
 import com.apx5.apx5.model.*
+import com.apx5.apx5.network.dto.PrPingDto
+import com.apx5.apx5.network.dto.PrStaticsDto
 import com.apx5.apx5.network.response.PrResponse
 import com.apx5.apx5.remote.*
 import retrofit2.Call
@@ -16,7 +17,8 @@ import rx.Observable
 interface PrApi {
     /* 서버 사용 검사 */
     @POST(URL_PING)
-    fun appPing(): Observable<Ping>
+//    fun appPing(): Observable<Ping>
+    fun appPing(): Call<PrResponse<PrPingDto>>
 
     /* 신규사용자등록 */
     @POST(URL_USER_POST)
@@ -29,7 +31,7 @@ interface PrApi {
     /* 요약데이터 */
     @POST(URL_STATICS)
 //    fun getStatics(@Body statics: ResourcePostStatics): Observable<Statics>
-    fun getStatics(@Body statics: ResourcePostStatics): Call<PrResponse<Statics2>>
+    fun getStatics(@Body statics: ResourcePostStatics): Call<PrResponse<PrStaticsDto>>
 
     /* 팀 간단데이터 */
     @POST(URL_TEAMS_ALL)

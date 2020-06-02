@@ -4,6 +4,12 @@ import android.app.Application
 import android.os.Handler
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.network.api.PrApi
+import com.apx5.apx5.network.dto.PrPingDto
+import com.apx5.apx5.network.dto.PrStaticsDto
+import com.apx5.apx5.network.operation.PrOps
+import com.apx5.apx5.network.operation.PrOpsCallBack
+import com.apx5.apx5.network.operation.PrOpsError
+import com.apx5.apx5.network.response.PrResponse
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.utils.equalsExt
 import rx.Subscriber
@@ -17,6 +23,7 @@ import rx.schedulers.Schedulers
 class SplashViewModel(application: Application) :
     BaseViewModel<SplashNavigator>(application) {
 
+    private val prService = PrOps.getInstance()
     private val rmts: PrApi = remoteService
 
     /* 화면 표기 및 사용검사*/
@@ -44,22 +51,17 @@ class SplashViewModel(application: Application) :
 
     /* 서버 검사*/
     internal fun checkServerStatus() {
-        rmts.appPing()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<PrApi.Ping>() {
-                override fun onCompleted() {
-                    getNavigator()?.getServerWorkResult(true)
+        prService.checkPing(object: PrOpsCallBack<PrPingDto> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<PrPingDto>?) {
+                responseBody?.data?.let { res ->
+                    getNavigator()?.getServerWorkResult(res.status > 0)
                     getNavigator()?.cancelSpinKit()
                 }
+            }
 
-                override fun onError(e: Throwable) {
-                    getNavigator()?.getServerWorkResult(false)
-                }
-
-                override fun onNext(ping: PrApi.Ping) {
-                    getNavigator()?.getServerWorkResult(ping.res)
-                }
-            })
+            override fun onFailed(errorData: PrOpsError) {
+                getNavigator()?.getServerWorkResult(false)
+            }
+        })
     }
 }

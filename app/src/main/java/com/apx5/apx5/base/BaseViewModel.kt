@@ -16,7 +16,7 @@ abstract class BaseViewModel<N>(application: Application) :
 
     private var navigator : WeakReference<N>? = null
 
-    private val isLoading = ObservableField<Boolean>(false)
+    private val isLoading = ObservableField(false)
 
     val remoteService: PrApi
         get() {

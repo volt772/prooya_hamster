@@ -10,6 +10,6 @@ class PrResponse<E> {
     @SerializedName(PrNetworks.RESPONSE_MESSAGE)
     var responseMessage: String?= null
 
-    @SerializedName("res")
+    @SerializedName(PrNetworks.DATA)
     var data: E? = null
 }

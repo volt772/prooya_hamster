@@ -7,8 +7,8 @@ import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtPlays
 import com.apx5.apx5.datum.DtStatics
-import com.apx5.apx5.network.dto.Statics2
 import com.apx5.apx5.network.api.PrApi
+import com.apx5.apx5.network.dto.PrStaticsDto
 import com.apx5.apx5.network.operation.PrOps
 import com.apx5.apx5.network.operation.PrOpsCallBack
 import com.apx5.apx5.network.operation.PrOpsError
@@ -26,7 +26,7 @@ import java.util.*
 class StaticsViewModel(application: Application) :
     BaseViewModel<StaticsNavigator>(application) {
 
-    val prService = PrOps.getInstance()
+    private val prService = PrOps.getInstance()
 
     private val rmts: PrApi = remoteService
     var seasonRate = ObservableField<String>()
@@ -104,8 +104,8 @@ class StaticsViewModel(application: Application) :
 
     /* 통계데이터 다운로드*/
     internal fun getStatics(userEmail: String) {
-        prService.getStatics(userEmail, object: PrOpsCallBack<Statics2> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<Statics2>?) {
+        prService.getStatics(userEmail, object: PrOpsCallBack<PrStaticsDto> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<PrStaticsDto>?) {
                 println("zerg : onSuccess, code : $responseCode, message : $responseMessage, body : ${responseBody!!.data!!.allStatics!!.count}, team : ${responseBody!!.data!!.team}")
             }
 
