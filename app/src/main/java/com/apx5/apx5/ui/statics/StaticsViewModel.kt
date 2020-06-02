@@ -7,15 +7,16 @@ import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtPlays
 import com.apx5.apx5.datum.DtStatics
-import com.apx5.apx5.network.PrApi
-import com.apx5.apx5.model.ResourcePostStatics
+import com.apx5.apx5.network.dto.Statics2
+import com.apx5.apx5.network.api.PrApi
+import com.apx5.apx5.network.operation.PrOps
+import com.apx5.apx5.network.operation.PrOpsCallBack
+import com.apx5.apx5.network.operation.PrOpsError
+import com.apx5.apx5.network.response.PrResponse
 import com.apx5.apx5.remote.RemoteAllStatics
 import com.apx5.apx5.remote.RemoteRecentPlay
 import com.apx5.apx5.remote.RemoteSeasonStatics
 import com.apx5.apx5.ui.utils.UiUtils
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import java.util.*
 
 /**
@@ -25,6 +26,8 @@ import java.util.*
 class StaticsViewModel(application: Application) :
     BaseViewModel<StaticsNavigator>(application) {
 
+    val prService = PrOps.getInstance()
+
     private val rmts: PrApi = remoteService
     var seasonRate = ObservableField<String>()
     var seasonPlays = ObservableField<String>()
@@ -33,6 +36,10 @@ class StaticsViewModel(application: Application) :
     var recentPlayTeam = ObservableField<String>()
     var recentPlay = ObservableField<String>()
     var allCount = ObservableField<String>()
+
+    init {
+
+    }
 
     /* 승률표기*/
     private fun getRateText(rate: Int): String {
@@ -97,25 +104,35 @@ class StaticsViewModel(application: Application) :
 
     /* 통계데이터 다운로드*/
     internal fun getStatics(userEmail: String) {
-        val resourcePostStatics = ResourcePostStatics(userEmail)
+        prService.getStatics(userEmail, object: PrOpsCallBack<Statics2> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<Statics2>?) {
+                println("zerg : onSuccess, code : $responseCode, message : $responseMessage, body : ${responseBody!!.data!!.allStatics!!.count}, team : ${responseBody!!.data!!.team}")
+            }
 
-        rmts.getStatics(resourcePostStatics)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<PrApi.Statics>() {
-                override fun onCompleted() {
-                    getNavigator()?.cancelSpinKit()
-                }
+            override fun onFailed(errorData: PrOpsError) {
+                println("zerg : onFailed, ${errorData.errorMessage}")
+            }
+        })
 
-                override fun onError(e: Throwable) { }
-
-                override fun onNext(statics: PrApi.Statics) {
-                    /* 요약 데이터 생성*/
-                    setTeamCode(statics.res.team)
-                    setStaticItem(statics.res.allStatics, statics.res.seasonStatics)
-                    setRecentPlaysItem(statics.res.recentPlays)
-                }
-            })
+//        val resourcePostStatics = ResourcePostStatics(userEmail)
+//
+//        rmts.getStatics(resourcePostStatics)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(object : Subscriber<PrApi.Statics>() {
+//                override fun onCompleted() {
+//                    getNavigator()?.cancelSpinKit()
+//                }
+//
+//                override fun onError(e: Throwable) { }
+//
+//                override fun onNext(statics: PrApi.Statics) {
+//                    /* 요약 데이터 생성*/
+//                    setTeamCode(statics.res.team)
+//                    setStaticItem(statics.res.allStatics, statics.res.seasonStatics)
+//                    setRecentPlaysItem(statics.res.recentPlays)
+//                }
+//            })
     }
 
     /* 팀코드 저장*/

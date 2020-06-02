@@ -3,7 +3,7 @@ package com.apx5.apx5.ui.recordteam
 import android.app.Application
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.datum.DtTeamRecord
-import com.apx5.apx5.network.PrApi
+import com.apx5.apx5.network.api.PrApi
 import com.apx5.apx5.model.ResourceGetRecordDetail
 import com.apx5.apx5.model.ResourcePostTeams
 import com.apx5.apx5.remote.RemoteTeamRecords

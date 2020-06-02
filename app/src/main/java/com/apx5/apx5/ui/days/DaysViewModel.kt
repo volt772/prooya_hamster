@@ -8,7 +8,7 @@ import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtDailyGame
-import com.apx5.apx5.network.PrApi
+import com.apx5.apx5.network.api.PrApi
 import com.apx5.apx5.model.ResourceGetPlay
 import com.apx5.apx5.model.ResourcePostPlay
 import com.apx5.apx5.remote.RemoteDailyPlay

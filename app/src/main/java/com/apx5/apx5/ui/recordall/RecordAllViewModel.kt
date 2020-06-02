@@ -3,7 +3,7 @@ package com.apx5.apx5.ui.recordall
 import android.app.Application
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.datum.DtAllGames
-import com.apx5.apx5.network.PrApi
+import com.apx5.apx5.network.api.PrApi
 import com.apx5.apx5.model.ResourceDelHistory
 import com.apx5.apx5.model.ResourcePostTeams
 import com.apx5.apx5.remote.RemoteHistories

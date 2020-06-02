@@ -3,7 +3,7 @@ package com.apx5.apx5.base
 import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
-import com.apx5.apx5.network.PrApi
+import com.apx5.apx5.network.api.PrApi
 import com.apx5.apx5.network.PrRemoteApplication
 import java.lang.ref.WeakReference
 

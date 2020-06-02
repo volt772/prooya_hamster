@@ -2,7 +2,7 @@ package com.apx5.apx5.ui.team
 
 import android.app.Application
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.network.PrApi
+import com.apx5.apx5.network.api.PrApi
 import com.apx5.apx5.model.ResourcePostUser
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.utils.equalsExt

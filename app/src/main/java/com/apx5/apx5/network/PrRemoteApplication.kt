@@ -3,6 +3,7 @@ package com.apx5.apx5.network
 import android.util.Log
 
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.network.api.PrApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * RemoteApplication
+ * TODO : DELETE
  */
 
 class PrRemoteApplication {
