@@ -3,6 +3,8 @@ package com.apx5.apx5.network.api
 import com.apx5.apx5.model.*
 import com.apx5.apx5.network.dto.PrPingDto
 import com.apx5.apx5.network.dto.PrStaticsDto
+import com.apx5.apx5.network.dto.PrUserDelDto
+import com.apx5.apx5.network.dto.PrUserDto
 import com.apx5.apx5.network.response.PrResponse
 import com.apx5.apx5.remote.*
 import retrofit2.Call
@@ -22,11 +24,13 @@ interface PrApi {
 
     /* 신규사용자등록 */
     @POST(URL_USER_POST)
-    fun postUser(@Body user: ResourcePostUser): Observable<PostUser>
+//    fun postUser(@Body user: ResourcePostUser): Observable<PostUser>
+    fun postUser(@Body user: ResourcePostUser): Call<PrResponse<PrUserDto>>
 
     /* 사용자삭제 */
     @POST(URL_USER_DELETE)
-    fun delUser(@Body user: ResourceDelUser): Observable<DelUser>
+//    fun delUser(@Body user: ResourceDelUser): Observable<DelUser>
+    fun delUser(@Body user: ResourceDelUser): Call<PrResponse<PrUserDelDto>>
 
     /* 요약데이터 */
     @POST(URL_STATICS)
