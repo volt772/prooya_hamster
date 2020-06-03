@@ -5,16 +5,12 @@ import android.os.Handler
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.network.api.PrApi
 import com.apx5.apx5.network.dto.PrPingDto
-import com.apx5.apx5.network.dto.PrStaticsDto
 import com.apx5.apx5.network.operation.PrOps
 import com.apx5.apx5.network.operation.PrOpsCallBack
 import com.apx5.apx5.network.operation.PrOpsError
 import com.apx5.apx5.network.response.PrResponse
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.utils.equalsExt
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 
 /**
  * TemplatesViewModel

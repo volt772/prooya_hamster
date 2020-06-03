@@ -1,14 +1,9 @@
 package com.apx5.apx5.network.operation
 
-import com.apx5.apx5.model.ResourceDelUser
-import com.apx5.apx5.model.ResourcePostStatics
-import com.apx5.apx5.model.ResourcePostUser
+import com.apx5.apx5.model.*
 import com.apx5.apx5.network.api.PrApi
 import com.apx5.apx5.network.api.PrApiService
-import com.apx5.apx5.network.dto.PrPingDto
-import com.apx5.apx5.network.dto.PrStaticsDto
-import com.apx5.apx5.network.dto.PrUserDelDto
-import com.apx5.apx5.network.dto.PrUserDto
+import com.apx5.apx5.network.dto.*
 import com.apx5.apx5.network.response.PrResponse
 import com.apx5.apx5.network.response.PrResponseHandler
 import retrofit2.Call
@@ -47,6 +42,49 @@ class PrOps {
     fun getStatics(request: ResourcePostStatics, operation: PrOpsCallBack<PrStaticsDto>) {
         handleResponse(this.api.getStatics(request), operation)
     }
+
+    /**
+     * 팀 상세 데이터 (전체)
+     */
+    fun getRecordByTeams(request: ResourcePostTeams, operation: PrOpsCallBack<PrRecordsDto>) {
+        handleResponse(this.api.getRecordByTeams(request), operation)
+    }
+
+    /**
+     * 팀 상세 데이터 (특정팀)
+     */
+    fun getRecordDetails(request: ResourceGetRecordDetail, operation: PrOpsCallBack<PrRecordDetailDto>) {
+        handleResponse(this.api.getRecordDetail(request), operation)
+    }
+
+    /**
+     * 경기목록
+     */
+    fun getHistories(request: ResourcePostTeams, operation: PrOpsCallBack<PrHistoriesDto>) {
+        handleResponse(this.api.getHistories(request), operation)
+    }
+
+    /**
+     * 경기삭제
+     */
+    fun deleteHistory(request: ResourceDelHistory, operation: PrOpsCallBack<PrHistoryDelDto>) {
+        handleResponse(this.api.delHistory(request), operation)
+    }
+
+    /**
+     * 오늘 경기 저장
+     */
+    fun postGame(request: ResourcePostPlay, operation: PrOpsCallBack<PrNewGameDto>) {
+        handleResponse(this.api.saveNewGame(request), operation)
+    }
+
+    /**
+     * 오늘 경기 로드
+     */
+    fun loadTodayGame(request: ResourceGetPlay, operation: PrOpsCallBack<PrGameDto>) {
+        handleResponse(this.api.getDayPlay(request), operation)
+    }
+
 
     companion object {
         private var instance: PrOps? = null

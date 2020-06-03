@@ -11,6 +11,13 @@ import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.network.api.PrApi
 import com.apx5.apx5.model.ResourceGetPlay
 import com.apx5.apx5.model.ResourcePostPlay
+import com.apx5.apx5.network.dto.PrGameDto
+import com.apx5.apx5.network.dto.PrNewGameDto
+import com.apx5.apx5.network.dto.PrPingDto
+import com.apx5.apx5.network.operation.PrOps
+import com.apx5.apx5.network.operation.PrOpsCallBack
+import com.apx5.apx5.network.operation.PrOpsError
+import com.apx5.apx5.network.response.PrResponse
 import com.apx5.apx5.remote.RemoteDailyPlay
 import com.apx5.apx5.ui.utils.UiUtils
 import rx.Subscriber
@@ -31,6 +38,7 @@ class DaysViewModel(application: Application) :
     var gameDate = ObservableField<String>()
     var gameStadium = ObservableField<String>()
 
+    private val prService = PrOps.getInstance()
     private val app: Application = getApplication()
 
     private var playList = mutableListOf<DtDailyGame>()
@@ -99,22 +107,34 @@ class DaysViewModel(application: Application) :
 
     /* 경기정보*/
     internal fun getMyPlay(play: ResourceGetPlay) {
-        rmts.getDayPlay(play)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<PrApi.Plays>() {
-            override fun onCompleted() {
-                getNavigator()?.cancelSpinKit()
+        prService.loadTodayGame(play, object: PrOpsCallBack<PrGameDto> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<PrGameDto>?) {
+                responseBody?.data?.let { res ->
+                    makePlayBoard(res.games)
+                    getNavigator()?.cancelSpinKit()
+                }
             }
 
-            override fun onError(e: Throwable) {
+            override fun onFailed(errorData: PrOpsError) {
                 getNavigator()?.cancelSpinKit()
-            }
-
-            override fun onNext(play: PrApi.Plays) {
-                makePlayBoard(play.res)
             }
         })
+//        rmts.getDayPlay(play)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(object : Subscriber<PrApi.Plays>() {
+//            override fun onCompleted() {
+//                getNavigator()?.cancelSpinKit()
+//            }
+//
+//            override fun onError(e: Throwable) {
+//                getNavigator()?.cancelSpinKit()
+//            }
+//
+//            override fun onNext(play: PrApi.Plays) {
+//                makePlayBoard(play.res)
+//            }
+//        })
     }
 
     private fun makePlayBoard(dailyPlays: List<RemoteDailyPlay>) {
@@ -153,19 +173,28 @@ class DaysViewModel(application: Application) :
 
     /* 새기록 저장*/
     internal fun saveNewPlay(play: ResourcePostPlay) {
-        rmts.saveNewPlay(play)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<PrApi.NewPlay>() {
-                override fun onCompleted() { }
-
-                override fun onError(e: Throwable) {}
-
-                override fun onNext(res: PrApi.NewPlay) {
-                    /* 완료 Dialog*/
+        prService.postGame(play, object: PrOpsCallBack<PrNewGameDto> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<PrNewGameDto>?) {
+                responseBody?.data?.let {
                     getNavigator()?.showSuccessDialog()
                 }
-            })
+            }
+
+            override fun onFailed(errorData: PrOpsError) { }
+        })
+//        rmts.saveNewPlay(play)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(object : Subscriber<PrApi.NewPlay>() {
+//                override fun onCompleted() { }
+//
+//                override fun onError(e: Throwable) {}
+//
+//                override fun onNext(res: PrApi.NewPlay) {
+//                    /* 완료 Dialog*/
+//                    getNavigator()?.showSuccessDialog()
+//                }
+//            })
     }
 
     /* 주 게임선택*/

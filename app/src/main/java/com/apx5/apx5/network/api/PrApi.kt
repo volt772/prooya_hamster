@@ -1,118 +1,57 @@
 package com.apx5.apx5.network.api
 
 import com.apx5.apx5.model.*
-import com.apx5.apx5.network.dto.PrPingDto
-import com.apx5.apx5.network.dto.PrStaticsDto
-import com.apx5.apx5.network.dto.PrUserDelDto
-import com.apx5.apx5.network.dto.PrUserDto
+import com.apx5.apx5.network.dto.*
 import com.apx5.apx5.network.response.PrResponse
-import com.apx5.apx5.remote.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
-import rx.Observable
 
 /**
- * RemoteService
+ * PrApi
  */
 
 interface PrApi {
     /* 서버 사용 검사 */
     @POST(URL_PING)
-//    fun appPing(): Observable<Ping>
     fun appPing(): Call<PrResponse<PrPingDto>>
 
     /* 신규사용자등록 */
     @POST(URL_USER_POST)
-//    fun postUser(@Body user: ResourcePostUser): Observable<PostUser>
     fun postUser(@Body user: ResourcePostUser): Call<PrResponse<PrUserDto>>
 
     /* 사용자삭제 */
     @POST(URL_USER_DELETE)
-//    fun delUser(@Body user: ResourceDelUser): Observable<DelUser>
     fun delUser(@Body user: ResourceDelUser): Call<PrResponse<PrUserDelDto>>
 
     /* 요약데이터 */
     @POST(URL_STATICS)
-//    fun getStatics(@Body statics: ResourcePostStatics): Observable<Statics>
     fun getStatics(@Body statics: ResourcePostStatics): Call<PrResponse<PrStaticsDto>>
 
     /* 팀 간단데이터 */
     @POST(URL_TEAMS_ALL)
-    fun getTeams(@Body teams: ResourcePostTeams): Observable<TeamsSummary>
+    fun getRecordByTeams(@Body teams: ResourcePostTeams): Call<PrResponse<PrRecordsDto>>
 
     /* 팀 경기상세*/
     @POST(URL_TEAMS_DETAIL)
-    fun getRecordDetail(@Body play: ResourceGetRecordDetail): Observable<TeamDetail>
+    fun getRecordDetail(@Body play: ResourceGetRecordDetail): Call<PrResponse<PrRecordDetailDto>>
 
     /* 전체 간단데이터 */
     @POST(URL_HISTORIES_ALL)
-    fun getHistories(@Body play: ResourcePostTeams): Observable<Histories>
+    fun getHistories(@Body play: ResourcePostTeams): Call<PrResponse<PrHistoriesDto>>
 
     /* 경기삭제*/
     @POST(URL_HISTORIES_DELETE)
-    fun delHistory(@Body play: ResourceDelHistory): Observable<DelPlay>
+    fun delHistory(@Body play: ResourceDelHistory): Call<PrResponse<PrHistoryDelDto>>
 
-    /* 오늘 내팀 경기*/
+    /* 오늘 내팀 경기저장*/
     @POST(URL_HISTORIES_POST)
-    fun saveNewPlay(@Body play: ResourcePostPlay): Observable<NewPlay>
+    fun saveNewGame(@Body play: ResourcePostPlay): Call<PrResponse<PrNewGameDto>>
 
-    /* 오늘 내팀 경기*/
+    /* 오늘 내팀 경기목록*/
     @POST(URL_SCORES_GET)
-    fun getDayPlay(@Body play: ResourceGetPlay): Observable<Plays>
+    fun getDayPlay(@Body play: ResourceGetPlay): Call<PrResponse<PrGameDto>>
 
-
-    /**
-     * Object Lists
-     * TODO : DELETE BELOW
-     */
-
-    /* Object - Ping*/
-    class Ping(val res: Boolean)
-
-    /* Object - 사용자 등록*/
-    class PostUser(val res: UserItem) {
-        inner class UserItem(
-            val id: Int,
-            val team: String
-        )
-    }
-
-    /* Object - 사용자 삭제*/
-    class DelUser(val res: Int)
-
-    /* Object - 경기 삭제*/
-    class DelPlay(val res: Int)
-
-    /* Object - 요약데이터*/
-    class Statics(val res: StaticsItem) {
-        inner class StaticsItem (
-            val team: String,
-            val allStatics: RemoteAllStatics,
-            val seasonStatics: RemoteSeasonStatics,
-            val recentPlays: List<RemoteRecentPlay>
-        )
-    }
-
-    /* Object - 요약데이터*/
-    class TeamsSummary(val res: TeamsSummaryItem) {
-        inner class TeamsSummaryItem(
-            val teams: List<RemoteTeamRecords>,
-            val summary: RemoteTeamSummary
-        )
-    }
-
-    /* Object - 오늘 내팀 경기*/
-    class Plays(val res: List<RemoteDailyPlay>)
-
-    /* Object - 새경기저장*/
-    class NewPlay(val res: Int)
-
-    /* Object - 기록 상세*/
-    class TeamDetail(val plays: List<RemoteTeamDetail>)
-
-    /* Object - 기록 전체*/
-    class Histories(val histories: List<RemoteHistories>)
 
     companion object {
         private const val URL_BASE = "prooya/v1"

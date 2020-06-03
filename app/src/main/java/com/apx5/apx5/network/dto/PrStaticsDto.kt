@@ -5,6 +5,10 @@ import com.apx5.apx5.remote.RemoteRecentPlay
 import com.apx5.apx5.remote.RemoteSeasonStatics
 import com.google.gson.annotations.SerializedName
 
+/**
+ * 요약데이터
+ */
+
 open class PrStaticsDto {
         @SerializedName("team")
         val team: String = ""

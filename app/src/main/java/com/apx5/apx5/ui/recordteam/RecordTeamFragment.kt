@@ -98,7 +98,7 @@ class RecordTeamFragment :
         val email = PrefManager.getInstance(requireContext()).userEmail?: ""
 
         if (!email.equalsExt("")) {
-            getViewModel().getDetailList(email, versus, year)
+            getViewModel().getDetails(email, versus, year)
         }
     }
 
@@ -196,7 +196,7 @@ class RecordTeamFragment :
         if (email.equalsExt("")) {
             DialogActivity.dialogError(requireContext())
         } else {
-            getViewModel().getTeams(email, year)
+            getViewModel().getRecords(email, year)
         }
     }
 
