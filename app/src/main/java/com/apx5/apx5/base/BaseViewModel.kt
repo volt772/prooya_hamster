@@ -3,8 +3,6 @@ package com.apx5.apx5.base
 import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
-import com.apx5.apx5.network.api.PrApi
-import com.apx5.apx5.network.PrRemoteApplication
 import java.lang.ref.WeakReference
 
 /**
@@ -17,12 +15,6 @@ abstract class BaseViewModel<N>(application: Application) :
     private var navigator : WeakReference<N>? = null
 
     private val isLoading = ObservableField(false)
-
-    val remoteService: PrApi
-        get() {
-            val remoteApplication = PrRemoteApplication()
-            return remoteApplication.remoteService
-        }
 
     fun setIsLoading(isLoading : Boolean) {
         this.isLoading.set(isLoading)

@@ -1,4 +1,4 @@
-package com.apx5.apx5.model
+package com.apx5.apx5.datum.pitcher
 
 /**
  * Resource Class
@@ -6,6 +6,6 @@ package com.apx5.apx5.model
  * @desc 통계데이터 요청
  */
 
-class ResourcePostStatics(
+class PtPostStatics(
     private val email: String
 )

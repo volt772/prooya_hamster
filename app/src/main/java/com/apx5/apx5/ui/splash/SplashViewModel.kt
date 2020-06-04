@@ -3,8 +3,7 @@ package com.apx5.apx5.ui.splash
 import android.app.Application
 import android.os.Handler
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.network.api.PrApi
-import com.apx5.apx5.network.dto.PrPingDto
+import com.apx5.apx5.datum.catcher.CtPing
 import com.apx5.apx5.network.operation.PrOps
 import com.apx5.apx5.network.operation.PrOpsCallBack
 import com.apx5.apx5.network.operation.PrOpsError
@@ -20,14 +19,13 @@ class SplashViewModel(application: Application) :
     BaseViewModel<SplashNavigator>(application) {
 
     private val prService = PrOps.getInstance()
-    private val rmts: PrApi = remoteService
 
     /* 화면 표기 및 사용검사*/
     internal fun startSeeding() {
-        val SPLASH_DISPLAY_LENGTH = 1000
+        val DURATION = 1000
         Handler().postDelayed({
             checkAccountAndDecideNextActivity()
-        }, SPLASH_DISPLAY_LENGTH.toLong())
+        }, DURATION.toLong())
     }
 
     /* Next Activity 검사*/
@@ -47,8 +45,8 @@ class SplashViewModel(application: Application) :
 
     /* 서버 검사*/
     internal fun checkServerStatus() {
-        prService.checkPing(object: PrOpsCallBack<PrPingDto> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<PrPingDto>?) {
+        prService.checkPing(object: PrOpsCallBack<CtPing> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPing>?) {
                 responseBody?.data?.let { res ->
                     getNavigator()?.getServerWorkResult(res.status > 0)
                     getNavigator()?.cancelSpinKit()

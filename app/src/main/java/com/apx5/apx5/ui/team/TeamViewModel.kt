@@ -2,9 +2,8 @@ package com.apx5.apx5.ui.team
 
 import android.app.Application
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.model.ResourcePostUser
-import com.apx5.apx5.network.api.PrApi
-import com.apx5.apx5.network.dto.PrUserDto
+import com.apx5.apx5.datum.pitcher.PtPostUser
+import com.apx5.apx5.datum.catcher.CtPostUser
 import com.apx5.apx5.network.operation.PrOps
 import com.apx5.apx5.network.operation.PrOpsCallBack
 import com.apx5.apx5.network.operation.PrOpsError
@@ -20,7 +19,6 @@ class TeamViewModel(application: Application) :
     BaseViewModel<TeamNavigator>(application) {
 
     private val prService = PrOps.getInstance()
-    private val rmts: PrApi = remoteService
 
     /**
      * 사용자 정보 서버 저장
@@ -28,8 +26,8 @@ class TeamViewModel(application: Application) :
     internal fun saveTeam(teamCode: String) {
         val email = PrefManager.getInstance(getApplication()).userEmail
         if (email != null && !email.equalsExt("")) {
-            prService.modifyUserInfo(ResourcePostUser(email, teamCode), object: PrOpsCallBack<PrUserDto> {
-                override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<PrUserDto>?) {
+            prService.modifyUserInfo(PtPostUser(email, teamCode), object: PrOpsCallBack<CtPostUser> {
+                override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPostUser>?) {
                     responseBody?.data?.let {
                         getNavigator()?.switchPageBySelectType()
                     }

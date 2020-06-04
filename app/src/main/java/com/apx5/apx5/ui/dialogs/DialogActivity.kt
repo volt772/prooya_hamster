@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
-import com.apx5.apx5.model.ResourceDelHistory
+import com.apx5.apx5.datum.pitcher.PtDelHistory
 
 /**
  * DialogActivity
@@ -114,8 +114,8 @@ class DialogActivity : AppCompatActivity() {
         /* Dialog - 기록삭제*/
         fun dialogHistoryDelete(
             context: Context,
-            delHistory: ResourceDelHistory,
-            func:(ResourceDelHistory) -> Unit) {
+            delHistory: PtDelHistory,
+            func:(PtDelHistory) -> Unit) {
 
             val dialog = prDialog(context, R.layout.dlg_history_delete)
             val lp = prLayoutParams(dialog)

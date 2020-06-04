@@ -1,7 +1,7 @@
 package com.apx5.apx5.network.api
 
-import com.apx5.apx5.model.*
-import com.apx5.apx5.network.dto.*
+import com.apx5.apx5.datum.pitcher.*
+import com.apx5.apx5.datum.catcher.*
 import com.apx5.apx5.network.response.PrResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -14,43 +14,43 @@ import retrofit2.http.POST
 interface PrApi {
     /* 서버 사용 검사 */
     @POST(URL_PING)
-    fun appPing(): Call<PrResponse<PrPingDto>>
+    fun appPing(): Call<PrResponse<CtPing>>
 
     /* 신규사용자등록 */
     @POST(URL_USER_POST)
-    fun postUser(@Body user: ResourcePostUser): Call<PrResponse<PrUserDto>>
+    fun postUser(@Body user: PtPostUser): Call<PrResponse<CtPostUser>>
 
     /* 사용자삭제 */
     @POST(URL_USER_DELETE)
-    fun delUser(@Body user: ResourceDelUser): Call<PrResponse<PrUserDelDto>>
+    fun delUser(@Body user: PtDelUser): Call<PrResponse<CtDelUser>>
 
     /* 요약데이터 */
     @POST(URL_STATICS)
-    fun getStatics(@Body statics: ResourcePostStatics): Call<PrResponse<PrStaticsDto>>
+    fun getStatics(@Body statics: PtPostStatics): Call<PrResponse<CtPostStatics>>
 
     /* 팀 간단데이터 */
     @POST(URL_TEAMS_ALL)
-    fun getRecordByTeams(@Body teams: ResourcePostTeams): Call<PrResponse<PrRecordsDto>>
+    fun getRecordByTeams(@Body teams: PtPostTeams): Call<PrResponse<CtPostTeams>>
 
     /* 팀 경기상세*/
     @POST(URL_TEAMS_DETAIL)
-    fun getRecordDetail(@Body play: ResourceGetRecordDetail): Call<PrResponse<PrRecordDetailDto>>
+    fun getRecordDetail(@Body play: PtGetRecordDetail): Call<PrResponse<CtGetRecordDetail>>
 
     /* 전체 간단데이터 */
     @POST(URL_HISTORIES_ALL)
-    fun getHistories(@Body play: ResourcePostTeams): Call<PrResponse<PrHistoriesDto>>
+    fun getHistories(@Body play: PtPostTeams): Call<PrResponse<CtHistories>>
 
     /* 경기삭제*/
     @POST(URL_HISTORIES_DELETE)
-    fun delHistory(@Body play: ResourceDelHistory): Call<PrResponse<PrHistoryDelDto>>
+    fun delHistory(@Body play: PtDelHistory): Call<PrResponse<CtDelHistory>>
 
     /* 오늘 내팀 경기저장*/
     @POST(URL_HISTORIES_POST)
-    fun saveNewGame(@Body play: ResourcePostPlay): Call<PrResponse<PrNewGameDto>>
+    fun saveNewGame(@Body play: PtPostPlay): Call<PrResponse<CtPostPlay>>
 
     /* 오늘 내팀 경기목록*/
     @POST(URL_SCORES_GET)
-    fun getDayPlay(@Body play: ResourceGetPlay): Call<PrResponse<PrGameDto>>
+    fun getDayPlay(@Body play: PtGetPlay): Call<PrResponse<CtGetPlay>>
 
 
     companion object {

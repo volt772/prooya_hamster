@@ -7,16 +7,15 @@ import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtPlays
 import com.apx5.apx5.datum.DtStatics
-import com.apx5.apx5.model.ResourcePostStatics
-import com.apx5.apx5.network.api.PrApi
-import com.apx5.apx5.network.dto.PrStaticsDto
+import com.apx5.apx5.datum.pitcher.PtPostStatics
+import com.apx5.apx5.datum.catcher.CtPostStatics
 import com.apx5.apx5.network.operation.PrOps
 import com.apx5.apx5.network.operation.PrOpsCallBack
 import com.apx5.apx5.network.operation.PrOpsError
 import com.apx5.apx5.network.response.PrResponse
-import com.apx5.apx5.remote.RemoteAllStatics
-import com.apx5.apx5.remote.RemoteRecentPlay
-import com.apx5.apx5.remote.RemoteSeasonStatics
+import com.apx5.apx5.datum.ops.OpsAllStatics
+import com.apx5.apx5.datum.ops.OpsRecentPlay
+import com.apx5.apx5.datum.ops.OpsSeasonStatics
 import com.apx5.apx5.ui.utils.UiUtils
 import java.util.*
 
@@ -29,7 +28,6 @@ class StaticsViewModel(application: Application) :
 
     private val prService = PrOps.getInstance()
 
-    private val rmts: PrApi = remoteService
     var seasonRate = ObservableField<String>()
     var seasonPlays = ObservableField<String>()
     var allRate = ObservableField<String>()
@@ -37,10 +35,6 @@ class StaticsViewModel(application: Application) :
     var recentPlayTeam = ObservableField<String>()
     var recentPlay = ObservableField<String>()
     var allCount = ObservableField<String>()
-
-    init {
-
-    }
 
     /* 승률표기*/
     private fun getRateText(rate: Int): String {
@@ -105,8 +99,8 @@ class StaticsViewModel(application: Application) :
 
     /* 통계데이터 다운로드*/
     internal fun getStatics(userEmail: String) {
-        prService.getStatics(ResourcePostStatics(userEmail), object: PrOpsCallBack<PrStaticsDto> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<PrStaticsDto>?) {
+        prService.getStatics(PtPostStatics(userEmail), object: PrOpsCallBack<CtPostStatics> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPostStatics>?) {
                 responseBody?.data?.let { res ->
                     getNavigator()?.cancelSpinKit()
                     setTeamCode(res.team)
@@ -125,7 +119,7 @@ class StaticsViewModel(application: Application) :
     }
 
     /* 통계수치지정*/
-    private fun setStaticItem(all: RemoteAllStatics?, season: RemoteSeasonStatics?) {
+    private fun setStaticItem(all: OpsAllStatics?, season: OpsSeasonStatics?) {
         if (all != null && season != null) {
             makeStaticItem(DtStatics(
                 countAll = all.count,
@@ -143,7 +137,7 @@ class StaticsViewModel(application: Application) :
     }
 
     /* 최근5경기*/
-    private fun setRecentPlaysItem(recentPlays: List<RemoteRecentPlay>?) {
+    private fun setRecentPlaysItem(recentPlays: List<OpsRecentPlay>?) {
         if (recentPlays != null) {
             val listPlay = ArrayList<DtPlays>()
 

@@ -12,6 +12,9 @@ import com.kakao.auth.KakaoSDK
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
+/**
+ * ProoyaClient
+ */
 
 class ProoyaClient : Application() {
     /**

@@ -8,21 +8,16 @@ import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtDailyGame
-import com.apx5.apx5.network.api.PrApi
-import com.apx5.apx5.model.ResourceGetPlay
-import com.apx5.apx5.model.ResourcePostPlay
-import com.apx5.apx5.network.dto.PrGameDto
-import com.apx5.apx5.network.dto.PrNewGameDto
-import com.apx5.apx5.network.dto.PrPingDto
+import com.apx5.apx5.datum.pitcher.PtGetPlay
+import com.apx5.apx5.datum.pitcher.PtPostPlay
+import com.apx5.apx5.datum.catcher.CtGetPlay
+import com.apx5.apx5.datum.catcher.CtPostPlay
 import com.apx5.apx5.network.operation.PrOps
 import com.apx5.apx5.network.operation.PrOpsCallBack
 import com.apx5.apx5.network.operation.PrOpsError
 import com.apx5.apx5.network.response.PrResponse
-import com.apx5.apx5.remote.RemoteDailyPlay
+import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.ui.utils.UiUtils
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import java.util.*
 
 /**
@@ -46,8 +41,6 @@ class DaysViewModel(application: Application) :
 
     val dailyGame: DtDailyGame
         get() = _game
-
-    private val rmts: PrApi = remoteService
 
     /* 경기검색 (캘린더)*/
     fun searchOtherGame() {
@@ -106,9 +99,9 @@ class DaysViewModel(application: Application) :
     }
 
     /* 경기정보*/
-    internal fun getMyPlay(play: ResourceGetPlay) {
-        prService.loadTodayGame(play, object: PrOpsCallBack<PrGameDto> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<PrGameDto>?) {
+    internal fun getMyPlay(play: PtGetPlay) {
+        prService.loadTodayGame(play, object: PrOpsCallBack<CtGetPlay> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtGetPlay>?) {
                 responseBody?.data?.let { res ->
                     makePlayBoard(res.games)
                     getNavigator()?.cancelSpinKit()
@@ -119,25 +112,9 @@ class DaysViewModel(application: Application) :
                 getNavigator()?.cancelSpinKit()
             }
         })
-//        rmts.getDayPlay(play)
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(object : Subscriber<PrApi.Plays>() {
-//            override fun onCompleted() {
-//                getNavigator()?.cancelSpinKit()
-//            }
-//
-//            override fun onError(e: Throwable) {
-//                getNavigator()?.cancelSpinKit()
-//            }
-//
-//            override fun onNext(play: PrApi.Plays) {
-//                makePlayBoard(play.res)
-//            }
-//        })
     }
 
-    private fun makePlayBoard(dailyPlays: List<RemoteDailyPlay>) {
+    private fun makePlayBoard(dailyPlays: List<OpsDailyPlay>) {
         playList.clear()
         for (play in dailyPlays) {
             if (play.id == 0) {
@@ -172,9 +149,9 @@ class DaysViewModel(application: Application) :
     }
 
     /* 새기록 저장*/
-    internal fun saveNewPlay(play: ResourcePostPlay) {
-        prService.postGame(play, object: PrOpsCallBack<PrNewGameDto> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<PrNewGameDto>?) {
+    internal fun saveNewPlay(play: PtPostPlay) {
+        prService.postGame(play, object: PrOpsCallBack<CtPostPlay> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPostPlay>?) {
                 responseBody?.data?.let {
                     getNavigator()?.showSuccessDialog()
                 }
@@ -182,19 +159,6 @@ class DaysViewModel(application: Application) :
 
             override fun onFailed(errorData: PrOpsError) { }
         })
-//        rmts.saveNewPlay(play)
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(object : Subscriber<PrApi.NewPlay>() {
-//                override fun onCompleted() { }
-//
-//                override fun onError(e: Throwable) {}
-//
-//                override fun onNext(res: PrApi.NewPlay) {
-//                    /* 완료 Dialog*/
-//                    getNavigator()?.showSuccessDialog()
-//                }
-//            })
     }
 
     /* 주 게임선택*/

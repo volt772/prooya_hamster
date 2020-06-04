@@ -1,12 +1,12 @@
-package com.apx5.apx5.network.dto
+package com.apx5.apx5.datum.catcher
 
 import com.google.gson.annotations.SerializedName
 
 /**
- * 사용자삭제
+ * 경기삭제
  */
 
-open class PrUserDelDto {
+open class CtDelHistory {
     @SerializedName("count")
     val count: Int = 0
 }

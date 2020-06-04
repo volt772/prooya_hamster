@@ -1,4 +1,4 @@
-package com.apx5.apx5.network.dto
+package com.apx5.apx5.datum.catcher
 
 import com.google.gson.annotations.SerializedName
 
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
  * 서버 사용 검사
  */
 
-open class PrPingDto {
+open class CtPing {
     @SerializedName("status")
     val status: Int = 0
 }

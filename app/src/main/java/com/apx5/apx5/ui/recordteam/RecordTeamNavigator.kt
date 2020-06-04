@@ -2,8 +2,8 @@ package com.apx5.apx5.ui.recordteam
 
 
 import com.apx5.apx5.datum.DtTeamRecord
-import com.apx5.apx5.remote.RemoteTeamDetail
-import com.apx5.apx5.remote.RemoteTeamSummary
+import com.apx5.apx5.datum.ops.OpsTeamDetail
+import com.apx5.apx5.datum.ops.OpsTeamSummary
 
 /**
  * RecordTeamNavigator
@@ -11,8 +11,8 @@ import com.apx5.apx5.remote.RemoteTeamSummary
 interface RecordTeamNavigator {
     fun selectSeasonYear(year: Int)
     fun getDetailLists(year: Int, versus: String)
-    fun showDetailLists(plays: List<RemoteTeamDetail>)
+    fun showDetailLists(plays: List<OpsTeamDetail>)
     fun setTeamRecord(teams: List<DtTeamRecord>)
-    fun setHeaderSummary(summary: RemoteTeamSummary)
+    fun setHeaderSummary(summary: OpsTeamSummary)
     fun cancelSpinKit()
 }

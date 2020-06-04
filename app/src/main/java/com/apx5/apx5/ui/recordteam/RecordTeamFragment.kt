@@ -15,8 +15,8 @@ import com.apx5.apx5.databinding.FragmentRecordTeamBinding
 import com.apx5.apx5.datum.DtTeamRecord
 import com.apx5.apx5.datum.adapter.AdtDetailLists
 import com.apx5.apx5.datum.adapter.AdtTeamLists
-import com.apx5.apx5.remote.RemoteTeamDetail
-import com.apx5.apx5.remote.RemoteTeamSummary
+import com.apx5.apx5.datum.ops.OpsTeamDetail
+import com.apx5.apx5.datum.ops.OpsTeamSummary
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
@@ -103,7 +103,7 @@ class RecordTeamFragment :
     }
 
     /* 상세정보 Dialog*/
-    override fun showDetailLists(plays: List<RemoteTeamDetail>) {
+    override fun showDetailLists(plays: List<OpsTeamDetail>) {
         recordDetailAdapter.clearItems()
         if (plays.isNotEmpty()) {
             for (play in plays) {
@@ -172,7 +172,7 @@ class RecordTeamFragment :
     }
 
     /* 상단 헤더 요약*/
-    override fun setHeaderSummary(summary: RemoteTeamSummary) {
+    override fun setHeaderSummary(summary: OpsTeamSummary) {
         binding().tvSeasonStatic.text =
             String.format(
                 Locale.getDefault(),
