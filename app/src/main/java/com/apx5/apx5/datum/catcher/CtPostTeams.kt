@@ -1,5 +1,6 @@
 package com.apx5.apx5.datum.catcher
 
+import com.apx5.apx5.constants.PrNetworkKeys
 import com.apx5.apx5.datum.ops.OpsTeamRecords
 import com.apx5.apx5.datum.ops.OpsTeamSummary
 import com.google.gson.annotations.SerializedName
@@ -9,9 +10,9 @@ import com.google.gson.annotations.SerializedName
  */
 
 open class CtPostTeams {
-        @SerializedName("teams")
+        @SerializedName(PrNetworkKeys.TEAMS)
         val teams: List<OpsTeamRecords> = emptyList()
 
-        @SerializedName("summary")
+        @SerializedName(PrNetworkKeys.SUMMARY)
         val summary: OpsTeamSummary?= null
 }

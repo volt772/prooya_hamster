@@ -1,5 +1,6 @@
 package com.apx5.apx5.datum.catcher
 
+import com.apx5.apx5.constants.PrNetworkKeys
 import com.apx5.apx5.datum.ops.OpsTeamDetail
 import com.google.gson.annotations.SerializedName
 
@@ -8,6 +9,6 @@ import com.google.gson.annotations.SerializedName
  */
 
 open class CtGetRecordDetail {
-        @SerializedName("games")
+        @SerializedName(PrNetworkKeys.GAMES)
         val games: List<OpsTeamDetail> = emptyList()
 }

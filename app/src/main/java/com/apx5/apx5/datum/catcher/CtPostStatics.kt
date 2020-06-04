@@ -1,5 +1,6 @@
 package com.apx5.apx5.datum.catcher
 
+import com.apx5.apx5.constants.PrNetworkKeys
 import com.apx5.apx5.datum.ops.OpsAllStatics
 import com.apx5.apx5.datum.ops.OpsRecentPlay
 import com.apx5.apx5.datum.ops.OpsSeasonStatics
@@ -10,15 +11,15 @@ import com.google.gson.annotations.SerializedName
  */
 
 open class CtPostStatics {
-        @SerializedName("team")
+        @SerializedName(PrNetworkKeys.TEAM)
         val team: String = ""
 
-        @SerializedName("allStatics")
+        @SerializedName(PrNetworkKeys.ALL_STATICS)
         val allStatics: OpsAllStatics?= null
 
-        @SerializedName("seasonStatics")
+        @SerializedName(PrNetworkKeys.SEASON_STATICS)
         val seasonStatics: OpsSeasonStatics?= null
 
-        @SerializedName("recentPlays")
+        @SerializedName(PrNetworkKeys.RECENT_PLAYS)
         val recentPlays: List<OpsRecentPlay>?= null
 }

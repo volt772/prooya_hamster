@@ -1,5 +1,6 @@
 package com.apx5.apx5.datum.catcher
 
+import com.apx5.apx5.constants.PrNetworkKeys
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -7,9 +8,9 @@ import com.google.gson.annotations.SerializedName
  */
 
 open class CtPostUser {
-        @SerializedName("id")
+        @SerializedName(PrNetworkKeys.ID)
         val id: Int = 0
 
-        @SerializedName("team")
+        @SerializedName(PrNetworkKeys.TEAM)
         val team: String = ""
 }
