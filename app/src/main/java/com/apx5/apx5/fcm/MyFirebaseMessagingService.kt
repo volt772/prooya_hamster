@@ -40,7 +40,7 @@ class MyFirebaseMessagingService :
         fcmData["myTeam"] = myTeamCode
         fcmData["userEmail"] = userEmail
 
-        if (PrefManager.getInstance(this).getBoolean(PrPrefKeys.NOTIFICATION, true) == true) {
+        if (PrefManager.getInstance(this).getBoolean(PrPrefKeys.NOTIFICATION, true)) {
             sendNotification(fcmData)
         }
     }

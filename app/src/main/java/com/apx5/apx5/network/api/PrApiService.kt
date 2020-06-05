@@ -18,7 +18,6 @@ class PrApiService private constructor() {
     companion object {
         private var instance: PrApiService? = null
         private var retrofit: Retrofit? = null
-        private lateinit var builder: Retrofit.Builder
         private const val BASE_URL = PrConstants.App.FLK_HOST
 
         @Synchronized

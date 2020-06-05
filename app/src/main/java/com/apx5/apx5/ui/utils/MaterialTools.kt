@@ -9,6 +9,10 @@ import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
+/**
+ * MaterialTools
+ */
+
 object MaterialTools {
     fun setSystemBarColor(act: Activity, @ColorRes color: Int) {
         val window = act.window

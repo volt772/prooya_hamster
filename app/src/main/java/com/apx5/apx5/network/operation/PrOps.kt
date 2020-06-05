@@ -8,6 +8,11 @@ import com.apx5.apx5.network.response.PrResponse
 import com.apx5.apx5.network.response.PrResponseHandler
 import retrofit2.Call
 
+/**
+ * PrOps
+ * @desc 데이터 Operations
+ */
+
 class PrOps {
     private val api: PrApi = PrApiService.getInstance().getService()
 
