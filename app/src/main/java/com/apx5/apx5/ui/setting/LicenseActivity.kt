@@ -3,6 +3,7 @@ package com.apx5.apx5.ui.setting
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,7 +49,8 @@ class LicenseActivity :
 
         supportActionBar?.run {
             title = "오픈라이선스"
-            setDisplayHomeAsUpEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_back)
         }
 
         MaterialTools.setSystemBarColor(this, R.color.p_navy_10)
@@ -78,6 +80,11 @@ class LicenseActivity :
         }
 
         return licenseRes.toString()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) { android.R.id.home -> finish() }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

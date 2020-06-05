@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.BR
@@ -60,7 +61,8 @@ class TeamActivity :
 
         supportActionBar?.run {
             title = resources.getString(R.string.team_select)
-            setDisplayHomeAsUpEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_back)
         }
 
         MaterialTools.setSystemBarColor(this, R.color.p_navy_10)
@@ -136,6 +138,11 @@ class TeamActivity :
         val mainIntent = Intent.makeRestartActivityTask(componentName)
         application.startActivity(mainIntent)
         Runtime.getRuntime().exit(0)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) { android.R.id.home -> finish() }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {
