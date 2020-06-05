@@ -12,12 +12,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class PrApiService private constructor() {
     fun getService(): PrApi {
-        return retrofit!!.create(PrApi::class.java)
+        return retrofit.create(PrApi::class.java)
     }
 
     companion object {
         private var instance: PrApiService? = null
-        private var retrofit: Retrofit? = null
+        private lateinit var retrofit: Retrofit
         private const val BASE_URL = PrConstants.App.FLK_HOST
 
         @Synchronized
@@ -30,13 +30,11 @@ class PrApiService private constructor() {
                 instance = PrApiService()
             }
 
-            if (retrofit == null) {
-                retrofit = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(client)
-                    .build()
-            }
+            retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
 
             return instance as PrApiService
         }

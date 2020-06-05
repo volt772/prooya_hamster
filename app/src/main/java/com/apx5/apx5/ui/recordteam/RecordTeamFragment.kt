@@ -128,7 +128,7 @@ class RecordTeamFragment :
 
             val builder = AlertDialog.Builder(requireContext())
             val inflater = layoutInflater
-            val view = inflater.inflate(R.layout.dlg_record_detail, null)
+            val view = inflater.inflate(R.layout.dialog_record_detail, null)
             builder.setView(view)
 
             val listview = view.findViewById<ListView>(R.id.lv_record_list)
