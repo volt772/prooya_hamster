@@ -9,8 +9,8 @@ import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentDaysBinding
-import com.apx5.apx5.model.ResourceGetPlay
-import com.apx5.apx5.model.ResourcePostPlay
+import com.apx5.apx5.datum.pitcher.PtGetPlay
+import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
@@ -65,7 +65,7 @@ class DaysFragment :
         val myTeamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
 
         getViewModel().saveNewPlay(
-            ResourcePostPlay(
+            PtPostPlay(
                 result = gameResult.result,
                 year = UiUtils.getYear(dailyGame.playDate.toString()),
                 regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
@@ -166,7 +166,7 @@ class DaysFragment :
 
     /* 경기검색(캘린더)*/
     private fun searchPlayByDate(playDate: String) {
-        val play = ResourceGetPlay(playDate, teamCode)
+        val play = PtGetPlay(playDate, teamCode)
         getViewModel().getMyPlay(play)
     }
 

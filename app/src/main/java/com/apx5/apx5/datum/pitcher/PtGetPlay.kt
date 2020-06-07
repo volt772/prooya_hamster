@@ -1,4 +1,4 @@
-package com.apx5.apx5.model
+package com.apx5.apx5.datum.pitcher
 
 /**
  * Resource Class
@@ -6,7 +6,7 @@ package com.apx5.apx5.model
  * @desc 일일경기 가져오기
  */
 
-class ResourceGetPlay(
+class PtGetPlay(
     private val regdate: String,
     private val team: String
 )

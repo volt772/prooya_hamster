@@ -1,4 +1,4 @@
-package com.apx5.apx5.model
+package com.apx5.apx5.datum.pitcher
 
 /**
  * Data Class
@@ -6,7 +6,7 @@ package com.apx5.apx5.model
  * @desc 신규경기저장
  */
 
-class ResourcePostPlay(
+class PtPostPlay(
     val result: String,
     val year: String,
     val regdate: String,

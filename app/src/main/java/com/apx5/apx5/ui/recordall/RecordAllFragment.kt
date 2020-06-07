@@ -10,7 +10,7 @@ import com.apx5.apx5.databinding.FragmentRecordAllBinding
 import com.apx5.apx5.datum.DtAllGames
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.datum.adapter.AdtPlayLists
-import com.apx5.apx5.model.ResourceDelHistory
+import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
@@ -74,7 +74,7 @@ class RecordAllFragment :
         if (!email.equalsExt("")) {
             DialogActivity.dialogHistoryDelete(
                 requireContext(),
-                ResourceDelHistory(
+                PtDelHistory(
                     pid = email,
                     rid = delPlay.id,
                     year = delPlay.season,
@@ -86,7 +86,7 @@ class RecordAllFragment :
     }
 
     /* 기록 삭제*/
-    private fun delHistory(delHistory: ResourceDelHistory) {
+    private fun delHistory(delHistory: PtDelHistory) {
         getViewModel().delHistory(delHistory)
     }
 

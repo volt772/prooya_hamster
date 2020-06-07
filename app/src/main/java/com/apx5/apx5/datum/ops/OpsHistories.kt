@@ -1,4 +1,4 @@
-package com.apx5.apx5.remote
+package com.apx5.apx5.datum.ops
 
 /**
  * Response
@@ -6,7 +6,7 @@ package com.apx5.apx5.remote
  * @desc 기록전체
  */
 
-data class RemoteHistories (
+data class OpsHistories (
     val playDate: String,
     val playId: Int,
     val playMyTeam: String,

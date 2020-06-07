@@ -3,13 +3,15 @@ package com.apx5.apx5.ui.recordall
 import android.app.Application
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.datum.DtAllGames
-import com.apx5.apx5.model.RemoteService
-import com.apx5.apx5.model.ResourceDelHistory
-import com.apx5.apx5.model.ResourcePostTeams
-import com.apx5.apx5.remote.RemoteHistories
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import com.apx5.apx5.datum.pitcher.PtDelHistory
+import com.apx5.apx5.datum.pitcher.PtPostTeams
+import com.apx5.apx5.datum.catcher.CtHistories
+import com.apx5.apx5.datum.catcher.CtDelHistory
+import com.apx5.apx5.network.operation.PrOps
+import com.apx5.apx5.network.operation.PrOpsCallBack
+import com.apx5.apx5.network.operation.PrOpsError
+import com.apx5.apx5.network.response.PrResponse
+import com.apx5.apx5.datum.ops.OpsHistories
 import java.util.*
 
 /**
@@ -19,63 +21,49 @@ import java.util.*
 class RecordAllViewModel(application: Application) :
     BaseViewModel<RecordAllNavigator>(application) {
 
-    private val rmts: RemoteService = remoteService
+    private val prService = PrOps.getInstance()
 
     /* 기록 삭제*/
-    internal fun delHistory(play: ResourceDelHistory) {
-        rmts.delHistory(play)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<RemoteService.DelPlay>() {
-                override fun onCompleted() { }
+    internal fun delHistory(play: PtDelHistory) {
+        prService.deleteHistory(play, object: PrOpsCallBack<CtDelHistory> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtDelHistory>?) {
+                getNavigator()?.selectYear(play.year)
+            }
 
-                override fun onError(e: Throwable) {}
-
-                override fun onNext(res: RemoteService.DelPlay) {
-                    getNavigator()?.selectYear(play.year)
-                }
-            })
+            override fun onFailed(errorData: PrOpsError) { }
+        })
     }
 
     /* 전체 데이터*/
     internal fun getAllPlayLists(email: String, year: Int) {
-        val resourcePostTeams = ResourcePostTeams(email, year)
-        rmts.getHistories(resourcePostTeams)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<RemoteService.Histories>() {
-                override fun onCompleted() {
+        prService.getHistories(PtPostTeams(email, year), object: PrOpsCallBack<CtHistories> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtHistories>?) {
+                responseBody?.data?.let { res ->
+                    setPlayHistoryItems(res.games, year)
                     getNavigator()?.cancelSpinKit()
                 }
+            }
 
-                override fun onError(e: Throwable) { }
-
-                override fun onNext(plays: RemoteService.Histories) {
-                    setPlayHistoryItems(plays.histories, year)
-                }
-            })
+            override fun onFailed(errorData: PrOpsError) { }
+        })
     }
 
-    private fun setPlayHistoryItems(plays: List<RemoteHistories>, year: Int) {
-        var listPlay = ArrayList<DtAllGames>()
+    private fun setPlayHistoryItems(plays: List<OpsHistories>, year: Int) {
+        val listPlay = ArrayList<DtAllGames>()
 
-        if (plays != null) {
-            for (play in plays) {
-                listPlay.add(
-                    DtAllGames(
-                        playId = play.playId,
-                        playPtGet = play.ptGet,
-                        playPtLost = play.ptLost,
-                        playSeason = play.playSeason,
-                        playDate = play.playDate,
-                        playResult = play.playResult,
-                        playVersus = play.playVs,
-                        playMyTeam = play.playMyTeam
-                    )
+        plays.forEach { play ->
+            listPlay.add(
+                DtAllGames(
+                    playId = play.playId,
+                    playPtGet = play.ptGet,
+                    playPtLost = play.ptLost,
+                    playSeason = play.playSeason,
+                    playDate = play.playDate,
+                    playResult = play.playResult,
+                    playVersus = play.playVs,
+                    playMyTeam = play.playMyTeam
                 )
-            }
-        } else {
-            listPlay = arrayListOf()
+            )
         }
 
         getNavigator()?.setHistory(listPlay, year)

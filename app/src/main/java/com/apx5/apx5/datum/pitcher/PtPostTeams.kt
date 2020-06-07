@@ -1,4 +1,4 @@
-package com.apx5.apx5.model
+package com.apx5.apx5.datum.pitcher
 
 /**
  * Resource Class
@@ -6,7 +6,7 @@ package com.apx5.apx5.model
  * @desc 경기데이터 팀 or 전체
  */
 
-class ResourcePostTeams(
+class PtPostTeams(
     private val email: String,
     private val year: Int
 )

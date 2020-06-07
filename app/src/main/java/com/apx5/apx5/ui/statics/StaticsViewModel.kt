@@ -7,15 +7,16 @@ import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtPlays
 import com.apx5.apx5.datum.DtStatics
-import com.apx5.apx5.model.RemoteService
-import com.apx5.apx5.model.ResourcePostStatics
-import com.apx5.apx5.remote.RemoteAllStatics
-import com.apx5.apx5.remote.RemoteRecentPlay
-import com.apx5.apx5.remote.RemoteSeasonStatics
+import com.apx5.apx5.datum.pitcher.PtPostStatics
+import com.apx5.apx5.datum.catcher.CtPostStatics
+import com.apx5.apx5.network.operation.PrOps
+import com.apx5.apx5.network.operation.PrOpsCallBack
+import com.apx5.apx5.network.operation.PrOpsError
+import com.apx5.apx5.network.response.PrResponse
+import com.apx5.apx5.datum.ops.OpsAllStatics
+import com.apx5.apx5.datum.ops.OpsRecentPlay
+import com.apx5.apx5.datum.ops.OpsSeasonStatics
 import com.apx5.apx5.ui.utils.UiUtils
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import java.util.*
 
 /**
@@ -25,7 +26,8 @@ import java.util.*
 class StaticsViewModel(application: Application) :
     BaseViewModel<StaticsNavigator>(application) {
 
-    private val rmts: RemoteService = remoteService
+    private val prService = PrOps.getInstance()
+
     var seasonRate = ObservableField<String>()
     var seasonPlays = ObservableField<String>()
     var allRate = ObservableField<String>()
@@ -97,25 +99,18 @@ class StaticsViewModel(application: Application) :
 
     /* 통계데이터 다운로드*/
     internal fun getStatics(userEmail: String) {
-        val resourcePostStatics = ResourcePostStatics(userEmail)
-
-        rmts.getStatics(resourcePostStatics)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<RemoteService.Statics>() {
-                override fun onCompleted() {
+        prService.getStatics(PtPostStatics(userEmail), object: PrOpsCallBack<CtPostStatics> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPostStatics>?) {
+                responseBody?.data?.let { res ->
                     getNavigator()?.cancelSpinKit()
+                    setTeamCode(res.team)
+                    setStaticItem(res.allStatics, res.seasonStatics)
+                    setRecentPlaysItem(res.recentPlays)
                 }
+            }
 
-                override fun onError(e: Throwable) { }
-
-                override fun onNext(statics: RemoteService.Statics) {
-                    /* 요약 데이터 생성*/
-                    setTeamCode(statics.res.team)
-                    setStaticItem(statics.res.allStatics, statics.res.seasonStatics)
-                    setRecentPlaysItem(statics.res.recentPlays)
-                }
-            })
+            override fun onFailed(errorData: PrOpsError) { }
+        })
     }
 
     /* 팀코드 저장*/
@@ -124,39 +119,43 @@ class StaticsViewModel(application: Application) :
     }
 
     /* 통계수치지정*/
-    private fun setStaticItem(all: RemoteAllStatics, season: RemoteSeasonStatics) {
-        makeStaticItem(DtStatics(
-            countAll = all.count,
-            countAllDraw = all.draw,
-            countAllLose = all.lose,
-            countAllWin = all.win,
-            rateAll = all.rate,
-            countSeason = season.count,
-            countSeasonDraw = season.draw,
-            countSeasonLose = season.lose,
-            countSeasonWin = season.win,
-            rateSeason = season.rate
-        ))
+    private fun setStaticItem(all: OpsAllStatics?, season: OpsSeasonStatics?) {
+        if (all != null && season != null) {
+            makeStaticItem(DtStatics(
+                countAll = all.count,
+                countAllDraw = all.draw,
+                countAllLose = all.lose,
+                countAllWin = all.win,
+                rateAll = all.rate,
+                countSeason = season.count,
+                countSeasonDraw = season.draw,
+                countSeasonLose = season.lose,
+                countSeasonWin = season.win,
+                rateSeason = season.rate
+            ))
+        }
     }
 
     /* 최근5경기*/
-    private fun setRecentPlaysItem(recentPlays: List<RemoteRecentPlay>) {
-        val listPlay = ArrayList<DtPlays>()
+    private fun setRecentPlaysItem(recentPlays: List<OpsRecentPlay>?) {
+        if (recentPlays != null) {
+            val listPlay = ArrayList<DtPlays>()
 
-        for (play in recentPlays) {
-            listPlay.add(DtPlays(
-                playId = play.playId,
-                playPtGet = play.ptGet,
-                playPtLost = play.ptLost,
-                playSeason = play.playSeason,
-                playDate = play.playDate,
-                playResult = play.playResult,
-                playVersus = play.playVs,
-                playMyTeam = play.playMyTeam
-            ))
+            recentPlays.forEach { game ->
+                listPlay.add(DtPlays(
+                    playId = game.playId,
+                    playPtGet = game.ptGet,
+                    playPtLost = game.ptLost,
+                    playSeason = game.playSeason,
+                    playDate = game.playDate,
+                    playResult = game.playResult,
+                    playVersus = game.playVs,
+                    playMyTeam = game.playMyTeam
+                ))
+            }
+
+            makeStaticRecentPlay(listPlay)
+            getNavigator()?.showRecentPlayList(listPlay)
         }
-
-        makeStaticRecentPlay(listPlay)
-        getNavigator()?.showRecentPlayList(listPlay)
     }
 }

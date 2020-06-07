@@ -1,4 +1,4 @@
-package com.apx5.apx5.remote
+package com.apx5.apx5.datum.ops
 
 /**
  * Response
@@ -6,7 +6,7 @@ package com.apx5.apx5.remote
  * @desc 일일경기
  */
 
-data class RemoteDailyPlay (
+data class OpsDailyPlay (
     val awayscore: Int,
     val awayteam: String,
     val homescore: Int,

@@ -1,16 +1,14 @@
-package com.apx5.apx5.remote
+package com.apx5.apx5.datum.ops
 
 /**
  * Response
  * @desc Tab : 2
- * @desc 팀기록
+ * @desc 팀요약
  */
 
-data class RemoteTeamRecords(
+data class OpsTeamSummary (
     val win: Int,
     val draw: Int,
     val lose: Int,
-    val rate: Int,
-    val team: String,
     val year: Int
 )

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
-import com.apx5.apx5.model.ResourceDelHistory
+import com.apx5.apx5.datum.pitcher.PtDelHistory
 
 /**
  * DialogActivity
@@ -114,10 +114,10 @@ class DialogActivity : AppCompatActivity() {
         /* Dialog - 기록삭제*/
         fun dialogHistoryDelete(
             context: Context,
-            delHistory: ResourceDelHistory,
-            func:(ResourceDelHistory) -> Unit) {
+            delHistory: PtDelHistory,
+            func:(PtDelHistory) -> Unit) {
 
-            val dialog = prDialog(context, R.layout.dlg_history_delete)
+            val dialog = prDialog(context, R.layout.dialog_history_delete)
             val lp = prLayoutParams(dialog)
 
             /* 취소버튼*/
@@ -158,10 +158,10 @@ class DialogActivity : AppCompatActivity() {
         fun dialogNoRecordDetail(
             context: Context) {
 
-            val dialog = prDialog(context, R.layout.dlg_record_no_detail)
+            val dialog = prDialog(context, R.layout.dialog_record_no_detail)
             val lp = prLayoutParams(dialog)
 
-            dialog.findViewById<View>(R.id.bt_follow).setOnClickListener { dialog.dismiss() }
+            dialog.findViewById<View>(R.id.bt_close).setOnClickListener { dialog.dismiss() }
 
             dialog.show()
             dialog.window?.attributes = lp
@@ -185,7 +185,7 @@ class DialogActivity : AppCompatActivity() {
                 context: Context,
                 selectGame:(Int) -> Unit) {
 
-            val dialog = prDialog(context, R.layout.dlg_select_double_header)
+            val dialog = prDialog(context, R.layout.dialog_select_double_header)
             val lp = prLayoutParams(dialog)
 
             /* 선택 : 1경기*/

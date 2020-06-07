@@ -9,9 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/deep_orange_500"
+        android:background="@color/p_white_10"
         android:gravity="center"
-        android:minHeight="@dimen/md_120"
         android:orientation="vertical"
         android:padding="@dimen/md_20">
 
@@ -19,14 +18,14 @@
             android:id="@+id/icon"
             android:layout_width="@dimen/md_80"
             android:layout_height="@dimen/md_80"
-            android:tint="@android:color/white"
-            app:srcCompat="@drawable/ic_rain_off" />
+            app:srcCompat="@drawable/ic_info_type_b" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|start"
+        android:background="@color/p_navy_10"
         android:orientation="vertical"
         android:padding="@dimen/md_20">
 
@@ -35,17 +34,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/md_3"
-            android:text="@string/errorComm"
+            android:text="@string/no_outdoor_seeing"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@color/blue_grey_800" />
+            android:textColor="@color/p_white_10" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lyt_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/md_15"
+        android:background="@color/p_navy_10"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -54,12 +53,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:background="@drawable/btn_rounded_orange"
+            android:background="@drawable/btn_rounded_white"
             android:paddingLeft="@dimen/md_20"
             android:paddingRight="@dimen/md_20"
-            android:text="@string/dlg_close"
-            android:textColor="@android:color/white" />
-
+            android:layout_marginBottom="@dimen/md_10"
+            android:text="@string/dlg_close" />
     </LinearLayout>
-
 </LinearLayout>

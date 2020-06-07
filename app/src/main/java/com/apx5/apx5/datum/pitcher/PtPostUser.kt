@@ -1,4 +1,4 @@
-package com.apx5.apx5.model
+package com.apx5.apx5.datum.pitcher
 
 /**
  * Resource Class
@@ -6,7 +6,7 @@ package com.apx5.apx5.model
  * @desc 사용자등록
  */
 
-class ResourcePostUser(
+class PtPostUser(
     private val pid: String,
     private val team: String
 )

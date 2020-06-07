@@ -13,7 +13,7 @@ import com.apx5.apx5.constants.PrPrefKeys
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.FragmentSettingBinding
-import com.apx5.apx5.model.ResourceDelUser
+import com.apx5.apx5.datum.pitcher.PtDelUser
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.team.TeamActivity
@@ -122,7 +122,7 @@ class SettingFragment :
         val email = PrefManager.getInstance(requireContext()).userEmail
 
         if (email != null && !email.equalsExt("")) {
-            val delUser = ResourceDelUser(email)
+            val delUser = PtDelUser(email)
             getViewModel().delRemoteUser(delUser)
         }
     }

@@ -1,4 +1,4 @@
-package com.apx5.apx5.model
+package com.apx5.apx5.datum.pitcher
 
 /**
  * Resource Class
@@ -6,7 +6,7 @@ package com.apx5.apx5.model
  * @desc 팀별경기 상세내역
  */
 
-class ResourceGetRecordDetail(
+class PtGetRecordDetail(
     private val email: String,
     private val versus: String,
     private val year: Int
