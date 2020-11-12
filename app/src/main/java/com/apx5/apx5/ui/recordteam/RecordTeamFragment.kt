@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ListView
 import androidx.databinding.library.baseAdapters.BR
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
@@ -21,6 +22,7 @@ import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.equalsExt
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -199,6 +201,33 @@ class RecordTeamFragment :
             getViewModel().getRecords(email, year)
         }
     }
+
+//    private fun showBottomSheet(data: MpWorkRecordEntity) {
+//        val bottomSheet = BottomSheetDialog(requireContext(), R.style.BottomDialogRoundStyle)
+//
+//        val bottomView = layoutInflater.inflate(R.layout.dialog_daily_status, null).apply {
+//
+//            val calTitle = convertDateTimeToString(data.date, DateTimeExt.yearMonthPattern).splitExt(" ")
+//            val calYear = calTitle[0]
+//            val calMonth = calTitle[1]
+//
+//            this.tv_month.text = getString(R.string.month_name, calYear, calMonth)
+//
+//            tv_status.text = getString(R.string.month_status_suffix)
+//            rv_list.layoutManager = LinearLayoutManager(context)
+//            val adapter = WorkListAdapter(workType)
+//            rv_list.adapter = adapter
+//            adapter.updateList(listOf(data))
+//
+//            iv_back.setOnClickListener {
+//                bottomSheet.dismiss()
+//            }
+//        }
+//
+//        bottomSheet.setContentView(bottomView)
+//        bottomSheet.show()
+//    }
+
 
     companion object {
         fun newInstance(): RecordTeamFragment {

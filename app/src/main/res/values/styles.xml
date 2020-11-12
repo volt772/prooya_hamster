@@ -228,6 +228,16 @@
         <item name="android:colorForeground">#42221f1f</item>
     </style>
 
+    <!-- Bottom Sheet -->
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_season_select_rounded</item>
+    </style>
+
+    <style name="BottomDialogRoundStyle" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
     <!--style for ripple library-->
     <style name="RippleStyleWhite">
         <item name="mrl_rippleOverlay">true</item>
