@@ -7,12 +7,13 @@ package com.apx5.apx5.datum.ops
  */
 
 data class OpsRecentPlay (
-    val playDate: String,
+    val awayScore: Int,
+    val awayTeam: String,
+    val homeScore: Int,
+    val homeTeam: String,
+    val playDate: Int,
     val playId: Int,
     val playResult: String,
     val playSeason: Int,
-    val playVs: String,
-    val playMyTeam: String,
-    val ptGet: Int,
-    val ptLost: Int
+    val playVs: String
 )

@@ -71,12 +71,12 @@ class RecordAllAdapter internal constructor(
         val playItems = playList[position]
 
         /* 팀 엠블럼*/
-        holder.teamEmblemMy.setImageResource(playItems.emblemMy)
-        holder.teamEmblemVersus.setImageResource(playItems.emblemVs)
+        holder.teamEmblemMy.setImageResource(playItems.awayEmblem)
+        holder.teamEmblemVersus.setImageResource(playItems.homeEmblem)
 
         /* 팀 스코어*/
-        holder.myScore.text = playItems.scoreMy.toString()
-        holder.versusScore.text = playItems.scoreVs.toString()
+        holder.myScore.text = playItems.awayScore.toString()
+        holder.versusScore.text = playItems.homeScore.toString()
 
         /* 경기일*/
         holder.playDate.text = UiUtils.getDateToFull(playItems.playDate)
@@ -91,7 +91,7 @@ class RecordAllAdapter internal constructor(
             nav.delHistoryItem(AdtPlayDelTarget(
                 id = playItems.playId,
                 season = playItems.playSeason,
-                versus = playItems.playVersus,
+                versus = "kt",
                 result = playItems.playResult
             ))
             true

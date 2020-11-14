@@ -67,10 +67,10 @@ class StaticsViewModel(application: Application) :
             val pl = plays[0]
 
             /* 최근직관팀(팀명)*/
-            recentPlayTeam.set(getRecentPlayTeamText(pl.playVersus))
+            recentPlayTeam.set(getRecentPlayTeamText(pl.playVs))
 
             /* 최근직관날짜(날짜)*/
-            recentPlay.set(getRecentPlayDateText(pl.playDate))
+            recentPlay.set(getRecentPlayDateText("${pl.playDate}"))
         } else {
             recentPlayTeam.set(getApplication<Application>().resources.getString(R.string.empty))
             recentPlay.set("-")
@@ -143,14 +143,15 @@ class StaticsViewModel(application: Application) :
 
             recentPlays.forEach { game ->
                 listPlay.add(DtPlays(
-                    playId = game.playId,
-                    playPtGet = game.ptGet,
-                    playPtLost = game.ptLost,
-                    playSeason = game.playSeason,
+                    awayScore = game.awayScore,
+                    awayTeam = game.awayTeam,
+                    homeScore = game.homeScore,
+                    homeTeam = game.homeTeam,
                     playDate = game.playDate,
+                    playId = game.playId,
                     playResult = game.playResult,
-                    playVersus = game.playVs,
-                    playMyTeam = game.playMyTeam
+                    playSeason = game.playSeason,
+                    playVs = game.playVs
                 ))
             }
 

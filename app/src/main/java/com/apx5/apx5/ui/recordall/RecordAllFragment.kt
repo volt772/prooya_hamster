@@ -107,29 +107,29 @@ class RecordAllFragment :
 
         isListExists(isVisible)
 
-        for (play in plays) {
-            recordAdapter.addItem(
-                AdtPlayLists(
-                    playVersus = play.playVersus,
-                    playId = play.playId,
-                    playSeason = play.playSeason,
-                    playResult = play.playResult,
-                    playDate = play.playDate,
-                    scoreMy = play.playPtGet,
-                    scoreVs = play.playPtLost,
-                    emblemMy = UiUtils.getDrawableByName(
-                        requireContext(),
-                        PrConstants.Teams.EMBLEM_PREFIX.plus(play.playMyTeam)),
-                    emblemVs = UiUtils.getDrawableByName(
-                        requireContext(),
-                        PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVersus))
-                )
-            )
-        }
+//        for (play in plays) {
+//            recordAdapter.addItem(
+//                AdtPlayLists(
+//                    playVersus = play.playVersus,
+//                    playId = play.playId,
+//                    playSeason = play.playSeason,
+//                    playResult = play.playResult,
+//                    playDate = play.playDate,
+//                    scoreMy = play.playPtGet,
+//                    scoreVs = play.playPtLost,
+//                    emblemMy = UiUtils.getDrawableByName(
+//                        requireContext(),
+//                        PrConstants.Teams.EMBLEM_PREFIX.plus(play.playMyTeam)),
+//                    emblemVs = UiUtils.getDrawableByName(
+//                        requireContext(),
+//                        PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVersus))
+//                )
+//            )
+//        }
 
-        recordAdapter.notifyDataSetChanged()
-
-        binding().tvSearchYear.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), year)
+//        recordAdapter.notifyDataSetChanged()
+//
+//        binding().tvSearchYear.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), year)
     }
 
     /* Observers*/

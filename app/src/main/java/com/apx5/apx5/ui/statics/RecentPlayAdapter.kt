@@ -33,10 +33,10 @@ class RecentPlayAdapter internal constructor() :
 
     private class RecentPlayHolder {
         lateinit var playRecent: View
-        lateinit var myEmblem: ImageView
-        lateinit var otherEmblem: ImageView
-        lateinit var myScore: TextView
-        lateinit var otherScore: TextView
+        lateinit var awayEmblem: ImageView
+        lateinit var homeEmblem: ImageView
+        lateinit var awayScore: TextView
+        lateinit var homeScore: TextView
         lateinit var playDate: TextView
     }
 
@@ -51,10 +51,10 @@ class RecentPlayAdapter internal constructor() :
 
             holder = RecentPlayHolder().apply {
                 playRecent = cv.lv_play_list
-                myEmblem = cv.iv_team_emblem_my
-                otherEmblem = cv.iv_team_emblem_versus
-                myScore = cv.tv_my_score
-                otherScore = cv.tv_versus_score
+                awayEmblem = cv.iv_team_emblem_away
+                homeEmblem = cv.iv_team_emblem_home
+                awayScore = cv.tv_away_score
+                homeScore = cv.tv_home_score
                 playDate = cv.tv_play_date
             }
 
@@ -67,22 +67,21 @@ class RecentPlayAdapter internal constructor() :
         val playItems = playList[position]
 
         /* 팀 엠블럼*/
-        holder.myEmblem.setImageResource(playItems.emblemMy)
-        holder.otherEmblem.setImageResource(playItems.emblemVs)
+        holder.awayEmblem.setImageResource(playItems.awayEmblem)
+        holder.homeEmblem.setImageResource(playItems.homeEmblem)
 
         /* 팀 스코어*/
-        holder.myScore.text = playItems.scoreMy.toString()
-        holder.otherScore.text = playItems.scoreVs.toString()
+        holder.awayScore.text = playItems.awayScore.toString()
+        holder.homeScore.text = playItems.homeScore.toString()
 
         /* 경기일*/
         holder.playDate.text = UiUtils.getDateToFull(playItems.playDate)
 
         /* 경기결과 구분처리 (Bold)*/
-        if (playItems.playResult.equalsExt(PrResultCode.WIN.codeAbbr)) {
-            holder.myScore.setTypeface(null, Typeface.BOLD)
-        }
-        if (playItems.playResult.equalsExt(PrResultCode.LOSE.codeAbbr)) {
-            holder.otherScore.setTypeface(null, Typeface.BOLD)
+        if (playItems.awayScore > playItems.homeScore) {
+            holder.awayScore.setTypeface(null, Typeface.BOLD)
+        } else if (playItems.awayScore < playItems.homeScore) {
+            holder.homeScore.setTypeface(null, Typeface.BOLD)
         }
 
         return cv

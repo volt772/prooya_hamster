@@ -56,19 +56,20 @@ class StaticsFragment :
         for (play in plays) {
             recentPlayAdapter.addItem(
                 AdtPlayLists(
-                    playVersus = play.playVersus,
+                    awayScore = play.awayScore,
+                    awayTeam = play.awayTeam,
+                    awayEmblem = UiUtils.getDrawableByName(
+                            requireContext(),
+                            PrConstants.Teams.EMBLEM_PREFIX.plus(play.awayTeam)),
+                    homeScore = play.homeScore,
+                    homeTeam = play.homeTeam,
+                    homeEmblem = UiUtils.getDrawableByName(
+                        requireContext(),
+                    PrConstants.Teams.EMBLEM_PREFIX.plus(play.homeTeam)),
+                    playDate = "${play.playDate}",
                     playId = play.playId,
-                    playSeason = play.playSeason,
-                    playResult = play.playResult,
-                    playDate = play.playDate,
-                    scoreMy = play.playPtGet,
-                    scoreVs = play.playPtLost,
-                    emblemMy = UiUtils.getDrawableByName(
-                        requireContext(),
-                        PrConstants.Teams.EMBLEM_PREFIX.plus(play.playMyTeam)),
-                    emblemVs = UiUtils.getDrawableByName(
-                        requireContext(),
-                        PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVersus))
+                    playResult =  play.playResult,
+                    playSeason = play.playSeason
                 )
             )
         }

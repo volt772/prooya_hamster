@@ -7,13 +7,14 @@ package com.apx5.apx5.datum.adapter
  */
 
 data class AdtPlayLists (
-    val playVersus: String,
-    val playId: Int,
-    val playSeason: Int,
-    val playResult: String,
+    val awayScore: Int,
+    val awayTeam: String,
+    val awayEmblem: Int,
+    val homeScore: Int,
+    val homeTeam: String,
+    val homeEmblem: Int,
     val playDate: String,
-    val scoreMy: Int,
-    val scoreVs: Int,
-    val emblemMy: Int,
-    val emblemVs: Int
+    val playId: Int,
+    val playResult: String,
+    val playSeason: Int
 )
