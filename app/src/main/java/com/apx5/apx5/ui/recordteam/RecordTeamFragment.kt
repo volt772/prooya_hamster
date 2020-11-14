@@ -202,33 +202,6 @@ class RecordTeamFragment :
         }
     }
 
-//    private fun showBottomSheet(data: MpWorkRecordEntity) {
-//        val bottomSheet = BottomSheetDialog(requireContext(), R.style.BottomDialogRoundStyle)
-//
-//        val bottomView = layoutInflater.inflate(R.layout.dialog_daily_status, null).apply {
-//
-//            val calTitle = convertDateTimeToString(data.date, DateTimeExt.yearMonthPattern).splitExt(" ")
-//            val calYear = calTitle[0]
-//            val calMonth = calTitle[1]
-//
-//            this.tv_month.text = getString(R.string.month_name, calYear, calMonth)
-//
-//            tv_status.text = getString(R.string.month_status_suffix)
-//            rv_list.layoutManager = LinearLayoutManager(context)
-//            val adapter = WorkListAdapter(workType)
-//            rv_list.adapter = adapter
-//            adapter.updateList(listOf(data))
-//
-//            iv_back.setOnClickListener {
-//                bottomSheet.dismiss()
-//            }
-//        }
-//
-//        bottomSheet.setContentView(bottomView)
-//        bottomSheet.show()
-//    }
-
-
     companion object {
         fun newInstance(): RecordTeamFragment {
             val args = Bundle()

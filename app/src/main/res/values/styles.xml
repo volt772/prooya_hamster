@@ -233,7 +233,7 @@
         <item name="android:background">@drawable/bg_season_select_rounded</item>
     </style>
 
-    <style name="BottomDialogRoundStyle" parent="@style/Theme.Design.Light.BottomSheetDialog">
+    <style name="YearSelectionRoundStyle" parent="@style/Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheet</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>

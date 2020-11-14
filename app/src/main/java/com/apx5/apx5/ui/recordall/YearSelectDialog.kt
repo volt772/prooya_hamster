@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.fragment.app.DialogFragment
 
 import com.apx5.apx5.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -16,6 +17,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class YearSelectDialog :
     BottomSheetDialogFragment(),
     View.OnClickListener {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.YearSelectionRoundStyle)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

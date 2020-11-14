@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.fragment.app.DialogFragment
 
 import com.apx5.apx5.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -17,12 +18,16 @@ class SeasonSelectDialog :
     BottomSheetDialogFragment(),
     View.OnClickListener {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.YearSelectionRoundStyle)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view = inflater.inflate(R.layout.dialog_season_select, container, false)
 
         val season17 = view.findViewById<LinearLayout>(R.id.lv_2017)
