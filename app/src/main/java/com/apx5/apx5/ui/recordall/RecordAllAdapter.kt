@@ -35,10 +35,10 @@ class RecordAllAdapter internal constructor(
 
     private class RecordAllHolder {
         lateinit var recordAll: View
-        lateinit var teamEmblemMy: ImageView
-        lateinit var teamEmblemVersus: ImageView
-        lateinit var myScore: TextView
-        lateinit var versusScore: TextView
+        lateinit var teamEmblemAway: ImageView
+        lateinit var teamEmblemHome: ImageView
+        lateinit var awayScore: TextView
+        lateinit var homeScore: TextView
         lateinit var playDate: TextView
         lateinit var playResult: TextView
     }
@@ -54,10 +54,10 @@ class RecordAllAdapter internal constructor(
 
             holder = RecordAllHolder().apply {
                 recordAll = cv.lv_play_list_all
-                teamEmblemMy = cv.iv_all_team_emblem_my
-                teamEmblemVersus = cv.iv_all_team_emblem_versus
-                myScore = cv.tv_all_my_score
-                versusScore = cv.tv_all_versus_score
+                teamEmblemAway = cv.iv_all_team_emblem_away
+                teamEmblemHome = cv.iv_all_team_emblem_home
+                awayScore = cv.tv_all_away_score
+                homeScore = cv.tv_all_home_score
                 playDate = cv.tv_all_play_date
                 playResult = cv.tv_all_result
             }
@@ -71,12 +71,12 @@ class RecordAllAdapter internal constructor(
         val playItems = playList[position]
 
         /* 팀 엠블럼*/
-        holder.teamEmblemMy.setImageResource(playItems.awayEmblem)
-        holder.teamEmblemVersus.setImageResource(playItems.homeEmblem)
+        holder.teamEmblemAway.setImageResource(playItems.awayEmblem)
+        holder.teamEmblemHome.setImageResource(playItems.homeEmblem)
 
         /* 팀 스코어*/
-        holder.myScore.text = playItems.awayScore.toString()
-        holder.versusScore.text = playItems.homeScore.toString()
+        holder.awayScore.text = playItems.awayScore.toString()
+        holder.homeScore.text = playItems.homeScore.toString()
 
         /* 경기일*/
         holder.playDate.text = UiUtils.getDateToFull(playItems.playDate)
@@ -91,7 +91,7 @@ class RecordAllAdapter internal constructor(
             nav.delHistoryItem(AdtPlayDelTarget(
                 id = playItems.playId,
                 season = playItems.playSeason,
-                versus = "kt",
+                versus = playItems.playVersus,
                 result = playItems.playResult
             ))
             true

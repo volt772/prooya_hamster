@@ -69,7 +69,8 @@ class StaticsFragment :
                     playDate = "${play.playDate}",
                     playId = play.playId,
                     playResult =  play.playResult,
-                    playSeason = play.playSeason
+                    playSeason = play.playSeason,
+                    playVersus = play.playVs
                 )
             )
         }

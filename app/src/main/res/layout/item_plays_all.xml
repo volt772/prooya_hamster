@@ -21,7 +21,7 @@
             android:layout_height="@dimen/md_0" />
 
         <ImageView
-            android:id="@+id/iv_all_team_emblem_my"
+            android:id="@+id/iv_all_team_emblem_away"
             android:layout_width="@dimen/md_35"
             android:layout_height="@dimen/md_35"
             android:layout_marginEnd="@dimen/md_5"
@@ -29,7 +29,7 @@
             android:src="@drawable/ic_info_type_c" />
 
         <TextView
-            android:id="@+id/tv_all_my_score"
+            android:id="@+id/tv_all_away_score"
             android:layout_width="@dimen/md_20"
             android:layout_height="wrap_content"
             android:textAlignment="textEnd"
@@ -49,7 +49,7 @@
             android:textColor="@color/grey_700" />
 
         <TextView
-            android:id="@+id/tv_all_versus_score"
+            android:id="@+id/tv_all_home_score"
             android:layout_width="@dimen/md_20"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -58,7 +58,7 @@
             android:textColor="@color/grey_700" />
 
         <ImageView
-            android:id="@+id/iv_all_team_emblem_versus"
+            android:id="@+id/iv_all_team_emblem_home"
             android:layout_width="@dimen/md_35"
             android:layout_height="@dimen/md_35"
             android:layout_marginStart="@dimen/md_5"

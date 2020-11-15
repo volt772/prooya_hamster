@@ -16,5 +16,6 @@ data class AdtPlayLists (
     val playDate: String,
     val playId: Int,
     val playResult: String,
-    val playSeason: Int
+    val playSeason: Int,
+    val playVersus: String
 )

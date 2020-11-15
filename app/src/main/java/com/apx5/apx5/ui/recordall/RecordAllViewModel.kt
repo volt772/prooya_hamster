@@ -48,20 +48,21 @@ class RecordAllViewModel(application: Application) :
         })
     }
 
-    private fun setPlayHistoryItems(plays: List<OpsHistories>, year: Int) {
+    private fun setPlayHistoryItems(games: List<OpsHistories>, year: Int) {
         val listPlay = ArrayList<DtAllGames>()
 
-        plays.forEach { play ->
+        games.forEach { game ->
             listPlay.add(
                 DtAllGames(
-                    playId = play.playId,
-                    playPtGet = play.ptGet,
-                    playPtLost = play.ptLost,
-                    playSeason = play.playSeason,
-                    playDate = play.playDate,
-                    playResult = play.playResult,
-                    playVersus = play.playVs,
-                    playMyTeam = play.playMyTeam
+                    awayScore = game.awayScore,
+                    awayTeam = game.awayTeam,
+                    homeScore = game.homeScore,
+                    homeTeam = game.homeTeam,
+                    playDate = game.playDate,
+                    playId = game.playId,
+                    playResult = game.playResult,
+                    playSeason = game.playSeason,
+                    playVs = game.playVs
                 )
             )
         }
