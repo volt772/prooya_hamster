@@ -71,8 +71,8 @@ class RecordAllAdapter internal constructor(
         val playItems = playList[position]
 
         /* 팀 엠블럼*/
-        holder.teamEmblemAway.setImageResource(playItems.awayEmblem)
-        holder.teamEmblemHome.setImageResource(playItems.homeEmblem)
+//        holder.teamEmblemAway.setImageResource(playItems.awayEmblem)
+//        holder.teamEmblemHome.setImageResource(playItems.homeEmblem)
 
         /* 팀 스코어*/
         holder.awayScore.text = playItems.awayScore.toString()

@@ -5,14 +5,14 @@ import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrStadium
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtPlays
 import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
-import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -58,19 +58,16 @@ class StaticsFragment :
                 AdtPlayLists(
                     awayScore = play.awayScore,
                     awayTeam = play.awayTeam,
-                    awayEmblem = UiUtils.getDrawableByName(
-                            requireContext(),
-                            PrConstants.Teams.EMBLEM_PREFIX.plus(play.awayTeam)),
+                    awayEmblem = PrTeam.getTeamByCode(play.awayTeam),
                     homeScore = play.homeScore,
                     homeTeam = play.homeTeam,
-                    homeEmblem = UiUtils.getDrawableByName(
-                        requireContext(),
-                    PrConstants.Teams.EMBLEM_PREFIX.plus(play.homeTeam)),
+                    homeEmblem = PrTeam.getTeamByCode(play.homeTeam),
                     playDate = "${play.playDate}",
                     playId = play.playId,
                     playResult =  play.playResult,
                     playSeason = play.playSeason,
-                    playVersus = play.playVs
+                    playVersus = play.playVs,
+                    stadium = PrStadium.getStadiumByCode(play.stadium).displayName
                 )
             )
         }
@@ -87,7 +84,7 @@ class StaticsFragment :
 
     /* SpinKit 제거*/
     override fun cancelSpinKit() {
-        binding().skLoading.visibility = View.GONE
+        binding().clLoading.visibility = View.GONE
     }
 
     /* 최근경기 리스트*/
@@ -96,8 +93,8 @@ class StaticsFragment :
             setRecentPlayLists(plays)
         }
 
-        binding().rytPlayList.visibility = CommonUtils.setVisibility(plays.isNotEmpty())
-        binding().rytEmptyList.visibility = CommonUtils.setVisibility(plays.isEmpty())
+        binding().lvPlayLists.visibility = CommonUtils.setVisibility(plays.isNotEmpty())
+        binding().clEmptyList.visibility = CommonUtils.setVisibility(plays.isEmpty())
     }
 
     private fun subscriber() {

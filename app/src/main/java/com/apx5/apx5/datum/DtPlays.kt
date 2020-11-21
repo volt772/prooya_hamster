@@ -15,5 +15,6 @@ data class DtPlays (
     val playId: Int,
     val playResult: String,
     val playSeason: Int,
-    val playVs: String
+    val playVs: String,
+    val stadium: String
 )

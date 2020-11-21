@@ -5,7 +5,7 @@ import android.view.View
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordAllBinding
 import com.apx5.apx5.datum.DtAllGames
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
@@ -112,19 +112,16 @@ class RecordAllFragment :
                 AdtPlayLists(
                     awayScore = play.awayScore,
                     awayTeam = play.awayTeam,
-                    awayEmblem = UiUtils.getDrawableByName(
-                            requireContext(),
-                            PrConstants.Teams.EMBLEM_PREFIX.plus(play.awayTeam)),
+                    awayEmblem = PrTeam.getTeamByCode(play.awayTeam),
                     homeScore = play.homeScore,
                     homeTeam = play.homeTeam,
-                    homeEmblem = UiUtils.getDrawableByName(
-                            requireContext(),
-                            PrConstants.Teams.EMBLEM_PREFIX.plus(play.homeTeam)),
+                    homeEmblem = PrTeam.getTeamByCode(play.homeTeam),
                     playDate = "${play.playDate}",
                     playId = play.playId,
                     playResult =  play.playResult,
                     playSeason = play.playSeason,
-                    playVersus = play.playVs
+                    playVersus = play.playVs,
+                    stadium = ""
                 )
             )
         }

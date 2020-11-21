@@ -85,6 +85,9 @@ dependencies {
     /* Loading spin kit*/
     implementation "com.github.ybq:Android-SpinKit:$spinkit"
 
+    /* circle image view*/
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
+
     /* Test*/
     androidTestImplementation "androidx.test:runner:$rootProject.testRunner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCore"

@@ -47,6 +47,17 @@ class UiUtils {
             }
         }
 
+        fun getDateToReadableMonthDay(dateString: String): String {
+            if (TextUtils.isEmpty(dateString)) {
+                return ""
+            }
+
+            val month = dateString.substring(4, 6)
+            val day = dateString.substring(6, 8)
+
+            return String.format(Locale.getDefault(), "%s월 %s일", month, day)
+        }
+
         /**
          * 연도
          */

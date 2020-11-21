@@ -7,15 +7,15 @@ import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtPlays
 import com.apx5.apx5.datum.DtStatics
-import com.apx5.apx5.datum.pitcher.PtPostStatics
 import com.apx5.apx5.datum.catcher.CtPostStatics
+import com.apx5.apx5.datum.ops.OpsAllStatics
+import com.apx5.apx5.datum.ops.OpsRecentPlay
+import com.apx5.apx5.datum.ops.OpsSeasonStatics
+import com.apx5.apx5.datum.pitcher.PtPostStatics
 import com.apx5.apx5.network.operation.PrOps
 import com.apx5.apx5.network.operation.PrOpsCallBack
 import com.apx5.apx5.network.operation.PrOpsError
 import com.apx5.apx5.network.response.PrResponse
-import com.apx5.apx5.datum.ops.OpsAllStatics
-import com.apx5.apx5.datum.ops.OpsRecentPlay
-import com.apx5.apx5.datum.ops.OpsSeasonStatics
 import com.apx5.apx5.ui.utils.UiUtils
 import java.util.*
 
@@ -34,6 +34,7 @@ class StaticsViewModel(application: Application) :
     var allPlays = ObservableField<String>()
     var recentPlayTeam = ObservableField<String>()
     var recentPlay = ObservableField<String>()
+    var seasonCount = ObservableField<String>()
     var allCount = ObservableField<String>()
 
     /* 승률표기*/
@@ -56,9 +57,14 @@ class StaticsViewModel(application: Application) :
         return UiUtils.getDateToAbbr(regdate, ".")
     }
 
-    /* 직관횟수 표기*/
-    private fun getAllCountText(countAll: Int, countSeason: Int): String {
-        return String.format(Locale.getDefault(), getApplication<Application>().resources.getString(R.string.seeing_count), countSeason, countAll)
+    /* 직관횟수표기 (시즌)*/
+    private fun getSeasonCountText(countSeason: Int): String {
+        return String.format(Locale.getDefault(), getApplication<Application>().resources.getString(R.string.seeing_count_season), countSeason)
+    }
+
+    /* 직관횟수표기 (통산)*/
+    private fun getAllCountText(countAll: Int): String {
+        return String.format(Locale.getDefault(), getApplication<Application>().resources.getString(R.string.seeing_count_all), countAll)
     }
 
     /* 최근 5경기*/
@@ -93,8 +99,11 @@ class StaticsViewModel(application: Application) :
         /* 통산전적(승패무)*/
         allPlays.set(getPlaysDetailText(st.countAllWin, st.countAllDraw, st.countAllLose))
 
-        /* 직관횟수(횟수)*/
-        allCount.set(getAllCountText(st.countAll, st.countSeason))
+        /* 직관횟수(시즌)*/
+        seasonCount.set(getSeasonCountText(st.countSeason))
+
+        /* 직관횟수(통산)*/
+        allCount.set(getAllCountText(st.countAll))
     }
 
     /* 통계데이터 다운로드*/
@@ -151,7 +160,8 @@ class StaticsViewModel(application: Application) :
                     playId = game.playId,
                     playResult = game.playResult,
                     playSeason = game.playSeason,
-                    playVs = game.playVs
+                    playVs = game.playVs,
+                    stadium = game.stadium
                 ))
             }
 

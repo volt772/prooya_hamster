@@ -19,9 +19,10 @@
 
     <string name="season_label">%d 시즌</string>
 
-    <string name="winning_rate">%d %%</string>
-    <string name="w_d_l">%d승 %d무 %d패</string>
-    <string name="seeing_count">%s회 (통산 %s회)</string>
+    <string name="winning_rate">%d%%</string>
+    <string name="w_d_l">%d승%d무%d패</string>
+    <string name="seeing_count_all">통산 %s회</string>
+    <string name="seeing_count_season">%s회</string>
 
     <string name="notification_format">%s - %s(%s) vs %s(%s)</string>
 
@@ -78,6 +79,6 @@
     <string name="winning_rate_total">통산승률</string>
     <string name="recent_watching">최근직관</string>
     <string name="watching_count">직관횟수</string>
-    <string name="recent_5plays">올해 최근 5경기</string>
+    <string name="recent_5plays">시즌 최근 5경기</string>
     <string name="no_plays">직관을 한번도 안갔어요.</string>
 </resources>

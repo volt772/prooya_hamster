@@ -1,7 +1,6 @@
 package com.apx5.apx5.ui.statics
 
 import android.content.Context
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +8,8 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.apx5.apx5.R
-import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.ui.utils.UiUtils
-import com.apx5.apx5.utils.equalsExt
 import kotlinx.android.synthetic.main.item_plays.view.*
 
 /**
@@ -66,23 +63,50 @@ class RecentPlayAdapter internal constructor() :
 
         val playItems = playList[position]
 
-        /* 팀 엠블럼*/
-        holder.awayEmblem.setImageResource(playItems.awayEmblem)
-        holder.homeEmblem.setImageResource(playItems.homeEmblem)
-
         /* 팀 스코어*/
         holder.awayScore.text = playItems.awayScore.toString()
         holder.homeScore.text = playItems.homeScore.toString()
 
         /* 경기일*/
-        holder.playDate.text = UiUtils.getDateToFull(playItems.playDate)
+        val playDate = UiUtils.getDateToReadableMonthDay(playItems.playDate)
+        val stadium = playItems.stadium
 
-        /* 경기결과 구분처리 (Bold)*/
-        if (playItems.awayScore > playItems.homeScore) {
-            holder.awayScore.setTypeface(null, Typeface.BOLD)
-        } else if (playItems.awayScore < playItems.homeScore) {
-            holder.homeScore.setTypeface(null, Typeface.BOLD)
+        holder.playDate.text = "${playDate}\n${stadium}"
+
+        val awayEmblem: Int
+        val homeEmblem: Int
+
+        /* 경기결과 구분처리 (Bold and Emblem)*/
+        when {
+            playItems.awayScore > playItems.homeScore -> {
+                /* 원정팀승*/
+                holder.awayScore.setTextAppearance(R.style.TeamScoreWinTeam)
+                holder.homeScore.setTextAppearance(R.style.TeamScoreLoseTeam)
+
+                awayEmblem = UiUtils.getDrawableByName(context, playItems.awayEmblem.emblem)
+                homeEmblem = UiUtils.getDrawableByName(context, playItems.homeEmblem.emblemBl)
+
+            }
+            playItems.awayScore < playItems.homeScore -> {
+                /* 홈팀승*/
+                holder.awayScore.setTextAppearance(R.style.TeamScoreLoseTeam)
+                holder.homeScore.setTextAppearance(R.style.TeamScoreWinTeam)
+
+                awayEmblem = UiUtils.getDrawableByName(context, playItems.awayEmblem.emblemBl)
+                homeEmblem = UiUtils.getDrawableByName(context, playItems.homeEmblem.emblem)
+            }
+            else -> {
+                /* 양팀 무승부*/
+                holder.awayScore.setTextAppearance(R.style.TeamScoreLoseTeam)
+                holder.homeScore.setTextAppearance(R.style.TeamScoreLoseTeam)
+
+                awayEmblem = UiUtils.getDrawableByName(context, playItems.awayEmblem.emblem)
+                homeEmblem = UiUtils.getDrawableByName(context, playItems.homeEmblem.emblem)
+            }
         }
+
+        holder.awayEmblem.setImageResource(awayEmblem)
+        holder.homeEmblem.setImageResource(homeEmblem)
 
         return cv
     }

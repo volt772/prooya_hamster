@@ -253,4 +253,44 @@
     <style name="RippleStyleDark" parent="RippleStyleWhite">
         <item name="mrl_rippleColor">#80000000</item>
     </style>
+
+    <!-- Team Score Text Style-->
+    <style name="TeamScoreStyle">
+        <item name="android:textSize">@dimen/md_20</item>
+        <item name="android:textColor">@color/grey_700</item>
+    </style>
+
+    <!-- Team Score Win Team-->
+    <style name="TeamScoreWinTeam">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/red_85</item>
+    </style>
+
+    <!-- Team Score Lose Team-->
+    <style name="TeamScoreLoseTeam">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/grey_700</item>
+    </style>
+
+    <!-- Statics Card Base Text-->
+    <style name="StaticsBaseText">
+        <item name="android:textColor">@color/p_white_10</item>
+    </style>
+
+    <!-- Statics Card Base Text :: TOP-->
+    <style name="StaticsBaseTextTop" parent="StaticsBaseText">
+        <item name="android:textSize">@dimen/md_30</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Statics Card Base Text :: MID-->
+    <style name="StaticsBaseTextMid" parent="StaticsBaseText">
+        <item name="android:textSize">@dimen/md_14</item>
+    </style>
+
+    <!-- Statics Card Base Text :: Bot-->
+    <style name="StaticsBaseTextBot" parent="StaticsBaseText">
+        <item name="android:textSize">@dimen/md_18</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
