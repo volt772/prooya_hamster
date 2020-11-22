@@ -25,9 +25,9 @@
             <!-- Card : 시즌승률-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cl_season_rate"
-                android:layout_width="@dimen/md_120"
-                android:layout_height="@dimen/md_170"
-                app:cardCornerRadius="@dimen/md_2"
+                android:layout_width="@dimen/md_110"
+                android:layout_height="@dimen/md_150"
+                app:cardCornerRadius="@dimen/md_10"
                 app:cardElevation="@dimen/md_2"
                 android:layout_marginEnd="@dimen/md_10"
                 app:layout_constraintTop_toTopOf="parent"
@@ -43,7 +43,7 @@
                         android:id="@+id/tv_season_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/md_30"
+                        android:layout_marginTop="@dimen/md_25"
                         android:textAppearance="@style/StaticsBaseTextTop"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -77,9 +77,9 @@
             <!-- Card : 통산승률-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cl_all_rate"
-                android:layout_width="@dimen/md_120"
-                android:layout_height="@dimen/md_170"
-                app:cardCornerRadius="@dimen/md_2"
+                android:layout_width="@dimen/md_110"
+                android:layout_height="@dimen/md_150"
+                app:cardCornerRadius="@dimen/md_10"
                 app:cardElevation="@dimen/md_2"
                 app:cardBackgroundColor="@color/indigo_400"
                 app:layout_constraintTop_toTopOf="parent"
@@ -94,7 +94,7 @@
                         android:id="@+id/tv_all_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/md_30"
+                        android:layout_marginTop="@dimen/md_25"
                         android:textAppearance="@style/StaticsBaseTextTop"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -128,11 +128,11 @@
             <!-- Card : 직관횟수-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cl_count"
-                android:layout_width="@dimen/md_120"
-                android:layout_height="@dimen/md_170"
+                android:layout_width="@dimen/md_110"
+                android:layout_height="@dimen/md_150"
                 android:layout_marginStart="@dimen/md_10"
                 app:cardBackgroundColor="@color/green_500"
-                app:cardCornerRadius="@dimen/md_2"
+                app:cardCornerRadius="@dimen/md_10"
                 app:cardElevation="@dimen/md_2"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -146,7 +146,7 @@
                         android:id="@+id/tv_season_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/md_30"
+                        android:layout_marginTop="@dimen/md_25"
                         android:textAppearance="@style/StaticsBaseTextTop"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -193,9 +193,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:textColor="@color/grey_700"
-                android:textStyle="bold"
-                android:textSize="@dimen/md_20"
+                android:textAppearance="@style/PageTitle"
                 android:text="@string/recent_5plays" />
 
             <!-- 최근5경기 리스트-->

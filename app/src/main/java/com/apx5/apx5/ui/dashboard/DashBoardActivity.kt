@@ -49,7 +49,6 @@ class DashBoardActivity :
             finish()
         }
 
-//        initTabLayout()
         initBottomNav()
     }
 

@@ -293,4 +293,43 @@
         <item name="android:textSize">@dimen/md_18</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <!-- Page Title -->
+    <style name="PageTitle">
+        <item name="android:textColor">@color/grey_700</item>
+        <item name="android:textSize">@dimen/md_20</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TeamRecordTeamName -->
+    <style name="TeamRecordSummaryTeamName">
+        <item name="android:textColor">@color/grey_700</item>
+        <item name="android:textSize">@dimen/md_20</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TeamRecordSummary -->
+    <style name="TeamRecordSummaryTeamSummary">
+        <item name="android:textColor">@color/grey_500</item>
+        <item name="android:textSize">@dimen/md_18</item>
+    </style>
+
+    <!-- TeamRecordListLabel -->
+    <style name="TeamRecordSummaryListLabel">
+        <item name="android:textColor">@color/grey_700</item>
+        <item name="android:textSize">@dimen/md_16</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TeamRecordListItemTeamName -->
+    <style name="TeamRecordListItemTeamName">
+        <item name="android:textColor">@color/grey_700</item>
+        <item name="android:textSize">@dimen/md_16</item>
+    </style>
+
+    <!-- TeamRecordListItemCount -->
+    <style name="TeamRecordListItemCount">
+        <item name="android:textColor">@color/grey_700</item>
+        <item name="android:textSize">@dimen/md_16</item>
+    </style>
 </resources>

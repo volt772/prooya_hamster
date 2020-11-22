@@ -31,7 +31,6 @@ class RecordTeamAdapter internal constructor(
     override fun getCount() = teamList.size
 
     private class RecordTeamHolder {
-        lateinit var recordList: View
         lateinit var teamEmblem: ImageView
         lateinit var teamName: TextView
         lateinit var winCount: TextView
@@ -50,7 +49,6 @@ class RecordTeamAdapter internal constructor(
             cv = inflater.inflate(R.layout.item_team_record, parent, false)
 
             holder = RecordTeamHolder().apply {
-                recordList = cv.lv_play_list
                 teamEmblem = cv.iv_team_emblem
                 teamName = cv.tv_team_name
                 winCount = cv.tv_win
@@ -68,31 +66,23 @@ class RecordTeamAdapter internal constructor(
 
         val teamItems = teamList[position]
 
-        /* 테이블 헤더 레이블*/
-        if (teamItems.win == LABEL_CODE) {
-            holder.winCount.text = context.resources.getString(R.string.win)
-            holder.drawCount.text = context.resources.getString(R.string.draw)
-            holder.loseCount.text = context.resources.getString(R.string.lose)
-            holder.winningRate.text = "%"
-        } else {
-            /* 팀 엠블럼*/
-            holder.teamEmblem.setImageResource(teamItems.teamEmblem)
+        /* 팀 엠블럼*/
+        holder.teamEmblem.setImageResource(teamItems.teamEmblem)
 
-            /* 팀 이름*/
-            holder.teamName.text = PrTeam.getTeamByCode(teamItems.team).fullName
+        /* 팀 이름*/
+        holder.teamName.text = PrTeam.getTeamByCode(teamItems.team).fullName
 
-            /* 승*/
-            holder.winCount.text = teamItems.win.toString()
+        /* 승*/
+        holder.winCount.text = teamItems.win.toString()
 
-            /* 무*/
-            holder.drawCount.text = teamItems.draw.toString()
+        /* 무*/
+        holder.drawCount.text = teamItems.draw.toString()
 
-            /* 패*/
-            holder.loseCount.text = teamItems.lose.toString()
+        /* 패*/
+        holder.loseCount.text = teamItems.lose.toString()
 
-            /* 승률*/
-            holder.winningRate.text = teamItems.rate.toString()
-        }
+        /* 승률*/
+        holder.winningRate.text = teamItems.rate.toString()
 
         /* 상세보기*/
         cv.setOnClickListener { nav.getDetailLists(teamItems.year, teamItems.team) }
@@ -109,23 +99,5 @@ class RecordTeamAdapter internal constructor(
         teamList.add(recordItem)
     }
 
-    internal fun addItem() {
-        val labelCode = LABEL_CODE
-
-        teamList.add(
-            AdtTeamLists(
-                year = 0,
-                team = "",
-                win = labelCode,
-                draw = labelCode,
-                lose = labelCode,
-                rate = labelCode,
-                teamEmblem = labelCode
-            )
-        )
-    }
-
-    companion object {
-        private val LABEL_CODE = 9999
-    }
+    companion object
 }

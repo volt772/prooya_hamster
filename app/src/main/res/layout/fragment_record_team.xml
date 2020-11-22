@@ -1,234 +1,219 @@
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.apx5.apx5.ui.recordteam.RecordTeamViewModel"/>
-    </data>
-
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_10" >
+        android:padding="@dimen/md_15"
+        android:background="@color/grey_200" >
 
-        <RelativeLayout
+        <!-- 상단 타이틀-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_box_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/grey_200"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" >
 
-            <!-- 2019년 시즌-->
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/nested_scroll_view"
+            <TextView
+                android:id="@+id/tv_box_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_700"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textAppearance="@style/PageTitle"
+                android:text="{YEAR}시즌 팀기록" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_change_season"
+                android:layout_width="@dimen/md_110"
+                android:layout_height="@dimen/md_30"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/btn_season_change_round"
+                android:text="@string/change_season"
+                android:textSize="16dp"
+                android:textColor="@color/grey_700" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 상단 요약-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_box_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/md_15"
+            app:layout_constraintTop_toBottomOf="@id/cl_box_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cl_box_team_record"
+            app:layout_constraintRight_toRightOf="parent" >
+
+            <!-- Card : 시즌요약-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cl_season_rate"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:scrollbars="none"
-                android:scrollingCache="true">
+                android:layout_height="@dimen/md_100"
+                app:cardElevation="@dimen/md_2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:cardBackgroundColor="@color/p_white_10" >
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:descendantFocusability="blocksDescendants"
-                    android:orientation="vertical">
+                    android:padding="@dimen/md_15" >
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/md_15" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_statics_box"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/md_10" >
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" >
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/md_0"
+                        <TextView
+                            android:id="@+id/tv_team_name"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/md_2"
-                            android:layout_marginLeft="@dimen/md_2"
-                            android:layout_marginRight="@dimen/md_2"
-                            android:layout_marginTop="@dimen/md_2"
-                            android:layout_weight="1"
-                            android:visibility="visible"
-                            app:cardCornerRadius="@dimen/md_2"
-                            app:cardElevation="@dimen/md_2">
+                            android:text="{TEAM FULL NAME}"
+                            android:textAppearance="@style/TeamRecordSummaryTeamName"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent" />
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/md_100"
-                                android:orientation="horizontal"
-                                android:padding="@dimen/md_15">
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical|left"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:id="@+id/tv_team_name"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                        android:textColor="@color/grey_700"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/tv_season_label"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                                        android:textColor="@color/grey_500" />
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:layout_marginTop="@dimen/md_5" >
-
-                                        <TextView
-                                            android:id="@+id/tv_season_static"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                            android:textColor="@color/grey_500" />
-
-                                        <androidx.appcompat.widget.AppCompatButton
-                                            android:id="@+id/bt_change_season"
-                                            android:layout_width="@dimen/md_65"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="@dimen/md_10"
-                                            android:background="@drawable/btn_rounded_navy"
-                                            android:text="@string/change_season"
-                                            android:textColor="@color/p_white_10" />
-                                    </LinearLayout>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="@dimen/md_80"
-                                    android:layout_height="@dimen/md_80"
-                                    android:layout_alignParentEnd="true"
-                                    android:orientation="vertical" >
-
-                                    <ImageView
-                                        android:id="@+id/iv_team_emblem"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        app:srcCompat="@drawable/ic_info_type_d" />
-                                </LinearLayout>
-
-                            </RelativeLayout>
-                        </androidx.cardview.widget.CardView>
-
-                        <View
-                            android:layout_width="@dimen/md_10"
-                            android:layout_height="@dimen/md_0" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/md_10" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/md_10"
-                        android:paddingRight="@dimen/md_10">
-
-                        <!-- 최근 직관경기-->
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/md_0"
+                        <TextView
+                            android:id="@+id/tv_season_static"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/md_2"
-                            android:layout_marginLeft="@dimen/md_2"
-                            android:layout_marginRight="@dimen/md_2"
-                            android:layout_marginTop="@dimen/md_2"
-                            android:layout_weight="1"
-                            android:visibility="visible"
-                            app:cardCornerRadius="@dimen/md_2"
-                            app:cardElevation="@dimen/md_2"/>
+                            android:layout_marginTop="@dimen/md_10"
+                            android:text="00승00무00패"
+                            android:textAppearance="@style/TeamRecordSummaryTeamSummary"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_team_name" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <View
-                            android:layout_width="@dimen/md_10"
-                            android:layout_height="@dimen/md_0" />
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/iv_team_emblem"
+                        android:layout_width="@dimen/md_80"
+                        android:layout_height="@dimen/md_80"
+                        android:background="@android:color/transparent"
+                        app:civ_shadow="true"
+                        app:civ_shadow_radius="0"
+                        app:civ_border="false"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:srcCompat="@drawable/ic_team_dsb" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <!-- 직관횟수-->
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/md_0"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/md_2"
-                            android:layout_marginLeft="@dimen/md_2"
-                            android:layout_marginRight="@dimen/md_2"
-                            android:layout_marginTop="@dimen/md_2"
-                            android:layout_weight="1"
-                            android:visibility="visible"
-                            app:cardCornerRadius="@dimen/md_2"
-                            app:cardElevation="@dimen/md_2"/>
-                    </LinearLayout>
+        <!-- 팀간리스트-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_box_team_record"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/md_0"
+            android:layout_marginTop="@dimen/md_20"
+            app:layout_constraintTop_toBottomOf="@id/cl_box_summary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" >
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/md_10"
-                        android:paddingRight="@dimen/md_10">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_list_label"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/md_50"
+                android:background="@color/p_white_10"
+                android:padding="@dimen/md_10"
+                app:layout_constraintTop_toTopOf="parent" >
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/md_2"
-                            android:layout_marginTop="@dimen/md_2"
-                            android:layout_marginRight="@dimen/md_2"
-                            android:layout_marginBottom="@dimen/md_2"
-                            android:visibility="visible"
-                            app:cardCornerRadius="@dimen/md_2"
-                            app:cardElevation="@dimen/md_2">
+                <TextView
+                    android:id="@+id/tv_list_label_win"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/md_25"
+                    android:textAppearance="@style/TeamRecordSummaryListLabel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/tv_list_label_draw"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/win" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_list_label_draw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/md_25"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textAppearance="@style/TeamRecordSummaryListLabel"
+                    app:layout_constraintRight_toLeftOf="@id/tv_list_label_lose"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/draw" />
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/md_558"
-                                    tools:showIn="@layout/fragment_statics">
+                <TextView
+                    android:id="@+id/tv_list_label_lose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/md_25"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textAppearance="@style/TeamRecordSummaryListLabel"
+                    app:layout_constraintRight_toLeftOf="@id/tv_list_label_rate"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/lose" />
 
-                                    <ListView
-                                        android:id="@+id/lvTeamLists"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent" />
-                                </RelativeLayout>
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_list_label_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/md_20"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textAppearance="@style/TeamRecordSummaryListLabel"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="%" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/md_10" />
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
-        </RelativeLayout>
+            <View
+                android:id="@+id/vw_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/md_1"
+                android:background="@color/grey_300"
+                app:layout_constraintTop_toBottomOf="@id/cl_list_label" />
+
+            <ListView
+                android:id="@+id/lv_team_record"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/md_0"
+                android:background="@color/p_white_10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vw_line"
+                app:layout_constraintVertical_bias="1.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- 로딩중-->
-        <RelativeLayout
-            android:id="@+id/ryt_loading"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" >
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" >
 
             <com.github.ybq.android.spinkit.SpinKitView
                 android:id="@+id/sk_loading"
                 style="@style/SpinKitView.Large.ThreeBounce"
                 android:layout_width="@dimen/md_40"
                 android:layout_height="@dimen/md_40"
-                android:layout_gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:SpinKit_Color="@color/red_400" />
-        </RelativeLayout>
-    </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

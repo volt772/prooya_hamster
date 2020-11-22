@@ -114,6 +114,7 @@
 
     <dimen name="md_110">110dp</dimen>
     <dimen name="md_120">120dp</dimen>
+    <dimen name="md_150">150dp</dimen>
     <dimen name="md_170">170dp</dimen>
     <dimen name="md_200">200dp</dimen>
     <dimen name="md_220">220dp</dimen>

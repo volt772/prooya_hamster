@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ListView
 import androidx.databinding.library.baseAdapters.BR
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
@@ -22,7 +21,6 @@ import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.equalsExt
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -73,13 +71,13 @@ class RecordTeamFragment :
     private fun initView() {
         /* 팀리스트*/
         recordTeamAdapter = RecordTeamAdapter(this)
-        binding().lvTeamLists.adapter = recordTeamAdapter
+        binding().lvTeamRecord.adapter = recordTeamAdapter
 
         /* 상세리스트*/
         recordDetailAdapter = RecordDetailAdapter(requireContext())
 
         /* 시즌변경 버튼*/
-        binding().btChangeSeason.setOnClickListener {
+        binding().btnChangeSeason.setOnClickListener {
             val seasonSelectDialog = SeasonSelectDialog.getInstance(this)
             seasonSelectDialog.show(childFragmentManager, "selectSeason")
         }
@@ -149,8 +147,6 @@ class RecordTeamFragment :
     override fun setTeamRecord(teams: List<DtTeamRecord>) {
         recordTeamAdapter.clearItems()
 
-        recordTeamAdapter.addItem()
-
         for (team in teams) {
             if (teamCode != team.team) {
                 recordTeamAdapter.addItem(
@@ -175,6 +171,7 @@ class RecordTeamFragment :
 
     /* 상단 헤더 요약*/
     override fun setHeaderSummary(summary: OpsTeamSummary) {
+        binding().tvBoxTitle.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), summary.year)
         binding().tvSeasonStatic.text =
             String.format(
                 Locale.getDefault(),
@@ -182,7 +179,6 @@ class RecordTeamFragment :
             )
 
         binding().tvTeamName.text = PrTeam.getTeamByCode(teamCode).fullName
-        binding().tvSeasonLabel.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), summary.year)
         binding().ivTeamEmblem.setImageResource(
             UiUtils.getDrawableByName(
                 requireContext(),
