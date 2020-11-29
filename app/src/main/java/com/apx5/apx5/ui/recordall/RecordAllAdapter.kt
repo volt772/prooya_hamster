@@ -13,7 +13,16 @@ import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.ui.utils.UiUtils
+import kotlinx.android.synthetic.main.item_plays.view.*
 import kotlinx.android.synthetic.main.item_plays_all.view.*
+import kotlinx.android.synthetic.main.item_plays_all.view.iv_game_result
+import kotlinx.android.synthetic.main.item_plays_all.view.iv_team_emblem_away
+import kotlinx.android.synthetic.main.item_plays_all.view.iv_team_emblem_home
+import kotlinx.android.synthetic.main.item_plays_all.view.lv_play_list
+import kotlinx.android.synthetic.main.item_plays_all.view.tv_away_score
+import kotlinx.android.synthetic.main.item_plays_all.view.tv_home_score
+import kotlinx.android.synthetic.main.item_plays_all.view.tv_play_date
+import kotlinx.android.synthetic.main.item_record_detail.view.*
 
 /**
  * RecordAllAdapter
@@ -34,13 +43,13 @@ class RecordAllAdapter internal constructor(
     override fun getCount() = playList.size
 
     private class RecordAllHolder {
-        lateinit var recordAll: View
-        lateinit var teamEmblemAway: ImageView
-        lateinit var teamEmblemHome: ImageView
+        lateinit var playRecent: View
+        lateinit var playResult: ImageView
+        lateinit var awayEmblem: ImageView
+        lateinit var homeEmblem: ImageView
         lateinit var awayScore: TextView
         lateinit var homeScore: TextView
         lateinit var playDate: TextView
-        lateinit var playResult: TextView
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -53,13 +62,13 @@ class RecordAllAdapter internal constructor(
             cv = inflater.inflate(R.layout.item_plays_all, parent, false)
 
             holder = RecordAllHolder().apply {
-                recordAll = cv.lv_play_list_all
-                teamEmblemAway = cv.iv_all_team_emblem_away
-                teamEmblemHome = cv.iv_all_team_emblem_home
-                awayScore = cv.tv_all_away_score
-                homeScore = cv.tv_all_home_score
-                playDate = cv.tv_all_play_date
-                playResult = cv.tv_all_result
+                playRecent = cv.lv_play_list
+                playResult = cv.iv_game_result
+                awayEmblem = cv.iv_team_emblem_away
+                homeEmblem = cv.iv_team_emblem_home
+                awayScore = cv.tv_away_score
+                homeScore = cv.tv_home_score
+                playDate = cv.tv_play_date
             }
 
             cv.tag = holder
@@ -70,29 +79,61 @@ class RecordAllAdapter internal constructor(
 
         val playItems = playList[position]
 
-        /* 팀 엠블럼*/
-//        holder.teamEmblemAway.setImageResource(playItems.awayEmblem)
-//        holder.teamEmblemHome.setImageResource(playItems.homeEmblem)
-
         /* 팀 스코어*/
         holder.awayScore.text = playItems.awayScore.toString()
         holder.homeScore.text = playItems.homeScore.toString()
 
         /* 경기일*/
-        holder.playDate.text = UiUtils.getDateToFull(playItems.playDate)
+        val playDate = UiUtils.getDateToReadableMonthDay(playItems.playDate)
+        val stadium = playItems.stadium
+
+        holder.playDate.text = "${playDate}\n${stadium}"
+
+        val awayEmblem: Int
+        val homeEmblem: Int
+
+        /* 경기결과 구분처리 (Bold and Emblem)*/
+        when {
+            playItems.awayScore > playItems.homeScore -> {
+                /* 원정팀승*/
+                holder.awayScore.setTextAppearance(R.style.TeamScoreWinTeam)
+                holder.homeScore.setTextAppearance(R.style.TeamScoreLoseTeam)
+
+                awayEmblem = UiUtils.getDrawableByName(context, playItems.awayEmblem.emblem)
+                homeEmblem = UiUtils.getDrawableByName(context, playItems.homeEmblem.emblemBl)
+
+            }
+            playItems.awayScore < playItems.homeScore -> {
+                /* 홈팀승*/
+                holder.awayScore.setTextAppearance(R.style.TeamScoreLoseTeam)
+                holder.homeScore.setTextAppearance(R.style.TeamScoreWinTeam)
+
+                awayEmblem = UiUtils.getDrawableByName(context, playItems.awayEmblem.emblemBl)
+                homeEmblem = UiUtils.getDrawableByName(context, playItems.homeEmblem.emblem)
+            }
+            else -> {
+                /* 양팀 무승부*/
+                holder.awayScore.setTextAppearance(R.style.TeamScoreLoseTeam)
+                holder.homeScore.setTextAppearance(R.style.TeamScoreLoseTeam)
+
+                awayEmblem = UiUtils.getDrawableByName(context, playItems.awayEmblem.emblem)
+                homeEmblem = UiUtils.getDrawableByName(context, playItems.homeEmblem.emblem)
+            }
+        }
+
+        holder.awayEmblem.setImageResource(awayEmblem)
+        holder.homeEmblem.setImageResource(homeEmblem)
 
         /* 경기결과*/
-        val result = PrResultCode.getResultByDisplayCode(playItems.playResult)
-        holder.playResult.text = result.displayCode
-        holder.playResult.setTextColor(ContextCompat.getColor(ctx, result.color))
+        holder.playResult.setColorFilter(context.getColor(playItems.playResult.color))
 
-        /* 삭제*/
-        holder.recordAll.setOnLongClickListener {
+        /* 기록삭제 (Long Press)*/
+        cv.setOnLongClickListener {
             nav.delHistoryItem(AdtPlayDelTarget(
                 id = playItems.playId,
                 season = playItems.playSeason,
                 versus = playItems.playVersus,
-                result = playItems.playResult
+                result = playItems.playResult.codeAbbr
             ))
             true
         }

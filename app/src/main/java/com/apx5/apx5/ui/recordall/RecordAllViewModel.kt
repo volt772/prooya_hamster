@@ -62,7 +62,8 @@ class RecordAllViewModel(application: Application) :
                     playId = game.playId,
                     playResult = game.playResult,
                     playSeason = game.playSeason,
-                    playVs = game.playVs
+                    playVs = game.playVs,
+                    stadium = game.stadium
                 )
             )
         }

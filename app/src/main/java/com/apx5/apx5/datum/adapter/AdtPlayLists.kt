@@ -1,5 +1,6 @@
 package com.apx5.apx5.datum.adapter
 
+import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrTeam
 
 /**
@@ -17,7 +18,7 @@ data class AdtPlayLists (
     val homeEmblem: PrTeam,
     val playDate: String,
     val playId: Int,
-    val playResult: String,
+    val playResult: PrResultCode,
     val playSeason: Int,
     val playVersus: String,
     val stadium: String

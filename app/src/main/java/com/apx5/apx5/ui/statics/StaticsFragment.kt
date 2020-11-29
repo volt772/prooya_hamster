@@ -6,6 +6,7 @@ import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
@@ -64,7 +65,7 @@ class StaticsFragment :
                     homeEmblem = PrTeam.getTeamByCode(play.homeTeam),
                     playDate = "${play.playDate}",
                     playId = play.playId,
-                    playResult =  play.playResult,
+                    playResult = PrResultCode.getResultByDisplayCode(play.playResult),
                     playSeason = play.playSeason,
                     playVersus = play.playVs,
                     stadium = PrStadium.getStadiumByCode(play.stadium).displayName

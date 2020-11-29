@@ -5,6 +5,8 @@ import android.view.View
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
+import com.apx5.apx5.constants.PrResultCode
+import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordAllBinding
 import com.apx5.apx5.datum.DtAllGames
@@ -59,10 +61,10 @@ class RecordAllFragment :
     /* UI 초기화*/
     private fun initView() {
         recordAdapter = RecordAllAdapter(requireContext(), this)
-        binding().lvPlayLists.adapter = recordAdapter
+        binding().lvPlayList.adapter = recordAdapter
 
         /* 시즌 변경*/
-        binding().tvSearchYear.setOnClickListener {
+        binding().btnChangeSeason.setOnClickListener {
             val seasonSelectDialog = DialogSeasonChange(::selectYear)
             seasonSelectDialog.show(childFragmentManager, "selectSeason")
         }
@@ -93,12 +95,18 @@ class RecordAllFragment :
 
     /* 리스트 분기*/
     private fun isListExists(exists: Boolean) {
-        binding().rlPlayLists.visibility = CommonUtils.setVisibility(exists)
-        binding().rlEmptyList.visibility = CommonUtils.setVisibility(!exists)
+        binding().clAllList.visibility = CommonUtils.setVisibility(exists)
+        binding().clEmptyList.visibility = CommonUtils.setVisibility(!exists)
     }
 
     /* 기록 리스트 생성*/
     override fun setHistory(plays: List<DtAllGames>, year: Int) {
+        binding().tvBoxTitle.text = String.format(
+            Locale.getDefault(),
+            resources.getString(R.string.all_label),
+            year
+        )
+
         var isVisible = true
 
         recordAdapter.clearItems()
@@ -119,17 +127,15 @@ class RecordAllFragment :
                     homeEmblem = PrTeam.getTeamByCode(play.homeTeam),
                     playDate = "${play.playDate}",
                     playId = play.playId,
-                    playResult =  play.playResult,
+                    playResult =  PrResultCode.getResultByDisplayCode(play.playResult),
                     playSeason = play.playSeason,
                     playVersus = play.playVs,
-                    stadium = ""
+                    stadium = PrStadium.getStadiumByCode(play.stadium).displayName
                 )
             )
         }
 
         recordAdapter.notifyDataSetChanged()
-
-        binding().tvSearchYear.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), year)
     }
 
     /* Observers*/

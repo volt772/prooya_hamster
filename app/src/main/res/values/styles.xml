@@ -270,13 +270,18 @@
 
     <!-- Team Score Text Style-->
     <style name="TeamScoreStyle">
+        <item name="android:textSize">@dimen/md_18</item>
+        <item name="android:textColor">@color/grey_700</item>
+    </style>
+
+    <style name="TeamScoreStyleRecentList">
         <item name="android:textSize">@dimen/md_20</item>
         <item name="android:textColor">@color/grey_700</item>
     </style>
 
     <!-- Team Score Win Team-->
     <style name="TeamScoreWinTeam">
-        <item name="android:textStyle">bold</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/red_85</item>
     </style>
 

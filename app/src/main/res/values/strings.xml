@@ -18,6 +18,7 @@
     <string name="day_game_date_with_starttime">%s</string>
 
     <string name="season_label">%d시즌 팀기록</string>
+    <string name="all_label">%d시즌 전체기록</string>
 
     <string name="winning_rate">%d%%</string>
     <string name="w_d_l">%d승%d무%d패</string>
