@@ -29,7 +29,7 @@ class RecordTeamViewModel(application: Application) :
         prService.getRecordDetails(PtGetRecordDetail(email, versus, year), object: PrOpsCallBack<CtGetRecordDetail> {
             override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtGetRecordDetail>?) {
                 responseBody?.data?.let { res ->
-                    getNavigator()?.showDetailLists(res.games)
+                    getNavigator()?.showDetailLists(res.games, versus)
                 }
             }
 

@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
-import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.datum.adapter.AdtDetailLists
 import com.apx5.apx5.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.item_record_detail.view.*
@@ -33,11 +31,12 @@ class RecordDetailAdapter internal constructor(
     override fun getCount() = detailList.size
 
     private class RecordDetailHolder {
-        lateinit var detailList: View
-        lateinit var teamEmblem: ImageView
-        lateinit var gotScore: TextView
-        lateinit var lostScore: TextView
-        lateinit var playResult: TextView
+        lateinit var playRecent: View
+        lateinit var playResult: ImageView
+        lateinit var awayEmblem: ImageView
+        lateinit var homeEmblem: ImageView
+        lateinit var awayScore: TextView
+        lateinit var homeScore: TextView
         lateinit var playDate: TextView
     }
 
@@ -50,12 +49,13 @@ class RecordDetailAdapter internal constructor(
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             cv = inflater.inflate(R.layout.item_record_detail, parent, false)
             holder = RecordDetailHolder().apply {
-                detailList = cv.lv_play_detail
-                teamEmblem = cv.iv_team_emblem
-                gotScore = cv.tv_get_score
-                lostScore = cv.tv_lost_score
-                playResult = cv.tv_result
-                playDate = cv.tv_date
+                playRecent = cv.lv_play_list
+                playResult = cv.iv_game_result
+                awayEmblem = cv.iv_team_emblem_away
+                homeEmblem = cv.iv_team_emblem_home
+                awayScore = cv.tv_away_score
+                homeScore = cv.tv_home_score
+                playDate = cv.tv_play_date
             }
 
             cv.tag = holder
@@ -67,22 +67,21 @@ class RecordDetailAdapter internal constructor(
 
         val detailItems = detailList[position]
 
-        /* 팀 엠블럼*/
-        holder.teamEmblem.setImageResource(detailItems.emblemTeam)
+        /* 팀 스코어*/
+        holder.awayScore.text = detailItems.awayScore.toString()
+        holder.homeScore.text = detailItems.homeScore.toString()
 
-        /* 득점*/
-        holder.gotScore.text = detailItems.ptGet.toString()
+        /* 경기일*/
+        val playDate = UiUtils.getDateToReadableMonthDay(detailItems.playDate)
+        val stadium = detailItems.stadium
 
-        /* 실점*/
-        holder.lostScore.text = detailItems.ptLost.toString()
+        holder.playDate.text = "${playDate}\n${stadium}"
 
-        /* 결과*/
-        val result = PrResultCode.getResultByDisplayCode(detailItems.playResult)
-        holder.playResult.text = result.displayCode
-        holder.playResult.setTextColor(ContextCompat.getColor(ctx, result.color))
+        holder.awayEmblem.setImageResource(UiUtils.getDrawableByName(context, detailItems.awayEmblem.emblem))
+        holder.homeEmblem.setImageResource(UiUtils.getDrawableByName(context, detailItems.homeEmblem.emblem))
 
-        /* 일자*/
-        holder.playDate.text = UiUtils.replaceText(detailItems.playDate, "-", ".")
+        /* 경기결과*/
+        holder.playResult.setColorFilter(context.getColor(detailItems.playResult.color))
 
         return cv
     }

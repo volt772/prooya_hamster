@@ -5,11 +5,14 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.ListView
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrResultCode
+import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordTeamBinding
 import com.apx5.apx5.datum.DtTeamRecord
@@ -109,23 +112,19 @@ class RecordTeamFragment :
     }
 
     /* 상세정보 Dialog*/
-    override fun showDetailLists(plays: List<OpsTeamDetail>) {
+    override fun showDetailLists(plays: List<OpsTeamDetail>, versus: String) {
         recordDetailAdapter.clearItems()
         if (plays.isNotEmpty()) {
             for (play in plays) {
-                val teamEmblem = UiUtils.getDrawableByName(
-                    requireContext(),
-                    PrConstants.Teams.EMBLEM_PREFIX.plus(play.playVs)
-                )
-
                 recordDetailAdapter.addItem(
                     AdtDetailLists(
-                        emblemTeam = teamEmblem,
-                        ptGet = play.ptGet,
-                        ptLost = play.ptLost,
-                        playDate = play.playDate,
-                        playResult = play.playResult,
-                        playVs = play.playVs
+                        awayScore = play.awayScore,
+                        awayEmblem = PrTeam.getTeamByCode(play.awayTeam),
+                        homeScore = play.homeScore,
+                        homeEmblem = PrTeam.getTeamByCode(play.homeTeam),
+                        playResult = PrResultCode.getResultByDisplayCode(play.playResult),
+                        playDate = "${play.playDate}",
+                        stadium = PrStadium.getStadiumByCode(play.stadium).displayName
                     )
                 )
             }
@@ -138,7 +137,16 @@ class RecordTeamFragment :
             builder.setView(view)
 
             val listview = view.findViewById<ListView>(R.id.lv_record_list)
+            val teamEmblem = view.findViewById<ImageView>(R.id.iv_team_emblem)
             val dialog = builder.create()
+
+            /* 상대팀 BI*/
+            teamEmblem.setImageResource(
+                UiUtils.getDrawableByName(
+                    requireContext(),
+                    PrTeam.getTeamByCode(versus).emblem
+                )
+            )
 
             listview.adapter = recordDetailAdapter
             dialog.setCancelable(true)

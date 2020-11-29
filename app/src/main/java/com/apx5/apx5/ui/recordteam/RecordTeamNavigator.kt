@@ -10,7 +10,7 @@ import com.apx5.apx5.datum.ops.OpsTeamSummary
  */
 interface RecordTeamNavigator {
     fun getDetailLists(year: Int, versus: String)
-    fun showDetailLists(plays: List<OpsTeamDetail>)
+    fun showDetailLists(plays: List<OpsTeamDetail>, versus: String)
     fun setTeamRecord(teams: List<DtTeamRecord>)
     fun setHeaderSummary(summary: OpsTeamSummary)
     fun cancelSpinKit()
