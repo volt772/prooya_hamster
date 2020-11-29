@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- TITLE-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/md_16"
+        android:text="@string/season_select_title"
+        android:textAppearance="@style/SeasonSelectionTitle"
+        app:layout_constraintBottom_toTopOf="@+id/np_year"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 선택-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_select"
+        android:layout_width="@dimen/md_60"
+        android:layout_height="@dimen/md_30"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/btn_season_select_round"
+        android:layout_margin="@dimen/md_16"
+        android:text="@string/select_ok"
+        android:textSize="@dimen/md_16"
+        android:textColor="@color/p_white_10" />
+
+    <!-- Picker-->
+    <NumberPicker
+        android:id="@+id/np_year"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="@dimen/md_16"
+        android:background="@color/p_white_10"
+        android:layout_marginTop="@dimen/md_16"
+        android:descendantFocusability="blocksDescendants"
+        android:theme="@style/DefaultNumberPickerTheme"
+        app:layout_constraintTop_toBottomOf="@id/btn_select"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

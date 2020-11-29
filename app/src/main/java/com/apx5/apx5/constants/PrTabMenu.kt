@@ -17,14 +17,50 @@ enum class PrTabMenu(
     val iconName: String,
     val color: Int,
     val menuName: Int,
-    val fragment: Fragment) {
-
-    STATICS("ic_tab_0", R.color.red_85, R.string.menu0, StaticsFragment.newInstance()),
-    RECORD_TEAM("ic_tab_1", R.color.grey_300, R.string.menu1, RecordTeamFragment.newInstance()),
-    RECORD_ALL("ic_tab_2", R.color.grey_300, R.string.menu2, RecordAllFragment.newInstance()),
-    DAYS("ic_tab_3", R.color.grey_300, R.string.menu3, DaysFragment.newInstance()),
-    SETTING("ic_tab_4", R.color.grey_300, R.string.menu4, SettingFragment.newInstance()),
-    OTHER("", 0, 0, StaticsFragment.newInstance());
+    val fragment: Fragment
+) {
+    /* 통계*/
+    STATICS(
+        "ic_tab_0",
+        R.color.red_85,
+        R.string.menu0,
+        StaticsFragment.newInstance()
+    ),
+    /* 팀기록*/
+    RECORD_TEAM(
+        "ic_tab_1",
+        R.color.grey_300,
+        R.string.menu1,
+        RecordTeamFragment.newInstance()
+    ),
+    /* 전체기록*/
+    RECORD_ALL(
+        "ic_tab_2",
+        R.color.grey_300,
+        R.string.menu2,
+        RecordAllFragment.newInstance()
+    ),
+    /* 일정*/
+    DAYS(
+        "ic_tab_3",
+        R.color.grey_300,
+        R.string.menu3,
+        DaysFragment.newInstance()
+    ),
+    /* 설정*/
+    SETTING(
+        "ic_tab_4",
+        R.color.grey_300,
+        R.string.menu4,
+        SettingFragment.newInstance()
+    ),
+    /* 기타*/
+    OTHER(
+        "",
+        0,
+        0,
+        StaticsFragment.newInstance()
+    );
 
     companion object {
         fun getTabByOrder(order: Int): PrTabMenu {

@@ -13,6 +13,7 @@ import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
+import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
@@ -62,8 +63,8 @@ class RecordAllFragment :
 
         /* 시즌 변경*/
         binding().tvSearchYear.setOnClickListener {
-            val seasonSelectDialog = YearSelectDialog.getInstance(this)
-            seasonSelectDialog.show(childFragmentManager, "selectYear")
+            val seasonSelectDialog = DialogSeasonChange(::selectYear)
+            seasonSelectDialog.show(childFragmentManager, "selectSeason")
         }
     }
 

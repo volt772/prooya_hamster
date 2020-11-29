@@ -302,6 +302,7 @@
 
     <color name="p_grey_10">#839484</color>
     <color name="p_grey_20">#999999</color>
+    <color name="p_grey_30">#C7C6C6</color>
 
     <color name="p_white_10">#FFFFFF</color>
 </resources>

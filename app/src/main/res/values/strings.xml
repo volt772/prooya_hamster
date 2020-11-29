@@ -74,6 +74,8 @@
     <string name="menu2">전체기록</string>
     <string name="menu3">일정</string>
     <string name="menu4">설정</string>
+    <string name="select_ok">선택</string>
+    <string name="season_select_title">시즌선택</string>
 
     <string name="winning_rate_season">시즌승률</string>
     <string name="winning_rate_total">통산승률</string>

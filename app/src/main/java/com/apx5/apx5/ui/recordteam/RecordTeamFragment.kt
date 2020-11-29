@@ -19,6 +19,7 @@ import com.apx5.apx5.datum.ops.OpsTeamDetail
 import com.apx5.apx5.datum.ops.OpsTeamSummary
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
+import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -83,7 +84,7 @@ class RecordTeamFragment :
 
         /* 시즌변경 버튼*/
         binding().btnChangeSeason.setOnClickListener {
-            val seasonSelectDialog = SeasonSelectDialog.getInstance(this)
+            val seasonSelectDialog = DialogSeasonChange(::selectSeasonYear)
             seasonSelectDialog.show(childFragmentManager, "selectSeason")
         }
     }
@@ -94,7 +95,7 @@ class RecordTeamFragment :
     }
 
     /* 시즌선택*/
-    override fun selectSeasonYear(year: Int) {
+    private fun selectSeasonYear(year: Int) {
         subscriber(year)
     }
 

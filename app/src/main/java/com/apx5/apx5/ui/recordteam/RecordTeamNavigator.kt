@@ -9,7 +9,6 @@ import com.apx5.apx5.datum.ops.OpsTeamSummary
  * RecordTeamNavigator
  */
 interface RecordTeamNavigator {
-    fun selectSeasonYear(year: Int)
     fun getDetailLists(year: Int, versus: String)
     fun showDetailLists(plays: List<OpsTeamDetail>)
     fun setTeamRecord(teams: List<DtTeamRecord>)

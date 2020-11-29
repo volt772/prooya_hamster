@@ -73,8 +73,8 @@ class DashBoardActivity :
         switchPage(PrTabMenu.STATICS)
 
         DashBoardNav.bottomNavLayout(
-           view = binding().navDashboard,
-           switchPage = ::switchPage
+            view = binding().navDashboard,
+            switchPage = ::switchPage
         )
     }
 
@@ -89,9 +89,7 @@ class DashBoardActivity :
         transaction.commit()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        return true
-    }
+    override fun onCreateOptionsMenu(menu: Menu) = true
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) finish()
