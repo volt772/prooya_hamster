@@ -232,13 +232,23 @@
         <item name="android:colorForeground">#42221f1f</item>
     </style>
 
-    <!-- Bottom Sheet -->
-    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+    <!-- Bottom Sheet(YearSelection) -->
+    <style name="BottomSheetYearSelection" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bg_season_select_rounded</item>
     </style>
 
     <style name="YearSelectionRoundStyle" parent="@style/Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="bottomSheetStyle">@style/BottomSheetYearSelection</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <!-- Bottom Sheet(Team Detail) -->
+    <style name="BottomSheetTeamDetail" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_team_detail_rounded</item>
+    </style>
+
+    <style name="TeamDetailRoundStyle" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetTeamDetail</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
@@ -339,6 +349,13 @@
 
     <!-- SeasonSelectionBottom Title -->
     <style name="SeasonSelectionTitle">
+        <item name="android:textColor">@color/p_white_10</item>
+        <item name="android:textSize">@dimen/md_16</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TeamDetailBottom Title -->
+    <style name="TeamDetailTitle">
         <item name="android:textColor">@color/p_white_10</item>
         <item name="android:textSize">@dimen/md_16</item>
         <item name="android:textStyle">bold</item>

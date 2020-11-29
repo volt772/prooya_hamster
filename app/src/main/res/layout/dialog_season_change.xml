@@ -19,13 +19,14 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_select"
         android:layout_width="@dimen/md_60"
-        android:layout_height="@dimen/md_30"
+        android:layout_height="@dimen/md_25"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/np_year"
         app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/btn_season_select_round"
-        android:layout_margin="@dimen/md_16"
         android:text="@string/select_ok"
-        android:textSize="@dimen/md_16"
+        android:layout_marginEnd="@dimen/md_16"
+        android:textSize="@dimen/md_14"
         android:textColor="@color/p_white_10" />
 
     <!-- Picker-->
@@ -36,7 +37,7 @@
         android:layout_weight="1"
         android:padding="@dimen/md_16"
         android:background="@color/p_white_10"
-        android:layout_marginTop="@dimen/md_16"
+        android:layout_marginTop="@dimen/md_14"
         android:descendantFocusability="blocksDescendants"
         android:theme="@style/DefaultNumberPickerTheme"
         app:layout_constraintTop_toBottomOf="@id/btn_select"

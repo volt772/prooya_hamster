@@ -14,9 +14,9 @@ enum class PrResultCode(
     val color: Int
 ) {
 
-    WIN(987, "w", "승", R.color.green_A700),
-    DRAW(988, "d", "무", R.color.brown_800),
-    LOSE(989, "l", "패", R.color.red_85),
+    WIN(987, "w", "승", R.color.green_A100),
+    DRAW(988, "d", "무", R.color.brown_100),
+    LOSE(989, "l", "패", R.color.red_A100),
     FINE(1000, "p",  "경기중", 0),
     OTHER(0, "", "", 0);
 

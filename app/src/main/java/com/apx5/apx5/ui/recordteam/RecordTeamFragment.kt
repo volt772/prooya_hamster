@@ -1,28 +1,22 @@
 package com.apx5.apx5.ui.recordteam
 
-import android.app.AlertDialog
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.ListView
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
-import com.apx5.apx5.constants.PrResultCode
-import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordTeamBinding
 import com.apx5.apx5.datum.DtTeamRecord
-import com.apx5.apx5.datum.adapter.AdtDetailLists
 import com.apx5.apx5.datum.adapter.AdtTeamLists
 import com.apx5.apx5.datum.ops.OpsTeamDetail
 import com.apx5.apx5.datum.ops.OpsTeamSummary
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
+import com.apx5.apx5.ui.dialogs.DialogTeamDetail
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -53,7 +47,6 @@ class RecordTeamFragment :
 
     private var teamCode: String
     private lateinit var recordTeamAdapter: RecordTeamAdapter
-    private lateinit var recordDetailAdapter: RecordDetailAdapter
 
     init {
         teamCode = ""
@@ -81,9 +74,6 @@ class RecordTeamFragment :
         /* 팀리스트*/
         recordTeamAdapter = RecordTeamAdapter(this)
         binding().lvTeamRecord.adapter = recordTeamAdapter
-
-        /* 상세리스트*/
-        recordDetailAdapter = RecordDetailAdapter(requireContext())
 
         /* 시즌변경 버튼*/
         binding().btnChangeSeason.setOnClickListener {
@@ -113,45 +103,9 @@ class RecordTeamFragment :
 
     /* 상세정보 Dialog*/
     override fun showDetailLists(plays: List<OpsTeamDetail>, versus: String) {
-        recordDetailAdapter.clearItems()
         if (plays.isNotEmpty()) {
-            for (play in plays) {
-                recordDetailAdapter.addItem(
-                    AdtDetailLists(
-                        awayScore = play.awayScore,
-                        awayEmblem = PrTeam.getTeamByCode(play.awayTeam),
-                        homeScore = play.homeScore,
-                        homeEmblem = PrTeam.getTeamByCode(play.homeTeam),
-                        playResult = PrResultCode.getResultByDisplayCode(play.playResult),
-                        playDate = "${play.playDate}",
-                        stadium = PrStadium.getStadiumByCode(play.stadium).displayName
-                    )
-                )
-            }
-
-            recordDetailAdapter.notifyDataSetChanged()
-
-            val builder = AlertDialog.Builder(requireContext())
-            val inflater = layoutInflater
-            val view = inflater.inflate(R.layout.dialog_record_detail, null)
-            builder.setView(view)
-
-            val listview = view.findViewById<ListView>(R.id.lv_record_list)
-            val teamEmblem = view.findViewById<ImageView>(R.id.iv_team_emblem)
-            val dialog = builder.create()
-
-            /* 상대팀 BI*/
-            teamEmblem.setImageResource(
-                UiUtils.getDrawableByName(
-                    requireContext(),
-                    PrTeam.getTeamByCode(versus).emblem
-                )
-            )
-
-            listview.adapter = recordDetailAdapter
-            dialog.setCancelable(true)
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.show()
+            val detailDialog = DialogTeamDetail(plays, versus)
+            detailDialog.show(childFragmentManager, "detailDialog")
         } else {
             DialogActivity.dialogNoRecordDetail(requireContext())
         }
