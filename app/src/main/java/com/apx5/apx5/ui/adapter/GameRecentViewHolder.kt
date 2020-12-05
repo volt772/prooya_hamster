@@ -29,40 +29,32 @@ class GameRecentViewHolder(
 
         itemView.tv_play_date.text = "${playDate}\n${stadium}"
 
-        val awayEmblem: Int
-        val homeEmblem: Int
-
-        /* 경기결과 구분처리 (Bold and Emblem)*/
-        when {
+        /* 경기결과 구분처리*/
+        val (awayStyle, homeStyle) = when {
             game.awayScore > game.homeScore -> {
                 /* 원정팀승*/
-                itemView.tv_away_score.setTextAppearance(R.style.TeamScoreWinTeam)
-                itemView.tv_home_score.setTextAppearance(R.style.TeamScoreLoseTeam)
-
-                awayEmblem = UiUtils.getDrawableByName(context, game.awayEmblem.emblem)
-                homeEmblem = UiUtils.getDrawableByName(context, game.homeEmblem.emblemBl)
-
+                R.style.TeamScoreWinTeam to R.style.TeamScoreLoseTeam
             }
             game.awayScore < game.homeScore -> {
                 /* 홈팀승*/
-                itemView.tv_away_score.setTextAppearance(R.style.TeamScoreLoseTeam)
-                itemView.tv_home_score.setTextAppearance(R.style.TeamScoreWinTeam)
-
-                awayEmblem = UiUtils.getDrawableByName(context, game.awayEmblem.emblemBl)
-                homeEmblem = UiUtils.getDrawableByName(context, game.homeEmblem.emblem)
+                R.style.TeamScoreLoseTeam to R.style.TeamScoreWinTeam
             }
             else -> {
                 /* 양팀 무승부*/
-                itemView.tv_away_score.setTextAppearance(R.style.TeamScoreLoseTeam)
-                itemView.tv_home_score.setTextAppearance(R.style.TeamScoreLoseTeam)
-
-                awayEmblem = UiUtils.getDrawableByName(context, game.awayEmblem.emblem)
-                homeEmblem = UiUtils.getDrawableByName(context, game.homeEmblem.emblem)
+                R.style.TeamScoreLoseTeam to R.style.TeamScoreLoseTeam
             }
         }
 
-        itemView.iv_team_emblem_away.setImageResource(awayEmblem)
-        itemView.iv_team_emblem_home.setImageResource(homeEmblem)
+        itemView.tv_away_score.setTextAppearance(awayStyle)
+        itemView.tv_home_score.setTextAppearance(homeStyle)
+
+        itemView.iv_team_emblem_away.setImageResource(
+                UiUtils.getDrawableByName(context, game.awayEmblem.emblem)
+        )
+
+        itemView.iv_team_emblem_home.setImageResource(
+                UiUtils.getDrawableByName(context, game.homeEmblem.emblem)
+        )
     }
 
     companion object {
