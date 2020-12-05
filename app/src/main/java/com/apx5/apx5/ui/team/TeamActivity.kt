@@ -65,7 +65,7 @@ class TeamActivity :
             setHomeAsUpIndicator(R.drawable.ic_back)
         }
 
-        MaterialTools.setSystemBarColor(this, R.color.p_navy_10)
+        MaterialTools.setSystemBarColor(this, R.color.p_main_first)
     }
 
     /* Components*/

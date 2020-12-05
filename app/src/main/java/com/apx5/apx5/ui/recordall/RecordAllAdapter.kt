@@ -7,22 +7,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
-import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.ui.utils.UiUtils
-import kotlinx.android.synthetic.main.item_plays.view.*
 import kotlinx.android.synthetic.main.item_plays_all.view.*
-import kotlinx.android.synthetic.main.item_plays_all.view.iv_game_result
-import kotlinx.android.synthetic.main.item_plays_all.view.iv_team_emblem_away
-import kotlinx.android.synthetic.main.item_plays_all.view.iv_team_emblem_home
-import kotlinx.android.synthetic.main.item_plays_all.view.lv_play_list
-import kotlinx.android.synthetic.main.item_plays_all.view.tv_away_score
-import kotlinx.android.synthetic.main.item_plays_all.view.tv_home_score
-import kotlinx.android.synthetic.main.item_plays_all.view.tv_play_date
-import kotlinx.android.synthetic.main.item_record_detail.view.*
 
 /**
  * RecordAllAdapter
@@ -44,7 +33,7 @@ class RecordAllAdapter internal constructor(
 
     private class RecordAllHolder {
         lateinit var playRecent: View
-        lateinit var playResult: ImageView
+        lateinit var playResult: TextView
         lateinit var awayEmblem: ImageView
         lateinit var homeEmblem: ImageView
         lateinit var awayScore: TextView
@@ -63,7 +52,7 @@ class RecordAllAdapter internal constructor(
 
             holder = RecordAllHolder().apply {
                 playRecent = cv.lv_play_list
-                playResult = cv.iv_game_result
+                playResult = cv.tv_game_result
                 awayEmblem = cv.iv_team_emblem_away
                 homeEmblem = cv.iv_team_emblem_home
                 awayScore = cv.tv_away_score
@@ -125,7 +114,8 @@ class RecordAllAdapter internal constructor(
         holder.homeEmblem.setImageResource(homeEmblem)
 
         /* 경기결과*/
-        holder.playResult.setColorFilter(context.getColor(playItems.playResult.color))
+        holder.playResult.backgroundTintList =  context.getColorStateList(playItems.playResult.color)
+        holder.playResult.text = playItems.playResult.displayCodeEn
 
         /* 기록삭제 (Long Press)*/
         cv.setOnLongClickListener {

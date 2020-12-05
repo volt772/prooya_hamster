@@ -5,7 +5,7 @@
     android:id="@+id/lv_play_list"
     android:layout_marginBottom="@dimen/md_5"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/md_65">
+    android:layout_height="@dimen/md_50">
 
     <View
         android:layout_width="match_parent"
@@ -14,12 +14,15 @@
         android:background="@color/grey_300" />
 
     <!-- 경기결과 색상바-->
-    <ImageView
-        android:id="@+id/iv_game_result"
-        android:layout_width="@dimen/md_8"
-        android:layout_height="0dp"
-        android:tint="@color/blue_600"
-        android:src="@drawable/line_game_status"
+    <TextView
+        android:id="@+id/tv_game_result"
+        android:layout_width="@dimen/md_30"
+        android:layout_height="@dimen/md_20"
+        android:background="@drawable/round_game_status"
+        android:layout_marginStart="@dimen/md_15"
+        android:gravity="center"
+        android:textAppearance="@style/GameResultLabel"
+        android:text="Lose"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
@@ -36,8 +39,8 @@
         app:civ_shadow_radius="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_away_score"
-        app:layout_constraintLeft_toRightOf="@id/iv_game_result"
-        app:layout_constraintStart_toEndOf="@+id/iv_game_result"
+        app:layout_constraintLeft_toRightOf="@id/tv_game_result"
+        app:layout_constraintStart_toEndOf="@+id/tv_game_result"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 원정 스코어-->
@@ -59,11 +62,11 @@
         android:id="@+id/tv_play_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+        android:textSize="@dimen/md_12"
         android:text="10월 20일\n서울잠실"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/iv_game_result"
+        app:layout_constraintLeft_toRightOf="@id/tv_game_result"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:textColor="@color/grey_500" />

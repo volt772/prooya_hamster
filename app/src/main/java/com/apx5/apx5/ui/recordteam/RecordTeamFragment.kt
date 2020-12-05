@@ -1,6 +1,5 @@
 package com.apx5.apx5.ui.recordteam
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
@@ -66,11 +65,6 @@ class RecordTeamFragment :
 
     /* UI 초기화*/
     private fun initView() {
-        /* 카드 컬러*/
-        binding().clSeasonRate.setBackgroundColor(
-                Color.parseColor(PrTeam.getTeamByCode(teamCode).mainColor)
-        )
-
         /* 팀리스트*/
         recordTeamAdapter = RecordTeamAdapter(this)
         binding().lvTeamRecord.adapter = recordTeamAdapter

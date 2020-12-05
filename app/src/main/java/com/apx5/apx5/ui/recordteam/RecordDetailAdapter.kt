@@ -12,12 +12,13 @@ import com.apx5.apx5.datum.adapter.AdtDetailLists
 import com.apx5.apx5.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.item_record_detail.view.*
 
+
 /**
  * RecordDetailAdapter
  */
 
 class RecordDetailAdapter internal constructor(
-    private val ctx: Context
+        private val ctx: Context
 ) : BaseAdapter() {
 
     private val detailList = mutableListOf<AdtDetailLists>()
@@ -32,7 +33,7 @@ class RecordDetailAdapter internal constructor(
 
     private class RecordDetailHolder {
         lateinit var playRecent: View
-        lateinit var playResult: ImageView
+        lateinit var playResult: TextView
         lateinit var awayEmblem: ImageView
         lateinit var homeEmblem: ImageView
         lateinit var awayScore: TextView
@@ -50,7 +51,7 @@ class RecordDetailAdapter internal constructor(
             cv = inflater.inflate(R.layout.item_record_detail, parent, false)
             holder = RecordDetailHolder().apply {
                 playRecent = cv.lv_play_list
-                playResult = cv.iv_game_result
+                playResult = cv.tv_game_result
                 awayEmblem = cv.iv_team_emblem_away
                 homeEmblem = cv.iv_team_emblem_home
                 awayScore = cv.tv_away_score
@@ -81,7 +82,8 @@ class RecordDetailAdapter internal constructor(
         holder.homeEmblem.setImageResource(UiUtils.getDrawableByName(context, detailItems.homeEmblem.emblem))
 
         /* 경기결과*/
-        holder.playResult.setColorFilter(context.getColor(detailItems.playResult.color))
+        holder.playResult.backgroundTintList =  context.getColorStateList(detailItems.playResult.color)
+        holder.playResult.text = detailItems.playResult.displayCodeEn
 
         return cv
     }

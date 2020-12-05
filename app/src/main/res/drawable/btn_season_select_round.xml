@@ -8,7 +8,7 @@
         android:color="@color/p_white_10" >
     </stroke>
 
-    <solid android:color="@color/p_navy_10" />
+    <solid android:color="@color/p_main_first" />
 
     <corners
         android:bottomLeftRadius="30dp"

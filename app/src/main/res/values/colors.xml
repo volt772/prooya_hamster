@@ -297,7 +297,6 @@
     <color name="grey_1000">#1A1A1A</color>
 
     <!-- Prooya Custom-->
-    <color name="p_navy_10">#131230</color>
     <color name="p_navy_20">#18172B</color>
 
     <color name="p_grey_10">#839484</color>
@@ -305,4 +304,10 @@
     <color name="p_grey_30">#C7C6C6</color>
 
     <color name="p_white_10">#FFFFFF</color>
+
+    <!-- Prooya Main-->
+    <color name="p_main_first">#353866</color>
+    <color name="p_main_second">#F8FAFF</color>
+    <color name="p_main_third">#CBA6C3</color>
+    <color name="p_main_fourth">#AAABD3</color>
 </resources>

@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|start"
         android:orientation="vertical"
-        android:background="@color/p_navy_10"
+        android:background="@color/p_main_first"
         android:padding="@dimen/md_20">
 
         <TextView
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/md_15"
         android:gravity="center"
-        android:background="@color/p_navy_10"
+        android:background="@color/p_main_first"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton

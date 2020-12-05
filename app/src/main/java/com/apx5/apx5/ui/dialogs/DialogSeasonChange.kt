@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.NumberPicker
 import androidx.fragment.app.DialogFragment
 import com.apx5.apx5.R
+import com.apx5.apx5.ui.utils.UiUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
@@ -33,14 +34,17 @@ class DialogSeasonChange(
         val npYear = view.findViewById<NumberPicker>(R.id.np_year)
         val btnSelect = view.findViewById<Button>(R.id.btn_select)
 
-        npYear.minValue = 2017
-        npYear.maxValue = 2021
+        val currentYear = UiUtils.currentYear
+
+        npYear.minValue = MIN_YEAR
+        npYear.maxValue = MAX_YEAR
         npYear.wrapSelectorWheel = true
 
         npYear.apply {
             minValue = MIN_YEAR
-            maxValue = MAX_YEAR
+            maxValue = currentYear
             wrapSelectorWheel = true
+            value = currentYear
         }
 
         btnSelect.setOnClickListener {

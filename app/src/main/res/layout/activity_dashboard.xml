@@ -30,7 +30,7 @@
                     android:id="@+id/tb_dashboard"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@color/p_navy_10"
+                    android:background="@color/p_main_first"
                     app:contentInsetStartWithNavigation="@dimen/md_0"
                     app:layout_scrollFlags="enterAlways"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/md_15"
-        android:background="@color/grey_200" >
+        android:background="@color/p_main_second" >
 
         <!-- 상단 요약-->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -202,7 +202,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/md_0"
                 android:layout_marginTop="@dimen/md_8"
-                android:background="@color/p_white_10"
+                android:background="@drawable/border_line_list"
                 app:layout_constraintTop_toBottomOf="@id/tv_recent_label"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:listSelector="@android:color/transparent" />
