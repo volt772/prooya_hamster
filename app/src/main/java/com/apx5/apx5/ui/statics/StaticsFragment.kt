@@ -3,20 +3,21 @@ package com.apx5.apx5.ui.statics
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.PrPrefKeys
-import com.apx5.apx5.constants.PrResultCode
-import com.apx5.apx5.constants.PrStadium
-import com.apx5.apx5.constants.PrTeam
+import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtPlays
-import com.apx5.apx5.datum.adapter.AdtPlayLists
+import com.apx5.apx5.datum.adapter.AdtGames
 import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.ui.adapter.PlayItemsAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 /**
  * StaticsFragment
@@ -35,7 +36,7 @@ class StaticsFragment :
         return staticsViewModel
     }
 
-    private lateinit var recentPlayAdapter: RecentPlayAdapter
+    private lateinit var playItemsAdapter: PlayItemsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,17 +47,21 @@ class StaticsFragment :
 
     /* UI 초기화*/
     private fun initView() {
-        recentPlayAdapter = RecentPlayAdapter()
-        binding().lvPlayLists.adapter = recentPlayAdapter
+        val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        playItemsAdapter = PlayItemsAdapter(requireContext(), PrAdapterViewType.RECENT)
+
+        binding().rvRecentList.apply {
+            addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+            layoutManager = linearLayoutManager
+            adapter = playItemsAdapter
+        }
     }
 
     /* 최근 5경기 리스트 생성*/
     private fun setRecentPlayLists(plays: List<DtPlays>) {
-        recentPlayAdapter.clearItems()
-
         for (play in plays) {
-            recentPlayAdapter.addItem(
-                AdtPlayLists(
+            playItemsAdapter.addItem(
+                AdtGames(
                     awayScore = play.awayScore,
                     awayTeam = play.awayTeam,
                     awayEmblem = PrTeam.getTeamByCode(play.awayTeam),
@@ -73,7 +78,7 @@ class StaticsFragment :
             )
         }
 
-        recentPlayAdapter.notifyDataSetChanged()
+        playItemsAdapter.notifyDataSetChanged()
     }
 
     /* 팀코드 엎어치기*/
@@ -89,13 +94,13 @@ class StaticsFragment :
     }
 
     /* 최근경기 리스트*/
-    override fun showRecentPlayList(plays: List<DtPlays>) {
-        if (plays.isNotEmpty()) {
-            setRecentPlayLists(plays)
+    override fun showRecentPlayList(playList: List<DtPlays>) {
+        if (playList.isNotEmpty()) {
+            setRecentPlayLists(playList)
         }
 
-        binding().lvPlayLists.visibility = CommonUtils.setVisibility(plays.isNotEmpty())
-        binding().clEmptyList.visibility = CommonUtils.setVisibility(plays.isEmpty())
+        binding().rvRecentList.visibility = CommonUtils.setVisibility(playList.isNotEmpty())
+        binding().clEmptyList.visibility = CommonUtils.setVisibility(playList.isEmpty())
     }
 
     private fun subscriber() {

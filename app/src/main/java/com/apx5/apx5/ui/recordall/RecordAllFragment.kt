@@ -2,18 +2,23 @@ package com.apx5.apx5.ui.recordall
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
+import com.apx5.apx5.constants.PrAdapterViewType
 import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordAllBinding
 import com.apx5.apx5.datum.DtAllGames
+import com.apx5.apx5.datum.adapter.AdtGames
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.ui.adapter.PlayItemsAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.utils.UiUtils
@@ -39,7 +44,7 @@ class RecordAllFragment :
         return recordAllViewModel
     }
 
-    private lateinit var recordAdapter: RecordAllAdapter
+    private lateinit var playItemsAdapter: PlayItemsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,8 +65,15 @@ class RecordAllFragment :
 
     /* UI 초기화*/
     private fun initView() {
-        recordAdapter = RecordAllAdapter(requireContext(), this)
-        binding().lvPlayList.adapter = recordAdapter
+        /* Adapter*/
+        val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        playItemsAdapter = PlayItemsAdapter(requireContext(), PrAdapterViewType.ALL, ::delHistoryItem)
+
+        binding().rvAllList.apply {
+            addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+            layoutManager = linearLayoutManager
+            adapter = playItemsAdapter
+        }
 
         /* 시즌 변경*/
         binding().btnChangeSeason.setOnClickListener {
@@ -86,6 +98,8 @@ class RecordAllFragment :
                 ),
                 ::delHistory)
         }
+
+        playItemsAdapter.notifyDataSetChanged()
     }
 
     /* 기록 삭제*/
@@ -107,18 +121,13 @@ class RecordAllFragment :
             year
         )
 
-        var isVisible = true
+        playItemsAdapter.clearItems()
 
-        recordAdapter.clearItems()
-        if (plays.isEmpty()) {
-            isVisible = false
-        }
-
-        isListExists(isVisible)
+        isListExists(plays.isNotEmpty())
 
         for (play in plays) {
-            recordAdapter.addItem(
-                AdtPlayLists(
+            playItemsAdapter.addItem(
+                AdtGames(
                     awayScore = play.awayScore,
                     awayTeam = play.awayTeam,
                     awayEmblem = PrTeam.getTeamByCode(play.awayTeam),
@@ -135,7 +144,7 @@ class RecordAllFragment :
             )
         }
 
-        recordAdapter.notifyDataSetChanged()
+        playItemsAdapter.notifyDataSetChanged()
     }
 
     /* Observers*/
