@@ -16,4 +16,5 @@ object PrNetworkKeys {
     const val SEASON_STATICS = "seasonStatics"
     const val RECENT_PLAYS = "recentPlays"
     const val SUMMARY = "summary"
+    const val TODAY_GAME = "todayGame"
 }

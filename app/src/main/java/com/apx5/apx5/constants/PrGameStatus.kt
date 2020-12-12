@@ -7,13 +7,14 @@ package com.apx5.apx5.constants
 
 enum class PrGameStatus(
     val code: Int,
-    val displayCode: String
+    val displayCode: String,
+    val color: String
 ) {
 
-    ONPLAY(997, "경기중"),
-    STANDBY(998, "경기전"),
-    CANCELED(999, "취소"),
-    FINE(1000, "경기종료");
+    ONPLAY(997, "경기중", "#FFD54F"),
+    STANDBY(998, "경기전", "#E57373"),
+    CANCELED(999, "취소", "#A1887F"),
+    FINE(1000, "경기종료", "#64B5F6");
 
     companion object {
         fun getStatsByCode(code: Int): PrGameStatus {
@@ -22,7 +23,7 @@ enum class PrGameStatus(
                 998 -> STANDBY
                 999 -> CANCELED
                 1000 -> FINE
-                else -> STANDBY
+                else -> FINE
             }
         }
     }

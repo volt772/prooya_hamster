@@ -4,19 +4,16 @@ import android.app.Application
 import androidx.databinding.ObservableField
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.datum.DtPlays
 import com.apx5.apx5.datum.DtStatics
 import com.apx5.apx5.datum.catcher.CtPostStatics
 import com.apx5.apx5.datum.ops.OpsAllStatics
-import com.apx5.apx5.datum.ops.OpsRecentPlay
+import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.ops.OpsSeasonStatics
 import com.apx5.apx5.datum.pitcher.PtPostStatics
 import com.apx5.apx5.network.operation.PrOps
 import com.apx5.apx5.network.operation.PrOpsCallBack
 import com.apx5.apx5.network.operation.PrOpsError
 import com.apx5.apx5.network.response.PrResponse
-import com.apx5.apx5.ui.utils.UiUtils
 import java.util.*
 
 /**
@@ -32,10 +29,13 @@ class StaticsViewModel(application: Application) :
     var seasonPlays = ObservableField<String>()
     var allRate = ObservableField<String>()
     var allPlays = ObservableField<String>()
-    var recentPlayTeam = ObservableField<String>()
-    var recentPlay = ObservableField<String>()
     var seasonCount = ObservableField<String>()
     var allCount = ObservableField<String>()
+
+    private lateinit var _gameList: List<OpsDailyPlay>
+    val gameList: List<OpsDailyPlay>
+        get() = _gameList
+
 
     /* 승률표기*/
     private fun getRateText(rate: Int): String {
@@ -47,16 +47,6 @@ class StaticsViewModel(application: Application) :
         return String.format(Locale.getDefault(), getApplication<Application>().resources.getString(R.string.w_d_l), win, draw, lose)
     }
 
-    /* 최근직관팀 표기*/
-    private fun getRecentPlayTeamText(versusTeam: String): String? {
-        return PrTeam.getTeamByCode(versusTeam).abbrName
-    }
-
-    /* 최근직관일 표기*/
-    private fun getRecentPlayDateText(regdate: String): String {
-        return UiUtils.getDateToAbbr(regdate, ".")
-    }
-
     /* 직관횟수표기 (시즌)*/
     private fun getSeasonCountText(countSeason: Int): String {
         return String.format(Locale.getDefault(), getApplication<Application>().resources.getString(R.string.seeing_count_season), countSeason)
@@ -65,22 +55,6 @@ class StaticsViewModel(application: Application) :
     /* 직관횟수표기 (통산)*/
     private fun getAllCountText(countAll: Int): String {
         return String.format(Locale.getDefault(), getApplication<Application>().resources.getString(R.string.seeing_count_all), countAll)
-    }
-
-    /* 최근 5경기*/
-    private fun makeStaticRecentPlay(plays: List<DtPlays>) {
-        if (plays.isNotEmpty()) {
-            val pl = plays[0]
-
-            /* 최근직관팀(팀명)*/
-            recentPlayTeam.set(getRecentPlayTeamText(pl.playVs))
-
-            /* 최근직관날짜(날짜)*/
-            recentPlay.set(getRecentPlayDateText("${pl.playDate}"))
-        } else {
-            recentPlayTeam.set(getApplication<Application>().resources.getString(R.string.empty))
-            recentPlay.set("-")
-        }
     }
 
     /**
@@ -114,7 +88,7 @@ class StaticsViewModel(application: Application) :
                     getNavigator()?.cancelSpinKit()
                     setTeamCode(res.team)
                     setStaticItem(res.allStatics, res.seasonStatics)
-                    setRecentPlaysItem(res.recentPlays)
+                    setTodayGame(res.todayGame)
                 }
             }
 
@@ -145,28 +119,14 @@ class StaticsViewModel(application: Application) :
         }
     }
 
-    /* 최근5경기*/
-    private fun setRecentPlaysItem(recentPlays: List<OpsRecentPlay>?) {
-        if (recentPlays != null) {
-            val listPlay = ArrayList<DtPlays>()
+    /* 오늘경기*/
+    private fun setTodayGame(game: List<OpsDailyPlay>?) {
+        game?.let { _game ->
+            val gameList = if (_game[0].id == 0) { emptyList() } else { _game }
 
-            recentPlays.forEach { game ->
-                listPlay.add(DtPlays(
-                    awayScore = game.awayScore,
-                    awayTeam = game.awayTeam,
-                    homeScore = game.homeScore,
-                    homeTeam = game.homeTeam,
-                    playDate = game.playDate,
-                    playId = game.playId,
-                    playResult = game.playResult,
-                    playSeason = game.playSeason,
-                    playVs = game.playVs,
-                    stadium = game.stadium
-                ))
-            }
+            _gameList = gameList
 
-            makeStaticRecentPlay(listPlay)
-            getNavigator()?.showRecentPlayList(listPlay)
+            getNavigator()?.showTodayGame(gameList)
         }
     }
 }

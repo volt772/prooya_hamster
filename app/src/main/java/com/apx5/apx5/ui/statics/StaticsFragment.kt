@@ -1,19 +1,22 @@
 package com.apx5.apx5.ui.statics
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.databinding.library.baseAdapters.BR
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.*
+import com.apx5.apx5.constants.PrGameStatus
+import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrStadium
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
-import com.apx5.apx5.datum.DtPlays
-import com.apx5.apx5.datum.adapter.AdtGames
+import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.storage.PrefManager
-import com.apx5.apx5.ui.adapter.PlayItemsAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
+import com.apx5.apx5.ui.utils.UiUtils.Companion.getTime
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,7 +28,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StaticsFragment :
     BaseFragment<FragmentStaticsBinding, StaticsViewModel>(),
-    StaticsNavigator {
+    StaticsNavigator, View.OnClickListener {
 
     private val staticsViewModel: StaticsViewModel by viewModel()
 
@@ -36,8 +39,6 @@ class StaticsFragment :
         return staticsViewModel
     }
 
-    private lateinit var playItemsAdapter: PlayItemsAdapter
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -47,38 +48,6 @@ class StaticsFragment :
 
     /* UI 초기화*/
     private fun initView() {
-        val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        playItemsAdapter = PlayItemsAdapter(requireContext(), PrAdapterViewType.RECENT)
-
-        binding().rvRecentList.apply {
-            addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-            layoutManager = linearLayoutManager
-            adapter = playItemsAdapter
-        }
-    }
-
-    /* 최근 5경기 리스트 생성*/
-    private fun setRecentPlayLists(plays: List<DtPlays>) {
-        for (play in plays) {
-            playItemsAdapter.addItem(
-                AdtGames(
-                    awayScore = play.awayScore,
-                    awayTeam = play.awayTeam,
-                    awayEmblem = PrTeam.getTeamByCode(play.awayTeam),
-                    homeScore = play.homeScore,
-                    homeTeam = play.homeTeam,
-                    homeEmblem = PrTeam.getTeamByCode(play.homeTeam),
-                    playDate = "${play.playDate}",
-                    playId = play.playId,
-                    playResult = PrResultCode.getResultByDisplayCode(play.playResult),
-                    playSeason = play.playSeason,
-                    playVersus = play.playVs,
-                    stadium = PrStadium.getStadiumByCode(play.stadium).displayName
-                )
-            )
-        }
-
-        playItemsAdapter.notifyDataSetChanged()
     }
 
     /* 팀코드 엎어치기*/
@@ -93,14 +62,67 @@ class StaticsFragment :
         binding().clLoading.visibility = View.GONE
     }
 
-    /* 최근경기 리스트*/
-    override fun showRecentPlayList(playList: List<DtPlays>) {
-        if (playList.isNotEmpty()) {
-            setRecentPlayLists(playList)
+    /* 오늘경기 리스트*/
+    override fun showTodayGame(games: List<OpsDailyPlay>) {
+        makeGameView(games.size)
+
+        if (games.size > 1) {
+            makeGameData(staticsViewModel.gameList[0])
+            switchGameSelectionButton(0)
+        }
+    }
+
+    /* 오늘경기 화면 분기*/
+    private fun makeGameView(count: Int) {
+        val isEmptyGame = (count == 0)
+        binding().clTodayGame.visibility = CommonUtils.setVisibility(!isEmptyGame)
+        binding().clNoGame.visibility = CommonUtils.setVisibility(isEmptyGame)
+        binding().clGameSelect.visibility = CommonUtils.setVisibility(count > 1)
+
+        binding().btnFirstGame.setOnClickListener(this)
+        binding().btnSecondGame.setOnClickListener(this)
+    }
+
+    /* 게임데이터 생성*/
+    private fun makeGameData(game: OpsDailyPlay) {
+        val (awayTeam, homeTeam) = PrTeam.getTeamByCode(game.awayteam) to PrTeam.getTeamByCode(game.hometeam)
+        val (awayScore, homeScore) = game.awayscore to game.homescore
+        val stadium = PrStadium.getStadiumByCode(game.stadium)
+        val startTime = getTime(game.starttime.toString())
+
+        binding().clInform.visibility = CommonUtils.setVisibility(!(stadium.displayName.isEmpty() && startTime.isEmpty()))
+
+        val statusLabel = if (stadium.displayName.isEmpty() && startTime.isNotEmpty()) {
+            startTime
+        } else if (stadium.displayName.isNotEmpty() && startTime.isEmpty()) {
+            stadium.displayName
+        } else {
+            "${stadium.displayName} | $startTime"
         }
 
-        binding().rvRecentList.visibility = CommonUtils.setVisibility(playList.isNotEmpty())
-        binding().clEmptyList.visibility = CommonUtils.setVisibility(playList.isEmpty())
+        val gameStatus = PrGameStatus.getStatsByCode(awayScore)
+
+        binding().apply {
+            clAwayTeam.backgroundTintList = ColorStateList.valueOf(Color.parseColor(awayTeam.mainColor))
+            clHomeTeam.backgroundTintList = ColorStateList.valueOf(Color.parseColor(homeTeam.mainColor))
+
+            ivAwayEmblem.setImageResource(resources.getIdentifier(awayTeam.emblem, "drawable", requireContext().packageName))
+            ivHomeEmblem.setImageResource(resources.getIdentifier(homeTeam.emblem, "drawable", requireContext().packageName))
+
+            tvAwayName.text = awayTeam.fullName
+            tvHomeName.text = homeTeam.fullName
+
+            tvAwayScore.text = awayScore.toString()
+            tvHomeScore.text = homeScore.toString()
+
+            tvGameStatus.text = statusLabel
+            clStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor(gameStatus.color))
+            tvStatusLabel.text = if (gameStatus == PrGameStatus.FINE) {
+                "${gameStatus.displayCode} / ${getString(R.string.save_game)}"
+            } else {
+                gameStatus.displayCode
+            }
+        }
     }
 
     private fun subscriber() {
@@ -112,12 +134,53 @@ class StaticsFragment :
         }
     }
 
+    /* 더블헤더 경기 선택 스타일*/
+    private fun switchGameSelectionButton(idx: Int) {
+        if (idx == 0) {
+            binding().btnFirstGame.apply {
+                background = ContextCompat.getDrawable(requireActivity(), ButtonSelection.SELECTED.drawable)
+                setTextAppearance(ButtonSelection.SELECTED.style)
+            }
+            binding().btnSecondGame.apply {
+                background = ContextCompat.getDrawable(requireActivity(), ButtonSelection.DESELECTED.drawable)
+                setTextAppearance(ButtonSelection.DESELECTED.style)
+            }
+        } else {
+            binding().btnFirstGame.apply {
+                background = ContextCompat.getDrawable(requireActivity(), ButtonSelection.DESELECTED.drawable)
+                setTextAppearance(ButtonSelection.DESELECTED.style)
+            }
+            binding().btnSecondGame.apply {
+                background = ContextCompat.getDrawable(requireActivity(), ButtonSelection.SELECTED.drawable)
+                setTextAppearance(ButtonSelection.SELECTED.style)
+            }
+        }
+    }
+
     companion object {
         fun newInstance(): StaticsFragment {
             val args = Bundle()
             val fragment = StaticsFragment()
             fragment.arguments = args
             return fragment
+        }
+
+        enum class ButtonSelection(val drawable: Int, val style: Int) {
+            SELECTED(R.drawable.btn_game_select_fill_round, R.style.TodayGameSelectLabel),
+            DESELECTED(R.drawable.btn_game_select_round, R.style.TodayGameSelectNormalLabel)
+        }
+    }
+
+    override fun onClick(view: View?) {
+        when(view?.id) {
+            R.id.btn_first_game -> {
+                makeGameData(staticsViewModel.gameList[0])
+                switchGameSelectionButton(0)
+            }
+            R.id.btn_second_game -> {
+                makeGameData(staticsViewModel.gameList[1])
+                switchGameSelectionButton(1)
+            }
         }
     }
 }

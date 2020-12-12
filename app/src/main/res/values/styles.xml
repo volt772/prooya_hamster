@@ -377,4 +377,36 @@
         <item name="android:textColor">@color/p_main_first</item>
         <item name="android:textSize">@dimen/md_16</item>
     </style>
+
+    <!-- 오늘경기 팀 레이블 -->
+    <style name="TodayGameLabel">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/p_white_10</item>
+        <item name="android:textSize">@dimen/md_24</item>
+    </style>
+
+    <!-- 오늘경기 팀 상세정보 레이블 -->
+    <style name="TodayGameDetailLabel">
+        <item name="android:textColor">@color/p_white_10</item>
+        <item name="android:textSize">@dimen/md_14</item>
+    </style>
+
+    <!-- 오늘경기 팀 진행정보 레이블 -->
+    <style name="TodayGameStatusLabel">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/p_white_10</item>
+        <item name="android:textSize">@dimen/md_18</item>
+    </style>
+
+    <!-- 오늘경기 선택 버튼 -->
+    <style name="TodayGameSelectNormalLabel">
+        <item name="android:textColor">@color/p_main_first</item>
+        <item name="android:textSize">@dimen/md_16</item>
+    </style>
+
+    <!-- 오늘경기 선택 버튼 -->
+    <style name="TodayGameSelectLabel">
+        <item name="android:textColor">@color/p_white_10</item>
+        <item name="android:textSize">@dimen/md_16</item>
+    </style>
 </resources>

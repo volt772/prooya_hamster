@@ -1,13 +1,13 @@
 package com.apx5.apx5.ui.statics
 
 
-import com.apx5.apx5.datum.DtPlays
+import com.apx5.apx5.datum.ops.OpsDailyPlay
 
 /**
  * StaticsNavigator
  */
 interface StaticsNavigator {
-    fun showRecentPlayList(playList: List<DtPlays>)
+    fun showTodayGame(games: List<OpsDailyPlay>)
     fun saveMyTeamCode(teamCode: String)
     fun cancelSpinKit()
 }
