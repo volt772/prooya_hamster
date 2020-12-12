@@ -33,12 +33,12 @@ class DaysFragment :
     /* 캘린더 핸들러 */
     private val calListener = DaysCalendar.datePickerListener(searchPlay = ::searchPlayByDate)
 
-    private val dv: DaysViewModel by viewModel()
+    private val dvm: DaysViewModel by viewModel()
     override fun getLayoutId() = R.layout.fragment_days
     override fun getBindingVariable() = BR.viewModel
     override fun getViewModel(): DaysViewModel {
-        dv.setNavigator(this)
-        return dv
+        dvm.setNavigator(this)
+        return dvm
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,7 +60,7 @@ class DaysFragment :
 
     /* 경기저장(Remote)*/
     override fun saveGameToRemote() {
-        val dailyGame = dv.dailyGame
+        val dailyGame = dvm.dailyGame
         val gameResult = getPlayResultByTeamSide()
         val myTeamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
 
@@ -82,7 +82,7 @@ class DaysFragment :
      * 홈/원정 결과 구분
      */
     private fun getPlayResultByTeamSide(): ResultBySide {
-        val dailyGame = dv.dailyGame
+        val dailyGame = dvm.dailyGame
         val isAwayTeam = teamCode.equalsExt(dailyGame.awayTeam)
 
         val awayScore = dailyGame.awayScore
@@ -121,14 +121,14 @@ class DaysFragment :
 
         if (show) {
             /* 저장버튼 노출유무*/
-            showSaveButton(dv.dailyGame.status)
+            showSaveButton(dvm.dailyGame.status)
 
             /* 팀 엠블럼*/
-            val awayTeam = dv.dailyGame.awayTeam
-            val homeTeam = dv.dailyGame.homeTeam
+            val awayTeam = dvm.dailyGame.awayTeam
+            val homeTeam = dvm.dailyGame.homeTeam
             showTeamEmblem(PrTeam.getTeamByCode(awayTeam), PrTeam.getTeamByCode(homeTeam))
 
-            dv.makeGameItem()
+            dvm.makeGameItem()
         }
     }
 

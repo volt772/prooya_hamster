@@ -167,6 +167,19 @@ class DialogActivity : AppCompatActivity() {
             dialog.window?.attributes = lp
         }
 
+        /* Dialog - 경기등록불가*/
+        fun dialogCannotRegist(
+            context: Context) {
+
+            val dialog = prDialog(context, R.layout.dialog_cannot_regist)
+            val lp = prLayoutParams(dialog)
+
+            dialog.findViewById<View>(R.id.bt_close).setOnClickListener { dialog.dismiss() }
+
+            dialog.show()
+            dialog.window?.attributes = lp
+        }
+
         /* Dialog - 경기없음*/
         fun dialogSaveDailyHistory(
             context: Context) {
