@@ -374,7 +374,7 @@
 
     <!-- Season Change Button Label -->
     <style name="SeasonChangeLabel">
-        <item name="android:textColor">@color/p_main_first</item>
+        <item name="android:textColor">@color/p_white_10</item>
         <item name="android:textSize">@dimen/md_16</item>
     </style>
 

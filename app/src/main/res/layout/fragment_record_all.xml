@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/md_15"
-        android:background="@color/p_main_second" >
+        android:background="@color/p_white_10" >
 
         <!-- 상단 타이틀-->
         <androidx.constraintlayout.widget.ConstraintLayout
