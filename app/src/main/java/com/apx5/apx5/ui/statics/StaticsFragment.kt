@@ -13,9 +13,13 @@ import com.apx5.apx5.constants.PrPrefKeys
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
+import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.ops.OpsDailyPlay
+import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
+import com.apx5.apx5.ui.utils.UiUtils
+import com.apx5.apx5.ui.utils.UiUtils.Companion.getPlayResultByTeamSide
 import com.apx5.apx5.ui.utils.UiUtils.Companion.getTime
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.CommonUtils.getBackgroundTintList
@@ -34,7 +38,7 @@ class StaticsFragment :
 
     private val svm: StaticsViewModel by viewModel()
 
-    private lateinit var todayGame: TodayGame
+    private lateinit var dailyGame: DtDailyGame
 
     override fun getLayoutId() = R.layout.fragment_statics
     override fun getBindingVariable() = BR.viewModel
@@ -90,8 +94,8 @@ class StaticsFragment :
         binding().clGameSelect.visibility = CommonUtils.setVisibility(count > 1)
     }
 
-    private fun makeGameView(game: TodayGame) {
-        todayGame = game
+    private fun makeGameView(game: DtDailyGame) {
+        dailyGame = game
         binding().apply {
             /* 원정팀, 홈팀 카드 색상*/
             clAwayTeam.backgroundTintList = getBackgroundTintList(game.awayTeam.mainColor)
@@ -147,11 +151,13 @@ class StaticsFragment :
         val gameStatus = PrGameStatus.getStatsByCode(awayScore)
 
         makeGameView(
-            TodayGame(
+            DtDailyGame(
+                gameId = game.id,
                 awayTeam = awayTeam,
                 homeTeam = homeTeam,
                 awayScore = awayScore,
                 homeScore = homeScore,
+                playDate = game.playdate,
                 stadium = stadium,
                 startTime = startTime,
                 status = gameStatus,
@@ -203,12 +209,33 @@ class StaticsFragment :
                 switchGameSelectionButton(1)
             }
             R.id.btn_status -> {
-                if (todayGame.status != PrGameStatus.FINE) {
+                if (dailyGame.status != PrGameStatus.FINE) {
                     DialogActivity.dialogCannotRegist(requireContext())
                 } else {
+                    val email = PrefManager.getInstance(requireContext()).userEmail?: ""
+                    val teamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
+                    val newGame = getPlayResultByTeamSide(dailyGame, teamCode)
+
+                    svm.saveNewPlay(
+                        PtPostPlay(
+                            result = newGame.result,
+                            year = UiUtils.getYear(dailyGame.playDate.toString()),
+                            regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
+                            pid = email,
+                            lostscore = newGame.lostScore,
+                            versus = newGame.versus,
+                            myteam = teamCode,
+                            getscore = newGame.getScore
+                        )
+                    )
                 }
             }
         }
+    }
+
+    /* 완료 Dialog*/
+    override fun showSuccessDialog() {
+        DialogActivity.dialogSaveDailyHistory(requireContext())
     }
 
     companion object {

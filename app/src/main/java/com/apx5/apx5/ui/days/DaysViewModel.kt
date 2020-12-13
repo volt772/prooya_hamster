@@ -55,14 +55,13 @@ class DaysViewModel(application: Application) :
     /* 경기 데이터*/
     internal fun makeGameItem() {
         /* 원정팀명*/
-        awayTeam.set(PrTeam.getTeamByCode(_game.awayTeam).fullName)
+        awayTeam.set(_game.awayTeam.fullName)
 
         /* 홈팀명*/
-        homeTeam.set(PrTeam.getTeamByCode(_game.homeTeam).fullName)
+        homeTeam.set(_game.homeTeam.fullName)
 
         /* 게임상태*/
-        val status = PrGameStatus.getStatsByCode(_game.status)
-        if (status == PrGameStatus.FINE) {
+        if (_game.status == PrGameStatus.FINE) {
             gameStatus.set(
                 String.format(
                     Locale.getDefault(),
@@ -71,31 +70,31 @@ class DaysViewModel(application: Application) :
                     _game.homeScore)
             )
         } else {
-            gameStatus.set(status.displayCode)
+            gameStatus.set(_game.status.displayCode)
         }
 
         /* 게임일자*/
         val _playDate = UiUtils.getDateToFull(_game.playDate.toString())
         val _startTime = UiUtils.getTime(_game.startTime.toString())
 
-        if (_game.startTime == 0) {
-            gameDate.set(
-                String.format(
-                    Locale.getDefault(),
-                    app.resources.getString(R.string.day_game_date_single), _playDate)
-            )
-        } else {
-            gameDate.set(
-                String.format(
-                    Locale.getDefault(),
-                    app.resources.getString(R.string.day_game_date_with_starttime),
-                    _playDate,
-                    _startTime)
-            )
-        }
+//        if (_game.startTime == 0) {
+//            gameDate.set(
+//                String.format(
+//                    Locale.getDefault(),
+//                    app.resources.getString(R.string.day_game_date_single), _playDate)
+//            )
+//        } else {
+//            gameDate.set(
+//                String.format(
+//                    Locale.getDefault(),
+//                    app.resources.getString(R.string.day_game_date_with_starttime),
+//                    _playDate,
+//                    _startTime)
+//            )
+//        }
 
         /* 게임장소*/
-        gameStadium.set(PrStadium.getStadiumByCode(_game.stadium).displayName)
+        gameStadium.set(_game.stadium.displayName)
     }
 
     /* 경기정보*/
@@ -128,12 +127,13 @@ class DaysViewModel(application: Application) :
                         gameId = id,
                         awayScore = awayscore,
                         homeScore = homescore,
-                        awayTeam = awayteam,
-                        homeTeam = hometeam,
+                        awayTeam = PrTeam.getTeamByCode(awayteam),
+                        homeTeam = PrTeam.getTeamByCode(hometeam),
                         playDate = playdate,
-                        startTime = starttime,
-                        stadium = stadium,
-                        status = getPlayStatusCode(awayscore)
+                        startTime = UiUtils.getTime(starttime.toString()),
+                        stadium = PrStadium.getStadiumByCode(stadium),
+                        status = PrGameStatus.getStatsByCode(getPlayStatusCode(awayscore)),
+                        additionalInfo = ""
                     )
                 )
             }

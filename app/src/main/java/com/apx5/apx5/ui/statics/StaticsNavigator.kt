@@ -10,4 +10,5 @@ interface StaticsNavigator {
     fun showTodayGame(games: List<OpsDailyPlay>)
     fun saveMyTeamCode(teamCode: String)
     fun cancelSpinKit()
+    fun showSuccessDialog()
 }

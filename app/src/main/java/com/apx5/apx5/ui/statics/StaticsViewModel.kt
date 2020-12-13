@@ -5,10 +5,12 @@ import androidx.databinding.ObservableField
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.datum.DtStatics
+import com.apx5.apx5.datum.catcher.CtPostPlay
 import com.apx5.apx5.datum.catcher.CtPostStatics
 import com.apx5.apx5.datum.ops.OpsAllStatics
 import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.ops.OpsSeasonStatics
+import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.datum.pitcher.PtPostStatics
 import com.apx5.apx5.network.operation.PrOps
 import com.apx5.apx5.network.operation.PrOpsCallBack
@@ -89,6 +91,19 @@ class StaticsViewModel(application: Application) :
                     setTeamCode(res.team)
                     setStaticItem(res.allStatics, res.seasonStatics)
                     setTodayGame(res.todayGame)
+                }
+            }
+
+            override fun onFailed(errorData: PrOpsError) { }
+        })
+    }
+
+    /* 새기록 저장*/
+    internal fun saveNewPlay(play: PtPostPlay) {
+        prService.postGame(play, object: PrOpsCallBack<CtPostPlay> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPostPlay>?) {
+                responseBody?.data?.let {
+                    getNavigator()?.showSuccessDialog()
                 }
             }
 

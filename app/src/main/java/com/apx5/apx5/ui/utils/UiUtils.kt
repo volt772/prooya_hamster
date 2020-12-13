@@ -2,6 +2,10 @@ package com.apx5.apx5.ui.utils
 
 import android.content.Context
 import android.text.TextUtils
+import com.apx5.apx5.constants.PrResultCode
+import com.apx5.apx5.constants.PrTeam
+import com.apx5.apx5.datum.DtDailyGame
+import com.apx5.apx5.ui.days.DaysFragment
 import com.apx5.apx5.utils.equalsExt
 import com.apx5.apx5.utils.splitExt
 import org.joda.time.DateTime
@@ -14,6 +18,12 @@ import java.util.*
 
 class UiUtils {
     companion object {
+        data class ResultBySide(
+            val versus: String,
+            val getScore: String,
+            val lostScore: String,
+            val result: String
+        )
 
         /**
          * 날자 변환
@@ -128,6 +138,39 @@ class UiUtils {
          */
         fun getDrawableByName(context: Context, name: String): Int {
             return context.resources.getIdentifier(name, "drawable", context.packageName)
+        }
+
+        fun getPlayResultByTeamSide(game: DtDailyGame, teamCode: String): ResultBySide {
+            val isAwayTeam = teamCode.equalsExt(game.awayTeam.code)
+
+            val awayScore = game.awayScore
+            val homeScore = game.homeScore
+
+            if (isAwayTeam) {
+                /* 원정경기*/
+                return ResultBySide(
+                    versus = game.homeTeam.code,
+                    getScore = awayScore.toString(),
+                    lostScore = homeScore.toString(),
+                    result = when {
+                        awayScore < homeScore -> PrResultCode.LOSE.codeAbbr
+                        awayScore > homeScore -> PrResultCode.WIN.codeAbbr
+                        else -> PrResultCode.DRAW.codeAbbr
+                    }
+                )
+            } else {
+                /* 홈경기*/
+                return ResultBySide(
+                    versus = game.awayTeam.code,
+                    getScore = homeScore.toString(),
+                    lostScore = awayScore.toString(),
+                    result = when {
+                        awayScore > homeScore -> PrResultCode.LOSE.codeAbbr
+                        awayScore < homeScore -> PrResultCode.WIN.codeAbbr
+                        else -> PrResultCode.DRAW.codeAbbr
+                    }
+                )
+            }
         }
     }
 }

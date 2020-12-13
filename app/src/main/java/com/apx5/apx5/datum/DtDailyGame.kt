@@ -1,5 +1,9 @@
 package com.apx5.apx5.datum
 
+import com.apx5.apx5.constants.PrGameStatus
+import com.apx5.apx5.constants.PrStadium
+import com.apx5.apx5.constants.PrTeam
+
 /**
  * Data Class
  * @desc Tab : 4
@@ -10,10 +14,11 @@ data class DtDailyGame(
     val gameId: Int,
     val awayScore: Int,
     val homeScore: Int,
-    val awayTeam: String,
-    val homeTeam: String,
+    val awayTeam: PrTeam,
+    val homeTeam: PrTeam,
     val playDate: Int,
-    val startTime: Int,
-    val stadium: String,
-    val status: Int
+    val startTime: String,
+    val stadium: PrStadium,
+    val status: PrGameStatus,
+    val additionalInfo: String
 )

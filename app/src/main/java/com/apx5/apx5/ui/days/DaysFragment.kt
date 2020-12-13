@@ -6,6 +6,7 @@ import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
+import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentDaysBinding
@@ -61,59 +62,59 @@ class DaysFragment :
     /* 경기저장(Remote)*/
     override fun saveGameToRemote() {
         val dailyGame = dvm.dailyGame
-        val gameResult = getPlayResultByTeamSide()
-        val myTeamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
-
-        getViewModel().saveNewPlay(
-            PtPostPlay(
-                result = gameResult.result,
-                year = UiUtils.getYear(dailyGame.playDate.toString()),
-                regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
-                pid = email,
-                lostscore = gameResult.lostScore,
-                versus = gameResult.versus,
-                myteam = myTeamCode,
-                getscore = gameResult.getScore
-            )
-        )
+//        val gameResult = getPlayResultByTeamSide()
+//        val myTeamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
+//
+//        getViewModel().saveNewPlay(
+//            PtPostPlay(
+//                result = gameResult.result,
+//                year = UiUtils.getYear(dailyGame.playDate.toString()),
+//                regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
+//                pid = email,
+//                lostscore = gameResult.lostScore,
+//                versus = gameResult.versus,
+//                myteam = myTeamCode,
+//                getscore = gameResult.getScore
+//            )
+//        )
     }
 
     /**
      * 홈/원정 결과 구분
      */
-    private fun getPlayResultByTeamSide(): ResultBySide {
-        val dailyGame = dvm.dailyGame
-        val isAwayTeam = teamCode.equalsExt(dailyGame.awayTeam)
-
-        val awayScore = dailyGame.awayScore
-        val homeScore = dailyGame.homeScore
-
-        if (isAwayTeam) {
-            /* 원정경기*/
-            return ResultBySide(
-                versus = dailyGame.homeTeam,
-                getScore = awayScore.toString(),
-                lostScore = homeScore.toString() ,
-                result = when {
-                    awayScore < homeScore -> PrResultCode.LOSE.codeAbbr
-                    awayScore > homeScore -> PrResultCode.WIN.codeAbbr
-                    else -> PrResultCode.DRAW.codeAbbr
-                }
-            )
-        } else {
-            /* 홈경기*/
-            return ResultBySide(
-                versus = dailyGame.awayTeam,
-                getScore = homeScore.toString(),
-                lostScore = awayScore.toString() ,
-                result = when {
-                    awayScore > homeScore -> PrResultCode.LOSE.codeAbbr
-                    awayScore < homeScore -> PrResultCode.WIN.codeAbbr
-                    else -> PrResultCode.DRAW.codeAbbr
-                }
-            )
-        }
-    }
+//    private fun getPlayResultByTeamSide(): ResultBySide {
+//        val dailyGame = dvm.dailyGame
+//        val isAwayTeam = teamCode.equalsExt(dailyGame.awayTeam)
+//
+//        val awayScore = dailyGame.awayScore
+//        val homeScore = dailyGame.homeScore
+//
+//        if (isAwayTeam) {
+//            /* 원정경기*/
+//            return ResultBySide(
+//                versus = homeTeam,
+//                getScore = awayScore.toString(),
+//                lostScore = homeScore.toString() ,
+//                result = when {
+//                    awayScore < homeScore -> PrResultCode.LOSE.codeAbbr
+//                    awayScore > homeScore -> PrResultCode.WIN.codeAbbr
+//                    else -> PrResultCode.DRAW.codeAbbr
+//                }
+//            )
+//        } else {
+//            /* 홈경기*/
+//            return ResultBySide(
+//                versus = awayTeam,
+//                getScore = homeScore.toString(),
+//                lostScore = awayScore.toString() ,
+//                result = when {
+//                    awayScore > homeScore -> PrResultCode.LOSE.codeAbbr
+//                    awayScore < homeScore -> PrResultCode.WIN.codeAbbr
+//                    else -> PrResultCode.DRAW.codeAbbr
+//                }
+//            )
+//        }
+//    }
 
     /* 경기 가져오기(From Remote)*/
     override fun setRemoteGameData(show: Boolean) {
@@ -126,7 +127,7 @@ class DaysFragment :
             /* 팀 엠블럼*/
             val awayTeam = dvm.dailyGame.awayTeam
             val homeTeam = dvm.dailyGame.homeTeam
-            showTeamEmblem(PrTeam.getTeamByCode(awayTeam), PrTeam.getTeamByCode(homeTeam))
+            showTeamEmblem(awayTeam, homeTeam)
 
             dvm.makeGameItem()
         }
@@ -171,9 +172,9 @@ class DaysFragment :
     }
 
     /* 저장버튼노출 (경기종료시에만 저장)*/
-    private fun showSaveButton(playStatus: Int) {
+    private fun showSaveButton(status: PrGameStatus) {
         binding().btSavePlay.visibility =
-            CommonUtils.setVisibility(playStatus == PrResultCode.FINE.code)
+            CommonUtils.setVisibility(status == PrResultCode.FINE)
     }
 
     /* 스코어 보드*/
