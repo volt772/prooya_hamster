@@ -85,7 +85,7 @@
     <string name="recent_watching">최근직관</string>
     <string name="watching_count">직관횟수</string>
     <string name="recent_5plays">시즌 최근 5경기</string>
-    <string name="today_game">오늘경기</string>
+    <string name="today_game">경기</string>
     <string name="first_game">1경기</string>
     <string name="second_game">2경기</string>
     <string name="no_plays">직관을 한번도 안갔어요.</string>

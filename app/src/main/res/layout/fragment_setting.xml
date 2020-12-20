@@ -24,188 +24,188 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
 
-                    <!-- 팀변경-->
-                    <LinearLayout
-                        android:id="@+id/lyt_change_team"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:minHeight="?attr/actionBarSize"
-                        android:orientation="vertical"
-                        android:padding="@dimen/md_15">
+<!--                    &lt;!&ndash; 팀변경&ndash;&gt;-->
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/lyt_change_team"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:minHeight="?attr/actionBarSize"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:padding="@dimen/md_15">-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:orientation="horizontal">-->
 
-                            <TextView
-                                android:layout_width="@dimen/md_0"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/my_team"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                                android:textColor="@color/blue_grey_900"
-                                android:textStyle="bold" />
+<!--                            <TextView-->
+<!--                                android:layout_width="@dimen/md_0"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="@string/my_team"-->
+<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"-->
+<!--                                android:textColor="@color/blue_grey_900"-->
+<!--                                android:textStyle="bold" />-->
 
-                            <View
-                                android:layout_width="@dimen/md_10"
-                                android:layout_height="wrap_content" />
+<!--                            <View-->
+<!--                                android:layout_width="@dimen/md_10"-->
+<!--                                android:layout_height="wrap_content" />-->
 
-                            <TextView
-                                android:id="@+id/tv_team"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                                android:textColor="@color/colorPrimary" />
+<!--                            <TextView-->
+<!--                                android:id="@+id/tv_team"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"-->
+<!--                                android:textColor="@color/colorPrimary" />-->
 
-                            <View
-                                android:layout_width="@dimen/md_10"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
+<!--                            <View-->
+<!--                                android:layout_width="@dimen/md_10"-->
+<!--                                android:layout_height="wrap_content" />-->
+<!--                        </LinearLayout>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/possible_change_team"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                            android:textColor="@color/grey_500" />
-                    </LinearLayout>
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/possible_change_team"-->
+<!--                            android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--                            android:textColor="@color/grey_500" />-->
+<!--                    </LinearLayout>-->
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="@color/grey_300" />
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="1px"-->
+<!--                        android:background="@color/grey_300" />-->
 
-                    <!-- 직관기록 초기화-->
-                    <LinearLayout
-                        android:id="@+id/lyt_del_user"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:minHeight="?attr/actionBarSize"
-                        android:orientation="vertical"
-                        android:padding="@dimen/md_15">
+<!--                    &lt;!&ndash; 직관기록 초기화&ndash;&gt;-->
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/lyt_del_user"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:minHeight="?attr/actionBarSize"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:padding="@dimen/md_15">-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:orientation="horizontal">-->
 
-                            <TextView
-                                android:layout_width="@dimen/md_0"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/init_all_histories"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                                android:textColor="@color/blue_grey_900"
-                                android:textStyle="bold" />
+<!--                            <TextView-->
+<!--                                android:layout_width="@dimen/md_0"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="@string/init_all_histories"-->
+<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"-->
+<!--                                android:textColor="@color/blue_grey_900"-->
+<!--                                android:textStyle="bold" />-->
 
-                            <View
-                                android:layout_width="@dimen/md_10"
-                                android:layout_height="wrap_content" />
+<!--                            <View-->
+<!--                                android:layout_width="@dimen/md_10"-->
+<!--                                android:layout_height="wrap_content" />-->
 
-                            <View
-                                android:layout_width="@dimen/md_10"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
+<!--                            <View-->
+<!--                                android:layout_width="@dimen/md_10"-->
+<!--                                android:layout_height="wrap_content" />-->
+<!--                        </LinearLayout>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/delete_all_with_login"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                            android:textColor="@color/grey_500" />
-                    </LinearLayout>
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/delete_all_with_login"-->
+<!--                            android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--                            android:textColor="@color/grey_500" />-->
+<!--                    </LinearLayout>-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="@color/grey_300" />
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="1px"-->
+<!--                        android:background="@color/grey_300" />-->
 
-                    <!-- 모든경기저장-->
+<!--                    &lt;!&ndash; 모든경기저장&ndash;&gt;-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="@color/grey_300" />
-                </LinearLayout>
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="1px"-->
+<!--                        android:background="@color/grey_300" />-->
+<!--                </LinearLayout>-->
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_10" />
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/md_10" />-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/md_10">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:paddingTop="@dimen/md_10">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/md_15"
-                        android:layout_marginLeft="@dimen/md_15"
-                        android:layout_marginTop="@dimen/md_15"
-                        android:layout_marginBottom="@dimen/md_10"
-                        android:text="@string/notification"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:textColor="@color/blue_grey_900"
-                        android:textStyle="bold" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="@dimen/md_15"-->
+<!--                        android:layout_marginLeft="@dimen/md_15"-->
+<!--                        android:layout_marginTop="@dimen/md_15"-->
+<!--                        android:layout_marginBottom="@dimen/md_10"-->
+<!--                        android:text="@string/notification"-->
+<!--                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"-->
+<!--                        android:textColor="@color/blue_grey_900"-->
+<!--                        android:textStyle="bold" />-->
 
-                    <!-- 알림수신-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:gravity="center_vertical"
-                        android:minHeight="@dimen/md_50"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/md_15"
-                        android:paddingRight="@dimen/md_15">
+<!--                    &lt;!&ndash; 알림수신&ndash;&gt;-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:background="?attr/selectableItemBackground"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:minHeight="@dimen/md_50"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:paddingLeft="@dimen/md_15"-->
+<!--                        android:paddingRight="@dimen/md_15">-->
 
-                        <TextView
-                            android:layout_width="@dimen/md_0"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/receive_notification"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                            android:textColor="@color/grey_500" />
+<!--                        <TextView-->
+<!--                            android:layout_width="@dimen/md_0"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:text="@string/receive_notification"-->
+<!--                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
+<!--                            android:textColor="@color/grey_500" />-->
 
-                        <View
-                            android:layout_width="@dimen/md_10"
-                            android:layout_height="wrap_content" />
+<!--                        <View-->
+<!--                            android:layout_width="@dimen/md_10"-->
+<!--                            android:layout_height="wrap_content" />-->
 
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/swt_noti"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:theme="@style/Setting.Switch" />
+<!--                        <androidx.appcompat.widget.SwitchCompat-->
+<!--                            android:id="@+id/swt_noti"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:checked="true"-->
+<!--                            android:theme="@style/Setting.Switch" />-->
 
-                        <View
-                            android:layout_width="@dimen/md_10"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
+<!--                        <View-->
+<!--                            android:layout_width="@dimen/md_10"-->
+<!--                            android:layout_height="wrap_content" />-->
+<!--                    </LinearLayout>-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="@color/grey_300" />
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="1px"-->
+<!--                        android:background="@color/grey_300" />-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_10" />
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/md_10" />-->
 
                 <LinearLayout
                     android:layout_width="match_parent"

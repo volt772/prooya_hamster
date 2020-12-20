@@ -45,18 +45,18 @@ class SettingFragment :
 
     /* UI 초기화*/
     private fun initView() {
-        val viewTeam = binding().tvTeam
-        val viewNoti = binding().swtNoti
+//        val viewTeam = binding().tvTeam
+//        val viewNoti = binding().swtNoti
         val viewVersion = binding().tvVersion
-        val viewChangeTeam = binding().lytChangeTeam
-        val viewDelUser = binding().lytDelUser
+//        val viewChangeTeam = binding().lytChangeTeam
+//        val viewDelUser = binding().lytDelUser
         val viewLicense = binding().lytLicense
 
         /* 팀명*/
-        val teamCode = PrefManager.getInstance(requireContext()).getString(PrPrefKeys.MYTEAM, "")
-        teamCode?.let { code ->
-            viewTeam.text = PrTeam.getTeamByCode(code).fullName
-        }
+//        val teamCode = PrefManager.getInstance(requireContext()).getString(PrPrefKeys.MYTEAM, "")
+//        teamCode?.let { code ->
+//            viewTeam.text = PrTeam.getTeamByCode(code).fullName
+//        }
 
         /* 버전*/
         try {
@@ -68,13 +68,13 @@ class SettingFragment :
         }
 
         /* Click Listener*/
-        viewTeam.setOnClickListener(this)
+//        viewTeam.setOnClickListener(this)
         viewLicense.setOnClickListener(this)
-        viewChangeTeam.setOnClickListener(this)
-        viewDelUser.setOnClickListener(this)
+//        viewChangeTeam.setOnClickListener(this)
+//        viewDelUser.setOnClickListener(this)
 
         /* Change Listener*/
-        viewNoti.setOnCheckedChangeListener(this)
+//        viewNoti.setOnCheckedChangeListener(this)
     }
 
     /* 계정삭제후, 앱재시작*/
@@ -94,15 +94,15 @@ class SettingFragment :
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.lyt_change_team -> {
-                /* 팀변경*/
-                val intentTeam = TeamActivity.newIntent(requireContext())
-                intentTeam.putExtra(PrConstants.Teams.TEAM_CHANGE_MODE, PrTeamChangeMode.CHANGE)
-                startActivity(intentTeam)
-            }
-            R.id.lyt_del_user ->
-                /* 사용자 삭제*/
-                showDelUserDialog()
+//            R.id.lyt_change_team -> {
+//                /* 팀변경*/
+//                val intentTeam = TeamActivity.newIntent(requireContext())
+//                intentTeam.putExtra(PrConstants.Teams.TEAM_CHANGE_MODE, PrTeamChangeMode.CHANGE)
+//                startActivity(intentTeam)
+//            }
+//            R.id.lyt_del_user ->
+//                /* 사용자 삭제*/
+//                showDelUserDialog()
             R.id.lyt_license -> {
                 /* 오픈라이선스*/
                 val intentLicense = LicenseActivity.newIntent(requireContext())
@@ -112,9 +112,9 @@ class SettingFragment :
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-        if (buttonView.id == R.id.swt_noti) {
-            PrefManager.getInstance(requireContext()).setBoolean(PrPrefKeys.NOTIFICATION, isChecked)
-        }
+//        if (buttonView.id == R.id.swt_noti) {
+//            PrefManager.getInstance(requireContext()).setBoolean(PrPrefKeys.NOTIFICATION, isChecked)
+//        }
     }
 
     /* 사용자 원격삭제*/

@@ -84,28 +84,28 @@ class RecordAllFragment :
 
     /* 기록삭제*/
     override fun delHistoryItem(delPlay: AdtPlayDelTarget) {
-        val email = PrefManager.getInstance(requireContext()).userEmail?: ""
-
-        if (!email.equalsExt("")) {
-            DialogActivity.dialogHistoryDelete(
-                requireContext(),
-                PtDelHistory(
-                    pid = email,
-                    rid = delPlay.id,
-                    year = delPlay.season,
-                    versus = delPlay.versus,
-                    result = delPlay.result
-                ),
-                ::delHistory)
-        }
-
-        playItemsAdapter.notifyDataSetChanged()
+//        val email = PrefManager.getInstance(requireContext()).userEmail?: ""
+//
+//        if (!email.equalsExt("")) {
+//            DialogActivity.dialogHistoryDelete(
+//                requireContext(),
+//                PtDelHistory(
+//                    pid = email,
+//                    rid = delPlay.id,
+//                    year = delPlay.season,
+//                    versus = delPlay.versus,
+//                    result = delPlay.result
+//                ),
+//                ::delHistory)
+//        }
+//
+//        playItemsAdapter.notifyDataSetChanged()
     }
 
     /* 기록 삭제*/
-    private fun delHistory(delHistory: PtDelHistory) {
-        getViewModel().delHistory(delHistory)
-    }
+//    private fun delHistory(delHistory: PtDelHistory) {
+//        getViewModel().delHistory(delHistory)
+//    }
 
     /* 리스트 분기*/
     private fun isListExists(exists: Boolean) {

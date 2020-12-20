@@ -26,7 +26,7 @@ class DashBoardNav {
                     R.id.nav_statics -> PrTabMenu.STATICS
                     R.id.nav_team_record -> PrTabMenu.RECORD_TEAM
                     R.id.nav_all_record -> PrTabMenu.RECORD_ALL
-                    R.id.nav_daily_game -> PrTabMenu.DAYS
+//                    R.id.nav_daily_game -> PrTabMenu.DAYS
                     R.id.nav_setting -> PrTabMenu.SETTING
                     else -> PrTabMenu.STATICS
                 }

@@ -352,7 +352,7 @@
                     android:layout_height="@dimen/md_0"
                     android:background="@color/grey_700"
                     android:padding="@dimen/md_5"
-                    app:layout_constraintBottom_toTopOf="@id/btn_status"
+                    app:layout_constraintBottom_toTopOf="@id/btn_game_select"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent" >
 
@@ -370,16 +370,16 @@
 
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_status"
+                    android:id="@+id/btn_game_select"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/md_0"
                     android:background="@drawable/border_line_bottom_radius"
-                    android:backgroundTint="@color/red_300"
+                    android:backgroundTint="@color/blue_300"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     android:textAppearance="@style/TodayGameStatusLabel"
-                    android:text="경기전" />
+                    android:text="다른경기" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- Empty-->

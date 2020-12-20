@@ -16,10 +16,10 @@
         android:icon="@drawable/ic_tab_2"
         android:title="전체기록" />
 
-    <item
-        android:id="@+id/nav_daily_game"
-        android:icon="@drawable/ic_tab_3"
-        android:title="일정" />
+<!--    <item-->
+<!--        android:id="@+id/nav_daily_game"-->
+<!--        android:icon="@drawable/ic_tab_3"-->
+<!--        android:title="일정" />-->
 
     <item
         android:id="@+id/nav_setting"

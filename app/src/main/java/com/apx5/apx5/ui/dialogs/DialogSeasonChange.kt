@@ -34,7 +34,7 @@ class DialogSeasonChange(
         val npYear = view.findViewById<NumberPicker>(R.id.np_year)
         val btnSelect = view.findViewById<Button>(R.id.btn_select)
 
-        val currentYear = UiUtils.currentYear
+//        val currentYear = UiUtils.currentYear
 
         npYear.minValue = MIN_YEAR
         npYear.maxValue = MAX_YEAR
@@ -42,9 +42,9 @@ class DialogSeasonChange(
 
         npYear.apply {
             minValue = MIN_YEAR
-            maxValue = currentYear
+            maxValue = MAX_YEAR
             wrapSelectorWheel = true
-            value = currentYear
+            value = MAX_YEAR
         }
 
         btnSelect.setOnClickListener {
@@ -58,6 +58,6 @@ class DialogSeasonChange(
 
     companion object {
         const val MIN_YEAR = 2017
-        const val MAX_YEAR = 2021
+        const val MAX_YEAR = 2020
     }
 }

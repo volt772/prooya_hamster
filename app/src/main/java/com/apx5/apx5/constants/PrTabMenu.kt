@@ -40,13 +40,13 @@ enum class PrTabMenu(
         R.string.menu2,
         RecordAllFragment.newInstance()
     ),
-    /* 일정*/
-    DAYS(
-        "ic_tab_3",
-        R.color.grey_300,
-        R.string.menu3,
-        DaysFragment.newInstance()
-    ),
+//    /* 일정*/
+//    DAYS(
+//        "ic_tab_3",
+//        R.color.grey_300,
+//        R.string.menu3,
+//        DaysFragment.newInstance()
+//    ),
     /* 설정*/
     SETTING(
         "ic_tab_4",
@@ -68,7 +68,7 @@ enum class PrTabMenu(
                 0 -> STATICS
                 1 -> RECORD_TEAM
                 2 -> RECORD_ALL
-                3 -> DAYS
+//                3 -> DAYS
                 4 -> SETTING
                 else -> OTHER
             }

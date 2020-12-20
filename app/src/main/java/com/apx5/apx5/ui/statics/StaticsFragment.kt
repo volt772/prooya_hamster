@@ -62,7 +62,7 @@ class StaticsFragment :
     private fun initView() {
         binding().btnFirstGame.setOnClickListener(this)
         binding().btnSecondGame.setOnClickListener(this)
-        binding().btnStatus.setOnClickListener(this)
+        binding().btnGameSelect.setOnClickListener(this)
     }
 
     /* 사용자 정보 저장*/
@@ -127,18 +127,6 @@ class StaticsFragment :
                 !(game.stadium.displayName.isEmpty() && game.startTime.isEmpty())
             )
             tvGameStatus.text = game.additionalInfo
-
-            /* 하단 상태버튼*/
-            btnStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor(game.status.color))
-            btnStatus.text = if (game.status == PrGameStatus.FINE) {
-                if (game.registedGame) {
-                    game.status.displayCode
-                } else {
-                    "${game.status.displayCode} / ${getString(R.string.save_game)}"
-                }
-            } else {
-                game.status.displayCode
-            }
         }
     }
 
@@ -216,32 +204,6 @@ class StaticsFragment :
             R.id.btn_second_game -> {
                 makeGameData(svm.gameList[1])
                 switchGameSelectionButton(1)
-            }
-            R.id.btn_status -> {
-                if (dailyGame.status != PrGameStatus.FINE) {
-                    DialogActivity.dialogCannotRegist(requireContext())
-                } else {
-                    println("probe : onClick : ${dailyGame}")
-                    if (dailyGame.registedGame) {
-                        DialogActivity.dialogAlreadyRegistedGame(requireContext())
-                    } else {
-                        val teamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
-                        val newGame = getPlayResultByTeamSide(dailyGame, teamCode)
-
-                        svm.saveNewPlay(
-                            PtPostPlay(
-                                result = newGame.result,
-                                year = UiUtils.getYear(dailyGame.playDate.toString()),
-                                regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
-                                pid = userEmail,
-                                lostscore = newGame.lostScore,
-                                versus = newGame.versus,
-                                myteam = teamCode,
-                                getscore = newGame.getScore
-                            )
-                        )
-                    }
-                }
             }
         }
     }
