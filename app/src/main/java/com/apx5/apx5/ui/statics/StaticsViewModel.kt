@@ -10,6 +10,7 @@ import com.apx5.apx5.datum.catcher.CtPostStatics
 import com.apx5.apx5.datum.ops.OpsAllStatics
 import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.ops.OpsSeasonStatics
+import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.datum.pitcher.PtPostStatics
 import com.apx5.apx5.network.operation.PrOps
@@ -88,7 +89,7 @@ class StaticsViewModel(application: Application) :
             override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPostStatics>?) {
                 responseBody?.data?.let { res ->
                     getNavigator()?.cancelSpinKit()
-                    setTeamCode(res.team)
+                    setTeamCode(res.user)
                     setStaticItem(res.allStatics, res.seasonStatics)
                     setTodayGame(res.todayGame)
                 }
@@ -112,8 +113,10 @@ class StaticsViewModel(application: Application) :
     }
 
     /* 팀코드 저장*/
-    private fun setTeamCode(teamCode: String) {
-        getNavigator()?.saveMyTeamCode(teamCode)
+    private fun setTeamCode(user: OpsUser?) {
+        user?.let { _user ->
+            getNavigator()?.saveUserInfo(_user)
+        }
     }
 
     /* 통계수치지정*/

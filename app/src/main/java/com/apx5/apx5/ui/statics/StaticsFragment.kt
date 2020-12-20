@@ -15,6 +15,7 @@ import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.ops.OpsDailyPlay
+import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
@@ -39,6 +40,7 @@ class StaticsFragment :
     private val svm: StaticsViewModel by viewModel()
 
     private lateinit var dailyGame: DtDailyGame
+    private var userEmail: String = ""
 
     override fun getLayoutId() = R.layout.fragment_statics
     override fun getBindingVariable() = BR.viewModel
@@ -49,6 +51,8 @@ class StaticsFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        userEmail = PrefManager.getInstance(requireContext()).userEmail?: ""
 
         initView()
         subscriber()
@@ -61,10 +65,11 @@ class StaticsFragment :
         binding().btnStatus.setOnClickListener(this)
     }
 
-    /* 팀코드 엎어치기*/
-    override fun saveMyTeamCode(teamCode: String) {
-        if (!teamCode.equalsExt("")) {
-            PrefManager.getInstance(requireActivity()).setString(PrPrefKeys.MYTEAM, teamCode)
+    /* 사용자 정보 저장*/
+    override fun saveUserInfo(user: OpsUser) {
+        user.run {
+            PrefManager.getInstance(requireActivity()).setString(PrPrefKeys.MYTEAM, team)
+            PrefManager.getInstance(requireActivity()).setInt(PrPrefKeys.MY_ID, userId)
         }
     }
 
@@ -126,7 +131,11 @@ class StaticsFragment :
             /* 하단 상태버튼*/
             btnStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor(game.status.color))
             btnStatus.text = if (game.status == PrGameStatus.FINE) {
-                "${game.status.displayCode} / ${getString(R.string.save_game)}"
+                if (game.registedGame) {
+                    game.status.displayCode
+                } else {
+                    "${game.status.displayCode} / ${getString(R.string.save_game)}"
+                }
             } else {
                 game.status.displayCode
             }
@@ -161,15 +170,15 @@ class StaticsFragment :
                 stadium = stadium,
                 startTime = startTime,
                 status = gameStatus,
-                additionalInfo = additionalInfo
+                additionalInfo = additionalInfo,
+                registedGame = (game.registedId > 0)
             )
         )
     }
 
     private fun subscriber() {
-        val email = PrefManager.getInstance(requireContext()).userEmail?: ""
-        if (!email.equalsExt("")) {
-            getViewModel().getStatics(email)
+        if (!userEmail.equalsExt("")) {
+            getViewModel().getStatics(userEmail)
         } else {
             DialogActivity.dialogError(requireContext())
         }
@@ -212,22 +221,26 @@ class StaticsFragment :
                 if (dailyGame.status != PrGameStatus.FINE) {
                     DialogActivity.dialogCannotRegist(requireContext())
                 } else {
-                    val email = PrefManager.getInstance(requireContext()).userEmail?: ""
-                    val teamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
-                    val newGame = getPlayResultByTeamSide(dailyGame, teamCode)
+                    println("probe : onClick : ${dailyGame}")
+                    if (dailyGame.registedGame) {
+                        DialogActivity.dialogAlreadyRegistedGame(requireContext())
+                    } else {
+                        val teamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
+                        val newGame = getPlayResultByTeamSide(dailyGame, teamCode)
 
-                    svm.saveNewPlay(
-                        PtPostPlay(
-                            result = newGame.result,
-                            year = UiUtils.getYear(dailyGame.playDate.toString()),
-                            regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
-                            pid = email,
-                            lostscore = newGame.lostScore,
-                            versus = newGame.versus,
-                            myteam = teamCode,
-                            getscore = newGame.getScore
+                        svm.saveNewPlay(
+                            PtPostPlay(
+                                result = newGame.result,
+                                year = UiUtils.getYear(dailyGame.playDate.toString()),
+                                regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
+                                pid = userEmail,
+                                lostscore = newGame.lostScore,
+                                versus = newGame.versus,
+                                myteam = teamCode,
+                                getscore = newGame.getScore
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
@@ -236,6 +249,7 @@ class StaticsFragment :
     /* 완료 Dialog*/
     override fun showSuccessDialog() {
         DialogActivity.dialogSaveDailyHistory(requireContext())
+        getViewModel().getStatics(userEmail)
     }
 
     companion object {
@@ -250,16 +264,5 @@ class StaticsFragment :
             SELECTED(R.drawable.btn_game_select_fill_round, R.style.TodayGameSelectLabel),
             DESELECTED(R.drawable.btn_game_select_round, R.style.TodayGameSelectNormalLabel)
         }
-
-        data class TodayGame (
-            val awayTeam: PrTeam,
-            val homeTeam: PrTeam,
-            val awayScore: Int,
-            val homeScore: Int,
-            val stadium: PrStadium,
-            val startTime: String,
-            val status: PrGameStatus,
-            val additionalInfo: String
-        )
     }
 }

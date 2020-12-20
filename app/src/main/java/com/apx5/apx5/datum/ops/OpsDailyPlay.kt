@@ -14,5 +14,6 @@ data class OpsDailyPlay (
     val id: Int,
     val playdate: Int,
     val stadium: String,
-    val starttime: Int
+    val starttime: Int,
+    val registedId: Int
 )

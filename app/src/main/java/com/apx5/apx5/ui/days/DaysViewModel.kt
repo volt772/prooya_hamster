@@ -133,7 +133,8 @@ class DaysViewModel(application: Application) :
                         startTime = UiUtils.getTime(starttime.toString()),
                         stadium = PrStadium.getStadiumByCode(stadium),
                         status = PrGameStatus.getStatsByCode(getPlayStatusCode(awayscore)),
-                        additionalInfo = ""
+                        additionalInfo = "",
+                        registedGame = registedId > 0
                     )
                 )
             }

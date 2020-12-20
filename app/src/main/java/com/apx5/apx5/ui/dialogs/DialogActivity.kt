@@ -180,6 +180,19 @@ class DialogActivity : AppCompatActivity() {
             dialog.window?.attributes = lp
         }
 
+        /* Dialog - 이미 등록된 게임*/
+        fun dialogAlreadyRegistedGame(
+            context: Context) {
+
+            val dialog = prDialog(context, R.layout.dialog_already_registed)
+            val lp = prLayoutParams(dialog)
+
+            dialog.findViewById<View>(R.id.bt_close).setOnClickListener { dialog.dismiss() }
+
+            dialog.show()
+            dialog.window?.attributes = lp
+        }
+
         /* Dialog - 경기없음*/
         fun dialogSaveDailyHistory(
             context: Context) {

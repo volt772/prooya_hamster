@@ -24,6 +24,14 @@ class PrefManager private constructor(ctx: Context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context)
     }
 
+    fun setInt(key: String, value: Int) {
+        preferences.edit().putInt(key, value).commit()
+    }
+
+    fun getInt(key: String, defaultValue: Int): Int? {
+        return preferences.getInt(key, defaultValue)
+    }
+
     fun setString(key: String, value: String) {
         preferences.edit().putString(key, value).commit()
     }

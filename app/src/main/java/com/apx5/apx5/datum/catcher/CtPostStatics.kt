@@ -4,6 +4,7 @@ import com.apx5.apx5.constants.PrNetworkKeys
 import com.apx5.apx5.datum.ops.OpsAllStatics
 import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.ops.OpsSeasonStatics
+import com.apx5.apx5.datum.ops.OpsUser
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -11,15 +12,15 @@ import com.google.gson.annotations.SerializedName
  */
 
 open class CtPostStatics {
-        @SerializedName(PrNetworkKeys.TEAM)
-        val team: String = ""
+    @SerializedName(PrNetworkKeys.USER)
+    val user: OpsUser?= null
 
-        @SerializedName(PrNetworkKeys.ALL_STATICS)
-        val allStatics: OpsAllStatics?= null
+    @SerializedName(PrNetworkKeys.ALL_STATICS)
+    val allStatics: OpsAllStatics?= null
 
-        @SerializedName(PrNetworkKeys.SEASON_STATICS)
-        val seasonStatics: OpsSeasonStatics?= null
+    @SerializedName(PrNetworkKeys.SEASON_STATICS)
+    val seasonStatics: OpsSeasonStatics?= null
 
-        @SerializedName(PrNetworkKeys.TODAY_GAME)
-        val todayGame: List<OpsDailyPlay>?= null
+    @SerializedName(PrNetworkKeys.TODAY_GAME)
+    val todayGame: List<OpsDailyPlay>?= null
 }

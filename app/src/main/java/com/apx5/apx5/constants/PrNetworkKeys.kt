@@ -7,6 +7,7 @@ package com.apx5.apx5.constants
 object PrNetworkKeys {
     const val ID = "id"
     const val COUNT = "count"
+    const val USER = "user"
     const val GAMES = "games"
     const val STATUS = "status"
     const val RESULT = "result"
