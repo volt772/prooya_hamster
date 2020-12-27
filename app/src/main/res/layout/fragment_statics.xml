@@ -379,7 +379,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     android:textAppearance="@style/TodayGameStatusLabel"
-                    android:text="다른경기" />
+                    android:text="@string/save_game" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- Empty-->

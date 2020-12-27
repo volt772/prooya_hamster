@@ -205,6 +205,31 @@ class StaticsFragment :
                 makeGameData(svm.gameList[1])
                 switchGameSelectionButton(1)
             }
+            R.id.btn_game_select -> {
+                if (dailyGame.status != PrGameStatus.FINE) {
+                    DialogActivity.dialogCannotRegist(requireContext())
+                } else {
+                    if (dailyGame.registedGame) {
+                        DialogActivity.dialogAlreadyRegistedGame(requireContext())
+                    } else {
+                        val teamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
+                        val newGame = getPlayResultByTeamSide(dailyGame, teamCode)
+
+                        svm.saveNewPlay(
+                            PtPostPlay(
+                                result = newGame.result,
+                                year = UiUtils.getYear(dailyGame.playDate.toString()),
+                                regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
+                                pid = userEmail,
+                                lostscore = newGame.lostScore,
+                                versus = newGame.versus,
+                                myteam = teamCode,
+                                getscore = newGame.getScore
+                            )
+                        )
+                    }
+                }
+            }
         }
     }
 

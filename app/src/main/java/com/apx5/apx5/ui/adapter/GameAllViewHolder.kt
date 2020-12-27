@@ -66,19 +66,19 @@ class GameAllViewHolder(
         }
 
         /* 기록삭제 (Long Press)*/
-//        itemView.setOnLongClickListener {
-//            delGame?.let { _callback ->
-//                _callback(
-//                    AdtPlayDelTarget(
-//                        id = game.playId?: 0,
-//                        season = game.playSeason?: 0,
-//                        versus = game.playVersus?: "",
-//                        result = game.playResult.codeAbbr
-//                    )
-//                )
-//            }
-//            true
-//        }
+        itemView.setOnLongClickListener {
+            delGame?.let { _callback ->
+                _callback(
+                    AdtPlayDelTarget(
+                        id = game.playId?: 0,
+                        season = game.playSeason?: 0,
+                        versus = game.playVersus?: "",
+                        result = game.playResult.codeAbbr
+                    )
+                )
+            }
+            true
+        }
     }
 
     companion object {
