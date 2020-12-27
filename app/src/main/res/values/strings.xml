@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Prooya\n직관기록</string>
-    <string name="app_name_title">Prooya 직관기록</string>
+    <string name="app_name">Prooya\n직관기록 LST</string>
+    <string name="app_name_title">Prooya 직관기록 LST</string>
     <string name="errorServerIsOff">연결상태가 좋지 않습니다.\n잠시후 다시 시도해 주시기 바랍니다.</string>
     <string name="errorComm">오류가 발생했습니다.\n앱을 다시 실행해 주세요.</string>
     <string name="empty">없음</string>
@@ -80,6 +80,7 @@
     <string name="select_ok">선택</string>
     <string name="season_select_title">시즌선택</string>
 
+    <string name="winning_rate_label">승률</string>
     <string name="winning_rate_season">시즌승률</string>
     <string name="winning_rate_total">통산승률</string>
     <string name="recent_watching">최근직관</string>

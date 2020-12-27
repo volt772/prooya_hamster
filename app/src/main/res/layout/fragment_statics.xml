@@ -7,410 +7,420 @@
             type="com.apx5.apx5.ui.statics.StaticsViewModel"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/md_15"
-        android:background="@color/p_white_10" >
+        android:orientation="vertical"
+        android:gravity ="center"
+        android:fillViewport="true"
+        android:layout_marginTop="@dimen/md_0" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_box_summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" >
+            android:padding="@dimen/md_15"
+            android:background="@color/p_white_10" >
 
-            <TextView
-                android:id="@+id/tv_summary_label"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_box_summary"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:textAppearance="@style/PageTitle"
-                android:text="@string/viewing_record" />
-
-            <!-- 직관기록-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_summary"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/md_300"
-                android:layout_marginTop="@dimen/md_10"
-                android:background="@drawable/border_line_list"
-                app:layout_constraintTop_toBottomOf="@id/tv_summary_label"
-                app:layout_constraintBottom_toBottomOf="parent" >
-
-                <!-- Circle Progress Bar-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_circle_progress"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_200"
-                    android:layout_marginTop="@dimen/md_25"
-                    app:layout_constraintBottom_toTopOf="@id/cl_records"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent">
-
-                    <com.ramijemli.percentagechartview.PercentageChartView
-                        android:id="@+id/pc_record"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:pcv_mode="ring"
-                        app:pcv_orientation="counter_clockwise"
-                        app:pcv_animDuration="800"
-                        app:pcv_animInterpolator="anticipate_overshoot"
-                        app:pcv_progress="10"
-                        app:pcv_startAngle="90"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!-- Summary-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_records"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_50"
-                    android:layout_marginTop="@dimen/md_25"
-                    android:layout_marginBottom="@dimen/md_10"
-                    app:layout_constraintTop_toBottomOf="@id/cl_circle_progress"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent">
-
-                    <!-- Left Record-->
-                    <LinearLayout
-                        android:id="@+id/ll_left_record"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/ll_center_divider"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent" >
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textAppearance="@style/StaticRecordTitle"
-                            android:text="승률" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textAppearance="@style/StaticRecordData"
-                            android:text="88승88무88패" />
-                    </LinearLayout>
-
-                    <!-- Center Divider-->
-                    <LinearLayout
-                        android:id="@+id/ll_center_divider"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent" >
-
-                        <View
-                            android:layout_width="5dp"
-                            android:layout_height="match_parent"
-                            android:background="#FF0000FF" />
-                    </LinearLayout>
-
-                    <!-- Right Record-->
-                    <LinearLayout
-                        android:id="@+id/ll_right_record"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/ll_center_divider"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent" >
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textAppearance="@style/StaticRecordTitle"
-                            android:text="직관횟수" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textAppearance="@style/StaticRecordData"
-                            android:text="99회" />
-                    </LinearLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <!-- 최근 5경기-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_box_recent_plays"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/md_0"
-            android:layout_marginTop="@dimen/md_25"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_box_summary" >
-
-            <TextView
-                android:id="@+id/tv_recent_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:textAppearance="@style/PageTitle"
-                android:text="@string/today_game" />
-
-            <!-- 오늘경기-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_today_game"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/md_0"
-                android:layout_marginTop="@dimen/md_10"
-                android:background="@drawable/border_line_list"
-                app:layout_constraintTop_toBottomOf="@id/tv_recent_label"
-                app:layout_constraintBottom_toBottomOf="parent" >
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_game_select"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" >
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_first_game"
-                        android:layout_width="@dimen/md_80"
-                        android:layout_height="@dimen/md_30"
-                        android:layout_marginTop="@dimen/md_16"
-                        android:layout_marginStart="@dimen/md_16"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:background="@drawable/btn_game_select_round"
-                        android:textAppearance="@style/TodayGameSelectNormalLabel"
-                        android:text="@string/first_game" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_second_game"
-                        android:layout_width="@dimen/md_80"
-                        android:layout_height="@dimen/md_30"
-                        android:layout_marginTop="@dimen/md_16"
-                        android:layout_marginStart="@dimen/md_8"
-                        app:layout_constraintLeft_toRightOf="@id/btn_first_game"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:background="@drawable/btn_game_select_round"
-                        android:textAppearance="@style/TodayGameSelectNormalLabel"
-                        android:text="@string/second_game" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!-- 원정팀-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_away_team"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_0"
-                    android:background="@drawable/border_line_card"
-                    android:backgroundTint="@color/skw"
-                    android:layout_marginTop="@dimen/md_16"
-                    android:layout_marginStart="@dimen/md_16"
-                    android:layout_marginEnd="@dimen/md_16"
-                    app:layout_constraintTop_toBottomOf="@id/cl_game_select"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:padding="@dimen/md_10" >
-
-                    <com.mikhaellopez.circularimageview.CircularImageView
-                        android:id="@+id/iv_away_emblem"
-                        android:layout_width="@dimen/md_50"
-                        android:layout_height="@dimen/md_50"
-                        android:background="@android:color/transparent"
-                        app:civ_shadow="true"
-                        app:civ_shadow_radius="0"
-                        app:civ_border="false"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:srcCompat="@drawable/ic_team_skw" />
-
-                    <TextView
-                        android:id="@+id/tv_away_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/md_10"
-                        app:layout_constraintLeft_toRightOf="@id/iv_away_emblem"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:textAppearance="@style/TodayGameLabel"
-                        android:text="SK 와이번스" />
-
-                    <TextView
-                        android:id="@+id/tv_away_score"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/md_10"
-                        android:layout_marginEnd="@dimen/md_10"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:textAppearance="@style/TodayGameLabel"
-                        android:text="22" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!-- 홈팀-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_home_team"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_0"
-                    android:background="@drawable/border_line_card"
-                    android:backgroundTint="@color/dsb"
-                    android:layout_marginTop="@dimen/md_10"
-                    android:layout_marginStart="@dimen/md_16"
-                    android:layout_marginEnd="@dimen/md_16"
-                    app:layout_constraintTop_toBottomOf="@id/cl_away_team"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:padding="@dimen/md_10" >
-
-                    <com.mikhaellopez.circularimageview.CircularImageView
-                        android:id="@+id/iv_home_emblem"
-                        android:layout_width="@dimen/md_50"
-                        android:layout_height="@dimen/md_50"
-                        android:background="@android:color/transparent"
-                        app:civ_shadow="true"
-                        app:civ_shadow_radius="0"
-                        app:civ_border="false"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:srcCompat="@drawable/ic_team_dsb" />
-
-                    <TextView
-                        android:id="@+id/tv_home_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/md_10"
-                        app:layout_constraintLeft_toRightOf="@id/iv_home_emblem"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:textAppearance="@style/TodayGameLabel"
-                        android:text="두산베어스" />
-
-                    <TextView
-                        android:id="@+id/tv_home_score"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/md_10"
-                        android:layout_marginEnd="@dimen/md_10"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:textAppearance="@style/TodayGameLabel"
-                        android:text="22" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!-- 기타정보-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_inform"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_0"
-                    android:background="@color/grey_700"
-                    android:padding="@dimen/md_5"
-                    app:layout_constraintBottom_toTopOf="@id/btn_game_select"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" >
-
-                    <TextView
-                        android:id="@+id/tv_game_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:text="서울잠실 | 18:00"
-                        android:textAppearance="@style/TodayGameDetailLabel" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_game_select"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_0"
-                    android:background="@drawable/border_line_bottom_radius"
-                    android:backgroundTint="@color/blue_300"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:textAppearance="@style/TodayGameStatusLabel"
-                    android:text="@string/save_game" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Empty-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_no_game"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/md_0"
-                android:background="@drawable/border_line_list"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/md_8"
-                app:layout_constraintTop_toBottomOf="@id/tv_recent_label"
-                app:layout_constraintBottom_toBottomOf="parent" >
-
-                <ImageView
-                    android:id="@+id/iv_empty"
-                    android:layout_width="@dimen/md_170"
-                    android:layout_height="@dimen/md_170"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="@dimen/md_50"
-                    android:src="@drawable/ic_info_type_b" />
+                app:layout_constraintRight_toRightOf="parent" >
 
                 <TextView
-                    android:id="@+id/iv_empty_info"
+                    android:id="@+id/tv_summary_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/md_15"
-                    android:text="@string/no_match_up"
-                    app:layout_constraintTop_toBottomOf="@id/iv_empty"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                    android:textColor="@color/grey_700" />
+                    android:textAppearance="@style/PageTitle"
+                    android:text="@string/viewing_record" />
+
+                <!-- 직관기록-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/md_250"
+                    android:layout_marginTop="@dimen/md_10"
+                    android:background="@drawable/border_line_list"
+                    app:layout_constraintTop_toBottomOf="@id/tv_summary_label"
+                    app:layout_constraintBottom_toBottomOf="parent" >
+
+                    <!-- Circle Progress Bar-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_circle_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/md_150"
+                        android:layout_marginTop="@dimen/md_25"
+                        app:layout_constraintBottom_toTopOf="@id/cl_records"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent">
+
+                        <com.ramijemli.percentagechartview.PercentageChartView
+                            android:id="@+id/pc_record"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:pcv_mode="ring"
+                            app:pcv_backgroundBarColor="@color/p_main_fourth"
+                            app:pcv_orientation="counter_clockwise"
+                            app:pcv_animDuration="800"
+                            app:pcv_animInterpolator="anticipate_overshoot"
+                            app:pcv_progress="10"
+                            app:pcv_startAngle="90"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Summary-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_records"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/md_50"
+                        android:layout_marginTop="@dimen/md_25"
+                        android:layout_marginBottom="@dimen/md_10"
+                        app:layout_constraintTop_toBottomOf="@id/cl_circle_progress"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent">
+
+                        <!-- Left Record-->
+                        <LinearLayout
+                            android:id="@+id/ll_left_record"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toLeftOf="@id/ll_center_divider"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textAppearance="@style/StaticRecordTitle"
+                                android:text="@string/winning_rate_label" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textAppearance="@style/StaticRecordData"
+                                android:text="@string/w_d_l" />
+                        </LinearLayout>
+
+                        <!-- Center Divider-->
+                        <LinearLayout
+                            android:id="@+id/ll_center_divider"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" >
+
+                            <View
+                                android:layout_width="@dimen/md_1"
+                                android:layout_height="match_parent"
+                                android:background="@color/p_main_fifth" />
+                        </LinearLayout>
+
+                        <!-- Right Record-->
+                        <LinearLayout
+                            android:id="@+id/ll_right_record"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toRightOf="@id/ll_center_divider"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textAppearance="@style/StaticRecordTitle"
+                                android:text="@string/watching_count" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textAppearance="@style/StaticRecordData"
+                                android:text="@string/seeing_count_season" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- 로딩중-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" >
 
-            <com.github.ybq.android.spinkit.SpinKitView
-                android:id="@+id/sk_loading"
-                style="@style/SpinKitView.Large.ThreeBounce"
-                android:layout_width="@dimen/md_40"
-                android:layout_height="@dimen/md_40"
+            <!-- 최근 5경기-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_box_recent_plays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/md_25"
+                app:layout_constraintTop_toBottomOf="@id/cl_box_summary" >
+
+                <TextView
+                    android:id="@+id/tv_recent_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:textAppearance="@style/PageTitle"
+                    android:text="@string/today_game" />
+
+                <!-- 오늘경기-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_today_game"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/md_10"
+                    android:background="@drawable/border_line_list"
+                    app:layout_constraintTop_toBottomOf="@id/tv_recent_label"
+                    app:layout_constraintBottom_toBottomOf="parent" >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_game_select"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" >
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_first_game"
+                            android:layout_width="@dimen/md_80"
+                            android:layout_height="@dimen/md_30"
+                            android:layout_marginTop="@dimen/md_16"
+                            android:layout_marginStart="@dimen/md_16"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:background="@drawable/btn_game_select_round"
+                            android:textAppearance="@style/TodayGameSelectNormalLabel"
+                            android:text="@string/first_game" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_second_game"
+                            android:layout_width="@dimen/md_80"
+                            android:layout_height="@dimen/md_30"
+                            android:layout_marginTop="@dimen/md_16"
+                            android:layout_marginStart="@dimen/md_8"
+                            app:layout_constraintLeft_toRightOf="@id/btn_first_game"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:background="@drawable/btn_game_select_round"
+                            android:textAppearance="@style/TodayGameSelectNormalLabel"
+                            android:text="@string/second_game" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- 원정팀-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_away_team"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/md_70"
+                        android:background="@drawable/border_line_card"
+                        android:backgroundTint="@color/skw"
+                        android:layout_marginTop="@dimen/md_16"
+                        android:layout_marginStart="@dimen/md_16"
+                        android:layout_marginEnd="@dimen/md_16"
+                        app:layout_constraintTop_toBottomOf="@id/cl_game_select"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:padding="@dimen/md_10" >
+
+                        <com.mikhaellopez.circularimageview.CircularImageView
+                            android:id="@+id/iv_away_emblem"
+                            android:layout_width="@dimen/md_50"
+                            android:layout_height="@dimen/md_50"
+                            android:background="@android:color/transparent"
+                            app:civ_shadow="true"
+                            app:civ_shadow_radius="0"
+                            app:civ_border="false"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:srcCompat="@drawable/ic_team_skw" />
+
+                        <TextView
+                            android:id="@+id/tv_away_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/md_10"
+                            app:layout_constraintLeft_toRightOf="@id/iv_away_emblem"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:textAppearance="@style/TodayGameLabel"
+                            android:text="SK 와이번스" />
+
+                        <TextView
+                            android:id="@+id/tv_away_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/md_10"
+                            android:layout_marginEnd="@dimen/md_10"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:textAppearance="@style/TodayGameLabel"
+                            android:text="22" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- 홈팀-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_home_team"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/md_70"
+                        android:background="@drawable/border_line_card"
+                        android:backgroundTint="@color/dsb"
+                        android:layout_marginTop="@dimen/md_10"
+                        android:layout_marginStart="@dimen/md_16"
+                        android:layout_marginEnd="@dimen/md_16"
+                        app:layout_constraintTop_toBottomOf="@id/cl_away_team"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:padding="@dimen/md_10" >
+
+                        <com.mikhaellopez.circularimageview.CircularImageView
+                            android:id="@+id/iv_home_emblem"
+                            android:layout_width="@dimen/md_50"
+                            android:layout_height="@dimen/md_50"
+                            android:background="@android:color/transparent"
+                            app:civ_shadow="true"
+                            app:civ_shadow_radius="0"
+                            app:civ_border="false"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:srcCompat="@drawable/ic_team_dsb" />
+
+                        <TextView
+                            android:id="@+id/tv_home_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/md_10"
+                            app:layout_constraintLeft_toRightOf="@id/iv_home_emblem"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:textAppearance="@style/TodayGameLabel"
+                            android:text="두산베어스" />
+
+                        <TextView
+                            android:id="@+id/tv_home_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/md_10"
+                            android:layout_marginEnd="@dimen/md_10"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:textAppearance="@style/TodayGameLabel"
+                            android:text="22" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- 기타정보-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_inform"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/md_30"
+                        android:background="@color/grey_700"
+                        android:padding="@dimen/md_5"
+                        android:layout_marginTop="@dimen/md_15"
+                        app:layout_constraintTop_toBottomOf="@id/cl_home_team"
+                        app:layout_constraintBottom_toTopOf="@id/btn_game_select"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" >
+
+                        <TextView
+                            android:id="@+id/tv_game_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="서울잠실 | 18:00"
+                            android:textAppearance="@style/TodayGameDetailLabel" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_game_select"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/md_50"
+                        android:background="@drawable/border_line_bottom_radius"
+                        android:backgroundTint="@color/blue_300"
+                        app:layout_constraintTop_toBottomOf="@id/cl_inform"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:textAppearance="@style/TodayGameStatusLabel"
+                        android:text="@string/save_game" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Empty-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_no_game"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/md_0"
+                    android:background="@drawable/border_line_list"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/md_8"
+                    app:layout_constraintTop_toBottomOf="@id/tv_recent_label"
+                    app:layout_constraintBottom_toBottomOf="parent" >
+
+                    <ImageView
+                        android:id="@+id/iv_empty"
+                        android:layout_width="@dimen/md_170"
+                        android:layout_height="@dimen/md_170"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="@dimen/md_50"
+                        android:src="@drawable/ic_info_type_b" />
+
+                    <TextView
+                        android:id="@+id/iv_empty_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/md_15"
+                        android:text="@string/no_match_up"
+                        app:layout_constraintTop_toBottomOf="@id/iv_empty"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/grey_700" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 로딩중-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:SpinKit_Color="@color/red_400" />
+                app:layout_constraintRight_toRightOf="parent" >
+
+                <com.github.ybq.android.spinkit.SpinKitView
+                    android:id="@+id/sk_loading"
+                    style="@style/SpinKitView.Large.ThreeBounce"
+                    android:layout_width="@dimen/md_40"
+                    android:layout_height="@dimen/md_40"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:SpinKit_Color="@color/red_400" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

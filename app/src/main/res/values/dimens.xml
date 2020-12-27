@@ -118,6 +118,7 @@
     <dimen name="md_170">170dp</dimen>
     <dimen name="md_200">200dp</dimen>
     <dimen name="md_220">220dp</dimen>
+    <dimen name="md_250">250dp</dimen>
     <dimen name="md_260">260dp</dimen>
     <dimen name="md_278">278dp</dimen>
     <dimen name="md_300">300dp</dimen>
