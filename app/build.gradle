@@ -88,6 +88,8 @@ dependencies {
     /* circle image view*/
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
 
+    implementation 'com.ramijemli.percentagechartview:percentagechartview:0.3.1'
+
     /* Test*/
     androidTestImplementation "androidx.test:runner:$rootProject.testRunner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCore"

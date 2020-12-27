@@ -409,4 +409,18 @@
         <item name="android:textColor">@color/p_white_10</item>
         <item name="android:textSize">@dimen/md_16</item>
     </style>
+
+    <!-- 통계페이지 기록 제목 레이블 -->
+    <style name="StaticRecordTitle">
+        <item name="android:textColor">@color/grey_700</item>
+        <item name="android:textSize">@dimen/md_16</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 통계페이지 기록 데이터 레이블 -->
+    <style name="StaticRecordData">
+        <item name="android:textColor">@color/grey_400</item>
+        <item name="android:textSize">@dimen/md_16</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
