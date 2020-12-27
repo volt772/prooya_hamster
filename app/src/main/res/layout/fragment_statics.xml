@@ -69,7 +69,9 @@
                             app:pcv_animDuration="800"
                             app:pcv_animInterpolator="anticipate_overshoot"
                             app:pcv_progress="10"
-                            app:pcv_startAngle="90"
+                            app:pcv_startAngle="270"
+                            app:pcv_textColor="@color/grey_700"
+                            app:pcv_textSize="@dimen/md_24"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent" />
@@ -106,6 +108,7 @@
                                 android:text="@string/winning_rate_label" />
 
                             <TextView
+                                android:id="@+id/tv_left_record"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -127,7 +130,7 @@
                             <View
                                 android:layout_width="@dimen/md_1"
                                 android:layout_height="match_parent"
-                                android:background="@color/p_main_fifth" />
+                                android:background="@color/grey_400" />
                         </LinearLayout>
 
                         <!-- Right Record-->
@@ -149,6 +152,7 @@
                                 android:text="@string/watching_count" />
 
                             <TextView
+                                android:id="@+id/tv_right_record"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -176,6 +180,17 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:textAppearance="@style/PageTitle"
                     android:text="@string/today_game" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_select_day"
+                    android:layout_width="@dimen/md_80"
+                    android:layout_height="@dimen/md_30"
+                    android:layout_marginStart="@dimen/md_16"
+                    android:textAppearance="@style/SeasonChangeLabel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:background="@drawable/btn_season_change_round"
+                    android:text="@string/more" />
 
                 <!-- 오늘경기-->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -335,7 +350,6 @@
                         android:padding="@dimen/md_5"
                         android:layout_marginTop="@dimen/md_15"
                         app:layout_constraintTop_toBottomOf="@id/cl_home_team"
-                        app:layout_constraintBottom_toTopOf="@id/btn_game_select"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent" >
 
@@ -368,21 +382,23 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_no_game"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/md_0"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/border_line_list"
-                    android:visibility="gone"
                     android:layout_marginTop="@dimen/md_8"
+                    android:visibility="gone"
+                    android:paddingTop="@dimen/md_30"
+                    android:paddingBottom="@dimen/md_30"
                     app:layout_constraintTop_toBottomOf="@id/tv_recent_label"
                     app:layout_constraintBottom_toBottomOf="parent" >
 
                     <ImageView
                         android:id="@+id/iv_empty"
-                        android:layout_width="@dimen/md_170"
-                        android:layout_height="@dimen/md_170"
+                        android:layout_width="@dimen/md_120"
+                        android:layout_height="@dimen/md_120"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/iv_empty_info"
                         android:layout_marginBottom="@dimen/md_50"
                         android:src="@drawable/ic_info_type_b" />
 
@@ -391,7 +407,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/md_15"
-                        android:text="@string/no_match_up"
+                        android:text="@string/search_other_day"
+                        android:gravity="center"
                         app:layout_constraintTop_toBottomOf="@id/iv_empty"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"

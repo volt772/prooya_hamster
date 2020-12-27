@@ -63,6 +63,7 @@
     <string name="today_match">오늘경기</string>
     <string name="more">더보기</string>
     <string name="no_match_up">경기가 없어요.</string>
+    <string name="search_other_day">경기가 없어요. \n다시 선택해 주세요.</string>
     <string name="init_all_histories">직관기록초기화</string>
     <string name="delete_all_with_login">로그인정보 및 모든 직관기록을 삭제합니다.</string>
     <string name="notification">알림</string>
@@ -92,4 +93,5 @@
     <string name="second_game">2경기</string>
     <string name="no_plays">직관을 한번도 안갔어요.</string>
     <string name="save_game">게임저장</string>
+    <string name="search_other_game">다른게임</string>
 </resources>

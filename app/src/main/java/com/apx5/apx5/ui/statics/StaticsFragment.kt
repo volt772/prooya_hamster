@@ -1,7 +1,5 @@
 package com.apx5.apx5.ui.statics
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -14,6 +12,7 @@ import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtDailyGame
+import com.apx5.apx5.datum.DtStatics
 import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.datum.pitcher.PtPostPlay
@@ -91,6 +90,25 @@ class StaticsFragment :
         }
     }
 
+    /**
+     * 통계 수치값 지정
+     */
+    override fun setDatumChart(statics: DtStatics) {
+        binding().apply {
+            pcRecord.setProgress(statics.rateAll.toFloat(), true)
+            /* 통산전적*/
+            tvLeftRecord.text = String.format(
+                resources.getString(R.string.w_d_l),
+                    statics.countAllWin, statics.countAllDraw, statics.countAllLose
+            )
+            /* 통산직관횟수*/
+            tvRightRecord.text = String.format(
+                resources.getString(R.string.seeing_count_season),
+                    statics.countAll
+            )
+        }
+    }
+
     /* 오늘경기 화면 분기*/
     private fun makeGameViewByCount(count: Int) {
         val isEmptyGame = (count == 0)
@@ -124,7 +142,7 @@ class StaticsFragment :
 
             /* 추가정보 : 경기장 | 경기시작시간*/
             clInform.visibility = CommonUtils.setVisibility(
-                !(game.stadium.displayName.isEmpty() && game.startTime.isEmpty())
+                    !(game.stadium.displayName.isEmpty() && game.startTime.isEmpty())
             )
             tvGameStatus.text = game.additionalInfo
         }
@@ -148,19 +166,19 @@ class StaticsFragment :
         val gameStatus = PrGameStatus.getStatsByCode(awayScore)
 
         makeGameView(
-            DtDailyGame(
-                gameId = game.id,
-                awayTeam = awayTeam,
-                homeTeam = homeTeam,
-                awayScore = awayScore,
-                homeScore = homeScore,
-                playDate = game.playdate,
-                stadium = stadium,
-                startTime = startTime,
-                status = gameStatus,
-                additionalInfo = additionalInfo,
-                registedGame = (game.registedId > 0)
-            )
+                DtDailyGame(
+                        gameId = game.id,
+                        awayTeam = awayTeam,
+                        homeTeam = homeTeam,
+                        awayScore = awayScore,
+                        homeScore = homeScore,
+                        playDate = game.playdate,
+                        stadium = stadium,
+                        startTime = startTime,
+                        status = gameStatus,
+                        additionalInfo = additionalInfo,
+                        registedGame = (game.registedId > 0)
+                )
         )
     }
 
@@ -212,20 +230,20 @@ class StaticsFragment :
                     if (dailyGame.registedGame) {
                         DialogActivity.dialogAlreadyRegistedGame(requireContext())
                     } else {
-                        val teamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
+                        val teamCode = PrefManager.getInstance(requireContext()).userTeam ?: ""
                         val newGame = getPlayResultByTeamSide(dailyGame, teamCode)
 
                         svm.saveNewPlay(
-                            PtPostPlay(
-                                result = newGame.result,
-                                year = UiUtils.getYear(dailyGame.playDate.toString()),
-                                regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
-                                pid = userEmail,
-                                lostscore = newGame.lostScore,
-                                versus = newGame.versus,
-                                myteam = teamCode,
-                                getscore = newGame.getScore
-                            )
+                                PtPostPlay(
+                                        result = newGame.result,
+                                        year = UiUtils.getYear(dailyGame.playDate.toString()),
+                                        regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
+                                        pid = userEmail,
+                                        lostscore = newGame.lostScore,
+                                        versus = newGame.versus,
+                                        myteam = teamCode,
+                                        getscore = newGame.getScore
+                                )
                         )
                     }
                 }
