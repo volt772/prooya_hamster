@@ -15,7 +15,6 @@ import com.apx5.apx5.databinding.FragmentRecordAllBinding
 import com.apx5.apx5.datum.DtAllGames
 import com.apx5.apx5.datum.adapter.AdtGames
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
-import com.apx5.apx5.datum.adapter.AdtPlayLists
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.adapter.PlayItemsAdapter
@@ -34,6 +33,8 @@ import java.util.*
 class RecordAllFragment :
     BaseFragment<FragmentRecordAllBinding, RecordAllViewModel>(),
     RecordAllNavigator {
+
+    private var selectedYear: Int = DialogSeasonChange.MAX_YEAR
 
     private val recordAllViewModel: RecordAllViewModel by viewModel()
 
@@ -56,6 +57,7 @@ class RecordAllFragment :
     /* 연도선택*/
     override fun selectYear(year: Int) {
         subscriber(year)
+        selectedYear = year
     }
 
     /* SpinKit 제거*/
@@ -77,7 +79,7 @@ class RecordAllFragment :
 
         /* 시즌 변경*/
         binding().btnChangeSeason.setOnClickListener {
-            val seasonSelectDialog = DialogSeasonChange(::selectYear)
+            val seasonSelectDialog = DialogSeasonChange(::selectYear, selectedYear)
             seasonSelectDialog.show(childFragmentManager, "selectSeason")
         }
     }

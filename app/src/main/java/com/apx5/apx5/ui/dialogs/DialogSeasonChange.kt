@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.NumberPicker
 import androidx.fragment.app.DialogFragment
 import com.apx5.apx5.R
-import com.apx5.apx5.ui.utils.UiUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
@@ -16,7 +15,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
  */
 
 class DialogSeasonChange(
-    val callback: (Int) -> Unit
+    val callback: (Int) -> Unit,
+    private val selectedYear: Int
 ): BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +34,7 @@ class DialogSeasonChange(
         val npYear = view.findViewById<NumberPicker>(R.id.np_year)
         val btnSelect = view.findViewById<Button>(R.id.btn_select)
 
-//        val currentYear = UiUtils.currentYear
+        npYear.setDividerHeight(2)
 
         npYear.minValue = MIN_YEAR
         npYear.maxValue = MAX_YEAR
@@ -44,16 +44,30 @@ class DialogSeasonChange(
             minValue = MIN_YEAR
             maxValue = MAX_YEAR
             wrapSelectorWheel = true
-            value = MAX_YEAR
+            value = selectedYear
         }
 
         btnSelect.setOnClickListener {
-            val selectedYear = npYear.value
-            callback(selectedYear)
+            callback(npYear.value)
             dismiss()
         }
 
         return view
+    }
+
+    private fun NumberPicker.setDividerHeight(height: Int) {
+        val pickerFields = NumberPicker::class.java.declaredFields
+        for (pf in pickerFields) {
+            if (pf.name == "mSelectionDividerHeight") {
+                pf.isAccessible = true
+                try {
+                    pf.set(this, height)
+                } catch (e: IllegalAccessException) {
+                    /**/
+                }
+                break
+            }
+        }
     }
 
     companion object {

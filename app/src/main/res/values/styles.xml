@@ -15,7 +15,7 @@
     </style>
 
     <style name="DefaultNumberPickerTheme" parent="AppTheme">
-        <item name="colorControlNormal">@color/p_main_third</item>
+        <item name="colorControlNormal">@color/grey_400</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
