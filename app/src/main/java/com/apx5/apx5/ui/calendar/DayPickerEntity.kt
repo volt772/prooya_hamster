@@ -3,16 +3,16 @@ package com.apx5.apx5.ui.calendar
 import java.util.*
 
 /**
- * RangePickerEntity
+ * DayPickerEntity
  */
 
-sealed class RangePickerEntity(
+sealed class DayPickerEntity(
     val columnCount: Int,
     val calendarType: Int,
     val selectionType: SelectionType
 ) {
     /* 표기타입1 : 년월*/
-    data class Month(val label: String): RangePickerEntity(
+    data class Month(val label: String): DayPickerEntity(
         MONTH_COLUMN_COUNT,
         CalendarType.MONTH.ordinal,
         SelectionType.NONE
@@ -24,14 +24,11 @@ sealed class RangePickerEntity(
         val prettyLabel: String,
         val date: Date,
         val selection: SelectionType = SelectionType.NONE,
-        val state: DateState = DateState.WEEKDAY,
-        val isRange: Boolean = false,
-        val weekDay: WeekDays,
-        val dayOfEdge: DayOfEdge
-    ): RangePickerEntity(DAY_COLUMN_COUNT, CalendarType.DAY.ordinal, selection)
+        val weekDay: WeekDays
+    ): DayPickerEntity(DAY_COLUMN_COUNT, CalendarType.DAY.ordinal, selection)
 
     /* 표기타입3 : 빈칸*/
-    object Empty: RangePickerEntity(
+    object Empty: DayPickerEntity(
         EMPTY_COLUMN_COUNT,
         CalendarType.EMPTY.ordinal,
         SelectionType.NONE
@@ -56,20 +53,8 @@ enum class CalendarType {
  * 선택타입 (START <--- BETWEEN ---> END) or NONE
  */
 enum class SelectionType {
-    START,
-    BETWEEN,
-    END,
+    SELECTED,
     NONE
-}
-
-/**
- * '일' 타입
- * @desc '현재일' 이후 일경우 DISABLED
- */
-enum class DateState {
-    WEEKDAY,
-    DISABLED,
-    WEEKEND
 }
 
 /**
@@ -78,8 +63,3 @@ enum class DateState {
 enum class WeekDays(val dayNum: Int) {
     SUN(1), MON(2), TUE(3), WED(4), THU(5), FRI(6), SAT(7), ETC(0)
 }
-
-/**
- * 월 기간검사 (월초, 월말, 기타)
- */
-enum class DayOfEdge { FIRST, BETWEEN, LAST }

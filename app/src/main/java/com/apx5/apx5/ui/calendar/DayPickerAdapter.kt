@@ -15,16 +15,16 @@ import com.apx5.apx5.R
 fun ViewGroup.inflate(@LayoutRes layoutId: Int, attachedToRoot: Boolean = false): View =
     from(context).inflate(layoutId, this, attachedToRoot)
 
-internal class RangePickerAdapter : RecyclerView.Adapter<RangePickerViewHolder>() {
-    private val data: MutableList<RangePickerEntity> = mutableListOf()
-    var onActionListener: (RangePickerEntity, Int) -> Unit = { _, _ -> }
+internal class DayPickerAdapter : RecyclerView.Adapter<DayPickerViewHolder>() {
+    private val data: MutableList<DayPickerEntity> = mutableListOf()
+    var onActionListener: (DayPickerEntity, Int) -> Unit = { _, _ -> }
 
     /**
      * Data 설정
      * @desc 일자 중복으로 DiffCallback 사용
      */
-    fun setData(newData: List<RangePickerEntity>) {
-        val diffCallback = RangePickerDiffCallback(data, newData)
+    fun setData(newData: List<DayPickerEntity>) {
+        val diffCallback = DayPickerDiffCallback(data, newData)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         data.clear()
         data.addAll(newData)
@@ -34,7 +34,7 @@ internal class RangePickerAdapter : RecyclerView.Adapter<RangePickerViewHolder>(
     /**
      * ViewHolder 생성
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RangePickerViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayPickerViewHolder {
         return when (viewType) {
             CalendarType.MONTH.ordinal -> MonthViewHolder(parent.inflate(R.layout.item_day_picker_month))
             CalendarType.DAY.ordinal -> DayViewHolder(parent.inflate(R.layout.item_day_picker_day))
@@ -50,7 +50,7 @@ internal class RangePickerAdapter : RecyclerView.Adapter<RangePickerViewHolder>(
     /**
      * Binding
      */
-    override fun onBindViewHolder(holder: RangePickerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DayPickerViewHolder, position: Int) {
         holder.onBind(data[position], onActionListener)
     }
 
@@ -63,9 +63,9 @@ internal class RangePickerAdapter : RecyclerView.Adapter<RangePickerViewHolder>(
 /**
  * DiffCallback
  */
-internal class RangePickerDiffCallback(
-    private val oldList: List<RangePickerEntity>,
-    private val newList: List<RangePickerEntity>
+internal class DayPickerDiffCallback(
+    private val oldList: List<DayPickerEntity>,
+    private val newList: List<DayPickerEntity>
 ) : DiffUtil.Callback() {
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
@@ -77,10 +77,10 @@ internal class RangePickerDiffCallback(
     override fun getNewListSize(): Int = newList.size
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return if (oldList[oldItemPosition] is RangePickerEntity.Day && newList[newItemPosition] is RangePickerEntity.Day) {
-            val oldDay = oldList[oldItemPosition] as RangePickerEntity.Day
-            val newDay = newList[newItemPosition] as RangePickerEntity.Day
-            oldDay.selection == newDay.selection && oldDay.isRange == newDay.isRange
+        return if (oldList[oldItemPosition] is DayPickerEntity.Day && newList[newItemPosition] is DayPickerEntity.Day) {
+            val oldDay = oldList[oldItemPosition] as DayPickerEntity.Day
+            val newDay = newList[newItemPosition] as DayPickerEntity.Day
+            oldDay.selection == newDay.selection
         } else {
             oldList[oldItemPosition].selectionType == newList[newItemPosition].selectionType
         }

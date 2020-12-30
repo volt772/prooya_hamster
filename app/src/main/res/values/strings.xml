@@ -104,6 +104,6 @@
     <string name="date_week_abbr_6">금</string>
     <string name="date_week_abbr_7">토</string>
 
-    <string name="range_picker_month_title">{YEAR}년 {MONTH}</string>
-    <string name="range_picker_date_label">{YEAR}-{MONTH}-{DAY}</string>
+    <string name="day_picker_month_title">{YEAR}년 {MONTH}</string>
+    <string name="day_picker_date_label">{YEAR}-{MONTH}-{DAY}</string>
 </resources>
