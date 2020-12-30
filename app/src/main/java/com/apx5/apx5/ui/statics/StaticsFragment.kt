@@ -1,5 +1,7 @@
 package com.apx5.apx5.ui.statics
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -17,6 +19,7 @@ import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.ui.calendar.DayPickerActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.ui.utils.UiUtils.Companion.getPlayResultByTeamSide
@@ -62,6 +65,7 @@ class StaticsFragment :
         binding().btnFirstGame.setOnClickListener(this)
         binding().btnSecondGame.setOnClickListener(this)
         binding().btnGameSelect.setOnClickListener(this)
+        binding().btnSelectDay.setOnClickListener(this)
     }
 
     /* 사용자 정보 저장*/
@@ -234,19 +238,44 @@ class StaticsFragment :
                         val newGame = getPlayResultByTeamSide(dailyGame, teamCode)
 
                         svm.saveNewPlay(
-                                PtPostPlay(
-                                        result = newGame.result,
-                                        year = UiUtils.getYear(dailyGame.playDate.toString()),
-                                        regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
-                                        pid = userEmail,
-                                        lostscore = newGame.lostScore,
-                                        versus = newGame.versus,
-                                        myteam = teamCode,
-                                        getscore = newGame.getScore
-                                )
+                            PtPostPlay(
+                                result = newGame.result,
+                                year = UiUtils.getYear(dailyGame.playDate.toString()),
+                                regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
+                                pid = userEmail,
+                                lostscore = newGame.lostScore,
+                                versus = newGame.versus,
+                                myteam = teamCode,
+                                getscore = newGame.getScore
+                            )
                         )
                     }
                 }
+            }
+            R.id.btn_select_day -> {
+                val daySelectIntent = DayPickerActivity.newIntent(requireContext())
+                startActivityForResult(daySelectIntent, daySelectIntentCode)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        data?.let {
+            if (resultCode != Activity.RESULT_OK) return
+
+            when (requestCode) {
+//                MpEasIntentCode.RANGE_PICKER.code -> {
+//                    val sDate = data.getSerializableExtra(MpIntent.Eas.SELECTED_START_DAY) as DateTime
+//                    val eDate = data.getSerializableExtra(MpIntent.Eas.SELECTED_END_DAY) as DateTime
+//
+//                    searchUtils.setDates(sDate, eDate)
+//
+//                    /* 기간 선택 후, 검색수행*/
+//                    submitQuery(typedSearchKeyword)
+//                }
+//                else -> { }
             }
         }
     }
@@ -258,6 +287,8 @@ class StaticsFragment :
     }
 
     companion object {
+        const val daySelectIntentCode = 60001
+
         fun newInstance(): StaticsFragment {
             val args = Bundle()
             val fragment = StaticsFragment()

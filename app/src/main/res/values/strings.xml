@@ -94,4 +94,16 @@
     <string name="no_plays">직관을 한번도 안갔어요.</string>
     <string name="save_game">게임저장</string>
     <string name="search_other_game">다른게임</string>
+
+    <!-- 날짜관련-->
+    <string name="date_week_abbr_1">일</string>
+    <string name="date_week_abbr_2">월</string>
+    <string name="date_week_abbr_3">화</string>
+    <string name="date_week_abbr_4">수</string>
+    <string name="date_week_abbr_5">목</string>
+    <string name="date_week_abbr_6">금</string>
+    <string name="date_week_abbr_7">토</string>
+
+    <string name="range_picker_month_title">{YEAR}년 {MONTH}</string>
+    <string name="range_picker_date_label">{YEAR}-{MONTH}-{DAY}</string>
 </resources>
