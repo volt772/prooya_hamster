@@ -73,7 +73,7 @@ internal class DayViewHolder(view: View) : DayPickerViewHolder(view) {
      * 선택 Style (일반)
      */
     private fun View.select() {
-        val drawable = ContextCompat.getDrawable(context, R.drawable.bg_range_picker_selected_day)
+        val drawable = ContextCompat.getDrawable(context, R.drawable.bg_day_picker_selected_day)
         background = drawable
     }
 

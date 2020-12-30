@@ -8,8 +8,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_picker_header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/md_150"
-        android:background="@color/p_main_fifth"
+        android:layout_height="@dimen/md_45"
+        android:background="@color/p_main_first"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" >
@@ -20,10 +20,26 @@
             android:layout_width="@dimen/md_24"
             android:layout_height="@dimen/md_24"
             android:src="@drawable/ic_close"
+            android:layout_marginTop="@dimen/md_10"
+            android:layout_marginBottom="@dimen/md_10"
             android:layout_marginStart="@dimen/md_16"
-            android:layout_marginTop="@dimen/md_24"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
+
+        <!-- '선택' 일자-->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/atv_selected_date"
+            android:layout_width="@dimen/md_0"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/select_game_day"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/md_12"
+            android:layout_marginBottom="@dimen/md_10"
+            android:textColor="@color/p_white_10"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <!-- '확인'-->
         <ImageView
@@ -31,116 +47,11 @@
             android:layout_width="@dimen/md_24"
             android:layout_height="@dimen/md_24"
             android:src="@drawable/ic_rangepicker_check"
+            android:layout_marginTop="@dimen/md_10"
+            android:layout_marginBottom="@dimen/md_10"
             android:layout_marginEnd="@dimen/md_16"
-            android:layout_marginTop="@dimen/md_24"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
-
-        <!-- 시간표시박스-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/md_10"
-            app:layout_constraintTop_toBottomOf="@id/iv_picker_close"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" >
-
-            <!-- 시작일-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_picker_start_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/md_10"
-                android:layout_marginEnd="@dimen/md_11"
-                app:layout_constraintEnd_toStartOf="@id/cl_picker_between"
-                app:layout_constraintBottom_toBottomOf="parent" >
-
-                <!-- '시작일' 레이블-->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/atv_start_date_label"
-                    android:layout_width="@dimen/md_0"
-                    android:layout_height="@dimen/md_18"
-                    android:gravity="center"
-                    android:text="시작일"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-                <!-- '시작일' 일자-->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/atv_start_date"
-                    android:layout_width="@dimen/md_0"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="{YY-MM-DD}"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/atv_start_date_label" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- 사이-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_picker_between"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" >
-
-                <!-- '시작일' 레이블-->
-                <TextView
-                    android:id="@+id/tv_empty"
-                    android:layout_width="@dimen/md_0"
-                    android:layout_height="@dimen/md_18"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_between"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="~"
-                    android:textStyle="bold"
-                    android:gravity="center_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/tv_empty"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" >
-                </TextView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- 종료일-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_picker_end_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/md_10"
-                android:layout_marginStart="@dimen/md_11"
-                app:layout_constraintStart_toEndOf="@id/cl_picker_between"
-                app:layout_constraintBottom_toBottomOf="parent" >
-
-                <!-- '종료일' 레이블-->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/atv_end_date_label"
-                    android:layout_width="@dimen/md_0"
-                    android:layout_height="@dimen/md_18"
-                    android:gravity="center"
-                    android:text="종료일"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-                <!-- '시작일' 일자-->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/atv_end_date"
-                    android:layout_width="@dimen/md_0"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="{YY-MM-DD}"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/atv_end_date_label" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

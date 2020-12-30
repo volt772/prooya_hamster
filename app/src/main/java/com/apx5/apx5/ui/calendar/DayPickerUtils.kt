@@ -26,7 +26,7 @@ internal fun Calendar.toPrettyDateString(label: String): String {
     val day = get(Calendar.DAY_OF_MONTH)
 
     return label
-        .replace("{YEAR}", year.substring(2, 4))
+        .replace("{YEAR}", year.substring(0, 4))
         .replace("{MONTH}", String.format("%02d", month))
         .replace("{DAY}", String.format("%02d", day))
 }

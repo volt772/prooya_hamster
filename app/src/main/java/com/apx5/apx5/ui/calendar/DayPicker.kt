@@ -262,7 +262,7 @@ class DayPicker : RecyclerView {
         if (item == selectedDate?.day) return
 
         resetSelection()
-        assignAsStartDate(item, position)
+        assignSelectedDate(item, position)
 
         dayPickerAdapter.setData(calendarData)
     }
@@ -271,12 +271,12 @@ class DayPicker : RecyclerView {
      * 선택 초기화
      */
     private fun resetSelection() {
-        val startDatePosition = selectedDate?.position
+        val selectedDatePosition = selectedDate?.position
 
-        if (startDatePosition != null) {
-            val entity = calendarData[startDatePosition]
+        if (selectedDatePosition != null) {
+            val entity = calendarData[selectedDatePosition]
             if (entity is DayPickerEntity.Day) {
-                calendarData[startDatePosition] = entity.copy(selection = SelectionType.NONE)
+                calendarData[selectedDatePosition] = entity.copy(selection = SelectionType.NONE)
             }
         }
     }
@@ -284,7 +284,7 @@ class DayPicker : RecyclerView {
     /**
      * 시작일자 할당
      */
-    private fun assignAsStartDate(
+    private fun assignSelectedDate(
         item: DayPickerEntity.Day,
         position: Int
     ) {

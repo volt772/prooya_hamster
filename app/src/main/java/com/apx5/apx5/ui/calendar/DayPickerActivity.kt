@@ -42,8 +42,7 @@ class DayPickerActivity : Activity() {
 
         /* Picker 단일 선택*/
         rp_search_date.setDaySelectedListener { startDate, label ->
-            atv_start_date.text = label
-            atv_end_date.text = "-"
+            atv_selected_date.text = label
             setDateTimeForQuery(DaySelectType.SINGLE, startDate)
         }
 
@@ -76,8 +75,8 @@ class DayPickerActivity : Activity() {
      * 캘린더 생성 후, 기본 일자 선택 (오늘)
      */
     private fun setDefaultDate(defaultDate: DayPickerEntity.Day) {
-        atv_start_date.text = defaultDate.prettyLabel
-        atv_end_date.text = defaultDate.prettyLabel
+        atv_selected_date.text = defaultDate.prettyLabel
+//        atv_end_date.text = defaultDate.prettyLabel
         setDateTimeForQuery(DaySelectType.DEFAULT, defaultDate.date)
     }
 
