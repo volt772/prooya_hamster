@@ -8,10 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.PrGameStatus
-import com.apx5.apx5.constants.PrPrefKeys
-import com.apx5.apx5.constants.PrStadium
-import com.apx5.apx5.constants.PrTeam
+import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.DtStatics
@@ -38,6 +35,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class StaticsFragment :
     BaseFragment<FragmentStaticsBinding, StaticsViewModel>(),
     StaticsNavigator, View.OnClickListener {
+
+    private var queriedDateString: String?= ""
 
     private val svm: StaticsViewModel by viewModel()
 
@@ -254,6 +253,7 @@ class StaticsFragment :
             }
             R.id.btn_select_day -> {
                 val daySelectIntent = DayPickerActivity.newIntent(requireContext())
+                daySelectIntent.putExtra(PrConstants.Intent.DAY_PICKED, queriedDateString)
                 startActivityForResult(daySelectIntent, daySelectIntentCode)
             }
         }
@@ -266,16 +266,9 @@ class StaticsFragment :
             if (resultCode != Activity.RESULT_OK) return
 
             when (requestCode) {
-//                MpEasIntentCode.RANGE_PICKER.code -> {
-//                    val sDate = data.getSerializableExtra(MpIntent.Eas.SELECTED_START_DAY) as DateTime
-//                    val eDate = data.getSerializableExtra(MpIntent.Eas.SELECTED_END_DAY) as DateTime
-//
-//                    searchUtils.setDates(sDate, eDate)
-//
-//                    /* 기간 선택 후, 검색수행*/
-//                    submitQuery(typedSearchKeyword)
-//                }
-//                else -> { }
+                daySelectIntentCode -> {
+                    queriedDateString = data.getStringExtra(PrConstants.Intent.DAY_PICKED)
+                }
             }
         }
     }

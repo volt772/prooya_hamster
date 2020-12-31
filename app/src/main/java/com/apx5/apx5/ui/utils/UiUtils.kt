@@ -5,6 +5,7 @@ import android.text.TextUtils
 import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtDailyGame
+import com.apx5.apx5.datum.DtQueryDateTime
 import com.apx5.apx5.ui.days.DaysFragment
 import com.apx5.apx5.utils.equalsExt
 import com.apx5.apx5.utils.splitExt
@@ -40,6 +41,18 @@ class UiUtils {
             val day = dateString.substring(6, 8)
 
             return String.format(Locale.getDefault(), "%s. %s. %s", year, month, day)
+        }
+
+        fun getDateToFullForQuery(dateString: String): DtQueryDateTime {
+            if (TextUtils.isEmpty(dateString)) {
+                return DtQueryDateTime()
+            }
+
+            return DtQueryDateTime(
+                year = dateString.substring(0, 4).toInt(),
+                month = dateString.substring(4, 6).toInt(),
+                day = dateString.substring(6, 8).toInt()
+            )
         }
 
         fun getTime(time: String): String {

@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
+import com.apx5.apx5.datum.DtQueryDateTime
 import com.apx5.apx5.ui.calendar.ext.isTheSameDay
 import com.apx5.apx5.ui.calendar.ext.withTime
 import java.util.*
@@ -64,8 +65,8 @@ class DayPicker : RecyclerView {
         labelForFullDate = context.resources.getString(R.string.day_picker_date_label)
 
         startDay.set(2017, 2, 1, 0, 0, 0)
-        endDay.set(2020, 10, 30, 0, 0, 0)
-        initDay.set(2020, 3, 1, 0, 0, 0)
+        endDay.set(2020, 11, 31, 0, 0, 0)
+//        initDay.set(2020, 2, 1, 0, 0, 0)
 
         setBackgroundColor(ContextCompat.getColor(context, R.color.p_white_10))
         initAdapter()
@@ -82,8 +83,11 @@ class DayPicker : RecyclerView {
     /**
      * UI에서 범위 지정
      */
-    fun setSelectionDate(date: Date) {
-        selectDate(date)
+    fun setSelectionDate(defaultTime: Date, defaultDateTime: DtQueryDateTime) {
+        selectDate(defaultTime)
+        initDay.set(defaultDateTime.year, defaultDateTime.month, defaultDateTime.day)
+
+        scrollToDate(initDay.time)
     }
 
     /**
@@ -100,7 +104,9 @@ class DayPicker : RecyclerView {
     private fun scrollToDate(date: Date) {
         val index = calendarData.indexOfFirst { it is DayPickerEntity.Day && it.date.isTheSameDay(date) }
         if (index > -1) {
-            scrollToPosition(index)
+            val scrollCenter = index - 60
+            val pos = if (scrollCenter > -1) { index - 60 } else { index }
+            scrollToPosition(pos)
         }
     }
 
