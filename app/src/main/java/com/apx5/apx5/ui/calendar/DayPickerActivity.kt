@@ -74,7 +74,7 @@ class DayPickerActivity : Activity() {
                 querySelectedDate?.let { _date ->
                     val year = _date.year
                     val month = String.format(MONTH_DAY_FORMAT, _date.monthOfYear)
-                    val day = String.format(MONTH_DAY_FORMAT, _date.dayOfMonth + 1)
+                    val day = String.format(MONTH_DAY_FORMAT, _date.dayOfMonth)
 
                     "${year}${month}${day}"
                 }

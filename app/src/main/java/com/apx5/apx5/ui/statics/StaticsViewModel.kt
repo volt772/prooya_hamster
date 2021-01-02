@@ -3,12 +3,14 @@ package com.apx5.apx5.ui.statics
 import android.app.Application
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.datum.DtStatics
+import com.apx5.apx5.datum.catcher.CtGetPlay
 import com.apx5.apx5.datum.catcher.CtPostPlay
 import com.apx5.apx5.datum.catcher.CtPostStatics
 import com.apx5.apx5.datum.ops.OpsAllStatics
 import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.ops.OpsSeasonStatics
 import com.apx5.apx5.datum.ops.OpsUser
+import com.apx5.apx5.datum.pitcher.PtGetPlay
 import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.datum.pitcher.PtPostStatics
 import com.apx5.apx5.network.operation.PrOps
@@ -83,6 +85,23 @@ class StaticsViewModel(application: Application) :
                 )
             )
         }
+    }
+
+    /* 경기정보*/
+    internal fun getMyPlay(play: PtGetPlay) {
+        prService.loadTodayGame(play, object: PrOpsCallBack<CtGetPlay> {
+            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtGetPlay>?) {
+                responseBody?.data?.let { res ->
+
+                    setTodayGame(res.games)
+                    getNavigator()?.cancelSpinKit()
+                }
+            }
+
+            override fun onFailed(errorData: PrOpsError) {
+                getNavigator()?.cancelSpinKit()
+            }
+        })
     }
 
     /* 오늘경기*/

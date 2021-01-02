@@ -81,7 +81,6 @@
                     android:layout_marginBottom="@dimen/md_10"
                     android:layout_marginLeft="@dimen/md_13"
                     android:layout_marginRight="@dimen/md_13"
-                    android:visibility="gone"
                     app:cardCornerRadius="@dimen/md_2"
                     app:cardElevation="@dimen/md_2">
 

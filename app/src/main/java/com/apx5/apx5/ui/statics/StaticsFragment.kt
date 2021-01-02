@@ -14,9 +14,11 @@ import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.DtStatics
 import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.ops.OpsUser
+import com.apx5.apx5.datum.pitcher.PtGetPlay
 import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.calendar.DayPickerActivity
+import com.apx5.apx5.ui.days.DaysCalendar
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.ui.utils.UiUtils.Companion.getPlayResultByTeamSide
@@ -40,8 +42,12 @@ class StaticsFragment :
 
     private val svm: StaticsViewModel by viewModel()
 
+    /* 캘린더 핸들러 */
+    private val calListener = DaysCalendar.datePickerListener(searchPlay = ::searchPlayByDate)
+
     private lateinit var dailyGame: DtDailyGame
     private var userEmail: String = ""
+    private var teamCode: String = ""
 
     override fun getLayoutId() = R.layout.fragment_statics
     override fun getBindingVariable() = BR.viewModel
@@ -54,9 +60,12 @@ class StaticsFragment :
         super.onViewCreated(view, savedInstanceState)
 
         userEmail = PrefManager.getInstance(requireContext()).userEmail?: ""
+        teamCode = PrefManager.getInstance(requireContext()).userTeam ?: ""
 
         initView()
         subscriber()
+
+        searchPlayByDate(UiUtils.today)
     }
 
     /* UI 초기화*/
@@ -148,6 +157,11 @@ class StaticsFragment :
                     !(game.stadium.displayName.isEmpty() && game.startTime.isEmpty())
             )
             tvGameStatus.text = game.additionalInfo
+
+            btnGameSelect.text = game.status.displayCode
+
+            val isEnable = (game.status == PrGameStatus.FINE)
+            btnGameSelect.isEnabled = isEnable
         }
     }
 
@@ -216,6 +230,12 @@ class StaticsFragment :
         }
     }
 
+    /* 경기검색(캘린더)*/
+    private fun searchPlayByDate(playDate: String) {
+        val play = PtGetPlay(playDate, teamCode)
+        getViewModel().getMyPlay(play)
+    }
+
     override fun onClick(view: View?) {
         when(view?.id) {
             R.id.btn_first_game -> {
@@ -233,7 +253,6 @@ class StaticsFragment :
                     if (dailyGame.registedGame) {
                         DialogActivity.dialogAlreadyRegistedGame(requireContext())
                     } else {
-                        val teamCode = PrefManager.getInstance(requireContext()).userTeam ?: ""
                         val newGame = getPlayResultByTeamSide(dailyGame, teamCode)
 
                         svm.saveNewPlay(
@@ -252,26 +271,33 @@ class StaticsFragment :
                 }
             }
             R.id.btn_select_day -> {
-                val daySelectIntent = DayPickerActivity.newIntent(requireContext())
-                daySelectIntent.putExtra(PrConstants.Intent.DAY_PICKED, queriedDateString)
-                startActivityForResult(daySelectIntent, daySelectIntentCode)
+                DaysCalendar.datePickerDialog(requireActivity(), calListener).show()
+//                val daySelectIntent = DayPickerActivity.newIntent(requireContext())
+//                daySelectIntent.putExtra(PrConstants.Intent.DAY_PICKED, queriedDateString)
+//                startActivityForResult(daySelectIntent, daySelectIntentCode)
             }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        data?.let {
-            if (resultCode != Activity.RESULT_OK) return
-
-            when (requestCode) {
-                daySelectIntentCode -> {
-                    queriedDateString = data.getStringExtra(PrConstants.Intent.DAY_PICKED)
-                }
-            }
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        data?.let {
+//            if (resultCode != Activity.RESULT_OK) return
+//
+//            when (requestCode) {
+//                daySelectIntentCode -> {
+//                    queriedDateString = data.getStringExtra(PrConstants.Intent.DAY_PICKED)
+//                    queriedDateString?.let { _queried ->
+//                        val play = PtGetPlay(_queried, teamCode)
+//                        svm.getMyPlay(play)
+//                    }
+//
+//                }
+//                else -> {}
+//            }
+//        }
+//    }
 
     /* 완료 Dialog*/
     override fun showSuccessDialog() {

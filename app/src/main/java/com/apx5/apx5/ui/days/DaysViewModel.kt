@@ -77,21 +77,21 @@ class DaysViewModel(application: Application) :
         val _playDate = UiUtils.getDateToFull(_game.playDate.toString())
         val _startTime = UiUtils.getTime(_game.startTime.toString())
 
-//        if (_game.startTime == 0) {
-//            gameDate.set(
-//                String.format(
-//                    Locale.getDefault(),
-//                    app.resources.getString(R.string.day_game_date_single), _playDate)
-//            )
-//        } else {
-//            gameDate.set(
-//                String.format(
-//                    Locale.getDefault(),
-//                    app.resources.getString(R.string.day_game_date_with_starttime),
-//                    _playDate,
-//                    _startTime)
-//            )
-//        }
+        if (_game.startTime == "0") {
+            gameDate.set(
+                String.format(
+                    Locale.getDefault(),
+                    app.resources.getString(R.string.day_game_date_single), _playDate)
+            )
+        } else {
+            gameDate.set(
+                String.format(
+                    Locale.getDefault(),
+                    app.resources.getString(R.string.day_game_date_with_starttime),
+                    _playDate,
+                    _startTime)
+            )
+        }
 
         /* 게임장소*/
         gameStadium.set(_game.stadium.displayName)
