@@ -23,4 +23,8 @@ object PrConstants {
         const val EMBLEM_PREFIX = "ic_team_"
         const val TEAM_CHANGE_MODE = "team_change_mode"
     }
+
+    object Intent {
+        const val DAY_PICKED = "dayPicked"
+    }
 }

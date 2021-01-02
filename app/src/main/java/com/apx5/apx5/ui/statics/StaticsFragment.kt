@@ -1,15 +1,14 @@
 package com.apx5.apx5.ui.statics
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.PrGameStatus
-import com.apx5.apx5.constants.PrPrefKeys
-import com.apx5.apx5.constants.PrStadium
-import com.apx5.apx5.constants.PrTeam
+import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.DtStatics
@@ -17,6 +16,7 @@ import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.ui.calendar.DayPickerActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.ui.utils.UiUtils.Companion.getPlayResultByTeamSide
@@ -35,6 +35,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class StaticsFragment :
     BaseFragment<FragmentStaticsBinding, StaticsViewModel>(),
     StaticsNavigator, View.OnClickListener {
+
+    private var queriedDateString: String?= ""
 
     private val svm: StaticsViewModel by viewModel()
 
@@ -62,6 +64,7 @@ class StaticsFragment :
         binding().btnFirstGame.setOnClickListener(this)
         binding().btnSecondGame.setOnClickListener(this)
         binding().btnGameSelect.setOnClickListener(this)
+        binding().btnSelectDay.setOnClickListener(this)
     }
 
     /* 사용자 정보 저장*/
@@ -234,18 +237,37 @@ class StaticsFragment :
                         val newGame = getPlayResultByTeamSide(dailyGame, teamCode)
 
                         svm.saveNewPlay(
-                                PtPostPlay(
-                                        result = newGame.result,
-                                        year = UiUtils.getYear(dailyGame.playDate.toString()),
-                                        regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
-                                        pid = userEmail,
-                                        lostscore = newGame.lostScore,
-                                        versus = newGame.versus,
-                                        myteam = teamCode,
-                                        getscore = newGame.getScore
-                                )
+                            PtPostPlay(
+                                result = newGame.result,
+                                year = UiUtils.getYear(dailyGame.playDate.toString()),
+                                regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
+                                pid = userEmail,
+                                lostscore = newGame.lostScore,
+                                versus = newGame.versus,
+                                myteam = teamCode,
+                                getscore = newGame.getScore
+                            )
                         )
                     }
+                }
+            }
+            R.id.btn_select_day -> {
+                val daySelectIntent = DayPickerActivity.newIntent(requireContext())
+                daySelectIntent.putExtra(PrConstants.Intent.DAY_PICKED, queriedDateString)
+                startActivityForResult(daySelectIntent, daySelectIntentCode)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        data?.let {
+            if (resultCode != Activity.RESULT_OK) return
+
+            when (requestCode) {
+                daySelectIntentCode -> {
+                    queriedDateString = data.getStringExtra(PrConstants.Intent.DAY_PICKED)
                 }
             }
         }
@@ -258,6 +280,8 @@ class StaticsFragment :
     }
 
     companion object {
+        const val daySelectIntentCode = 60001
+
         fun newInstance(): StaticsFragment {
             val args = Bundle()
             val fragment = StaticsFragment()

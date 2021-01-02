@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/p_white_10"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_picker_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_45"
+        android:background="@color/p_main_first"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" >
+
+        <!-- '닫기'-->
+        <ImageView
+            android:id="@+id/iv_picker_close"
+            android:layout_width="@dimen/md_24"
+            android:layout_height="@dimen/md_24"
+            android:src="@drawable/ic_close"
+            android:layout_marginTop="@dimen/md_10"
+            android:layout_marginBottom="@dimen/md_10"
+            android:layout_marginStart="@dimen/md_16"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <!-- '선택' 일자-->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/atv_selected_date"
+            android:layout_width="@dimen/md_0"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/select_game_day"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/md_12"
+            android:layout_marginBottom="@dimen/md_10"
+            android:textColor="@color/p_white_10"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <!-- '확인'-->
+        <ImageView
+            android:id="@+id/iv_picker_confirm"
+            android:layout_width="@dimen/md_24"
+            android:layout_height="@dimen/md_24"
+            android:src="@drawable/ic_rangepicker_check"
+            android:layout_marginTop="@dimen/md_10"
+            android:layout_marginBottom="@dimen/md_10"
+            android:layout_marginEnd="@dimen/md_16"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_picker_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_0"
+        android:layout_marginStart="@dimen/md_12"
+        android:layout_marginEnd="@dimen/md_12"
+        app:layout_constraintTop_toBottomOf="@id/cl_picker_header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" >
+
+        <include
+            android:id="@+id/in_week"
+            layout="@layout/layout_day_picker_week" />
+
+        <com.apx5.apx5.ui.calendar.DayPicker
+            android:id="@+id/rp_search_date"
+            android:layout_width="@dimen/md_0"
+            android:layout_height="@dimen/md_0"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/md_8"
+            android:scrollbarStyle="outsideOverlay"
+            app:layout_constraintTop_toBottomOf="@id/in_week"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

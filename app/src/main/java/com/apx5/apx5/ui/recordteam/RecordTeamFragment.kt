@@ -29,6 +29,8 @@ class RecordTeamFragment :
     BaseFragment<FragmentRecordTeamBinding, RecordTeamViewModel>(),
     RecordTeamNavigator {
 
+    private var selectedYear: Int = DialogSeasonChange.MAX_YEAR
+
     private val recordTeamViewModel: RecordTeamViewModel by viewModel()
 
     override fun getLayoutId(): Int {
@@ -71,7 +73,7 @@ class RecordTeamFragment :
 
         /* 시즌변경 버튼*/
         binding().btnChangeSeason.setOnClickListener {
-            val seasonSelectDialog = DialogSeasonChange(::selectSeasonYear)
+            val seasonSelectDialog = DialogSeasonChange(::selectSeasonYear, selectedYear)
             seasonSelectDialog.show(childFragmentManager, "selectSeason")
         }
     }
@@ -84,6 +86,7 @@ class RecordTeamFragment :
     /* 시즌선택*/
     private fun selectSeasonYear(year: Int) {
         subscriber(year)
+        selectedYear = year
     }
 
     /* 상세정보 데이터*/
