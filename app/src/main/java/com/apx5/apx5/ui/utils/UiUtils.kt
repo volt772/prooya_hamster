@@ -98,7 +98,8 @@ class UiUtils {
         val currentYear: Int
             get() {
                 val date = DateTime()
-                return date.year
+
+                return if (date.year > 2020) { 2020 } else { date.year }
             }
 
         /**
