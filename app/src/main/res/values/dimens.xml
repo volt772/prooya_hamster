@@ -122,5 +122,6 @@
     <dimen name="md_260">260dp</dimen>
     <dimen name="md_278">278dp</dimen>
     <dimen name="md_300">300dp</dimen>
+    <dimen name="md_400">400dp</dimen>
     <dimen name="md_558">558dp</dimen>
 </resources>

@@ -64,7 +64,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:pcv_mode="ring"
-                            app:pcv_backgroundBarColor="@color/p_main_fourth"
+                            app:pcv_backgroundBarColor="@color/p_main_fifth"
                             app:pcv_orientation="counter_clockwise"
                             app:pcv_animDuration="800"
                             app:pcv_animInterpolator="anticipate_overshoot"

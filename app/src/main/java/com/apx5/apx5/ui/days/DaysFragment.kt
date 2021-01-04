@@ -173,28 +173,31 @@ class DaysFragment :
 
     /* 저장버튼노출 (경기종료시에만 저장)*/
     private fun showSaveButton(status: PrGameStatus) {
-        println("probe : game satsu : ${status}")
-//        binding().btSavePlay.visibility =
-//            CommonUtils.setVisibility(status == PrResultCode.FINE)
+        binding().btSavePlay.visibility =
+            CommonUtils.setVisibility(status == PrGameStatus.FINE)
     }
 
     /* 스코어 보드*/
     private fun showScoreBoard(gameExist: Boolean) {
-        binding().cvScoreBoard.visibility = CommonUtils.setVisibility(gameExist)
-        binding().cvEmpty.visibility = CommonUtils.setVisibility(!gameExist)
+        binding().apply {
+            clScoreBoard.visibility = CommonUtils.setVisibility(gameExist)
+            clNoGame.visibility = CommonUtils.setVisibility(!gameExist)
+        }
     }
 
     /* 팀 엠블럼 및 팀컬러*/
     private fun showTeamEmblem(away: PrTeam, home: PrTeam) {
-        /* 엠블럼*/
-        binding().ivTeamAway.setImageResource(
-            resources.getIdentifier(away.emblem, "drawable", requireContext().packageName))
-        binding().ivTeamHome.setImageResource(
-            resources.getIdentifier(home.emblem, "drawable", requireContext().packageName))
+        binding().apply {
+            /* 엠블럼*/
+            ivTeamAway.setImageResource(
+                    resources.getIdentifier(away.emblem, "drawable", requireContext().packageName))
+            ivTeamHome.setImageResource(
+                    resources.getIdentifier(home.emblem, "drawable", requireContext().packageName))
 
-        /* 팀컬러*/
-        binding().tvTeamAway.setBackgroundColor(Color.parseColor(away.mainColor))
-        binding().tvTeamHome.setBackgroundColor(Color.parseColor(home.mainColor))
+            /* 팀컬러*/
+            tvTeamAway.setBackgroundColor(Color.parseColor(away.mainColor))
+            tvTeamHome.setBackgroundColor(Color.parseColor(home.mainColor))
+        }
     }
 
     companion object {
