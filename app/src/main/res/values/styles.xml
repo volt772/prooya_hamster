@@ -398,18 +398,6 @@
         <item name="android:textSize">@dimen/md_18</item>
     </style>
 
-    <!-- 오늘경기 선택 버튼 -->
-    <style name="TodayGameSelectNormalLabel">
-        <item name="android:textColor">@color/p_main_first</item>
-        <item name="android:textSize">@dimen/md_16</item>
-    </style>
-
-    <!-- 오늘경기 선택 버튼 -->
-    <style name="TodayGameSelectLabel">
-        <item name="android:textColor">@color/p_white_10</item>
-        <item name="android:textSize">@dimen/md_16</item>
-    </style>
-
     <!-- 통계페이지 기록 제목 레이블 -->
     <style name="StaticRecordTitle">
         <item name="android:textColor">@color/grey_700</item>

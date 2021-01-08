@@ -88,7 +88,10 @@ dependencies {
     /* circle image view*/
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
 
+    /* Circle Chart View*/
     implementation 'com.ramijemli.percentagechartview:percentagechartview:0.3.1'
+
+    implementation "com.github.skydoves:progressview:1.1.1"
 
     /* Test*/
     androidTestImplementation "androidx.test:runner:$rootProject.testRunner"

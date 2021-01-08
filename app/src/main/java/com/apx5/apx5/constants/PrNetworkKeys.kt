@@ -14,8 +14,6 @@ object PrNetworkKeys {
     const val TEAM = "team"
     const val TEAMS = "teams"
     const val ALL_STATICS = "allStatics"
-    const val SEASON_STATICS = "seasonStatics"
-    const val RECENT_PLAYS = "recentPlays"
+    const val TEAM_ALL_PERCENTAGE = "teamAllPercentage"
     const val SUMMARY = "summary"
-    const val TODAY_GAME = "todayGame"
 }
