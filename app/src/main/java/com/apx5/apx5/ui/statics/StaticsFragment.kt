@@ -9,8 +9,10 @@ import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrAdapterViewType
 import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtStatics
+import com.apx5.apx5.datum.adapter.AdtTeamPerc
 import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.adapter.PlayItemsAdapter

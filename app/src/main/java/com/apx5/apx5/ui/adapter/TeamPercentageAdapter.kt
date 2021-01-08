@@ -4,60 +4,47 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtTeamPerc
 
-class TeamPercentageAdapter internal constructor(
-    private val ctx: Context
-) : BaseAdapter() {
+class TeamPercentageAdapter(
+    val context: Context
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val teams = mutableListOf<AdtTeamPerc>()
 
-    internal fun clearItems() {
-        teams.clear()
-        notifyDataSetChanged()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val view = layoutInflater.inflate(R.layout.item_team_perc, parent, false)
+        return TeamPercViewHolder(context, view)
     }
 
-    override fun getCount() = teams.size
-
-    private class RecordAllHolder {
-//        lateinit var playRecent: View
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        (holder as TeamPercViewHolder).bind(teams[position])
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val cv: View
-        val context = parent.context
-        val holder: RecordAllHolder
+    override fun getItemCount() = teams.size
 
-        if (convertView == null) {
-            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            cv = inflater.inflate(R.layout.item_team_perc, parent, false)
+    inner class TeamPercViewHolder(
+            private val context: Context,
+            view: View
+    ): RecyclerView.ViewHolder(view) {
 
-            holder = RecordAllHolder().apply {
-//                playRecent = cv.lv_play_list
-            }
-
-            cv.tag = holder
-        } else {
-            holder = convertView.tag as RecordAllHolder
-            cv = convertView
+        fun bind(team: AdtTeamPerc) {
+            /* 팀 스코어*/
+//            itemView.tv_away_score.text = game.awayScore.toString()
         }
-
-        val team = teams[position]
-
-//        holder.awayScore.text = playItems.awayScore.toString()
-
-        return cv
     }
-
-    override fun getItemId(position: Int) = position.toLong()
-
-    override fun getItem(position: Int) = teams[position]
 
     /* 아이템 추가*/
     internal fun addItem(team: AdtTeamPerc) {
         teams.add(team)
     }
-}
 
+    /* 아이템 전체초기화*/
+    internal fun clearItems() {
+        teams.clear()
+        notifyDataSetChanged()
+    }
+}
