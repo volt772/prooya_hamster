@@ -1,12 +1,16 @@
 package com.apx5.apx5.ui.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtTeamPerc
+import com.apx5.apx5.ui.utils.UiUtils
+import kotlinx.android.synthetic.main.item_game_all.view.*
+import kotlinx.android.synthetic.main.item_team_perc.view.*
 
 class TeamPercentageAdapter(
     val context: Context
@@ -33,6 +37,12 @@ class TeamPercentageAdapter(
 
         fun bind(team: AdtTeamPerc) {
             /* 팀 스코어*/
+            itemView.iv_team_emblem.setImageResource(UiUtils.getDrawableByName(context, team.team.emblem))
+            itemView.pv_percentage.apply {
+                progress = team.winningRate.toFloat()
+            }
+            itemView.tv_percentage.text = "${team.winningRate}%"
+
 //            itemView.tv_away_score.text = game.awayScore.toString()
         }
     }

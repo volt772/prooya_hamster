@@ -61,10 +61,16 @@ class StaticsFragment :
         teamPercAdapter = TeamPercentageAdapter(requireContext())
 
         binding().rvTeamPerList.apply {
-            addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
             layoutManager = linearLayoutManager
             adapter = teamPercAdapter
         }
+
+        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.DSB, 80))
+        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.KAT, 45))
+        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.NCD, 90))
+        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.SSL, 0))
+        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.HHE, 100))
+        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.KTW, 30))
     }
 
     /* 사용자 정보 저장*/

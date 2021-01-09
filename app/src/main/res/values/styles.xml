@@ -458,4 +458,11 @@
     <style name="RangePickerDate.Date">
         <item name="android:textSize">@dimen/md_24</item>
     </style>
+
+    <!-- 팀통산승률 Percentage-->
+    <style name="TeamPercentage">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/md_14</item>
+        <item name="android:textColor">@color/grey_700</item>
+    </style>
 </resources>
