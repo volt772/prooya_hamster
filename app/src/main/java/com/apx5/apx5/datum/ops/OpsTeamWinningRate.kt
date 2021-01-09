@@ -6,7 +6,7 @@ package com.apx5.apx5.datum.ops
  * @desc 팀요약
  */
 
-data class OpsTeamAllPercentage (
+data class OpsTeamWinningRate (
     val dsb: Int,
     val hhe: Int,
     val kat: Int,
