@@ -2,10 +2,12 @@ package com.apx5.apx5.ui.statics
 
 import android.app.Application
 import com.apx5.apx5.base.BaseViewModel
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtStatics
+import com.apx5.apx5.datum.adapter.AdtTeamWinningRate
 import com.apx5.apx5.datum.catcher.CtPostStatics
 import com.apx5.apx5.datum.ops.OpsAllStatics
-import com.apx5.apx5.datum.ops.OpsTeamAllPercentage
+import com.apx5.apx5.datum.ops.OpsTeamWinningRate
 import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.datum.pitcher.PtPostStatics
 import com.apx5.apx5.network.operation.PrOps
@@ -30,7 +32,7 @@ class StaticsViewModel(application: Application) :
                     getNavigator()?.cancelSpinKit()
                     setTeamCode(statics.user)
                     setStaticItem(statics.allStatics)
-                    setTeamAllPercentageItem(statics.teamAllPercentage)
+                    setTeamAllPercentageItem(statics.teamWinningRate)
                 }
             }
 
@@ -45,9 +47,26 @@ class StaticsViewModel(application: Application) :
         }
     }
 
-    private fun setTeamAllPercentageItem(teamData: OpsTeamAllPercentage?) {
+    private fun setTeamAllPercentageItem(teamData: OpsTeamWinningRate?) {
+        val teams = mutableListOf<AdtTeamWinningRate>()
         teamData?.let { _teamData ->
+            val list = listOf(
+                AdtTeamWinningRate(PrTeam.DSB, _teamData.dsb),
+                AdtTeamWinningRate(PrTeam.HHE, _teamData.hhe),
+                AdtTeamWinningRate(PrTeam.KAT, _teamData.kat),
+                AdtTeamWinningRate(PrTeam.KTW, _teamData.ktw),
+                AdtTeamWinningRate(PrTeam.LGT, _teamData.lgt),
+                AdtTeamWinningRate(PrTeam.LTG, _teamData.ltg),
+                AdtTeamWinningRate(PrTeam.NCD, _teamData.ncd),
+                AdtTeamWinningRate(PrTeam.NXH, _teamData.nxh),
+                AdtTeamWinningRate(PrTeam.SKW, _teamData.skw),
+                AdtTeamWinningRate(PrTeam.SSL, _teamData.ssl)
+            )
 
+            teams.addAll(list)
+
+            val sorted = teams.sortedWith(compareByDescending { it.winningRate })
+            getNavigator()?.setTeamWinningRate(sorted)
         }
     }
 

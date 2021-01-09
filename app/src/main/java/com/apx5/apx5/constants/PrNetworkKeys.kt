@@ -14,6 +14,6 @@ object PrNetworkKeys {
     const val TEAM = "team"
     const val TEAMS = "teams"
     const val ALL_STATICS = "allStatics"
-    const val TEAM_ALL_PERCENTAGE = "teamAllPercentage"
+    const val TEAM_WINNING_RATE = "teamWinningRate"
     const val SUMMARY = "summary"
 }

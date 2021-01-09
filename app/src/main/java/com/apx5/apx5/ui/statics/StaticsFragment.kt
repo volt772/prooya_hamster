@@ -3,20 +3,16 @@ package com.apx5.apx5.ui.statics
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.PrAdapterViewType
 import com.apx5.apx5.constants.PrPrefKeys
-import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtStatics
-import com.apx5.apx5.datum.adapter.AdtTeamPerc
+import com.apx5.apx5.datum.adapter.AdtTeamWinningRate
 import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.storage.PrefManager
-import com.apx5.apx5.ui.adapter.PlayItemsAdapter
-import com.apx5.apx5.ui.adapter.TeamPercentageAdapter
+import com.apx5.apx5.ui.adapter.TeamWinningRateAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,7 +31,7 @@ class StaticsFragment :
     private var userEmail: String = ""
     private var teamCode: String = ""
 
-    private lateinit var teamPercAdapter: TeamPercentageAdapter
+    private lateinit var teamWinningRateAdapter: TeamWinningRateAdapter
 
     override fun getLayoutId() = R.layout.fragment_statics
     override fun getBindingVariable() = BR.viewModel
@@ -58,19 +54,12 @@ class StaticsFragment :
     private fun initView() {
         /* Adapter*/
         val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        teamPercAdapter = TeamPercentageAdapter(requireContext())
+        teamWinningRateAdapter = TeamWinningRateAdapter()
 
         binding().rvTeamPerList.apply {
             layoutManager = linearLayoutManager
-            adapter = teamPercAdapter
+            adapter = teamWinningRateAdapter
         }
-
-        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.DSB, 80))
-        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.KAT, 45))
-        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.NCD, 90))
-        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.SSL, 0))
-        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.HHE, 100))
-        teamPercAdapter.addItem(AdtTeamPerc(PrTeam.KTW, 30))
     }
 
     /* 사용자 정보 저장*/
@@ -105,18 +94,24 @@ class StaticsFragment :
         }
     }
 
+    /**
+     * 팀통산승률 그래프 처리
+     */
+    override fun setTeamWinningRate(teams: List<AdtTeamWinningRate>) {
+        teamWinningRateAdapter.clearItems()
+        teams.forEach { _team ->
+            if (_team.team.code != teamCode) {
+                teamWinningRateAdapter.addItem(_team)
+            }
+        }
+    }
+
     private fun subscriber() {
         if (!userEmail.equalsExt("")) {
             getViewModel().getStatics(userEmail)
         } else {
             DialogActivity.dialogError(requireContext())
         }
-    }
-
-    /* 완료 Dialog*/
-    override fun showSuccessDialog() {
-        DialogActivity.dialogSaveDailyHistory(requireContext())
-        getViewModel().getStatics(userEmail)
     }
 
     companion object {

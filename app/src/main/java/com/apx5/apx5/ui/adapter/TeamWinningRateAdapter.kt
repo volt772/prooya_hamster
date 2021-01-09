@@ -5,20 +5,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
-import com.apx5.apx5.datum.adapter.AdtTeamPerc
+import com.apx5.apx5.datum.adapter.AdtTeamWinningRate
 import com.apx5.apx5.ui.utils.UiUtils
-import kotlinx.android.synthetic.main.item_team_perc.view.*
+import kotlinx.android.synthetic.main.item_team_winning_rate.view.*
 
 /**
- * TeamPercentageAdapter
+ * TeamWinningRateAdapter
  */
-class TeamPercentageAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TeamWinningRateAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val teams = mutableListOf<AdtTeamPerc>()
+    private val teams = mutableListOf<AdtTeamWinningRate>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.item_team_perc, parent, false)
+        val view = layoutInflater.inflate(R.layout.item_team_winning_rate, parent, false)
         return TeamPercViewHolder(view)
     }
 
@@ -29,7 +29,7 @@ class TeamPercentageAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount() = teams.size
 
     inner class TeamPercViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        fun bind(team: AdtTeamPerc) {
+        fun bind(team: AdtTeamWinningRate) {
             itemView.apply {
                 iv_team_emblem.setImageResource(UiUtils.getDrawableByName(context, team.team.emblem))
 
@@ -42,7 +42,7 @@ class TeamPercentageAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     /* 아이템 추가*/
-    internal fun addItem(team: AdtTeamPerc) {
+    internal fun addItem(team: AdtTeamWinningRate) {
         teams.add(team)
     }
 
