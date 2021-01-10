@@ -29,7 +29,7 @@
                 android:id="@+id/iv_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_info_type_a" />
+                app:srcCompat="@drawable/ic_info_type_d" />
         </RelativeLayout>
 
         <!-- 로딩중-->
