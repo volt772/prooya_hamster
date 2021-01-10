@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/md_10"
     android:padding="@dimen/md_10"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/md_50">
+    android:layout_height="@dimen/md_60">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_team_info_box"
@@ -18,8 +18,8 @@
         <!-- 팀 엠블럼-->
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/iv_team_emblem"
-            android:layout_width="@dimen/md_35"
-            android:layout_height="@dimen/md_35"
+            android:layout_width="@dimen/md_40"
+            android:layout_height="@dimen/md_40"
             android:background="@android:color/transparent"
             app:civ_shadow="true"
             app:civ_shadow_radius="0"

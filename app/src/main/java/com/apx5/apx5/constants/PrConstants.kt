@@ -7,7 +7,7 @@ package com.apx5.apx5.constants
 
 object PrConstants {
     object App {
-        const val FLK_HOST = "https://apx-prooya.co.kr:6100"
+        const val FLK_HOST = "https://apx-prooya.co.kr:2772"
     }
 
     object Fcm {
@@ -22,9 +22,5 @@ object PrConstants {
     object Teams {
         const val EMBLEM_PREFIX = "ic_team_"
         const val TEAM_CHANGE_MODE = "team_change_mode"
-    }
-
-    object Intent {
-        const val DAY_PICKED = "dayPicked"
     }
 }

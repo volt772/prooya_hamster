@@ -279,6 +279,11 @@
         <item name="android:textColor">@color/grey_700</item>
     </style>
 
+    <style name="GameListAdditionalDetails">
+        <item name="android:textSize">@dimen/md_14</item>
+        <item name="android:textColor">@color/grey_500</item>
+    </style>
+
     <!-- Team Score Win Team-->
     <style name="TeamScoreWinTeam">
         <item name="android:textStyle">normal</item>
@@ -336,26 +341,33 @@
     <!-- TeamRecordListLabel -->
     <style name="TeamRecordSummaryListLabel">
         <item name="android:textColor">@color/grey_700</item>
-        <item name="android:textSize">@dimen/md_16</item>
+        <item name="android:textSize">@dimen/md_18</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <!-- TeamRecordListItemTeamName -->
     <style name="TeamRecordListItemTeamName">
         <item name="android:textColor">@color/grey_700</item>
-        <item name="android:textSize">@dimen/md_16</item>
+        <item name="android:textSize">@dimen/md_18</item>
     </style>
 
     <!-- TeamRecordListItemCount -->
     <style name="TeamRecordListItemCount">
         <item name="android:textColor">@color/grey_700</item>
-        <item name="android:textSize">@dimen/md_16</item>
+        <item name="android:textSize">@dimen/md_18</item>
     </style>
 
     <!-- SeasonSelectionBottom Title -->
     <style name="SeasonSelectionTitle">
         <item name="android:textColor">@color/p_white_10</item>
-        <item name="android:textSize">@dimen/md_16</item>
+        <item name="android:textSize">@dimen/md_18</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- SeasonSelectionBottom Title -->
+    <style name="SeasonSelectionButton">
+        <item name="android:textColor">@color/p_white_10</item>
+        <item name="android:textSize">@dimen/md_18</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -369,13 +381,13 @@
     <!-- TeamDetailBottom Title -->
     <style name="GameResultLabel">
         <item name="android:textColor">@color/p_white_10</item>
-        <item name="android:textSize">@dimen/md_10</item>
+        <item name="android:textSize">@dimen/md_12</item>
     </style>
 
     <!-- Season Change Button Label -->
     <style name="SeasonChangeLabel">
         <item name="android:textColor">@color/p_white_10</item>
-        <item name="android:textSize">@dimen/md_16</item>
+        <item name="android:textSize">@dimen/md_18</item>
     </style>
 
     <!-- 오늘경기 팀 레이블 -->
@@ -462,7 +474,7 @@
     <!-- 팀통산승률 Percentage-->
     <style name="TeamPercentage">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/md_14</item>
+        <item name="android:textSize">@dimen/md_18</item>
         <item name="android:textColor">@color/grey_700</item>
     </style>
 

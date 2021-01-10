@@ -4,12 +4,12 @@
     android:orientation="vertical"
     android:id="@+id/cl_team_percentage"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/md_40">
+    android:layout_height="@dimen/md_55">
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/iv_team_emblem"
-        android:layout_width="@dimen/md_30"
-        android:layout_height="@dimen/md_30"
+        android:layout_width="@dimen/md_40"
+        android:layout_height="@dimen/md_40"
         android:layout_marginStart="@dimen/md_10"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_info_type_c"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="@dimen/md_0"
-        android:layout_height="@dimen/md_15"
+        android:layout_height="@dimen/md_16"
         android:layout_marginStart="@dimen/md_10"
         android:layout_marginEnd="@dimen/md_5"
         app:progressView_autoAnimate="true"

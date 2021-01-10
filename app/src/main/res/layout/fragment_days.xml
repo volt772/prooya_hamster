@@ -255,8 +255,8 @@
 
                 <ImageView
                     android:id="@+id/iv_empty"
-                    android:layout_width="@dimen/md_120"
-                    android:layout_height="@dimen/md_120"
+                    android:layout_width="@dimen/md_150"
+                    android:layout_height="@dimen/md_150"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"

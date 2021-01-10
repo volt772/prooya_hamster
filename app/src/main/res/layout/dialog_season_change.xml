@@ -24,10 +24,9 @@
         app:layout_constraintBottom_toTopOf="@+id/np_year"
         app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/btn_season_select_round"
+        android:textAppearance="@style/SeasonSelectionButton"
         android:text="@string/select_ok"
-        android:layout_marginEnd="@dimen/md_16"
-        android:textSize="@dimen/md_14"
-        android:textColor="@color/p_white_10" />
+        android:layout_marginEnd="@dimen/md_16" />
 
     <!-- Picker-->
     <NumberPicker
