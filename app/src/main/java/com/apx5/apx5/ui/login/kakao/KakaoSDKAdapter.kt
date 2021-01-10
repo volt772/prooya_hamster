@@ -5,14 +5,8 @@ package com.apx5.apx5.ui.login.kakao
  * 카카오 API
  */
 
-import android.content.Context
-
 import com.apx5.apx5.ProoyaClient
-import com.kakao.auth.ApprovalType
-import com.kakao.auth.AuthType
-import com.kakao.auth.IApplicationConfig
-import com.kakao.auth.ISessionConfig
-import com.kakao.auth.KakaoAdapter
+import com.kakao.auth.*
 
 /**
  * @author leoshin on 15. 9. 15.

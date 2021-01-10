@@ -66,23 +66,26 @@ class RecordTeamAdapter internal constructor(
 
         val teamItems = teamList[position]
 
-        /* 팀 엠블럼*/
-        holder.teamEmblem.setImageResource(teamItems.teamEmblem)
+        holder.apply {
+            /* 팀 엠블럼*/
+            teamEmblem.setImageResource(teamItems.teamEmblem)
 
-        /* 팀 이름*/
-        holder.teamName.text = PrTeam.getTeamByCode(teamItems.team).fullName
+            /* 팀 이름*/
+            teamName.text = PrTeam.getTeamByCode(teamItems.team).fullName
 
-        /* 승*/
-        holder.winCount.text = teamItems.win.toString()
+            /* 승*/
+            winCount.text = teamItems.win.toString()
 
-        /* 무*/
-        holder.drawCount.text = teamItems.draw.toString()
+            /* 무*/
+            drawCount.text = teamItems.draw.toString()
 
-        /* 패*/
-        holder.loseCount.text = teamItems.lose.toString()
+            /* 패*/
+            loseCount.text = teamItems.lose.toString()
 
-        /* 승률*/
-        holder.winningRate.text = teamItems.rate.toString()
+            /* 승률*/
+            winningRate.text = teamItems.rate.toString()
+        }
+
 
         /* 상세보기*/
         cv.setOnClickListener { nav.getDetailLists(teamItems.year, teamItems.team) }

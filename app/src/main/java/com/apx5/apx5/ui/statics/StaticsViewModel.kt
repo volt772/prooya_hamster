@@ -27,7 +27,11 @@ class StaticsViewModel(application: Application) :
     /* 통계데이터 다운로드*/
     internal fun getStatics(userEmail: String) {
         prService.getStatics(PtPostStatics(userEmail), object: PrOpsCallBack<CtPostStatics> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPostStatics>?) {
+            override fun onSuccess(
+                responseCode: Int,
+                responseMessage: String,
+                responseBody: PrResponse<CtPostStatics>?
+            ) {
                 responseBody?.data?.let { statics ->
                     getNavigator()?.cancelSpinKit()
                     setTeamCode(statics.user)

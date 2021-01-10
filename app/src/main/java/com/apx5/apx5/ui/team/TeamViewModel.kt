@@ -27,7 +27,11 @@ class TeamViewModel(application: Application) :
         val email = PrefManager.getInstance(getApplication()).userEmail
         if (email != null && !email.equalsExt("")) {
             prService.modifyUserInfo(PtPostUser(email, teamCode), object: PrOpsCallBack<CtPostUser> {
-                override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPostUser>?) {
+                override fun onSuccess(
+                    responseCode: Int,
+                    responseMessage: String,
+                    responseBody: PrResponse<CtPostUser>?
+                ) {
                     responseBody?.data?.let {
                         getNavigator()?.switchPageBySelectType()
                     }

@@ -111,8 +111,10 @@ class RecordAllFragment :
 
     /* 리스트 분기*/
     private fun isListExists(exists: Boolean) {
-        binding().clAllList.visibility = CommonUtils.setVisibility(exists)
-        binding().clEmptyList.visibility = CommonUtils.setVisibility(!exists)
+        binding().apply {
+            clAllList.visibility = CommonUtils.setVisibility(exists)
+            clEmptyList.visibility = CommonUtils.setVisibility(!exists)
+        }
     }
 
     /* 기록 리스트 생성*/
@@ -152,10 +154,7 @@ class RecordAllFragment :
     /* Observers*/
     private fun subscriber(year: Int) {
         val email = PrefManager.getInstance(requireContext()).userEmail
-
-        if (email != null) {
-            getViewModel().getAllPlayLists(email, year)
-        }
+        email?.let { getViewModel().getAllPlayLists(it, year) }
     }
 
     companion object {

@@ -21,26 +21,31 @@ class DialogActivity : AppCompatActivity() {
 
     companion object {
         /* Dialog 생성*/
-        fun prDialog(
+        private fun prDialog(
             context: Context,
-            layout: Int): Dialog {
+            layout: Int
+        ): Dialog {
 
             val dialog = Dialog(context)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setContentView(layout)
-            dialog.setCancelable(false)
+            dialog.apply {
+                requestWindowFeature(Window.FEATURE_NO_TITLE)
+                setContentView(layout)
+                setCancelable(false)
+            }
 
             return dialog
         }
 
         /* Layout Params 생성*/
-        fun prLayoutParams(
+        private fun prLayoutParams(
             dialog: Dialog): WindowManager.LayoutParams {
 
             val lp = WindowManager.LayoutParams()
-            lp.copyFrom(dialog.window?.attributes)
-            lp.width = WindowManager.LayoutParams.WRAP_CONTENT
-            lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+            lp.apply {
+                copyFrom(dialog.window?.attributes)
+                width = WindowManager.LayoutParams.WRAP_CONTENT
+                height = WindowManager.LayoutParams.WRAP_CONTENT
+            }
 
             return lp
         }
@@ -159,32 +164,6 @@ class DialogActivity : AppCompatActivity() {
             context: Context) {
 
             val dialog = prDialog(context, R.layout.dialog_record_no_detail)
-            val lp = prLayoutParams(dialog)
-
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener { dialog.dismiss() }
-
-            dialog.show()
-            dialog.window?.attributes = lp
-        }
-
-        /* Dialog - 경기등록불가*/
-        fun dialogCannotRegist(
-            context: Context) {
-
-            val dialog = prDialog(context, R.layout.dialog_cannot_regist)
-            val lp = prLayoutParams(dialog)
-
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener { dialog.dismiss() }
-
-            dialog.show()
-            dialog.window?.attributes = lp
-        }
-
-        /* Dialog - 이미 등록된 게임*/
-        fun dialogAlreadyRegistedGame(
-            context: Context) {
-
-            val dialog = prDialog(context, R.layout.dialog_already_registed)
             val lp = prLayoutParams(dialog)
 
             dialog.findViewById<View>(R.id.bt_close).setOnClickListener { dialog.dismiss() }

@@ -84,9 +84,11 @@ class DashBoardActivity :
      */
     private fun switchPage(tab: PrTabMenu) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_layout, tab.fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        transaction.apply {
+            replace(R.id.frame_layout, tab.fragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu) = true

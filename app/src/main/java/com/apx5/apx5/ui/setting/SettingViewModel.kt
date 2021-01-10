@@ -21,11 +21,17 @@ class SettingViewModel(application: Application) :
     /* 사용자 삭제 (Remote)*/
     internal fun delRemoteUser(delUser: PtDelUser) {
         prService.deleteUserInfo(delUser, object: PrOpsCallBack<CtDelUser> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtDelUser>?) {
+            override fun onSuccess(
+                responseCode: Int,
+                responseMessage: String,
+                responseBody: PrResponse<CtDelUser>?
+            ) {
                 responseBody?.data?.let {
                     /* 사용자 삭제 결과*/
-                    getNavigator()?.clearSharedPreferences()
-                    getNavigator()?.vectoredRestart()
+                    getNavigator()?.run {
+                        clearSharedPreferences()
+                        vectoredRestart()
+                    }
                 }
             }
 

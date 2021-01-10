@@ -26,8 +26,15 @@ class RecordTeamViewModel(application: Application) :
 
     /* 팀 상세 데이터*/
     internal fun getDetails(email: String, versus: String, year: Int) {
-        prService.getRecordDetails(PtGetRecordDetail(email, versus, year), object: PrOpsCallBack<CtGetRecordDetail> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtGetRecordDetail>?) {
+        prService.getRecordDetails(
+            PtGetRecordDetail(email, versus, year),
+            object: PrOpsCallBack<CtGetRecordDetail> {
+
+            override fun onSuccess(
+                responseCode: Int,
+                responseMessage: String,
+                responseBody: PrResponse<CtGetRecordDetail>?
+            ) {
                 responseBody?.data?.let { res ->
                     getNavigator()?.showDetailLists(res.games, versus)
                 }
@@ -40,7 +47,11 @@ class RecordTeamViewModel(application: Application) :
     /* 팀 상세 데이터 다운로드*/
     internal fun getRecords(email: String, year: Int) {
         prService.getRecordByTeams(PtPostTeams(email, year), object: PrOpsCallBack<CtPostTeams> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPostTeams>?) {
+            override fun onSuccess(
+                responseCode: Int,
+                responseMessage: String,
+                responseBody: PrResponse<CtPostTeams>?
+            ) {
                 responseBody?.data?.let { res ->
                     setTeamSummaryItems(res.teams)
                     setHeaderSummary(res.summary)
@@ -73,8 +84,6 @@ class RecordTeamViewModel(application: Application) :
 
     /* 팀헤더 요약정보*/
     private fun setHeaderSummary(summary: OpsTeamSummary?) {
-        if (summary != null) {
-            getNavigator()?.setHeaderSummary(summary)
-        }
+        summary?.let { getNavigator()?.setHeaderSummary(it) }
     }
 }

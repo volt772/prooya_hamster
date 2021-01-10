@@ -465,4 +465,11 @@
         <item name="android:textSize">@dimen/md_14</item>
         <item name="android:textColor">@color/grey_700</item>
     </style>
+
+    <!-- 상단 앱이름-->
+    <style name="AppNameToolBar">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/md_18</item>
+        <item name="android:textColor">@color/p_white_10</item>
+    </style>
 </resources>

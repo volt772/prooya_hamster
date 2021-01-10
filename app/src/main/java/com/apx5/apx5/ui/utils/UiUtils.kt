@@ -2,11 +2,6 @@ package com.apx5.apx5.ui.utils
 
 import android.content.Context
 import android.text.TextUtils
-import com.apx5.apx5.constants.PrResultCode
-import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.datum.DtDailyGame
-import com.apx5.apx5.datum.DtQueryDateTime
-import com.apx5.apx5.ui.days.DaysFragment
 import com.apx5.apx5.utils.equalsExt
 import com.apx5.apx5.utils.splitExt
 import org.joda.time.DateTime
@@ -41,18 +36,6 @@ class UiUtils {
             val day = dateString.substring(6, 8)
 
             return String.format(Locale.getDefault(), "%s. %s. %s", year, month, day)
-        }
-
-        fun getDateToFullForQuery(dateString: String): DtQueryDateTime {
-            if (TextUtils.isEmpty(dateString)) {
-                return DtQueryDateTime()
-            }
-
-            return DtQueryDateTime(
-                year = dateString.substring(0, 4).toInt(),
-                month = dateString.substring(4, 6).toInt(),
-                day = dateString.substring(6, 8).toInt()
-            )
         }
 
         fun getTime(time: String): String {
@@ -139,52 +122,10 @@ class UiUtils {
         }
 
         /**
-         * 문자열치환
-         */
-        fun replaceText(text: String, from: String, to: String): String {
-            return if (text.equalsExt("")) {
-                ""
-            } else text.replace(from, to)
-        }
-
-        /**
          * Drawable Int
          */
         fun getDrawableByName(context: Context, name: String): Int {
             return context.resources.getIdentifier(name, "drawable", context.packageName)
-        }
-
-        fun getPlayResultByTeamSide(game: DtDailyGame, teamCode: String): ResultBySide {
-            val isAwayTeam = teamCode.equalsExt(game.awayTeam.code)
-
-            val awayScore = game.awayScore
-            val homeScore = game.homeScore
-
-            if (isAwayTeam) {
-                /* 원정경기*/
-                return ResultBySide(
-                    versus = game.homeTeam.code,
-                    getScore = awayScore.toString(),
-                    lostScore = homeScore.toString(),
-                    result = when {
-                        awayScore < homeScore -> PrResultCode.LOSE.codeAbbr
-                        awayScore > homeScore -> PrResultCode.WIN.codeAbbr
-                        else -> PrResultCode.DRAW.codeAbbr
-                    }
-                )
-            } else {
-                /* 홈경기*/
-                return ResultBySide(
-                    versus = game.awayTeam.code,
-                    getScore = homeScore.toString(),
-                    lostScore = awayScore.toString(),
-                    result = when {
-                        awayScore > homeScore -> PrResultCode.LOSE.codeAbbr
-                        awayScore < homeScore -> PrResultCode.WIN.codeAbbr
-                        else -> PrResultCode.DRAW.codeAbbr
-                    }
-                )
-            }
         }
     }
 }

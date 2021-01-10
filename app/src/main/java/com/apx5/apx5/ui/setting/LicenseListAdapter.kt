@@ -32,8 +32,10 @@ class LicenseListAdapter internal constructor(
         if (holder is LicenseHolder) {
 
             val item = license[position]
-            holder.name.text = item.name
-            holder.content.text = item.content
+            holder.apply {
+                name.text = item.name
+                content.text = item.content
+            }
         }
     }
 

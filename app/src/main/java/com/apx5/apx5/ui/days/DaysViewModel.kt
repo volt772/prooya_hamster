@@ -8,15 +8,15 @@ import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtDailyGame
-import com.apx5.apx5.datum.pitcher.PtGetPlay
-import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.datum.catcher.CtGetPlay
 import com.apx5.apx5.datum.catcher.CtPostPlay
+import com.apx5.apx5.datum.ops.OpsDailyPlay
+import com.apx5.apx5.datum.pitcher.PtGetPlay
+import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.network.operation.PrOps
 import com.apx5.apx5.network.operation.PrOpsCallBack
 import com.apx5.apx5.network.operation.PrOpsError
 import com.apx5.apx5.network.response.PrResponse
-import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.ui.utils.UiUtils
 import java.util.*
 
@@ -74,22 +74,22 @@ class DaysViewModel(application: Application) :
         }
 
         /* 게임일자*/
-        val _playDate = UiUtils.getDateToFull(_game.playDate.toString())
-        val _startTime = UiUtils.getTime(_game.startTime.toString())
+        val playDate = UiUtils.getDateToFull(_game.playDate.toString())
 
         if (_game.startTime == "0") {
             gameDate.set(
                 String.format(
                     Locale.getDefault(),
-                    app.resources.getString(R.string.day_game_date_single), _playDate)
+                    app.resources.getString(R.string.day_game_date_single), playDate)
             )
         } else {
             gameDate.set(
                 String.format(
                     Locale.getDefault(),
                     app.resources.getString(R.string.day_game_date_with_starttime),
-                    _playDate,
-                    _startTime)
+                    playDate,
+                    UiUtils.getTime(_game.startTime)
+                )
             )
         }
 
@@ -100,7 +100,11 @@ class DaysViewModel(application: Application) :
     /* 경기정보*/
     internal fun getMyPlay(play: PtGetPlay) {
         prService.loadTodayGame(play, object: PrOpsCallBack<CtGetPlay> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtGetPlay>?) {
+            override fun onSuccess(
+                responseCode: Int,
+                responseMessage: String,
+                responseBody: PrResponse<CtGetPlay>?
+            ) {
                 responseBody?.data?.let { res ->
                     makePlayBoard(res.games)
                     getNavigator()?.cancelSpinKit()
@@ -152,7 +156,11 @@ class DaysViewModel(application: Application) :
     /* 새기록 저장*/
     internal fun saveNewPlay(play: PtPostPlay) {
         prService.postGame(play, object: PrOpsCallBack<CtPostPlay> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPostPlay>?) {
+            override fun onSuccess(
+                responseCode: Int,
+                responseMessage: String,
+                responseBody: PrResponse<CtPostPlay>?
+            ) {
                 responseBody?.data?.let {
                     getNavigator()?.showSuccessDialog()
                 }
@@ -170,11 +178,6 @@ class DaysViewModel(application: Application) :
 
     /* 경기 상태 코드*/
     private fun getPlayStatusCode(code: Int): Int {
-        return when (code) {
-            999 -> PrGameStatus.CANCELED.code
-            998 -> PrGameStatus.STANDBY.code
-            997 -> PrGameStatus.ONPLAY.code
-            else -> PrGameStatus.FINE.code
-        }
+        return PrGameStatus.getStatsByCode(code).code
     }
 }

@@ -33,18 +33,13 @@ class RecordTeamFragment :
 
     private val recordTeamViewModel: RecordTeamViewModel by viewModel()
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_record_team
-    }
-
+    override fun getLayoutId() = R.layout.fragment_record_team
     override fun getViewModel(): RecordTeamViewModel {
         recordTeamViewModel.setNavigator(this)
         return recordTeamViewModel
     }
 
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
-    }
+    override fun getBindingVariable() = BR.viewModel
 
     private var teamCode: String
     private lateinit var recordTeamAdapter: RecordTeamAdapter
@@ -92,7 +87,6 @@ class RecordTeamFragment :
     /* 상세정보 데이터*/
     override fun getDetailLists(year: Int, versus: String) {
         val email = PrefManager.getInstance(requireContext()).userEmail?: ""
-
         if (!email.equalsExt("")) {
             getViewModel().getDetails(email, versus, year)
         }

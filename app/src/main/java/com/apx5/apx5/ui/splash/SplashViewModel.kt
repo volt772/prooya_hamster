@@ -46,10 +46,16 @@ class SplashViewModel(application: Application) :
     /* 서버 검사*/
     internal fun checkServerStatus() {
         prService.checkPing(object: PrOpsCallBack<CtPing> {
-            override fun onSuccess(responseCode: Int, responseMessage: String, responseBody: PrResponse<CtPing>?) {
+            override fun onSuccess(
+                responseCode: Int,
+                responseMessage: String,
+                responseBody: PrResponse<CtPing>?
+            ) {
                 responseBody?.data?.let { res ->
-                    getNavigator()?.getServerWorkResult(res.status > 0)
-                    getNavigator()?.cancelSpinKit()
+                    getNavigator()?.run {
+                        getServerWorkResult(res.status > 0)
+                        cancelSpinKit()
+                    }
                 }
             }
 

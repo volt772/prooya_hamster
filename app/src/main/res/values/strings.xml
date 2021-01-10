@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Prooya\n직관기록 LST</string>
-    <string name="app_name_title">Prooya 직관기록 LST</string>
+    <string name="app_name">Prooya\n직관기록</string>
+    <string name="app_name_title">Prooya 직관기록</string>
     <string name="errorServerIsOff">연결상태가 좋지 않습니다.\n잠시후 다시 시도해 주시기 바랍니다.</string>
     <string name="errorComm">오류가 발생했습니다.\n앱을 다시 실행해 주세요.</string>
     <string name="empty">없음</string>
@@ -108,4 +108,10 @@
 
     <string name="day_picker_month_title">{YEAR}년 {MONTH}</string>
     <string name="day_picker_date_label">{YEAR}년 {MONTH}월 {DAY}일</string>
+
+    <string name="tab_menu_0">통계</string>
+    <string name="tab_menu_1">팀기록</string>
+    <string name="tab_menu_2">전체기록</string>
+    <string name="tab_menu_3">일정</string>
+    <string name="tab_menu_4">설정</string>
 </resources>
