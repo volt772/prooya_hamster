@@ -48,6 +48,10 @@ dependencies {
     /* FCM*/
     implementation "com.google.firebase:firebase-core:$rootProject.firebase_core"
     implementation "com.google.firebase:firebase-messaging:$rootProject.firebase_messaging"
+    implementation "com.google.firebase:firebase-config:$rootProject.firebase_config"
+    implementation 'com.google.firebase:firebase-config-ktx:19.1.4'
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.4.3'
+//    implementation 'com.google.firebase:firebase-config-ktx'
     implementation "com.android.volley:volley:$rootProject.volley"
 
     /* 카카오 로그인 */

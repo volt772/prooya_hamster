@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.databinding.library.baseAdapters.BR
+import com.apx5.apx5.ProoyaClient
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
 import com.apx5.apx5.databinding.ActivitySplashBinding
@@ -11,6 +12,9 @@ import com.apx5.apx5.ui.dashboard.DashBoardActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.login.LoginActivity
 import com.apx5.apx5.ui.utils.MaterialTools
+import com.google.firebase.FirebaseApp
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -37,6 +41,41 @@ class SplashActivity :
 
         /* 서버 상태검사*/
         getViewModel().checkServerStatus()
+
+        initFirebaseRemoteConfig()
+//        getHamster()
+    }
+
+    private fun initFirebaseRemoteConfig() {
+        FirebaseApp.initializeApp(this)
+        FirebaseRemoteConfig.getInstance().apply {
+            //set this during development
+            val configSettings = FirebaseRemoteConfigSettings.Builder()
+                    .setMinimumFetchIntervalInSeconds(0)
+                    .build()
+            setConfigSettingsAsync(configSettings)
+            //set this during development
+
+            setDefaultsAsync(R.xml.remote_config_defaults)
+            fetchAndActivate().addOnCompleteListener { task ->
+                val updated = task.result
+                if (task.isSuccessful) {
+                    val updated = task.result
+                    if (updated) {
+                        println("probe : Config params updated1 : ${updated}, task : ${task}")
+                        getHamster()
+                    }
+                } else {
+                    println("probe : Config params updated2 : ${updated}, task : ${task}")
+                }
+            }
+        }
+    }
+
+    private fun getHamster() {
+        val remoteConfig = FirebaseRemoteConfig.getInstance()
+        val hamsterVersion = remoteConfig.getString("version_hamster")
+        println("probe : hamsterVersion : ${hamsterVersion}")
     }
 
     /* 서버 동작여부 검사*/
