@@ -41,41 +41,6 @@ class SplashActivity :
 
         /* 서버 상태검사*/
         getViewModel().checkServerStatus()
-
-        initFirebaseRemoteConfig()
-//        getHamster()
-    }
-
-    private fun initFirebaseRemoteConfig() {
-        FirebaseApp.initializeApp(this)
-        FirebaseRemoteConfig.getInstance().apply {
-            //set this during development
-            val configSettings = FirebaseRemoteConfigSettings.Builder()
-                    .setMinimumFetchIntervalInSeconds(0)
-                    .build()
-            setConfigSettingsAsync(configSettings)
-            //set this during development
-
-            setDefaultsAsync(R.xml.remote_config_defaults)
-            fetchAndActivate().addOnCompleteListener { task ->
-                val updated = task.result
-                if (task.isSuccessful) {
-                    val updated = task.result
-                    if (updated) {
-                        println("probe : Config params updated1 : ${updated}, task : ${task}")
-                        getHamster()
-                    }
-                } else {
-                    println("probe : Config params updated2 : ${updated}, task : ${task}")
-                }
-            }
-        }
-    }
-
-    private fun getHamster() {
-        val remoteConfig = FirebaseRemoteConfig.getInstance()
-        val hamsterVersion = remoteConfig.getString("version_hamster")
-        println("probe : hamsterVersion : ${hamsterVersion}")
     }
 
     /* 서버 동작여부 검사*/
