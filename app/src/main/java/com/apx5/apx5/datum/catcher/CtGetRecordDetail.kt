@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  * 팀 경기상세
  */
 
-open class CtGetRecordDetail {
-        @SerializedName(PrNetworkKeys.GAMES)
-        val games: List<OpsTeamDetail> = emptyList()
-}
+data class CtGetRecordDetail(
+    @SerializedName(PrNetworkKeys.GAMES)
+    val games: List<OpsTeamDetail> = emptyList()
+)

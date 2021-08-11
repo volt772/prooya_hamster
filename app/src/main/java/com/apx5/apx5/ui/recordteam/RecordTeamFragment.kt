@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseFragment
+import com.apx5.apx5.base.BaseFragment2
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrStatus
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordTeamBinding
 import com.apx5.apx5.datum.DtTeamRecord
 import com.apx5.apx5.datum.adapter.AdtTeamLists
 import com.apx5.apx5.datum.ops.OpsTeamDetail
+import com.apx5.apx5.datum.ops.OpsTeamRecords
 import com.apx5.apx5.datum.ops.OpsTeamSummary
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
@@ -26,26 +28,23 @@ import java.util.*
  */
 
 class RecordTeamFragment :
-    BaseFragment<FragmentRecordTeamBinding, RecordTeamViewModel>(),
+    BaseFragment2<FragmentRecordTeamBinding>(),
     RecordTeamNavigator {
 
     private var selectedYear: Int = DialogSeasonChange.MAX_YEAR
 
-    private val recordTeamViewModel: RecordTeamViewModel by viewModel()
+    private val rtvm: RecordTeamViewModel by viewModel()
 
     override fun getLayoutId() = R.layout.fragment_record_team
-    override fun getViewModel(): RecordTeamViewModel {
-        recordTeamViewModel.setNavigator(this)
-        return recordTeamViewModel
-    }
-
     override fun getBindingVariable() = BR.viewModel
 
     private var teamCode: String
+    private var detailVersusTeam: String
     private lateinit var recordTeamAdapter: RecordTeamAdapter
 
     init {
         teamCode = ""
+        detailVersusTeam = ""
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,7 +73,7 @@ class RecordTeamFragment :
     }
 
     /* SpinKit 제거*/
-    override fun cancelSpinKit() {
+    private fun cancelSpinKit() {
         binding().skLoading.visibility = View.GONE
     }
 
@@ -87,15 +86,16 @@ class RecordTeamFragment :
     /* 상세정보 데이터*/
     override fun getDetailLists(year: Int, versus: String) {
         val email = PrefManager.getInstance(requireContext()).userEmail?: ""
-        if (!email.equalsExt("")) {
-            getViewModel().getDetails(email, versus, year)
+        if (email.isNotBlank()) {
+            detailVersusTeam = versus
+            rtvm.fetchDetails(email, versus, year)
         }
     }
 
     /* 상세정보 Dialog*/
-    override fun showDetailLists(plays: List<OpsTeamDetail>, versus: String) {
+    private fun showDetailLists(plays: List<OpsTeamDetail>) {
         if (plays.isNotEmpty()) {
-            val detailDialog = DialogTeamDetail(plays, versus)
+            val detailDialog = DialogTeamDetail(plays, detailVersusTeam)
             detailDialog.show(childFragmentManager, "detailDialog")
         } else {
             DialogActivity.dialogNoRecordDetail(requireContext())
@@ -103,7 +103,7 @@ class RecordTeamFragment :
     }
 
     /* 팀 기록 리스트*/
-    override fun setTeamRecord(teams: List<DtTeamRecord>) {
+    private fun setTeamRecord(teams: List<DtTeamRecord>) {
         recordTeamAdapter.clearItems()
 
         for (team in teams) {
@@ -129,7 +129,7 @@ class RecordTeamFragment :
     }
 
     /* 상단 헤더 요약*/
-    override fun setHeaderSummary(summary: OpsTeamSummary) {
+    private fun setHeaderSummary(summary: OpsTeamSummary) {
         binding().tvBoxTitle.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), summary.year)
         binding().tvSeasonStatic.text =
             String.format(
@@ -150,11 +150,58 @@ class RecordTeamFragment :
     private fun subscriber(year: Int) {
         val email = PrefManager.getInstance(requireContext()).userEmail?: ""
 
-        if (email.equalsExt("")) {
+        if (email.isBlank()) {
             DialogActivity.dialogError(requireContext())
         } else {
-            getViewModel().getRecords(email, year)
+            rtvm.fetchRecords(email, year)
         }
+
+        /* With Datum*/
+        rtvm.getDetails().observe(viewLifecycleOwner, {
+            when (it.status) {
+                PrStatus.SUCCESS -> showDetailLists(it.data?.games?: emptyList())
+                PrStatus.LOADING,
+                PrStatus.ERROR -> {}
+            }
+        })
+
+        rtvm.getTeams().observe(viewLifecycleOwner, {
+            when (it.status) {
+                PrStatus.SUCCESS -> {
+                    setTeamSummaryItems(it.data?.teams)
+                    setHeaderSummaryItems(it.data?.summary)
+                    cancelSpinKit()
+                }
+                PrStatus.LOADING,
+                PrStatus.ERROR -> {}
+            }
+        })
+    }
+
+    private fun setTeamSummaryItems(teams: List<OpsTeamRecords>?) {
+        val listTeam = ArrayList<DtTeamRecord>()
+
+        teams?.let { _team ->
+            _team.forEach {
+                val teamEntity = DtTeamRecord(
+                    year = it.year,
+                    team = it.team,
+                    win = it.win,
+                    lose = it.lose,
+                    draw = it.draw,
+                    rate = it.rate
+                )
+
+                listTeam.add(teamEntity)
+            }
+
+            setTeamRecord(listTeam)
+        }
+    }
+
+    /* 팀헤더 요약정보*/
+    private fun setHeaderSummaryItems(summary: OpsTeamSummary?) {
+        summary?.let { setHeaderSummary(it) }
     }
 
     companion object {

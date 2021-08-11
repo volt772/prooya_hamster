@@ -2,30 +2,40 @@ package com.apx5.apx5.ui.days
 
 import android.app.Application
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.apx5.apx5.ProoyaClient.Companion.appContext
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseViewModel
+import com.apx5.apx5.base.BaseViewModel2
 import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.catcher.CtGetPlay
 import com.apx5.apx5.datum.catcher.CtPostPlay
+import com.apx5.apx5.datum.catcher.CtPostStatics
 import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.pitcher.PtGetPlay
 import com.apx5.apx5.datum.pitcher.PtPostPlay
+import com.apx5.apx5.datum.pitcher.PtPostStatics
 import com.apx5.apx5.network.operation.PrOps
 import com.apx5.apx5.network.operation.PrOpsCallBack
 import com.apx5.apx5.network.operation.PrOpsError
+import com.apx5.apx5.network.operation.PrResource
 import com.apx5.apx5.network.response.PrResponse
+import com.apx5.apx5.repository.PrRepository
 import com.apx5.apx5.ui.utils.UiUtils
+import kotlinx.coroutines.launch
 import java.util.*
 
 /**
  * DaysViewModel
  */
 
-class DaysViewModel(application: Application) :
-    BaseViewModel<DaysNavigator>(application) {
+class DaysViewModel(
+    private val prRepository: PrRepository
+) : BaseViewModel2<DaysNavigator>()  {
 
     var awayTeam = ObservableField<String>()
     var homeTeam = ObservableField<String>()
@@ -33,8 +43,8 @@ class DaysViewModel(application: Application) :
     var gameDate = ObservableField<String>()
     var gameStadium = ObservableField<String>()
 
-    private val prService = PrOps.getInstance()
-    private val app: Application = getApplication()
+    private val todayGame = MutableLiveData<PrResource<CtGetPlay>>()
+    private val postGame = MutableLiveData<PrResource<CtPostPlay>>()
 
     private var playList = mutableListOf<DtDailyGame>()
     private lateinit var _game: DtDailyGame
@@ -65,7 +75,7 @@ class DaysViewModel(application: Application) :
             gameStatus.set(
                 String.format(
                     Locale.getDefault(),
-                    app.resources.getString(R.string.day_game_score),
+                    appContext.resources.getString(R.string.day_game_score),
                     _game.awayScore,
                     _game.homeScore)
             )
@@ -80,13 +90,13 @@ class DaysViewModel(application: Application) :
             gameDate.set(
                 String.format(
                     Locale.getDefault(),
-                    app.resources.getString(R.string.day_game_date_single), playDate)
+                    appContext.resources.getString(R.string.day_game_date_single), playDate)
             )
         } else {
             gameDate.set(
                 String.format(
                     Locale.getDefault(),
-                    app.resources.getString(R.string.day_game_date_with_starttime),
+                    appContext.resources.getString(R.string.day_game_date_with_starttime),
                     playDate,
                     UiUtils.getTime(_game.startTime)
                 )
@@ -99,22 +109,17 @@ class DaysViewModel(application: Application) :
 
     /* 경기정보*/
     internal fun getMyPlay(play: PtGetPlay) {
-        prService.loadTodayGame(play, object: PrOpsCallBack<CtGetPlay> {
-            override fun onSuccess(
-                responseCode: Int,
-                responseMessage: String,
-                responseBody: PrResponse<CtGetPlay>?
-            ) {
-                responseBody?.data?.let { res ->
-                    makePlayBoard(res.games)
-                    getNavigator()?.cancelSpinKit()
-                }
-            }
-
-            override fun onFailed(errorData: PrOpsError) {
+        viewModelScope.launch {
+            todayGame.postValue(PrResource.loading(null))
+            try {
+                val result = prRepository.getDayPlay(play)
+                makePlayBoard(result.data?.games?: emptyList())
+                getNavigator()?.cancelSpinKit()
+            } catch (e: Exception) {
+                todayGame.postValue(PrResource.error("Fetch Today Game Error", null))
                 getNavigator()?.cancelSpinKit()
             }
-        })
+        }
     }
 
     private fun makePlayBoard(dailyPlays: List<OpsDailyPlay>) {
@@ -155,19 +160,15 @@ class DaysViewModel(application: Application) :
 
     /* 새기록 저장*/
     internal fun saveNewPlay(play: PtPostPlay) {
-        prService.postGame(play, object: PrOpsCallBack<CtPostPlay> {
-            override fun onSuccess(
-                responseCode: Int,
-                responseMessage: String,
-                responseBody: PrResponse<CtPostPlay>?
-            ) {
-                responseBody?.data?.let {
-                    getNavigator()?.showSuccessDialog()
-                }
+        viewModelScope.launch {
+            postGame.postValue(PrResource.loading(null))
+            try {
+                prRepository.postNewGame(play)
+                getNavigator()?.showSuccessDialog()
+            } catch (e: Exception) {
+                postGame.postValue(PrResource.error("Post Today Game Error", null))
             }
-
-            override fun onFailed(errorData: PrOpsError) { }
-        })
+        }
     }
 
     /* 주 게임선택*/

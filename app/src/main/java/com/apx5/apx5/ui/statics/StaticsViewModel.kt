@@ -24,7 +24,7 @@ class StaticsViewModel(
     private val statics = MutableLiveData<PrResource<CtPostStatics>>()
 
     /* 통계데이터 다운로드*/
-    internal fun getStatics(userEmail: String) {
+    fun fetchStatics(userEmail: String) {
         viewModelScope.launch {
             statics.postValue(PrResource.loading(null))
             try {

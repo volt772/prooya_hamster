@@ -21,6 +21,30 @@ interface PrApi {
     /* 요약데이터 */
     @POST(URL_STATICS)
     suspend fun getStatics2(@Body statics: PtPostStatics): MkResponse<CtPostStatics>
+
+    /* 팀 간단데이터 */
+    @POST(URL_TEAMS_ALL)
+    suspend fun getRecordByTeams2(@Body teams: PtPostTeams): MkResponse<CtPostTeams>
+
+    /* 팀 경기상세*/
+    @POST(URL_TEAMS_DETAIL)
+    suspend fun getRecordDetail2(@Body play: PtGetRecordDetail): MkResponse<CtGetRecordDetail>
+
+    /* 전체 간단데이터 */
+    @POST(URL_HISTORIES_ALL)
+    suspend fun getHistories2(@Body play: PtPostTeams): MkResponse<CtHistories>
+
+    /* 경기삭제*/
+    @POST(URL_HISTORIES_DELETE)
+    suspend fun delHistory2(@Body play: PtDelHistory): MkResponse<CtDelHistory>
+
+    /* 오늘 내팀 경기목록*/
+    @POST(URL_SCORES_GET)
+    suspend fun getDayPlay2(@Body play: PtGetPlay): MkResponse<CtGetPlay>
+
+    /* 오늘 내팀 경기저장*/
+    @POST(URL_HISTORIES_POST)
+    suspend fun saveNewGame2(@Body play: PtPostPlay): MkResponse<CtPostPlay>
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /* 서버 사용 검사 */

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * 오늘 내팀 경기저장
  */
 
-open class CtPostPlay {
+open class CtPostPlay(
     @SerializedName(PrNetworkKeys.RESULT)
     val result: Int = 0
-}
+)

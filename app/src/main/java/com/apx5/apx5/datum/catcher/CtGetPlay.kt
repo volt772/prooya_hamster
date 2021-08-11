@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  * 오늘 내팀 경기목록
  */
 
-open class CtGetPlay {
+data class CtGetPlay(
     @SerializedName(PrNetworkKeys.GAMES)
     val games: List<OpsDailyPlay> = emptyList()
-}
+)

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * 경기삭제
  */
 
-open class CtDelHistory {
+data class CtDelHistory(
     @SerializedName(PrNetworkKeys.COUNT)
     val count: Int = 0
-}
+)

@@ -6,21 +6,18 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.PrAdapterViewType
-import com.apx5.apx5.constants.PrResultCode
-import com.apx5.apx5.constants.PrStadium
-import com.apx5.apx5.constants.PrTeam
+import com.apx5.apx5.base.BaseFragment2
+import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentRecordAllBinding
 import com.apx5.apx5.datum.DtAllGames
 import com.apx5.apx5.datum.adapter.AdtGames
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
+import com.apx5.apx5.datum.ops.OpsHistories
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.adapter.PlayItemsAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
-import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,20 +27,14 @@ import java.util.*
  * RecordAllFragment
  */
 
-class RecordAllFragment :
-    BaseFragment<FragmentRecordAllBinding, RecordAllViewModel>(),
-    RecordAllNavigator {
+class RecordAllFragment : BaseFragment2<FragmentRecordAllBinding>() {
 
     private var selectedYear: Int = DialogSeasonChange.MAX_YEAR
 
-    private val recordAllViewModel: RecordAllViewModel by viewModel()
+    private val ravm: RecordAllViewModel by viewModel()
 
     override fun getLayoutId() = R.layout.fragment_record_all
     override fun getBindingVariable() = BR.viewModel
-    override fun getViewModel(): RecordAllViewModel {
-        recordAllViewModel.setNavigator(this)
-        return recordAllViewModel
-    }
 
     private lateinit var playItemsAdapter: PlayItemsAdapter
 
@@ -51,17 +42,19 @@ class RecordAllFragment :
         super.onViewCreated(view, savedInstanceState)
 
         initView()
-        subscriber(UiUtils.currentYear)
+        fetchHistories(selectedYear)
+
+        subscriber()
     }
 
     /* 연도선택*/
-    override fun selectYear(year: Int) {
-        subscriber(year)
+    private fun selectYear(year: Int) {
+        fetchHistories(year)
         selectedYear = year
     }
 
     /* SpinKit 제거*/
-    override fun cancelSpinKit() {
+    private fun cancelSpinKit() {
         binding().skLoading.visibility = View.GONE
     }
 
@@ -85,7 +78,7 @@ class RecordAllFragment :
     }
 
     /* 기록삭제*/
-    override fun delHistoryItem(delPlay: AdtPlayDelTarget) {
+    private fun delHistoryItem(delPlay: AdtPlayDelTarget) {
         val email = PrefManager.getInstance(requireContext()).userEmail?: ""
 
         if (!email.equalsExt("")) {
@@ -106,7 +99,7 @@ class RecordAllFragment :
 
     /* 기록 삭제*/
     private fun delHistory(delHistory: PtDelHistory) {
-        getViewModel().delHistory(delHistory)
+        ravm.requestDelHistory(delHistory)
     }
 
     /* 리스트 분기*/
@@ -118,7 +111,7 @@ class RecordAllFragment :
     }
 
     /* 기록 리스트 생성*/
-    override fun setHistory(plays: List<DtAllGames>, year: Int) {
+    private fun setHistory(plays: List<DtAllGames>, year: Int) {
         binding().tvBoxTitle.text = String.format(
             Locale.getDefault(),
             resources.getString(R.string.all_label),
@@ -151,10 +144,56 @@ class RecordAllFragment :
         playItemsAdapter.notifyDataSetChanged()
     }
 
-    /* Observers*/
-    private fun subscriber(year: Int) {
+    private fun fetchHistories(year: Int) {
         val email = PrefManager.getInstance(requireContext()).userEmail
-        email?.let { getViewModel().getAllPlayLists(it, year) }
+        email?.let { ravm.getAllPlayLists(it, year) }
+    }
+
+    /* Observers*/
+    private fun subscriber() {
+        ravm.getHistories().observe(viewLifecycleOwner, {
+            when (it.status) {
+                PrStatus.SUCCESS -> {
+                    setPlayHistoryItems(it.data?.games?: emptyList())
+                    cancelSpinKit()
+                }
+                PrStatus.LOADING,
+                PrStatus.ERROR -> {}
+            }
+        })
+
+        ravm.delHistory().observe(viewLifecycleOwner, {
+            when (it.status) {
+                PrStatus.SUCCESS -> {
+                    selectYear(selectedYear)
+                }
+                PrStatus.LOADING,
+                PrStatus.ERROR -> {}
+            }
+        })
+    }
+
+    private fun setPlayHistoryItems(games: List<OpsHistories>) {
+        val listPlay = ArrayList<DtAllGames>()
+
+        games.forEach { game ->
+            listPlay.add(
+                DtAllGames(
+                    awayScore = game.awayScore,
+                    awayTeam = game.awayTeam,
+                    homeScore = game.homeScore,
+                    homeTeam = game.homeTeam,
+                    playDate = game.playDate,
+                    playId = game.playId,
+                    playResult = game.playResult,
+                    playSeason = game.playSeason,
+                    playVs = game.playVs,
+                    stadium = game.stadium
+                )
+            )
+        }
+
+        setHistory(listPlay, selectedYear)
     }
 
     companion object {
@@ -166,4 +205,3 @@ class RecordAllFragment :
         }
     }
 }
-

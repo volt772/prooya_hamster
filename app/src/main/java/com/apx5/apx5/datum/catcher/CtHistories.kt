@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  * 전체 간단데이터
  */
 
-open class CtHistories {
-        @SerializedName(PrNetworkKeys.GAMES)
-        val games: List<OpsHistories> = emptyList()
-}
+data class CtHistories(
+    @SerializedName(PrNetworkKeys.GAMES)
+    val games: List<OpsHistories> = emptyList()
+)

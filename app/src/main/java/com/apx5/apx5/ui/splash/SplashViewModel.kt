@@ -24,7 +24,7 @@ class SplashViewModel(
     private val serverStatus = MutableLiveData<PrResource<CtPing>>()
 
     init {
-        checkServerStatus()
+        fetchServerStatus()
     }
 
     /* 화면 표기 및 사용검사*/
@@ -59,7 +59,7 @@ class SplashViewModel(
     }
 
     /* 서버 검사*/
-    private fun checkServerStatus() {
+    private fun fetchServerStatus() {
         viewModelScope.launch {
             serverStatus.postValue(PrResource.loading(null))
             try {

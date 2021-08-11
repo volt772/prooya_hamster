@@ -1,81 +1,54 @@
 package com.apx5.apx5.ui.recordall
 
-import android.app.Application
-import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.datum.DtAllGames
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.apx5.apx5.base.BaseViewModel2
 import com.apx5.apx5.datum.catcher.CtDelHistory
 import com.apx5.apx5.datum.catcher.CtHistories
-import com.apx5.apx5.datum.ops.OpsHistories
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.datum.pitcher.PtPostTeams
-import com.apx5.apx5.network.operation.PrOps
-import com.apx5.apx5.network.operation.PrOpsCallBack
-import com.apx5.apx5.network.operation.PrOpsError
-import com.apx5.apx5.network.response.PrResponse
-import java.util.*
+import com.apx5.apx5.network.operation.PrResource
+import com.apx5.apx5.repository.PrRepository
+import kotlinx.coroutines.launch
 
 /**
  * RecordAllViewModel
  */
 
-class RecordAllViewModel(application: Application) :
-    BaseViewModel<RecordAllNavigator>(application) {
+class RecordAllViewModel(
+    private val prRepository: PrRepository
+) : BaseViewModel2<Any>() {
 
-    private val prService = PrOps.getInstance()
+    private val delHistory = MutableLiveData<PrResource<CtDelHistory>>()
+    private val histories = MutableLiveData<PrResource<CtHistories>>()
 
     /* 기록 삭제*/
-    internal fun delHistory(play: PtDelHistory) {
-        prService.deleteHistory(play, object: PrOpsCallBack<CtDelHistory> {
-            override fun onSuccess(
-                responseCode: Int,
-                responseMessage: String,
-                responseBody: PrResponse<CtDelHistory>?
-            ) {
-                getNavigator()?.selectYear(play.year)
+    fun requestDelHistory(play: PtDelHistory) {
+        viewModelScope.launch {
+            delHistory.postValue(PrResource.loading(null))
+            try {
+                val result = prRepository.delHistory(play)
+                delHistory.postValue(PrResource.success(result.data))
+            } catch (e: Exception) {
+                delHistory.postValue(PrResource.error("Delete History Error", null))
             }
-
-            override fun onFailed(errorData: PrOpsError) { }
-        })
+        }
     }
 
     /* 전체 데이터*/
-    internal fun getAllPlayLists(email: String, year: Int) {
-        prService.getHistories(PtPostTeams(email, year), object: PrOpsCallBack<CtHistories> {
-            override fun onSuccess(
-                responseCode: Int,
-                responseMessage: String,
-                responseBody: PrResponse<CtHistories>?
-            ) {
-                responseBody?.data?.let { res ->
-                    setPlayHistoryItems(res.games, year)
-                    getNavigator()?.cancelSpinKit()
-                }
+    fun getAllPlayLists(email: String, year: Int) {
+        viewModelScope.launch {
+            histories.postValue(PrResource.loading(null))
+            try {
+                val result = prRepository.getHistories(PtPostTeams(email, year))
+                histories.postValue(PrResource.success(result.data))
+            } catch (e: Exception) {
+                histories.postValue(PrResource.error("Fetch History Error", null))
             }
-
-            override fun onFailed(errorData: PrOpsError) { }
-        })
-    }
-
-    private fun setPlayHistoryItems(games: List<OpsHistories>, year: Int) {
-        val listPlay = ArrayList<DtAllGames>()
-
-        games.forEach { game ->
-            listPlay.add(
-                DtAllGames(
-                    awayScore = game.awayScore,
-                    awayTeam = game.awayTeam,
-                    homeScore = game.homeScore,
-                    homeTeam = game.homeTeam,
-                    playDate = game.playDate,
-                    playId = game.playId,
-                    playResult = game.playResult,
-                    playSeason = game.playSeason,
-                    playVs = game.playVs,
-                    stadium = game.stadium
-                )
-            )
         }
-
-        getNavigator()?.setHistory(listPlay, year)
     }
+
+    fun delHistory(): LiveData<PrResource<CtDelHistory>> = delHistory
+    fun getHistories(): LiveData<PrResource<CtHistories>> = histories
 }

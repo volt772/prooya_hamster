@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseFragment
+import com.apx5.apx5.base.BaseFragment2
 import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrTeam
@@ -24,12 +24,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 
 class DaysFragment :
-    BaseFragment<FragmentDaysBinding, DaysViewModel>(),
+    BaseFragment2<FragmentDaysBinding>(),
     DaysNavigator {
 
     private var email: String = ""
     private var teamCode: String = ""
-
 
     /* 캘린더 핸들러 */
     private val calListener = DaysCalendar.datePickerListener(searchPlay = ::searchPlayByDate)
@@ -37,13 +36,11 @@ class DaysFragment :
     private val dvm: DaysViewModel by viewModel()
     override fun getLayoutId() = R.layout.fragment_days
     override fun getBindingVariable() = BR.viewModel
-    override fun getViewModel(): DaysViewModel {
-        dvm.setNavigator(this)
-        return dvm
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        dvm.setNavigator(this)
 
         initView()
         searchPlayByDate(UiUtils.today)
@@ -65,7 +62,7 @@ class DaysFragment :
         val gameResult = getPlayResultByTeamSide()
         val myTeamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
 
-        getViewModel().saveNewPlay(
+        dvm.saveNewPlay(
             PtPostPlay(
                 result = gameResult.result,
                 year = UiUtils.getYear(dailyGame.playDate.toString()),
@@ -94,7 +91,7 @@ class DaysFragment :
             return ResultBySide(
                 versus = dailyGame.homeTeam.code,
                 getScore = awayScore.toString(),
-                lostScore = homeScore.toString() ,
+                lostScore = homeScore.toString(),
                 result = when {
                     awayScore < homeScore -> PrResultCode.LOSE.codeAbbr
                     awayScore > homeScore -> PrResultCode.WIN.codeAbbr
@@ -106,7 +103,7 @@ class DaysFragment :
             return ResultBySide(
                 versus = dailyGame.awayTeam.code,
                 getScore = homeScore.toString(),
-                lostScore = awayScore.toString() ,
+                lostScore = awayScore.toString(),
                 result = when {
                     awayScore > homeScore -> PrResultCode.LOSE.codeAbbr
                     awayScore < homeScore -> PrResultCode.WIN.codeAbbr
@@ -143,7 +140,7 @@ class DaysFragment :
 
     /* 더블헤더 선택*/
     private fun selectMainGameOfDoubleHeader(gameNum: Int) {
-        getViewModel().setMainGameData(gameNum)
+        dvm.setMainGameData(gameNum)
     }
 
     /* 완료 Dialog*/
@@ -156,19 +153,21 @@ class DaysFragment :
         email = PrefManager.getInstance(requireContext()).userEmail?: ""
         teamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
 
-        if (email.equalsExt("") || teamCode.equalsExt("")) {
+        if (email.isEmpty() || teamCode.isEmpty()) {
             DialogActivity.dialogError(requireContext())
         } else {
-            DaysCalendar.todayYear = UiUtils.getTodaySeparate("year")
-            DaysCalendar.todayMonth = UiUtils.getTodaySeparate("month")
-            DaysCalendar.todayDay = UiUtils.getTodaySeparate("day")
+            DaysCalendar.apply {
+                todayYear = UiUtils.getTodaySeparate("year")
+                todayMonth = UiUtils.getTodaySeparate("month")
+                todayDay = UiUtils.getTodaySeparate("day")
+            }
         }
     }
 
     /* 경기검색(캘린더)*/
     private fun searchPlayByDate(playDate: String) {
         val play = PtGetPlay(playDate, teamCode)
-        getViewModel().getMyPlay(play)
+        dvm.getMyPlay(play)
     }
 
     /* 저장버튼노출 (경기종료시에만 저장)*/

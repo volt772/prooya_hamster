@@ -25,8 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * StaticsFragment
  */
 
-class StaticsFragment :
-    BaseFragment2<FragmentStaticsBinding>() {
+class StaticsFragment : BaseFragment2<FragmentStaticsBinding>() {
 
     private val svm: StaticsViewModel by viewModel()
 
@@ -61,7 +60,7 @@ class StaticsFragment :
     }
 
     /* 사용자 정보 저장*/
-    fun saveUserInfo(user: OpsUser) {
+    private fun saveUserInfo(user: OpsUser) {
         user.run {
             PrefManager.getInstance(requireActivity()).setString(PrPrefKeys.MYTEAM, team)
             PrefManager.getInstance(requireActivity()).setInt(PrPrefKeys.MY_ID, userId)
@@ -76,7 +75,7 @@ class StaticsFragment :
     /**
      * 통계 수치값 지정
      */
-    fun setDatumChart(statics: DtStatics) {
+    private fun setDatumChart(statics: DtStatics) {
         binding().apply {
             pcRecord.setProgress(statics.rateAll.toFloat(), true)
             /* 통산전적*/
@@ -95,7 +94,7 @@ class StaticsFragment :
     /**
      * 팀통산승률 그래프 처리
      */
-    fun setTeamWinningRate(teams: List<AdtTeamWinningRate>) {
+    private fun setTeamWinningRate(teams: List<AdtTeamWinningRate>) {
         teamWinningRateAdapter.clearItems()
         teams.forEach { _team ->
             if (_team.team.code != teamCode) {
@@ -107,7 +106,7 @@ class StaticsFragment :
     private fun subscriber() {
         /* 통계자료 Fetch*/
         if (userEmail.isNotBlank()) {
-            svm.getStatics(userEmail)
+            svm.fetchStatics(userEmail)
         } else {
             DialogActivity.dialogError(requireContext())
         }
