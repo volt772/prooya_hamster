@@ -2,6 +2,7 @@ package com.apx5.apx5.network.api
 
 import com.apx5.apx5.datum.pitcher.*
 import com.apx5.apx5.datum.catcher.*
+import com.apx5.apx5.network.response.MkResponse
 import com.apx5.apx5.network.response.PrResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -12,6 +13,16 @@ import retrofit2.http.POST
  */
 
 interface PrApi {
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /* 서버 사용 검사 */
+    @POST(URL_PING)
+    suspend fun getServerStatus(): MkResponse<CtPing>
+
+    /* 요약데이터 */
+    @POST(URL_STATICS)
+    suspend fun getStatics2(@Body statics: PtPostStatics): MkResponse<CtPostStatics>
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /* 서버 사용 검사 */
     @POST(URL_PING)
     fun appPing(): Call<PrResponse<CtPing>>

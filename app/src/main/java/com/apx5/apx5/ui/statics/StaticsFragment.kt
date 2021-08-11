@@ -5,16 +5,19 @@ import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseFragment
+import com.apx5.apx5.base.BaseFragment2
 import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrStatus
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtStatics
 import com.apx5.apx5.datum.adapter.AdtTeamWinningRate
+import com.apx5.apx5.datum.ops.OpsAllStatics
+import com.apx5.apx5.datum.ops.OpsTeamWinningRate
 import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.adapter.TeamWinningRateAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
-import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -23,8 +26,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 
 class StaticsFragment :
-    BaseFragment<FragmentStaticsBinding, StaticsViewModel>(),
-    StaticsNavigator {
+    BaseFragment2<FragmentStaticsBinding>() {
 
     private val svm: StaticsViewModel by viewModel()
 
@@ -35,10 +37,6 @@ class StaticsFragment :
 
     override fun getLayoutId() = R.layout.fragment_statics
     override fun getBindingVariable() = BR.viewModel
-    override fun getViewModel(): StaticsViewModel {
-        svm.setNavigator(this)
-        return svm
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,7 +61,7 @@ class StaticsFragment :
     }
 
     /* 사용자 정보 저장*/
-    override fun saveUserInfo(user: OpsUser) {
+    fun saveUserInfo(user: OpsUser) {
         user.run {
             PrefManager.getInstance(requireActivity()).setString(PrPrefKeys.MYTEAM, team)
             PrefManager.getInstance(requireActivity()).setInt(PrPrefKeys.MY_ID, userId)
@@ -71,14 +69,14 @@ class StaticsFragment :
     }
 
     /* SpinKit 제거*/
-    override fun cancelSpinKit() {
+    fun cancelSpinKit() {
         binding().clLoading.visibility = View.GONE
     }
 
     /**
      * 통계 수치값 지정
      */
-    override fun setDatumChart(statics: DtStatics) {
+    fun setDatumChart(statics: DtStatics) {
         binding().apply {
             pcRecord.setProgress(statics.rateAll.toFloat(), true)
             /* 통산전적*/
@@ -97,7 +95,7 @@ class StaticsFragment :
     /**
      * 팀통산승률 그래프 처리
      */
-    override fun setTeamWinningRate(teams: List<AdtTeamWinningRate>) {
+    fun setTeamWinningRate(teams: List<AdtTeamWinningRate>) {
         teamWinningRateAdapter.clearItems()
         teams.forEach { _team ->
             if (_team.team.code != teamCode) {
@@ -107,10 +105,68 @@ class StaticsFragment :
     }
 
     private fun subscriber() {
-        if (!userEmail.equalsExt("")) {
-            getViewModel().getStatics(userEmail)
+        /* 통계자료 Fetch*/
+        if (userEmail.isNotBlank()) {
+            svm.getStatics(userEmail)
         } else {
             DialogActivity.dialogError(requireContext())
+        }
+
+        /* 통계자료 Display*/
+        svm.getStatics().observe(viewLifecycleOwner, {
+            when (it.status) {
+                PrStatus.SUCCESS -> {
+                    cancelSpinKit()
+                    setTeamCode(it.data?.user)
+                    setStaticItem(it.data?.allStatics)
+                    setTeamAllPercentageItem(it.data?.teamWinningRate)
+                }
+                PrStatus.LOADING,
+                PrStatus.ERROR -> {}
+            }
+        })
+    }
+
+    /* 팀코드 저장*/
+    private fun setTeamCode(user: OpsUser?) {
+        user?.let { _user -> saveUserInfo(_user) }
+    }
+
+    /* 통계수치지정*/
+    private fun setStaticItem(statics: OpsAllStatics?) {
+        statics?.let { _statics ->
+            setDatumChart(
+                DtStatics(
+                    countAll = _statics.count,
+                    countAllDraw = _statics.draw,
+                    countAllLose = _statics.lose,
+                    countAllWin = _statics.win,
+                    rateAll = _statics.rate
+                )
+            )
+        }
+    }
+
+    private fun setTeamAllPercentageItem(teamData: OpsTeamWinningRate?) {
+        val teams = mutableListOf<AdtTeamWinningRate>()
+        teamData?.let { _teamData ->
+            val list = listOf(
+                AdtTeamWinningRate(PrTeam.DSB, _teamData.dsb),
+                AdtTeamWinningRate(PrTeam.HHE, _teamData.hhe),
+                AdtTeamWinningRate(PrTeam.KAT, _teamData.kat),
+                AdtTeamWinningRate(PrTeam.KTW, _teamData.ktw),
+                AdtTeamWinningRate(PrTeam.LGT, _teamData.lgt),
+                AdtTeamWinningRate(PrTeam.LTG, _teamData.ltg),
+                AdtTeamWinningRate(PrTeam.NCD, _teamData.ncd),
+                AdtTeamWinningRate(PrTeam.NXH, _teamData.nxh),
+                AdtTeamWinningRate(PrTeam.SKW, _teamData.skw),
+                AdtTeamWinningRate(PrTeam.SSL, _teamData.ssl)
+            )
+
+            teams.addAll(list)
+
+            val sorted = teams.sortedWith(compareByDescending { it.winningRate })
+            setTeamWinningRate(sorted)
         }
     }
 

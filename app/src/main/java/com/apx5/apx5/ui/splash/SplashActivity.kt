@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.databinding.library.baseAdapters.BR
-import com.apx5.apx5.ProoyaClient
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseActivity
+import com.apx5.apx5.base.BaseActivity2
+import com.apx5.apx5.constants.PrStatus
 import com.apx5.apx5.databinding.ActivitySplashBinding
 import com.apx5.apx5.ui.dashboard.DashBoardActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.login.LoginActivity
 import com.apx5.apx5.ui.utils.MaterialTools
-import com.google.firebase.FirebaseApp
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -22,32 +19,42 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 
 class SplashActivity :
-    BaseActivity<ActivitySplashBinding, SplashViewModel>(),
+    BaseActivity2<ActivitySplashBinding>(),
     SplashNavigator {
 
-    private val splashViewModel: SplashViewModel by viewModel()
+    private val svm: SplashViewModel by viewModel()
 
     override fun getLayoutId() = R.layout.activity_splash
     override fun getBindingVariable() = BR.viewModel
-    override fun getViewModel(): SplashViewModel {
-        splashViewModel.setNavigator(this)
-        return splashViewModel
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        svm.setNavigator(this)
+
         initComponent()
 
-        /* 서버 상태검사*/
-        getViewModel().checkServerStatus()
+        subscriber()
+    }
+
+    private fun subscriber() {
+        svm.getServerStatus().observe(this, {
+            when (it.status) {
+                PrStatus.SUCCESS -> {
+                    getServerWorkResult(it.data?.status?: 0 > 0)
+                    cancelSpinKit()
+                }
+                PrStatus.LOADING -> {}
+                PrStatus.ERROR -> getServerWorkResult(false)
+            }
+        })
     }
 
     /* 서버 동작여부 검사*/
-    override fun getServerWorkResult(alive: Boolean) {
+    private fun getServerWorkResult(alive: Boolean) {
         if (alive) {
             /* 로그인, 메인분기*/
-            getViewModel().startSeeding()
+            svm.startSeeding()
         } else {
             /* 앱종료*/
             dialogForServerIsDead()
@@ -55,7 +62,7 @@ class SplashActivity :
     }
 
     /* SpinKit 제거*/
-    override fun cancelSpinKit() {
+    private fun cancelSpinKit() {
         binding().skLoading.visibility = View.GONE
     }
 

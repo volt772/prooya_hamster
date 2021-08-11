@@ -24,7 +24,7 @@ class PrOps {
      * 서버 Ping 검사
      */
     fun checkPing(operation: PrOpsCallBack<CtPing>) {
-        handleResponse(this.api.appPing(), operation)
+//        handleResponse(this.api.appPing(), operation)
     }
 
     /**

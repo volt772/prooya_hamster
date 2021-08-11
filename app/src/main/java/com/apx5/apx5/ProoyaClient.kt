@@ -7,6 +7,10 @@ import androidx.collection.LruCache
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
 import com.apx5.apx5.base.appModules
+import com.apx5.apx5.di.apiModule
+import com.apx5.apx5.di.repositoryModule
+import com.apx5.apx5.di.retrofitModule
+import com.apx5.apx5.di.viewModelModule
 import com.apx5.apx5.ui.login.kakao.KakaoSDKAdapter
 import com.kakao.auth.KakaoSDK
 import org.koin.android.ext.koin.androidContext
@@ -49,8 +53,14 @@ class ProoyaClient : Application() {
         imageLoader = ImageLoader(requestQueue, imageCache)
 
         startKoin {
-            androidContext(appContext)
-            modules(appModules)
+            androidContext(this@ProoyaClient)
+//            modules(appModules)
+            modules(listOf(
+                apiModule,
+                repositoryModule,
+                retrofitModule,
+                viewModelModule
+            ))
         }
 
     }

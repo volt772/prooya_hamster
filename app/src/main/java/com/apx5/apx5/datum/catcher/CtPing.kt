@@ -7,7 +7,11 @@ import com.google.gson.annotations.SerializedName
  * 서버 사용 검사
  */
 
-open class CtPing {
+data class CtPing(
     @SerializedName(PrNetworkKeys.STATUS)
-    val status: Int = 0
-}
+    val status: Int
+)
+//open class CtPing {
+//    @SerializedName(PrNetworkKeys.STATUS)
+//    val status: Int = 0
+//}

@@ -9,14 +9,25 @@ import com.google.gson.annotations.SerializedName
 /**
  * 요약데이터
  */
-
-open class CtPostStatics {
+data class CtPostStatics(
     @SerializedName(PrNetworkKeys.USER)
-    val user: OpsUser?= null
+    val user: OpsUser?= null,
 
     @SerializedName(PrNetworkKeys.ALL_STATICS)
-    val allStatics: OpsAllStatics?= null
+    val allStatics: OpsAllStatics?= null,
 
     @SerializedName(PrNetworkKeys.TEAM_WINNING_RATE)
     val teamWinningRate: OpsTeamWinningRate?= null
-}
+)
+
+
+//open class CtPostStatics {
+//    @SerializedName(PrNetworkKeys.USER)
+//    val user: OpsUser?= null
+//
+//    @SerializedName(PrNetworkKeys.ALL_STATICS)
+//    val allStatics: OpsAllStatics?= null
+//
+//    @SerializedName(PrNetworkKeys.TEAM_WINNING_RATE)
+//    val teamWinningRate: OpsTeamWinningRate?= null
+//}

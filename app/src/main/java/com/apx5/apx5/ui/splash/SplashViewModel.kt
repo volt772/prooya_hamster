@@ -2,23 +2,30 @@ package com.apx5.apx5.ui.splash
 
 import android.app.Application
 import android.os.Handler
-import com.apx5.apx5.base.BaseViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.apx5.apx5.ProoyaClient.Companion.appContext
+import com.apx5.apx5.base.BaseViewModel2
 import com.apx5.apx5.datum.catcher.CtPing
-import com.apx5.apx5.network.operation.PrOps
-import com.apx5.apx5.network.operation.PrOpsCallBack
-import com.apx5.apx5.network.operation.PrOpsError
-import com.apx5.apx5.network.response.PrResponse
+import com.apx5.apx5.network.operation.PrResource
+import com.apx5.apx5.repository.PrRepository
 import com.apx5.apx5.storage.PrefManager
-import com.apx5.apx5.utils.equalsExt
+import kotlinx.coroutines.launch
 
 /**
  * TemplatesViewModel
  */
 
-class SplashViewModel(application: Application) :
-    BaseViewModel<SplashNavigator>(application) {
+class SplashViewModel(
+    private val prRepository: PrRepository
+) : BaseViewModel2<SplashNavigator>() {
 
-    private val prService = PrOps.getInstance()
+    private val serverStatus = MutableLiveData<PrResource<CtPing>>()
+
+    init {
+        checkServerStatus()
+    }
 
     /* 화면 표기 및 사용검사*/
     internal fun startSeeding() {
@@ -28,40 +35,43 @@ class SplashViewModel(application: Application) :
         }, DURATION.toLong())
     }
 
+    private fun moveToDashBoard() {
+        getNavigator()?.switchToDashBoard()
+    }
+
+    private fun moveToLogin() {
+        getNavigator()?.switchToLogin()
+    }
+
     /* Next Activity 검사*/
     private fun checkAccountAndDecideNextActivity() {
-        val email = PrefManager.getInstance(getApplication()).userEmail
+        val email = PrefManager.getInstance(appContext).userEmail
 
-        if (email != null && !email.equalsExt("") && email.contains("@")) {
-            if (!email.equalsExt("") && email.contains("@")) {
-                getNavigator()?.switchToDashBoard()
+        email?.let { _email ->
+            if (_email.isNotBlank() && _email.contains("@")) {
+                moveToDashBoard()
             } else {
-                getNavigator()?.switchToLogin()
+                moveToLogin()
             }
-        } else {
-            getNavigator()?.switchToLogin()
+        } ?: run {
+            moveToLogin()
         }
     }
 
     /* 서버 검사*/
-    internal fun checkServerStatus() {
-        prService.checkPing(object: PrOpsCallBack<CtPing> {
-            override fun onSuccess(
-                responseCode: Int,
-                responseMessage: String,
-                responseBody: PrResponse<CtPing>?
-            ) {
-                responseBody?.data?.let { res ->
-                    getNavigator()?.run {
-                        getServerWorkResult(res.status > 0)
-                        cancelSpinKit()
-                    }
-                }
-            }
+    private fun checkServerStatus() {
+        viewModelScope.launch {
+            serverStatus.postValue(PrResource.loading(null))
+            try {
+                val result = prRepository.getServerStatus()
+                val serverResult = PrResource.success(result.data)
 
-            override fun onFailed(errorData: PrOpsError) {
-                getNavigator()?.getServerWorkResult(false)
+                serverStatus.postValue(serverResult)
+            } catch (e: Exception) {
+                serverStatus.postValue(PrResource.error("Server Check Error", null))
             }
-        })
+        }
     }
+
+    fun getServerStatus(): LiveData<PrResource<CtPing>> = serverStatus
 }
