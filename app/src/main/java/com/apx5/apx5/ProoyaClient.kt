@@ -54,7 +54,6 @@ class ProoyaClient : Application() {
 
         startKoin {
             androidContext(this@ProoyaClient)
-//            modules(appModules)
             modules(listOf(
                 apiModule,
                 repositoryModule,

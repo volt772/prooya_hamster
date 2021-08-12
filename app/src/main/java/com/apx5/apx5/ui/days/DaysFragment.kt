@@ -4,10 +4,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
+import com.apx5.apx5.ProoyaClient
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment2
 import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrResultCode
+import com.apx5.apx5.constants.PrStatus
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentDaysBinding
 import com.apx5.apx5.datum.pitcher.PtGetPlay
@@ -18,6 +20,7 @@ import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 /**
  * DaysFragment
@@ -44,6 +47,8 @@ class DaysFragment :
 
         initView()
         searchPlayByDate(UiUtils.today)
+
+        subscriber()
     }
 
     /* 다른 경기 검색 (캘린더)*/
@@ -126,7 +131,7 @@ class DaysFragment :
             val homeTeam = dvm.dailyGame.homeTeam
             showTeamEmblem(awayTeam, homeTeam)
 
-            dvm.makeGameItem()
+            makeGameItem()
         }
     }
 
@@ -162,6 +167,9 @@ class DaysFragment :
                 todayDay = UiUtils.getTodaySeparate("day")
             }
         }
+
+        binding().btnChangeSeason.setOnClickListener { searchOtherGame() }
+        binding().btSavePlay.setOnClickListener { saveGameToRemote() }
     }
 
     /* 경기검색(캘린더)*/
@@ -198,6 +206,71 @@ class DaysFragment :
             tvTeamHome.setBackgroundColor(Color.parseColor(home.mainColor))
         }
     }
+
+    private fun subscriber() {
+        dvm.getTodayGame().observe(viewLifecycleOwner, {
+            when (it.status) {
+                PrStatus.SUCCESS -> {
+                    dvm.makePlayBoard(it.data?.games?: emptyList())
+                }
+                PrStatus.LOADING,
+                PrStatus.ERROR -> { cancelSpinKit() }
+            }
+        })
+
+        dvm.getPostGame().observe(viewLifecycleOwner, {
+            when (it.status) {
+                PrStatus.SUCCESS -> {
+                    showSuccessDialog()
+                }
+                PrStatus.LOADING,
+                PrStatus.ERROR -> { }
+            }
+        })
+    }
+
+    /* 경기 데이터*/
+    private fun makeGameItem() {
+        /* 원정팀명*/
+        binding().tvTeamAway.text = dvm.dailyGame.awayTeam.fullName
+
+        /* 홈팀명*/
+        binding().tvTeamHome.text = dvm.dailyGame.homeTeam.fullName
+
+        /* 게임상태*/
+        if (dvm.dailyGame.status == PrGameStatus.FINE) {
+            binding().tvScore.text =
+                String.format(
+                    Locale.getDefault(),
+                    ProoyaClient.appContext.resources.getString(R.string.day_game_score),
+                    dvm.dailyGame.awayScore,
+                    dvm.dailyGame.homeScore)
+        } else {
+            binding().tvScore.text = dvm.dailyGame.status.displayCode
+        }
+
+        /* 게임일자*/
+        val playDate = UiUtils.getDateToFull(dvm.dailyGame.playDate.toString())
+
+        if (dvm.dailyGame.startTime == "0") {
+            binding().tvPlayDate.text =
+                String.format(
+                    Locale.getDefault(),
+                    ProoyaClient.appContext.resources.getString(R.string.day_game_date_single), playDate)
+        } else {
+            binding().tvPlayDate.text =
+                String.format(
+                    Locale.getDefault(),
+                    ProoyaClient.appContext.resources.getString(R.string.day_game_date_with_starttime),
+                    playDate,
+                    UiUtils.getTime(dvm.dailyGame.startTime)
+                )
+        }
+
+        /* 게임장소*/
+        binding().tvStadium.text = dvm.dailyGame.stadium.displayName
+    }
+
 
     companion object {
         data class ResultBySide(
