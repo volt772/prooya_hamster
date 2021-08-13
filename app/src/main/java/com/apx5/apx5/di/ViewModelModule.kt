@@ -14,7 +14,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { SplashViewModel(get()) }
     viewModel { TeamViewModel(get()) }
-    viewModel { DashBoardViewModel(get()) }
+    viewModel { DashBoardViewModel() }
     viewModel { StaticsViewModel(get()) }
     viewModel { RecordTeamViewModel(get()) }
     viewModel { RecordAllViewModel(get()) }

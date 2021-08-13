@@ -6,40 +6,31 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.PrConstants
-import com.apx5.apx5.constants.PrPrefKeys
-import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.constants.PrTeamChangeMode
+import com.apx5.apx5.base.BaseFragment2
+import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentSettingBinding
 import com.apx5.apx5.datum.pitcher.PtDelUser
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.team.TeamActivity
-import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * SettingFragment
  */
 class SettingFragment :
-    BaseFragment<FragmentSettingBinding, SettingViewModel>(),
-    SettingNavigator,
-    View.OnClickListener
-{
+    BaseFragment2<FragmentSettingBinding>(),
+    View.OnClickListener {
 
-    private val settingViewModel: SettingViewModel by viewModel()
+    private val svm: SettingViewModel by viewModel()
     override fun getLayoutId() = R.layout.fragment_setting
     override fun getBindingVariable() = BR.viewModel
-    override fun getViewModel(): SettingViewModel {
-        settingViewModel.setNavigator(this)
-        return settingViewModel
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
+        subscriber()
     }
 
     /* UI 초기화*/
@@ -73,7 +64,7 @@ class SettingFragment :
     }
 
     /* 계정삭제후, 앱재시작*/
-    override fun vectoredRestart() {
+    private fun vectoredRestart() {
         val packageManager = requireActivity().packageManager
         val intent = packageManager.getLaunchIntentForPackage(requireActivity().packageName)
         val componentName = intent?.component
@@ -83,7 +74,7 @@ class SettingFragment :
     }
 
     /* 로컬 데이터 초기화*/
-    override fun clearSharedPreferences() {
+    private fun clearSharedPreferences() {
         PrefManager.getInstance(requireContext()).removePref(requireContext())
     }
 
@@ -110,15 +101,30 @@ class SettingFragment :
     private fun delUserRemote() {
         val email = PrefManager.getInstance(requireContext()).userEmail
 
-        if (email != null && !email.equalsExt("")) {
-            val delUser = PtDelUser(email)
-            getViewModel().delRemoteUser(delUser)
+        email?.let {
+            if (it.isNotBlank()) {
+                val delUser = PtDelUser(it)
+                svm.delRemoteUser(delUser)
+            }
         }
     }
 
     /* 계정삭제 다이얼로그*/
     private fun showDelUserDialog() {
         DialogActivity.dialogUserDelete(requireContext(), ::delUserRemote)
+    }
+
+    private fun subscriber() {
+        svm.getDelUserResult().observe(viewLifecycleOwner, {
+            when (it.status) {
+                PrStatus.SUCCESS -> {
+                    clearSharedPreferences()
+                    vectoredRestart()
+                }
+                PrStatus.LOADING,
+                PrStatus.ERROR -> {  }
+            }
+        })
     }
 
     companion object {

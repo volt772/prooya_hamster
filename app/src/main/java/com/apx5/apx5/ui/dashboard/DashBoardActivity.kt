@@ -7,7 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseActivity
+import com.apx5.apx5.base.BaseActivity2
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrTabMenu
 import com.apx5.apx5.constants.PrTeamChangeMode
@@ -16,18 +16,14 @@ import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.team.TeamActivity
 import com.apx5.apx5.ui.utils.MaterialTools
 import com.apx5.apx5.utils.equalsExt
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * DashBoardActivity
  */
 
-class DashBoardActivity :
-    BaseActivity<ActivityDashboardBinding, DashBoardViewModel>() {
+class DashBoardActivity : BaseActivity2<ActivityDashboardBinding>() {
 
-    private val dashBoardViewModel: DashBoardViewModel by viewModel()
     override fun getLayoutId() = R.layout.activity_dashboard
-    override fun getViewModel() = dashBoardViewModel
     override fun getBindingVariable() = BR.viewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

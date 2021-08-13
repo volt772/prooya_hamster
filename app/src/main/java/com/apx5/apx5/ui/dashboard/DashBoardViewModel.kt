@@ -1,11 +1,9 @@
 package com.apx5.apx5.ui.dashboard
 
-import android.app.Application
-
-import com.apx5.apx5.base.BaseViewModel
+import com.apx5.apx5.base.BaseViewModel2
 
 /**
  * DashBoardViewModel
  */
 
-class DashBoardViewModel(application: Application) : BaseViewModel<Any>(application)
+class DashBoardViewModel : BaseViewModel2<Any>()

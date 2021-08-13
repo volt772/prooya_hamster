@@ -45,6 +45,14 @@ interface PrApi {
     /* 오늘 내팀 경기저장*/
     @POST(URL_HISTORIES_POST)
     suspend fun saveNewGame2(@Body play: PtPostPlay): MkResponse<CtPostPlay>
+
+    /* 사용자삭제 */
+    @POST(URL_USER_DELETE)
+    suspend fun delUser2(@Body user: PtDelUser): MkResponse<CtDelUser>
+
+    /* 신규사용자등록 */
+    @POST(URL_USER_POST)
+    suspend fun postUser2(@Body user: PtPostUser): MkResponse<CtPostUser>
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /* 서버 사용 검사 */

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * 사용자삭제
  */
 
-open class CtDelUser {
+data class CtDelUser(
     @SerializedName(PrNetworkKeys.COUNT)
     val count: Int = 0
-}
+)

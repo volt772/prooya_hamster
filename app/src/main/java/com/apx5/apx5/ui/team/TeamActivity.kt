@@ -9,11 +9,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseActivity
-import com.apx5.apx5.constants.PrConstants
-import com.apx5.apx5.constants.PrPrefKeys
-import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.constants.PrTeamChangeMode
+import com.apx5.apx5.base.BaseActivity2
+import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.ActivityTeamBinding
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.storage.PrefManager
@@ -28,20 +25,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 
 class TeamActivity :
-    BaseActivity<ActivityTeamBinding, TeamViewModel>(),
+    BaseActivity2<ActivityTeamBinding>(),
     TeamNavigator {
 
     private var teamSelectMode: PrTeamChangeMode?= null
     private lateinit var teamListAdapter: TeamListAdapter
 
-    private val teamViewModel: TeamViewModel by viewModel()
+    private val tvm: TeamViewModel by viewModel()
     override fun getLayoutId() = R.layout.activity_team
     override fun getBindingVariable() = BR.viewModel
-    override fun getViewModel(): TeamViewModel {
-        teamViewModel.setNavigator(this)
-        return teamViewModel
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +42,12 @@ class TeamActivity :
             teamSelectMode = getSerializableExtra(PrConstants.Teams.TEAM_CHANGE_MODE) as PrTeamChangeMode?
         }
 
+        tvm.setNavigator(this)
+
         initToolbar()
         initComponent()
+
+        subscriber()
     }
 
     /* Toolbar*/
@@ -82,7 +78,7 @@ class TeamActivity :
     /* 사용자 팀선택완료*/
     private fun finishSetMyTeam(code: String) {
         PrefManager.getInstance(this).setString(PrPrefKeys.MYTEAM, code)
-        getViewModel().saveTeam(code)
+        tvm.saveTeam(code)
     }
 
     /* 팀선택 최종 확인*/
@@ -113,7 +109,7 @@ class TeamActivity :
      * 신규선택 : DashBoardActivity
      * 기존변경 : 앱재시작
      */
-    override fun switchPageBySelectType() {
+    private fun switchPageBySelectType() {
         when (teamSelectMode) {
             PrTeamChangeMode.APPLY -> {
                 startActivity(DashBoardActivity.newIntent(this@TeamActivity))
@@ -125,7 +121,7 @@ class TeamActivity :
     }
 
     /* 계정삭제후, 앱재시작*/
-    override fun vectoredRestart() {
+    private fun vectoredRestart() {
         PrefManager.getInstance(this).setString(PrPrefKeys.MYTEAM, "")
         restartApp()
     }
@@ -143,6 +139,16 @@ class TeamActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) { android.R.id.home -> finish() }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun subscriber() {
+        tvm.getTeamPostResult().observe(this, {
+            when (it.status) {
+                PrStatus.SUCCESS -> switchPageBySelectType()
+                PrStatus.LOADING -> {}
+                PrStatus.ERROR ->vectoredRestart()
+            }
+        })
     }
 
     companion object {

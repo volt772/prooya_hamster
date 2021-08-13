@@ -17,4 +17,6 @@ class PrRepository(private val prApi: PrApi) {
     suspend fun delHistory(param: PtDelHistory) = prApi.delHistory2(param)
     suspend fun getDayPlay(param: PtGetPlay) = prApi.getDayPlay2(param)
     suspend fun postNewGame(param: PtPostPlay) = prApi.saveNewGame2(param)
+    suspend fun delUser(param: PtDelUser) = prApi.delUser2(param)
+    suspend fun postUser(param: PtPostUser) = prApi.postUser2(param)
 }

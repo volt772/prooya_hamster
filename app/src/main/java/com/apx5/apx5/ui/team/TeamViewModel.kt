@@ -1,46 +1,46 @@
 package com.apx5.apx5.ui.team
 
-import android.app.Application
-import com.apx5.apx5.base.BaseViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.apx5.apx5.ProoyaClient.Companion.appContext
+import com.apx5.apx5.base.BaseViewModel2
 import com.apx5.apx5.datum.catcher.CtPostUser
 import com.apx5.apx5.datum.pitcher.PtPostUser
-import com.apx5.apx5.network.operation.PrOps
-import com.apx5.apx5.network.operation.PrOpsCallBack
-import com.apx5.apx5.network.operation.PrOpsError
-import com.apx5.apx5.network.response.PrResponse
+import com.apx5.apx5.network.operation.PrResource
+import com.apx5.apx5.repository.PrRepository
 import com.apx5.apx5.storage.PrefManager
-import com.apx5.apx5.utils.equalsExt
+import kotlinx.coroutines.launch
 
 /**
  * TeamViewModel
  */
 
-class TeamViewModel(application: Application) :
-    BaseViewModel<TeamNavigator>(application) {
+class TeamViewModel(
+    private val prRepository: PrRepository
+) : BaseViewModel2<TeamNavigator>()  {
 
-    private val prService = PrOps.getInstance()
+    private val teamPostResult = MutableLiveData<PrResource<CtPostUser>>()
+
+    fun getTeamPostResult(): LiveData<PrResource<CtPostUser>> = teamPostResult
 
     /**
      * 사용자 정보 서버 저장
      */
-    internal fun saveTeam(teamCode: String) {
-        val email = PrefManager.getInstance(getApplication()).userEmail
-        if (email != null && !email.equalsExt("")) {
-            prService.modifyUserInfo(PtPostUser(email, teamCode), object: PrOpsCallBack<CtPostUser> {
-                override fun onSuccess(
-                    responseCode: Int,
-                    responseMessage: String,
-                    responseBody: PrResponse<CtPostUser>?
-                ) {
-                    responseBody?.data?.let {
-                        getNavigator()?.switchPageBySelectType()
+    fun saveTeam(teamCode: String) {
+        val email = PrefManager.getInstance(appContext).userEmail
+        email?.let {
+            if (it.isNotBlank()) {
+                viewModelScope.launch {
+                    teamPostResult.postValue(PrResource.loading(null))
+                    try {
+                        val result = prRepository.postUser(PtPostUser(email, teamCode))
+                        teamPostResult.postValue(PrResource.success(result.data))
+                    } catch (e: Exception) {
+                        teamPostResult.postValue(PrResource.error("Post User Error", null))
                     }
                 }
-
-                override fun onFailed(errorData: PrOpsError) {
-                    getNavigator()?.vectoredRestart()
-                }
-            })
+            }
         }
     }
 }
