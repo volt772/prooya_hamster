@@ -1,14 +1,5 @@
 package com.apx5.apx5.ui.templates
 
-import android.os.Bundle
-import android.view.View
-import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.ViewModelProviders
-
-import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.databinding.FragmentStaticsBinding
-
 /**
  * TemplatesFragment
  */
