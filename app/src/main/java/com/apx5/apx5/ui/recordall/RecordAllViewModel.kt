@@ -3,7 +3,7 @@ package com.apx5.apx5.ui.recordall
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.apx5.apx5.base.BaseViewModel2
+import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.datum.catcher.CtHistories
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.datum.pitcher.PtPostTeams
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class RecordAllViewModel(
     private val prRepository: PrRepository
-) : BaseViewModel2<RecordAllNavigator>() {
+) : BaseViewModel<RecordAllNavigator>() {
 
     private val histories = MutableLiveData<PrResource<CtHistories>>()
 

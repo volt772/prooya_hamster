@@ -5,7 +5,7 @@ import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseFragment2
+import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrPrefKeys
 import com.apx5.apx5.constants.PrStatus
 import com.apx5.apx5.constants.PrTeam
@@ -25,7 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * StaticsFragment
  */
 
-class StaticsFragment : BaseFragment2<FragmentStaticsBinding>() {
+class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
 
     private val svm: StaticsViewModel by viewModel()
 

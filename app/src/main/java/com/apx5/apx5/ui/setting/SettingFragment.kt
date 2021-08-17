@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseFragment2
+import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentSettingBinding
 import com.apx5.apx5.datum.pitcher.PtDelUser
@@ -19,7 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * SettingFragment
  */
 class SettingFragment :
-    BaseFragment2<FragmentSettingBinding>(),
+    BaseFragment<FragmentSettingBinding>(),
     View.OnClickListener {
 
     private val svm: SettingViewModel by viewModel()

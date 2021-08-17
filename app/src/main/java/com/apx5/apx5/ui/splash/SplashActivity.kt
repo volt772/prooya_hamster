@@ -2,10 +2,9 @@ package com.apx5.apx5.ui.splash
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseActivity2
+import com.apx5.apx5.base.BaseActivity
 import com.apx5.apx5.constants.PrStatus
 import com.apx5.apx5.databinding.ActivitySplashBinding
 import com.apx5.apx5.ui.dashboard.DashBoardActivity
@@ -19,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 
 class SplashActivity :
-    BaseActivity2<ActivitySplashBinding>(),
+    BaseActivity<ActivitySplashBinding>(),
     SplashNavigator {
 
     private val svm: SplashViewModel by viewModel()

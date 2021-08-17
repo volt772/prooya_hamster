@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseFragment2
+import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentRecordAllBinding
 import com.apx5.apx5.datum.DtAllGames
@@ -21,15 +21,15 @@ import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * RecordAllFragment
  */
 
 class RecordAllFragment :
-    BaseFragment2<FragmentRecordAllBinding>(),
+    BaseFragment<FragmentRecordAllBinding>(),
     RecordAllNavigator
 {
 

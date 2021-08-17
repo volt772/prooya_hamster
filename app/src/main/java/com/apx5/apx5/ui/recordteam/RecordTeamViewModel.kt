@@ -3,7 +3,7 @@ package com.apx5.apx5.ui.recordteam
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.apx5.apx5.base.BaseViewModel2
+import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.datum.catcher.CtPostTeams
 import com.apx5.apx5.datum.pitcher.PtGetRecordDetail
 import com.apx5.apx5.datum.pitcher.PtPostTeams
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class RecordTeamViewModel(
     private val prRepository: PrRepository
-) : BaseViewModel2<RecordTeamNavigator>() {
+) : BaseViewModel<RecordTeamNavigator>() {
 
     private val teams = MutableLiveData<PrResource<CtPostTeams>>()
 

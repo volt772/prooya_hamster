@@ -3,7 +3,7 @@ package com.apx5.apx5.ui.days
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.apx5.apx5.base.BaseViewModel2
+import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 
 class DaysViewModel(
     private val prRepository: PrRepository
-) : BaseViewModel2<DaysNavigator>()  {
+) : BaseViewModel<DaysNavigator>()  {
 
     private val todayGame = MutableLiveData<PrResource<CtGetPlay>>()
 

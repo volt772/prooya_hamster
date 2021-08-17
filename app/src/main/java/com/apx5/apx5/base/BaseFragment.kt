@@ -16,12 +16,11 @@ import com.apx5.apx5.ProoyaClient
  * BaseFragment
  */
 
-abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> :
-    Fragment() {
+abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     private lateinit var viewDataBinding: T
 
-    private var activity: BaseActivity<*, *>? = null
+    private var activity: BaseActivity<*>? = null
 
     private val appContext: Context = ProoyaClient.appContext
 
@@ -29,14 +28,8 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> :
 
     abstract fun getBindingVariable(): Int
 
-    abstract fun getViewModel(): V
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is BaseActivity<*, *>) {
-            activity = context
-            activity?.onFragmentAttached()
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +48,6 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewDataBinding.setVariable(getBindingVariable(), getViewModel())
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
     }
@@ -69,10 +61,5 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> :
     override fun onDetach() {
         activity = null
         super.onDetach()
-    }
-
-    interface Callback {
-        fun onFragmentAttached()
-        fun onFragmentDetached(tag: String)
     }
 }

@@ -15,17 +15,13 @@ import com.apx5.apx5.utils.CommonUtils
  * BaseActivity
  */
 
-abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
-    AppCompatActivity(),
-    BaseFragment.Callback {
+abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     private lateinit var viewDataBinding: T
 
     private val appContext: Context = ProoyaClient.appContext
 
     @LayoutRes abstract fun getLayoutId(): Int
-
-    abstract fun getViewModel(): V
 
     abstract fun getBindingVariable(): Int
 
@@ -36,9 +32,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
         performDataBinding()
     }
 
-    override fun onFragmentAttached() { }
-
-    override fun onFragmentDetached(tag: String) { }
 
     private fun hideLoading() {
         if (progressDialog.isShowing) {
@@ -54,7 +47,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
     private fun performDataBinding() {
         viewDataBinding = DataBindingUtil.setContentView(this, getLayoutId())
         viewDataBinding.lifecycleOwner = this
-        viewDataBinding.setVariable(getBindingVariable(), getViewModel())
         viewDataBinding.executePendingBindings()
     }
 

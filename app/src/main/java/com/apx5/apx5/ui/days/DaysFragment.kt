@@ -6,7 +6,7 @@ import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.ProoyaClient
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseFragment2
+import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrStatus
@@ -19,15 +19,15 @@ import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * DaysFragment
  */
 
 class DaysFragment :
-    BaseFragment2<FragmentDaysBinding>(),
+    BaseFragment<FragmentDaysBinding>(),
     DaysNavigator {
 
     private var selectedDate: String = ""

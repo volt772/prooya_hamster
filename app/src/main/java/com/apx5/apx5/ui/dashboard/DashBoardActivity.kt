@@ -7,7 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseActivity2
+import com.apx5.apx5.base.BaseActivity
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrTabMenu
 import com.apx5.apx5.constants.PrTeamChangeMode
@@ -21,7 +21,7 @@ import com.apx5.apx5.utils.equalsExt
  * DashBoardActivity
  */
 
-class DashBoardActivity : BaseActivity2<ActivityDashboardBinding>() {
+class DashBoardActivity : BaseActivity<ActivityDashboardBinding>() {
 
     override fun getLayoutId() = R.layout.activity_dashboard
     override fun getBindingVariable() = BR.viewModel

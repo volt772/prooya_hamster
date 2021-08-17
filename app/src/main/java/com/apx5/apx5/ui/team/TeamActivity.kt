@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseActivity2
+import com.apx5.apx5.base.BaseActivity
 import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.ActivityTeamBinding
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
@@ -25,7 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 
 class TeamActivity :
-    BaseActivity2<ActivityTeamBinding>(),
+    BaseActivity<ActivityTeamBinding>(),
     TeamNavigator {
 
     private var teamSelectMode: PrTeamChangeMode?= null

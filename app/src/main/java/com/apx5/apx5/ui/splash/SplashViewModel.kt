@@ -1,12 +1,11 @@
 package com.apx5.apx5.ui.splash
 
-import android.app.Application
 import android.os.Handler
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.ProoyaClient.Companion.appContext
-import com.apx5.apx5.base.BaseViewModel2
+import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.datum.catcher.CtPing
 import com.apx5.apx5.network.operation.PrResource
 import com.apx5.apx5.repository.PrRepository
@@ -19,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class SplashViewModel(
     private val prRepository: PrRepository
-) : BaseViewModel2<SplashNavigator>() {
+) : BaseViewModel<SplashNavigator>() {
 
     private val serverStatus = MutableLiveData<PrResource<CtPing>>()
 

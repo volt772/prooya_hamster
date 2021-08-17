@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
-import com.apx5.apx5.base.BaseFragment2
+import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrStatus
 import com.apx5.apx5.constants.PrTeam
@@ -19,15 +19,15 @@ import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.dialogs.DialogTeamDetail
 import com.apx5.apx5.ui.utils.UiUtils
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * RecordTeamFragment
  */
 
 class RecordTeamFragment :
-    BaseFragment2<FragmentRecordTeamBinding>(),
+    BaseFragment<FragmentRecordTeamBinding>(),
     RecordTeamNavigator {
 
     private var selectedYear: Int = 0

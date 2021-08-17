@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.ProoyaClient.Companion.appContext
-import com.apx5.apx5.base.BaseViewModel2
+import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.datum.catcher.CtPostUser
 import com.apx5.apx5.datum.pitcher.PtPostUser
 import com.apx5.apx5.network.operation.PrResource
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class TeamViewModel(
     private val prRepository: PrRepository
-) : BaseViewModel2<TeamNavigator>()  {
+) : BaseViewModel<TeamNavigator>()  {
 
     private val teamPostResult = MutableLiveData<PrResource<CtPostUser>>()
 

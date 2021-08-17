@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import androidx.collection.LruCache
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
-import com.apx5.apx5.base.appModules
 import com.apx5.apx5.di.apiModule
 import com.apx5.apx5.di.repositoryModule
 import com.apx5.apx5.di.retrofitModule

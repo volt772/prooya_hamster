@@ -1,9 +1,9 @@
 package com.apx5.apx5.ui.dashboard
 
-import com.apx5.apx5.base.BaseViewModel2
+import com.apx5.apx5.base.BaseViewModel
 
 /**
  * DashBoardViewModel
  */
 
-class DashBoardViewModel : BaseViewModel2<Any>()
+class DashBoardViewModel : BaseViewModel<Any>()
