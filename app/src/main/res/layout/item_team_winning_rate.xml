@@ -29,13 +29,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="@dimen/md_0"
         android:layout_height="@dimen/md_16"
-        android:layout_marginStart="@dimen/md_10"
+        android:layout_marginStart="@dimen/md_16"
         android:layout_marginEnd="@dimen/md_5"
         app:progressView_autoAnimate="true"
         app:progressView_colorBackground="@color/p_white_10"
-        app:progressView_colorProgress="@color/p_main_fifth"
+        app:progressView_colorProgress="@color/p_main_first"
         app:progressView_highlightAlpha="0.8"
-        app:progressView_highlightColor="@color/blue_300"
+        app:progressView_highlightColor="@color/p_main_first"
         app:progressView_highlightWidth="@dimen/md_1"
         app:progressView_radius="4dp" />
 
