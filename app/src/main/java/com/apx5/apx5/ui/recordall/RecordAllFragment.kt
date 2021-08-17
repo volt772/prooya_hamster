@@ -27,7 +27,10 @@ import java.util.*
  * RecordAllFragment
  */
 
-class RecordAllFragment : BaseFragment2<FragmentRecordAllBinding>() {
+class RecordAllFragment :
+    BaseFragment2<FragmentRecordAllBinding>(),
+    RecordAllNavigator
+{
 
     private var selectedYear: Int = DialogSeasonChange.MAX_YEAR
 
@@ -41,6 +44,8 @@ class RecordAllFragment : BaseFragment2<FragmentRecordAllBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        ravm.setNavigator(this)
+
         initView()
         fetchHistories(selectedYear)
 
@@ -48,7 +53,7 @@ class RecordAllFragment : BaseFragment2<FragmentRecordAllBinding>() {
     }
 
     /* 연도선택*/
-    private fun selectYear(year: Int) {
+    override fun selectYear(year: Int) {
         fetchHistories(year)
         selectedYear = year
     }
@@ -99,7 +104,7 @@ class RecordAllFragment : BaseFragment2<FragmentRecordAllBinding>() {
 
     /* 기록 삭제*/
     private fun delHistory(delHistory: PtDelHistory) {
-        ravm.requestDelHistory(delHistory)
+        ravm.requestDelHistory(delHistory, selectedYear)
     }
 
     /* 리스트 분기*/
@@ -156,16 +161,6 @@ class RecordAllFragment : BaseFragment2<FragmentRecordAllBinding>() {
                 PrStatus.SUCCESS -> {
                     setPlayHistoryItems(it.data?.games?: emptyList())
                     cancelSpinKit()
-                }
-                PrStatus.LOADING,
-                PrStatus.ERROR -> {}
-            }
-        })
-
-        ravm.delHistory().observe(viewLifecycleOwner, {
-            when (it.status) {
-                PrStatus.SUCCESS -> {
-                    selectYear(selectedYear)
                 }
                 PrStatus.LOADING,
                 PrStatus.ERROR -> {}

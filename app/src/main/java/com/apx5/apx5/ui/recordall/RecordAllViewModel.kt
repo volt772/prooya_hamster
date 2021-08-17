@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel2
-import com.apx5.apx5.datum.catcher.CtDelHistory
 import com.apx5.apx5.datum.catcher.CtHistories
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.datum.pitcher.PtPostTeams
@@ -18,20 +17,23 @@ import kotlinx.coroutines.launch
 
 class RecordAllViewModel(
     private val prRepository: PrRepository
-) : BaseViewModel2<Any>() {
+) : BaseViewModel2<RecordAllNavigator>() {
 
-    private val delHistory = MutableLiveData<PrResource<CtDelHistory>>()
     private val histories = MutableLiveData<PrResource<CtHistories>>()
 
     /* 기록 삭제*/
-    fun requestDelHistory(play: PtDelHistory) {
+    fun requestDelHistory(play: PtDelHistory, year: Int) {
         viewModelScope.launch {
-            delHistory.postValue(PrResource.loading(null))
             try {
                 val result = prRepository.delHistory(play)
-                delHistory.postValue(PrResource.success(result.data))
+
+                result.data?.let { _res ->
+                    if (_res.count == 1) {
+                        getNavigator()?.selectYear(year)
+                    }
+                }
             } catch (e: Exception) {
-                delHistory.postValue(PrResource.error("Delete History Error", null))
+                //
             }
         }
     }
@@ -49,6 +51,5 @@ class RecordAllViewModel(
         }
     }
 
-    fun delHistory(): LiveData<PrResource<CtDelHistory>> = delHistory
     fun getHistories(): LiveData<PrResource<CtHistories>> = histories
 }

@@ -217,16 +217,6 @@ class DaysFragment :
                 PrStatus.ERROR -> { cancelSpinKit() }
             }
         })
-
-        dvm.getPostGame().observe(viewLifecycleOwner, {
-            when (it.status) {
-                PrStatus.SUCCESS -> {
-                    showSuccessDialog()
-                }
-                PrStatus.LOADING,
-                PrStatus.ERROR -> { }
-            }
-        })
     }
 
     /* 경기 데이터*/

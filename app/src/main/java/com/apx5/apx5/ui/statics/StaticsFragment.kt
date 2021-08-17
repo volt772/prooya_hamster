@@ -68,7 +68,7 @@ class StaticsFragment : BaseFragment2<FragmentStaticsBinding>() {
     }
 
     /* SpinKit 제거*/
-    fun cancelSpinKit() {
+    private fun cancelSpinKit() {
         binding().clLoading.visibility = View.GONE
     }
 

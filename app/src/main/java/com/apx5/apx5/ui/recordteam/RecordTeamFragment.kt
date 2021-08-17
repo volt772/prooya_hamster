@@ -1,9 +1,7 @@
 package com.apx5.apx5.ui.recordteam
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment2
@@ -21,7 +19,6 @@ import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.dialogs.DialogTeamDetail
 import com.apx5.apx5.ui.utils.UiUtils
-import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -53,13 +50,14 @@ class RecordTeamFragment :
         super.onViewCreated(view, savedInstanceState)
         teamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
 
-        if (teamCode.equalsExt("")) {
+        rtvm.setNavigator(this)
+
+        if (teamCode.isBlank()) {
             DialogActivity.dialogError(requireContext())
         }
 
         initView()
         subscribeTeamsRecords()
-        subscribeDetails()
         recordByYear(UiUtils.currentYear)
     }
 
@@ -97,8 +95,7 @@ class RecordTeamFragment :
     }
 
     /* 상세정보 Dialog*/
-    private fun showDetailLists(plays: List<OpsTeamDetail>) {
-//        println("probe : showDetailLists : plays : ${plays}")
+    override fun showDetailLists(plays: List<OpsTeamDetail>) {
         if (plays.isNotEmpty()) {
             val detailDialog = DialogTeamDetail(plays, detailVersusTeam)
             detailDialog.show(childFragmentManager, "detailDialog")
@@ -174,60 +171,6 @@ class RecordTeamFragment :
             }
         })
     }
-
-    private fun subscribeDetails() {
-        println("terran : hit!!!!!!!")
-        rtvm.getDetails().observe(viewLifecycleOwner, {
-            when (it.status) {
-                PrStatus.SUCCESS -> {
-                    println("terran : success : ${it.data}")
-                    showDetailLists(it.data?.games?: emptyList())
-                }
-                PrStatus.LOADING -> {
-                    println("terran : loading")
-                }
-                PrStatus.ERROR -> {
-                    println("terran : error")
-                }
-            }
-        })
-    }
-
-    /* Observers*/
-//    private fun subscriber(year: Int) {
-//        val email = PrefManager.getInstance(requireContext()).userEmail?: ""
-//
-//        if (email.isBlank()) {
-//            DialogActivity.dialogError(requireContext())
-//        } else {
-//            println("probe : subscriber : year : ${year}, email : ${email}")
-//            rtvm.fetchRecords(email, year)
-//        }
-//
-//        /* With Datum*/
-//        rtvm.getDetails().observe(viewLifecycleOwner, {
-//            when (it.status) {
-//                PrStatus.SUCCESS -> {
-//                    println("probe : getDetails : ${it.data}")
-//                    showDetailLists(it.data?.games?: emptyList())
-//                }
-//                PrStatus.LOADING,
-//                PrStatus.ERROR -> {}
-//            }
-//        })
-//
-//        rtvm.getTeams().observe(viewLifecycleOwner, {
-//            when (it.status) {
-//                PrStatus.SUCCESS -> {
-//                    setTeamSummaryItems(it.data?.teams)
-//                    setHeaderSummaryItems(it.data?.summary)
-//                    cancelSpinKit()
-//                }
-//                PrStatus.LOADING,
-//                PrStatus.ERROR -> {}
-//            }
-//        })
-//    }
 
     private fun setTeamSummaryItems(teams: List<OpsTeamRecords>?) {
         val listTeam = ArrayList<DtTeamRecord>()

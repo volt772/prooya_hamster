@@ -9,7 +9,6 @@ import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.catcher.CtGetPlay
-import com.apx5.apx5.datum.catcher.CtPostPlay
 import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.pitcher.PtGetPlay
 import com.apx5.apx5.datum.pitcher.PtPostPlay
@@ -27,7 +26,6 @@ class DaysViewModel(
 ) : BaseViewModel2<DaysNavigator>()  {
 
     private val todayGame = MutableLiveData<PrResource<CtGetPlay>>()
-    private val postGame = MutableLiveData<PrResource<CtPostPlay>>()
 
     private var playList = mutableListOf<DtDailyGame>()
     private lateinit var _game: DtDailyGame
@@ -36,7 +34,6 @@ class DaysViewModel(
         get() = _game
 
     fun getTodayGame(): LiveData<PrResource<CtGetPlay>> = todayGame
-    fun getPostGame(): LiveData<PrResource<CtPostPlay>> = postGame
 
     /* 경기정보*/
     fun getMyPlay(play: PtGetPlay) {
@@ -90,12 +87,14 @@ class DaysViewModel(
     /* 새기록 저장*/
     fun saveNewPlay(play: PtPostPlay) {
         viewModelScope.launch {
-            postGame.postValue(PrResource.loading(null))
             try {
                 val result = prRepository.postNewGame(play)
-                postGame.postValue(PrResource.success(result.data))
+
+                result.data?.let { _res ->
+                    if (_res.result > 0) getNavigator()?.showSuccessDialog()
+                }
             } catch (e: Exception) {
-                postGame.postValue(PrResource.error("Post Today Game Error", null))
+                //
             }
         }
     }
