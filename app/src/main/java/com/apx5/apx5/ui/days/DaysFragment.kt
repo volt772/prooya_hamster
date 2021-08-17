@@ -30,6 +30,8 @@ class DaysFragment :
     BaseFragment2<FragmentDaysBinding>(),
     DaysNavigator {
 
+    private var selectedDate: String = ""
+
     private var email: String = ""
     private var teamCode: String = ""
 
@@ -46,7 +48,9 @@ class DaysFragment :
         dvm.setNavigator(this)
 
         initView()
-        searchPlayByDate(UiUtils.today)
+
+        val queryDate = if (selectedDate.isBlank()) UiUtils.today else selectedDate
+        searchPlayByDate(queryDate)
 
         subscriber()
     }
@@ -174,6 +178,7 @@ class DaysFragment :
 
     /* 경기검색(캘린더)*/
     private fun searchPlayByDate(playDate: String) {
+        selectedDate = playDate
         val play = PtGetPlay(playDate, teamCode)
         dvm.getMyPlay(play)
     }

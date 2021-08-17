@@ -18,6 +18,7 @@ import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.adapter.PlayItemsAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
+import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,7 +33,7 @@ class RecordAllFragment :
     RecordAllNavigator
 {
 
-    private var selectedYear: Int = DialogSeasonChange.MAX_YEAR
+    private var selectedYear: Int = 0
 
     private val ravm: RecordAllViewModel by viewModel()
 
@@ -47,6 +48,8 @@ class RecordAllFragment :
         ravm.setNavigator(this)
 
         initView()
+
+        selectedYear = if (selectedYear == 0) UiUtils.currentYear else selectedYear
         fetchHistories(selectedYear)
 
         subscriber()

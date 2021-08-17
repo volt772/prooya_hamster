@@ -30,7 +30,7 @@ class RecordTeamFragment :
     BaseFragment2<FragmentRecordTeamBinding>(),
     RecordTeamNavigator {
 
-    private var selectedYear: Int = DialogSeasonChange.MAX_YEAR
+    private var selectedYear: Int = 0
 
     private val rtvm: RecordTeamViewModel by viewModel()
 
@@ -57,8 +57,10 @@ class RecordTeamFragment :
         }
 
         initView()
-        subscribeTeamsRecords()
-        recordByYear(UiUtils.currentYear)
+        subscriber()
+
+        val queryYear = if (selectedYear == 0) UiUtils.currentYear else selectedYear
+        recordByYear(queryYear)
     }
 
     /* UI 초기화*/
@@ -158,7 +160,7 @@ class RecordTeamFragment :
         }
     }
 
-    private fun subscribeTeamsRecords() {
+    private fun subscriber() {
         rtvm.getTeams().observe(viewLifecycleOwner, {
             when (it.status) {
                 PrStatus.SUCCESS -> {

@@ -5,14 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.apx5.apx5.ui.splash.SplashActivity" >
 
-    <data>
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="com.apx5.apx5.ui.splash.SplashViewModel"/>
-    </data>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -60,11 +52,11 @@
 
             <ImageView
                 android:id="@+id/iv_app_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/md_30"
                 android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"
-                android:layout_marginBottom="@dimen/md_30"
+                android:layout_marginBottom="@dimen/md_50"
                 app:srcCompat="@drawable/txt_appname" />
         </RelativeLayout>
     </RelativeLayout>

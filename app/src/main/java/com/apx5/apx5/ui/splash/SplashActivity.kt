@@ -84,11 +84,7 @@ class SplashActivity :
     /* Components*/
     private fun initComponent() {
         /* 상단상태바 색상강제적용*/
-        MaterialTools.setSystemBarColor(this, R.color.p_main_first)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
+        MaterialTools.setSystemBarColor(this, R.color.p_white_10)
     }
 
     /* APP 종료*/
