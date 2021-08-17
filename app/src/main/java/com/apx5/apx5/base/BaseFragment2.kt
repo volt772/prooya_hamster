@@ -29,11 +29,11 @@ abstract class BaseFragment2<T : ViewDataBinding> : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is BaseActivity<*, *>) {
-            activity = context
+        if (context is BaseActivity2<*>) {
             activity?.onFragmentAttached()
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(false)

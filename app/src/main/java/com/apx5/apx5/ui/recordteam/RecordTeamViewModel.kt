@@ -20,6 +20,7 @@ class RecordTeamViewModel(
     private val prRepository: PrRepository
 ) : BaseViewModel2<Any>() {
 
+//    private val details: MutableLiveData<PrResource<CtGetRecordDetail>> by lazy{ MutableLiveData<PrResource<CtGetRecordDetail>>() }
     private val details = MutableLiveData<PrResource<CtGetRecordDetail>>()
     private val teams = MutableLiveData<PrResource<CtPostTeams>>()
 
@@ -29,6 +30,7 @@ class RecordTeamViewModel(
             details.postValue(PrResource.loading(null))
             try {
                 val result = prRepository.getRecordDetail(PtGetRecordDetail(email, versus, year))
+                println("probe : fetchDetails : ${result}")
                 details.postValue(PrResource.success(result.data))
             } catch (e: Exception) {
                 details.postValue(PrResource.error("Fetch Details For $versus Error", null))

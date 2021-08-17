@@ -1,7 +1,9 @@
 package com.apx5.apx5.ui.recordteam
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment2
@@ -56,7 +58,9 @@ class RecordTeamFragment :
         }
 
         initView()
-        subscriber(UiUtils.currentYear)
+        subscribeTeamsRecords()
+        subscribeDetails()
+        recordByYear(UiUtils.currentYear)
     }
 
     /* UI 초기화*/
@@ -79,7 +83,7 @@ class RecordTeamFragment :
 
     /* 시즌선택*/
     private fun selectSeasonYear(year: Int) {
-        subscriber(year)
+        recordByYear(year)
         selectedYear = year
     }
 
@@ -94,6 +98,7 @@ class RecordTeamFragment :
 
     /* 상세정보 Dialog*/
     private fun showDetailLists(plays: List<OpsTeamDetail>) {
+//        println("probe : showDetailLists : plays : ${plays}")
         if (plays.isNotEmpty()) {
             val detailDialog = DialogTeamDetail(plays, detailVersusTeam)
             detailDialog.show(childFragmentManager, "detailDialog")
@@ -146,8 +151,7 @@ class RecordTeamFragment :
         )
     }
 
-    /* Observers*/
-    private fun subscriber(year: Int) {
+    private fun recordByYear(year: Int) {
         val email = PrefManager.getInstance(requireContext()).userEmail?: ""
 
         if (email.isBlank()) {
@@ -155,16 +159,9 @@ class RecordTeamFragment :
         } else {
             rtvm.fetchRecords(email, year)
         }
+    }
 
-        /* With Datum*/
-        rtvm.getDetails().observe(viewLifecycleOwner, {
-            when (it.status) {
-                PrStatus.SUCCESS -> showDetailLists(it.data?.games?: emptyList())
-                PrStatus.LOADING,
-                PrStatus.ERROR -> {}
-            }
-        })
-
+    private fun subscribeTeamsRecords() {
         rtvm.getTeams().observe(viewLifecycleOwner, {
             when (it.status) {
                 PrStatus.SUCCESS -> {
@@ -177,6 +174,60 @@ class RecordTeamFragment :
             }
         })
     }
+
+    private fun subscribeDetails() {
+        println("terran : hit!!!!!!!")
+        rtvm.getDetails().observe(viewLifecycleOwner, {
+            when (it.status) {
+                PrStatus.SUCCESS -> {
+                    println("terran : success : ${it.data}")
+                    showDetailLists(it.data?.games?: emptyList())
+                }
+                PrStatus.LOADING -> {
+                    println("terran : loading")
+                }
+                PrStatus.ERROR -> {
+                    println("terran : error")
+                }
+            }
+        })
+    }
+
+    /* Observers*/
+//    private fun subscriber(year: Int) {
+//        val email = PrefManager.getInstance(requireContext()).userEmail?: ""
+//
+//        if (email.isBlank()) {
+//            DialogActivity.dialogError(requireContext())
+//        } else {
+//            println("probe : subscriber : year : ${year}, email : ${email}")
+//            rtvm.fetchRecords(email, year)
+//        }
+//
+//        /* With Datum*/
+//        rtvm.getDetails().observe(viewLifecycleOwner, {
+//            when (it.status) {
+//                PrStatus.SUCCESS -> {
+//                    println("probe : getDetails : ${it.data}")
+//                    showDetailLists(it.data?.games?: emptyList())
+//                }
+//                PrStatus.LOADING,
+//                PrStatus.ERROR -> {}
+//            }
+//        })
+//
+//        rtvm.getTeams().observe(viewLifecycleOwner, {
+//            when (it.status) {
+//                PrStatus.SUCCESS -> {
+//                    setTeamSummaryItems(it.data?.teams)
+//                    setHeaderSummaryItems(it.data?.summary)
+//                    cancelSpinKit()
+//                }
+//                PrStatus.LOADING,
+//                PrStatus.ERROR -> {}
+//            }
+//        })
+//    }
 
     private fun setTeamSummaryItems(teams: List<OpsTeamRecords>?) {
         val listTeam = ArrayList<DtTeamRecord>()
