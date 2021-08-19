@@ -6,19 +6,15 @@ import android.graphics.Bitmap
 import androidx.collection.LruCache
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
-import com.apx5.apx5.di.apiModule
-import com.apx5.apx5.di.repositoryModule
-import com.apx5.apx5.di.retrofitModule
-import com.apx5.apx5.di.viewModelModule
 import com.apx5.apx5.ui.login.kakao.KakaoSDKAdapter
 import com.kakao.auth.KakaoSDK
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import dagger.hilt.android.HiltAndroidApp
 
 /**
  * ProoyaClient
  */
 
+@HiltAndroidApp
 class ProoyaClient : Application() {
     /**
      * 이미지 로더를 반환한다.
@@ -51,15 +47,15 @@ class ProoyaClient : Application() {
 
         imageLoader = ImageLoader(requestQueue, imageCache)
 
-        startKoin {
-            androidContext(this@ProoyaClient)
-            modules(listOf(
-                apiModule,
-                repositoryModule,
-                retrofitModule,
-                viewModelModule
-            ))
-        }
+//        startKoin {
+//            androidContext(this@ProoyaClient)
+//            modules(listOf(
+//                apiModule,
+//                repositoryModule,
+//                retrofitModule,
+//                viewModelModule
+//            ))
+//        }
 
     }
 

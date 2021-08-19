@@ -1,13 +1,12 @@
-package com.apx5.apx5.repository
+package com.apx5.apx5.network.api
 
 import com.apx5.apx5.datum.pitcher.*
-import com.apx5.apx5.network.api.PrApiService
 import javax.inject.Inject
 
 /**
- * PrRepository
+ * PrApiHelper
  */
-class PrRepository @Inject constructor(private val prApi: PrApiService) {
+class PrApiHelper @Inject constructor(private val prApi: PrApiService) {
     suspend fun getServerStatus() = prApi.getServerStatus()
 
     suspend fun getStatics(param: PtPostStatics) = prApi.getStatics2(param)

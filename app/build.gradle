@@ -4,6 +4,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -105,7 +106,10 @@ dependencies {
     /* coroutine*/
     implementation 'android.arch.lifecycle:extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+
+    /* Hilt*/
+    implementation "com.google.dagger:hilt-android:$rootProject.dagger_hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$rootProject.dagger_hilt_version"
 }
 
 apply plugin: 'com.google.gms.google-services'
-

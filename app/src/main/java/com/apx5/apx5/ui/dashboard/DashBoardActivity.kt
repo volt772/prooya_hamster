@@ -15,12 +15,13 @@ import com.apx5.apx5.databinding.ActivityDashboardBinding
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.team.TeamActivity
 import com.apx5.apx5.ui.utils.MaterialTools
-import com.apx5.apx5.utils.equalsExt
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * DashBoardActivity
  */
 
+@AndroidEntryPoint
 class DashBoardActivity : BaseActivity<ActivityDashboardBinding>() {
 
     override fun getLayoutId() = R.layout.activity_dashboard
@@ -38,7 +39,7 @@ class DashBoardActivity : BaseActivity<ActivityDashboardBinding>() {
      */
     private fun seedToStart() {
         val team = PrefManager.getInstance(this).userTeam
-        if (team.equalsExt("")) {
+        if (team.isNullOrBlank()) {
             val intentTeam = TeamActivity.newIntent(this)
             intentTeam.putExtra(PrConstants.Teams.TEAM_CHANGE_MODE, PrTeamChangeMode.APPLY)
             startActivity(intentTeam)

@@ -1,7 +1,7 @@
 package com.apx5.apx5.ui.splash
 
 /**
- * TemplatesNavigator
+ * SplashNavigator
  */
 
 interface SplashNavigator {

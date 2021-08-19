@@ -1,27 +1,30 @@
 package com.apx5.apx5.ui.splash
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.library.baseAdapters.BR
+import com.apx5.apx5.ProoyaClient
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
 import com.apx5.apx5.constants.PrStatus
 import com.apx5.apx5.databinding.ActivitySplashBinding
+import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dashboard.DashBoardActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.login.LoginActivity
 import com.apx5.apx5.ui.utils.MaterialTools
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * SplashActivity
  */
 
-class SplashActivity :
-    BaseActivity<ActivitySplashBinding>(),
-    SplashNavigator {
+@AndroidEntryPoint
+class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
-    private val svm: SplashViewModel by viewModel()
+    private val svm: SplashViewModel by viewModels()
 
     override fun getLayoutId() = R.layout.activity_splash
     override fun getBindingVariable() = BR.viewModel
@@ -29,10 +32,7 @@ class SplashActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        svm.setNavigator(this)
-
         initComponent()
-
         subscriber()
     }
 
@@ -53,10 +53,32 @@ class SplashActivity :
     private fun getServerWorkResult(alive: Boolean) {
         if (alive) {
             /* 로그인, 메인분기*/
-            svm.startSeeding()
+            seedingNextView()
         } else {
             /* 앱종료*/
             dialogForServerIsDead()
+        }
+    }
+
+    private fun seedingNextView() {
+        Handler().postDelayed({
+            checkAccountAndDecideNextActivity()
+        }, LOADING_DURATION)
+    }
+
+
+    /* Next Activity 검사*/
+    private fun checkAccountAndDecideNextActivity() {
+        val email = PrefManager.getInstance(ProoyaClient.appContext).userEmail
+
+        email?.let { _email ->
+            if (_email.isNotBlank() && _email.contains("@")) {
+                switchToDashBoard()
+            } else {
+                switchToLogin()
+            }
+        } ?: run {
+            switchToLogin()
         }
     }
 
@@ -66,7 +88,7 @@ class SplashActivity :
     }
 
     /* 로그인 > DashBoard*/
-    override fun switchToLogin() {
+    private fun switchToLogin() {
         val intentLogin = LoginActivity.newIntent(this@SplashActivity)
         startActivity(intentLogin)
         this.overridePendingTransition(0, 0)
@@ -74,7 +96,7 @@ class SplashActivity :
     }
 
     /* DashBoard*/
-    override fun switchToDashBoard() {
+    private fun switchToDashBoard() {
         val intentStatics = DashBoardActivity.newIntent(this@SplashActivity)
         startActivity(intentStatics)
         finish()
@@ -94,5 +116,9 @@ class SplashActivity :
     /* 서버 미작동 다이얼로그*/
     private fun dialogForServerIsDead() {
         DialogActivity.dialogNoInternet(this, ::onFinish)
+    }
+
+    companion object {
+        const val LOADING_DURATION = 1000L
     }
 }
