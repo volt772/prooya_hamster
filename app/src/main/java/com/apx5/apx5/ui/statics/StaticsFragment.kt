@@ -18,21 +18,25 @@ import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.adapter.TeamWinningRateAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
+import androidx.fragment.app.viewModels
+import javax.inject.Inject
 
 
 /**
  * StaticsFragment
  */
 
+@AndroidEntryPoint
 class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
 
-    private val svm: StaticsViewModel by viewModel()
+    private val svm: StaticsViewModel by viewModels()
 
     private var userEmail: String = ""
     private var teamCode: String = ""
 
-    private lateinit var teamWinningRateAdapter: TeamWinningRateAdapter
+    @Inject
+    lateinit var teamWinningRateAdapter: TeamWinningRateAdapter
 
     override fun getLayoutId() = R.layout.fragment_statics
     override fun getBindingVariable() = BR.viewModel

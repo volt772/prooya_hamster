@@ -8,6 +8,7 @@ import javax.inject.Inject
  * PrRepository
  */
 class PrRepository @Inject constructor(private val prApi: PrApiService) {
+
     suspend fun getServerStatus() = prApi.getServerStatus()
 
     suspend fun getStatics(param: PtPostStatics) = prApi.getStatics2(param)

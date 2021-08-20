@@ -10,14 +10,16 @@ import android.widget.TextView
 import com.apx5.apx5.R
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.adapter.AdtTeamLists
+import com.apx5.apx5.navigator.PrNavigator
 import kotlinx.android.synthetic.main.item_team_record.view.*
+import javax.inject.Inject
 
 /**
  * RecordTeamAdapter
  */
 
-class RecordTeamAdapter internal constructor(
-    private val nav: RecordTeamNavigator
+class RecordTeamAdapter constructor(
+    private val selectFunc:(Int, String) -> Unit
 ) : BaseAdapter() {
 
     private val teamList = mutableListOf<AdtTeamLists>()
@@ -86,9 +88,10 @@ class RecordTeamAdapter internal constructor(
             winningRate.text = teamItems.rate.toString()
         }
 
-
         /* 상세보기*/
-        cv.setOnClickListener { nav.getDetailLists(teamItems.year, teamItems.team) }
+        cv.setOnClickListener {
+            selectFunc.invoke(teamItems.year, teamItems.team)
+        }
 
         return cv
     }

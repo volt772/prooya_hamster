@@ -168,6 +168,7 @@ class DialogActivity : AppCompatActivity() {
 
             dialog.findViewById<View>(R.id.bt_close).setOnClickListener { dialog.dismiss() }
 
+            println("probe : dialogNoRecordDetail")
             dialog.show()
             dialog.window?.attributes = lp
         }

@@ -8,11 +8,13 @@ import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtTeamWinningRate
 import com.apx5.apx5.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.item_team_winning_rate.view.*
+import javax.inject.Inject
 
 /**
  * TeamWinningRateAdapter
  */
-class TeamWinningRateAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TeamWinningRateAdapter @Inject constructor(
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val teams = mutableListOf<AdtTeamWinningRate>()
 
