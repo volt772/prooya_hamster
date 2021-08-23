@@ -8,13 +8,16 @@ import com.apx5.apx5.datum.catcher.CtDelUser
 import com.apx5.apx5.datum.pitcher.PtDelUser
 import com.apx5.apx5.network.operation.PrResource
 import com.apx5.apx5.repository.PrRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * SettingViewModel
  */
 
-class SettingViewModel(
+@HiltViewModel
+class SettingViewModel @Inject constructor(
     private val prRepository: PrRepository
 ) : BaseViewModel<Any>()  {
 
@@ -30,7 +33,7 @@ class SettingViewModel(
                 val result = prRepository.delUser(delUser)
                 delUserResult.postValue(PrResource.success(result.data))
             } catch (e: Exception) {
-                delUserResult.postValue(PrResource.error("Fail Delete Remote User", null))
+                delUserResult.postValue(PrResource.error("[FAIL] Delete Remote User", null))
             }
         }
     }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.BR
@@ -13,25 +14,25 @@ import com.apx5.apx5.base.BaseActivity
 import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.ActivityTeamBinding
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
+import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dashboard.DashBoardActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.MaterialTools
 import com.apx5.apx5.ui.utils.UiUtils
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * TeamActivity
  */
 
-class TeamActivity :
-    BaseActivity<ActivityTeamBinding>(),
-    TeamNavigator {
+@AndroidEntryPoint
+class TeamActivity : BaseActivity<ActivityTeamBinding>() {
 
     private var teamSelectMode: PrTeamChangeMode?= null
     private lateinit var teamListAdapter: TeamListAdapter
 
-    private val tvm: TeamViewModel by viewModel()
+    private val tvm: TeamViewModel by viewModels()
     override fun getLayoutId() = R.layout.activity_team
     override fun getBindingVariable() = BR.viewModel
 
@@ -41,8 +42,6 @@ class TeamActivity :
         with(intent) {
             teamSelectMode = getSerializableExtra(PrConstants.Teams.TEAM_CHANGE_MODE) as PrTeamChangeMode?
         }
-
-        tvm.setNavigator(this)
 
         initToolbar()
         initComponent()
@@ -68,7 +67,7 @@ class TeamActivity :
     private fun initComponent() {
         val teamView = binding().rvTeam
 
-        teamListAdapter = TeamListAdapter(getAppContext(), this)
+        teamListAdapter = TeamListAdapter(getAppContext(), ::selectMyTeam)
         teamView.adapter = teamListAdapter
 
         /* 팀정보리스트 생성*/
@@ -82,7 +81,7 @@ class TeamActivity :
     }
 
     /* 팀선택 최종 확인*/
-    override fun selectMyTeam(team: AdtTeamSelection) {
+    private fun selectMyTeam(team: AdtTeamSelection) {
         DialogActivity.dialogTeamSelect(this, team, ::finishSetMyTeam)
     }
 
@@ -142,12 +141,8 @@ class TeamActivity :
     }
 
     private fun subscriber() {
-        tvm.getTeamPostResult().observe(this, {
-            when (it.status) {
-                PrStatus.SUCCESS -> switchPageBySelectType()
-                PrStatus.LOADING -> {}
-                PrStatus.ERROR ->vectoredRestart()
-            }
+        tvm.getTeamPostResult().observe(this, PrObserver {
+            switchPageBySelectType()
         })
     }
 

@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.viewModels
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.*
@@ -13,16 +14,18 @@ import com.apx5.apx5.datum.pitcher.PtDelUser
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.team.TeamActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * SettingFragment
  */
+
+@AndroidEntryPoint
 class SettingFragment :
     BaseFragment<FragmentSettingBinding>(),
     View.OnClickListener {
 
-    private val svm: SettingViewModel by viewModel()
+    private val svm: SettingViewModel by viewModels()
     override fun getLayoutId() = R.layout.fragment_setting
     override fun getBindingVariable() = BR.viewModel
 

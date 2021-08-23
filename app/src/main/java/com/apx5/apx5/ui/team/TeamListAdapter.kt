@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.item_team.view.*
 
 class TeamListAdapter internal constructor(
     private val ctx: Context,
-    private val nav: TeamNavigator
+    private val selectFunc: (AdtTeamSelection) -> Unit
 ) : BaseAdapter() {
 
     private val teamList = mutableListOf<AdtTeamSelection>()
@@ -58,7 +58,7 @@ class TeamListAdapter internal constructor(
         holder.tvTeamName.text = teamItems.teamName
         MaterialTools.displayImageRound(ctx, holder.ivTeamEmblem, teamItems.teamImage)
         holder.lytParent.setOnClickListener {
-            nav.selectMyTeam(teamItems)
+            selectFunc.invoke(teamItems)
         }
 
         return cv

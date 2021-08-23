@@ -10,15 +10,18 @@ import com.apx5.apx5.datum.pitcher.PtPostUser
 import com.apx5.apx5.network.operation.PrResource
 import com.apx5.apx5.repository.PrRepository
 import com.apx5.apx5.storage.PrefManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * TeamViewModel
  */
 
-class TeamViewModel(
+@HiltViewModel
+class TeamViewModel @Inject constructor(
     private val prRepository: PrRepository
-) : BaseViewModel<TeamNavigator>()  {
+) : BaseViewModel<Any>()  {
 
     private val teamPostResult = MutableLiveData<PrResource<CtPostUser>>()
 
@@ -37,7 +40,7 @@ class TeamViewModel(
                         val result = prRepository.postUser(PtPostUser(email, teamCode))
                         teamPostResult.postValue(PrResource.success(result.data))
                     } catch (e: Exception) {
-                        teamPostResult.postValue(PrResource.error("Post User Error", null))
+                        teamPostResult.postValue(PrResource.error("[FAIL] Post User", null))
                     }
                 }
             }

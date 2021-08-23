@@ -54,7 +54,6 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
 
         initView()
 
-        println("probe : selected Date : ${selectedDate}")
         val queryDate = if (selectedDate.isBlank()) UiUtils.today else selectedDate
         searchPlayByDate(queryDate)
 

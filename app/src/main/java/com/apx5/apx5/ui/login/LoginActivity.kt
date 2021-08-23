@@ -10,7 +10,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
-
 import com.apx5.apx5.R
 import com.apx5.apx5.ui.login.kakao.KakaoSignupActivity
 import com.kakao.auth.ISessionCallback

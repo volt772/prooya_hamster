@@ -11,14 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtLicenseLists
 import com.apx5.apx5.ui.utils.MaterialTools
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
 /**
  * LicenseActivity
  */
 
-class LicenseActivity :
-    AppCompatActivity() {
+@AndroidEntryPoint
+class LicenseActivity : AppCompatActivity() {
 
     /* 라이센스 데이터 조합 (이름 / 내용)*/
     private val licenseData: List<AdtLicenseLists>
