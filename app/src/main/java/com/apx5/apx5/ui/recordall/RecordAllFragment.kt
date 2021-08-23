@@ -2,18 +2,23 @@ package com.apx5.apx5.ui.recordall
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.*
+import com.apx5.apx5.constants.PrAdapterViewType
+import com.apx5.apx5.constants.PrResultCode
+import com.apx5.apx5.constants.PrStadium
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordAllBinding
 import com.apx5.apx5.datum.DtAllGames
 import com.apx5.apx5.datum.adapter.AdtGames
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.datum.ops.OpsHistories
 import com.apx5.apx5.datum.pitcher.PtDelHistory
+import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.adapter.PlayItemsAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
@@ -21,21 +26,19 @@ import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * RecordAllFragment
  */
 
-class RecordAllFragment :
-    BaseFragment<FragmentRecordAllBinding>(),
-    RecordAllNavigator
-{
+@AndroidEntryPoint
+class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
 
     private var selectedYear: Int = 0
 
-    private val ravm: RecordAllViewModel by viewModel()
+    private val ravm: RecordAllViewModel by viewModels()
 
     override fun getLayoutId() = R.layout.fragment_record_all
     override fun getBindingVariable() = BR.viewModel
@@ -45,7 +48,7 @@ class RecordAllFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ravm.setNavigator(this)
+//        ravm.setNavigator(this)
 
         initView()
 
@@ -56,7 +59,7 @@ class RecordAllFragment :
     }
 
     /* 연도선택*/
-    override fun selectYear(year: Int) {
+    private fun selectYear(year: Int) {
         fetchHistories(year)
         selectedYear = year
     }
@@ -107,7 +110,7 @@ class RecordAllFragment :
 
     /* 기록 삭제*/
     private fun delHistory(delHistory: PtDelHistory) {
-        ravm.requestDelHistory(delHistory, selectedYear)
+        ravm.requestDelHistory(delHistory)
     }
 
     /* 리스트 분기*/
@@ -159,14 +162,14 @@ class RecordAllFragment :
 
     /* Observers*/
     private fun subscriber() {
-        ravm.getHistories().observe(viewLifecycleOwner, {
-            when (it.status) {
-                PrStatus.SUCCESS -> {
-                    setPlayHistoryItems(it.data?.games?: emptyList())
-                    cancelSpinKit()
-                }
-                PrStatus.LOADING,
-                PrStatus.ERROR -> {}
+        ravm.getHistories().observe(viewLifecycleOwner, PrObserver {
+            setPlayHistoryItems(it.games)
+            cancelSpinKit()
+        })
+
+        ravm.getDelResult().observe(viewLifecycleOwner, PrObserver {
+            if (it.count == 1) {
+                selectYear(selectedYear)
             }
         })
     }

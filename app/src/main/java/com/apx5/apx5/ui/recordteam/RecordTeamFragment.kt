@@ -28,9 +28,7 @@ import java.util.*
  */
 
 @AndroidEntryPoint
-class RecordTeamFragment :
-    BaseFragment<FragmentRecordTeamBinding>()
-{
+class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
 
     private var selectedYear: Int = 0
 
