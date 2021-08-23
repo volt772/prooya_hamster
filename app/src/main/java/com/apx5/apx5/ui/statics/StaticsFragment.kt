@@ -66,7 +66,7 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
     /* 사용자 정보 저장*/
     private fun saveUserInfo(user: OpsUser) {
         user.run {
-            PrefManager.getInstance(requireActivity()).setString(PrPrefKeys.MYTEAM, team)
+            PrefManager.getInstance(requireActivity()).setString(PrPrefKeys.MY_TEAM, team)
             PrefManager.getInstance(requireActivity()).setInt(PrPrefKeys.MY_ID, userId)
         }
     }
@@ -155,7 +155,7 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
                 AdtTeamWinningRate(PrTeam.LGT, _teamData.lgt),
                 AdtTeamWinningRate(PrTeam.LTG, _teamData.ltg),
                 AdtTeamWinningRate(PrTeam.NCD, _teamData.ncd),
-                AdtTeamWinningRate(PrTeam.NXH, _teamData.nxh),
+                AdtTeamWinningRate(PrTeam.KWH, _teamData.kwh),
                 AdtTeamWinningRate(PrTeam.SKW, _teamData.skw),
                 AdtTeamWinningRate(PrTeam.SSL, _teamData.ssl)
             )

@@ -6,7 +6,7 @@ package com.apx5.apx5.constants
 
 object PrPrefKeys {
     const val NOTIFICATION = "notification"
-    const val MYTEAM = "myTeam"
-    const val MYEMAIL = "myEmail"
+    const val MY_TEAM = "myTeam"
+    const val MY_EMAIL = "myEmail"
     const val MY_ID = "myId"
 }

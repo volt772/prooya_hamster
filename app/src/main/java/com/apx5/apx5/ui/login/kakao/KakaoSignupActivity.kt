@@ -60,7 +60,7 @@ class KakaoSignupActivity : Activity() {
                     //
                 } else {
                     val userEmail = result.kakaoAccount.email
-                    PrefManager.getInstance(this@KakaoSignupActivity).setString(PrPrefKeys.MYEMAIL, userEmail)
+                    PrefManager.getInstance(this@KakaoSignupActivity).setString(PrPrefKeys.MY_EMAIL, userEmail)
                     redirectDashBoard() // 로그인 성공시 MainActivity로
                 }
             }

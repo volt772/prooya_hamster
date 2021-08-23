@@ -21,7 +21,7 @@ enum class PrStadium(
     CHUNGJU("청주"),
     POHANG("포항"),
     ULSAN("울산"),
-    OTHER("");
+    OTHER("알수없음");
 
     companion object {
         fun getStadiumByCode(code: String): PrStadium {
@@ -30,8 +30,8 @@ enum class PrStadium(
                 "sog" -> SEOUL_GOCHUK
                 "kjc" -> KWANGJU
                 "bss" -> BUSAN
-                "msg" -> CHANGWON
-                "ich" -> INCHEON
+                "cwn" -> CHANGWON
+                "icl" -> INCHEON
                 "dje" -> DAEJEON
                 "dgl" -> DAEGU
                 "sww" -> SUWON

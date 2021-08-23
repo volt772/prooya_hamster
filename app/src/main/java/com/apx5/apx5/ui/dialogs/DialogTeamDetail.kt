@@ -46,7 +46,7 @@ class DialogTeamDetail(
         val tvVersusTitle = view.findViewById<TextView>(R.id.tv_versus_title)
 
         /* 상대팀명*/
-        tvVersusTitle.text = "vs ${PrTeam.getTeamByCode(versus).fullName}"
+        tvVersusTitle.text = "vs ${PrTeam.teamByCode(versus).fullName}"
 
         /* 상세내역 리스트*/
         val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -61,9 +61,9 @@ class DialogTeamDetail(
             playItemsAdapter.addItem(
                 AdtGames(
                     awayScore = play.awayScore,
-                    awayEmblem = PrTeam.getTeamByCode(play.awayTeam),
+                    awayEmblem = PrTeam.teamByCode(play.awayTeam),
                     homeScore = play.homeScore,
-                    homeEmblem = PrTeam.getTeamByCode(play.homeTeam),
+                    homeEmblem = PrTeam.teamByCode(play.homeTeam),
                     playResult = PrResultCode.getResultByDisplayCode(play.playResult),
                     playDate = "${play.playDate}",
                     stadium = PrStadium.getStadiumByCode(play.stadium).displayName

@@ -45,9 +45,9 @@ class SettingFragment :
         val viewLicense = binding().lytLicense
 
         /* 팀명*/
-        val teamCode = PrefManager.getInstance(requireContext()).getString(PrPrefKeys.MYTEAM, "")
+        val teamCode = PrefManager.getInstance(requireContext()).getString(PrPrefKeys.MY_TEAM, "")
         teamCode?.let { code ->
-            viewTeam.text = PrTeam.getTeamByCode(code).fullName
+            viewTeam.text = PrTeam.teamByCode(code).fullName
         }
 
         /* 버전*/

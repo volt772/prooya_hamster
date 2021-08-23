@@ -14,7 +14,7 @@ data class OpsTeamWinningRate (
     val lgt: Int,
     val ltg: Int,
     val ncd: Int,
-    val nxh: Int,
+    val kwh: Int,
     val skw: Int,
     val ssl: Int
 )

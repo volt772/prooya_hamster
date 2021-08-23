@@ -52,10 +52,10 @@ class MyFirebaseMessagingService :
         /* 메시지 형식 : 07월01일 - 기아(4) vs 두산(5) */
         val fcmMsg = String.format(resources.getString(R.string.notification_format),
             fcmData[PrConstants.Fcm.DATE].toString(),
-            PrTeam.getTeamByCode(fcmData[PrConstants.Fcm.AWAYCODE].toString()).abbrName,
-            PrTeam.getTeamByCode(fcmData[PrConstants.Fcm.HOMECODE].toString()).abbrName,
-            fcmData[PrConstants.Fcm.AWAYSCORE].toString(),
-            fcmData[PrConstants.Fcm.HOMESCORE].toString()
+            PrTeam.teamByCode(fcmData[PrConstants.Fcm.AWAY_CODE].toString()).abbrName,
+            PrTeam.teamByCode(fcmData[PrConstants.Fcm.HOME_CODE].toString()).abbrName,
+            fcmData[PrConstants.Fcm.AWAY_SCORE].toString(),
+            fcmData[PrConstants.Fcm.HOME_SCORE].toString()
         )
 
         val intent = Intent(this, SplashActivity::class.java)
@@ -95,10 +95,10 @@ class MyFirebaseMessagingService :
         private val messageKeys = listOf(
             PrConstants.Fcm.TITLE,
             PrConstants.Fcm.DATE,
-            PrConstants.Fcm.AWAYCODE,
-            PrConstants.Fcm.HOMECODE,
-            PrConstants.Fcm.AWAYSCORE,
-            PrConstants.Fcm.HOMESCORE
+            PrConstants.Fcm.AWAY_CODE,
+            PrConstants.Fcm.HOME_CODE,
+            PrConstants.Fcm.AWAY_SCORE,
+            PrConstants.Fcm.HOME_SCORE
         )
     }
 }

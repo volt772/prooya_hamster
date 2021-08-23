@@ -10,9 +10,7 @@ import android.widget.TextView
 import com.apx5.apx5.R
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.adapter.AdtTeamLists
-import com.apx5.apx5.navigator.PrNavigator
 import kotlinx.android.synthetic.main.item_team_record.view.*
-import javax.inject.Inject
 
 /**
  * RecordTeamAdapter
@@ -73,7 +71,7 @@ class RecordTeamAdapter constructor(
             teamEmblem.setImageResource(teamItems.teamEmblem)
 
             /* 팀 이름*/
-            teamName.text = PrTeam.getTeamByCode(teamItems.team).fullName
+            teamName.text = PrTeam.teamByCode(teamItems.team).fullName
 
             /* 승*/
             winCount.text = teamItems.win.toString()

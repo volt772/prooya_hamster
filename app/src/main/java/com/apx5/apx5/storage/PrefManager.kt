@@ -14,10 +14,10 @@ class PrefManager private constructor(ctx: Context) {
     private val preferences: SharedPreferences
 
     val userEmail: String?
-        get() = preferences.getString(PrPrefKeys.MYEMAIL, "")
+        get() = preferences.getString(PrPrefKeys.MY_EMAIL, "")
 
     val userTeam: String?
-        get() = preferences.getString(PrPrefKeys.MYTEAM, "")
+        get() = preferences.getString(PrPrefKeys.MY_TEAM, "")
 
     init {
         val context = ctx.applicationContext

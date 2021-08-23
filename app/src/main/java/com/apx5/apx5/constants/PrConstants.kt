@@ -7,16 +7,16 @@ package com.apx5.apx5.constants
 
 object PrConstants {
     object App {
-        const val FLK_HOST = "http://apx-prooya.co.kr:6100"
+        const val FLK_HOST = "http://apx-prooya.co.kr:2772"
     }
 
     object Fcm {
         const val TITLE = "title"
         const val DATE = "pdate"
-        const val AWAYCODE = "acode"
-        const val HOMECODE = "hcode"
-        const val AWAYSCORE = "ascore"
-        const val HOMESCORE = "hscore"
+        const val AWAY_CODE = "acode"
+        const val HOME_CODE = "hcode"
+        const val AWAY_SCORE = "ascore"
+        const val HOME_SCORE = "hscore"
     }
 
     object Teams {

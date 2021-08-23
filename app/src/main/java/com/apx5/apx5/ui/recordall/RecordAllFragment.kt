@@ -138,10 +138,10 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
                 AdtGames(
                     awayScore = play.awayScore,
                     awayTeam = play.awayTeam,
-                    awayEmblem = PrTeam.getTeamByCode(play.awayTeam),
+                    awayEmblem = PrTeam.teamByCode(play.awayTeam),
                     homeScore = play.homeScore,
                     homeTeam = play.homeTeam,
-                    homeEmblem = PrTeam.getTeamByCode(play.homeTeam),
+                    homeEmblem = PrTeam.teamByCode(play.homeTeam),
                     playDate = "${play.playDate}",
                     playId = play.playId,
                     playResult =  PrResultCode.getResultByDisplayCode(play.playResult),

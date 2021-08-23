@@ -78,7 +78,7 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
 
     /* 사용자 팀선택완료*/
     private fun finishSetMyTeam(code: String) {
-        PrefManager.getInstance(this).setString(PrPrefKeys.MYTEAM, code)
+        PrefManager.getInstance(this).setString(PrPrefKeys.MY_TEAM, code)
         tvm.saveTeam(code)
     }
 
@@ -120,7 +120,7 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
 
     /* 계정삭제후, 앱재시작*/
     private fun vectoredRestart() {
-        PrefManager.getInstance(this).setString(PrPrefKeys.MYTEAM, "")
+        PrefManager.getInstance(this).setString(PrPrefKeys.MY_TEAM, "")
         restartApp()
     }
 
