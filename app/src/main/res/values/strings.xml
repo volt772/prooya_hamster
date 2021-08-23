@@ -48,7 +48,7 @@
     <string name="select_ok">선택</string>
     <string name="season_select_title">시즌선택</string>
 
-    <string name="winning_rate_label">승률</string>
+    <string name="winning_rate_label">직관기록</string>
     <string name="watching_count">직관횟수</string>
     <string name="viewing_record">직관기록</string>
     <string name="record_team_percentage">팀별통산승률</string>
