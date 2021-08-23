@@ -43,7 +43,6 @@ class DashBoardActivity : BaseActivity<ActivityDashboardBinding>() {
             val intentTeam = TeamActivity.newIntent(this)
             intentTeam.putExtra(PrConstants.Teams.TEAM_CHANGE_MODE, PrTeamChangeMode.APPLY)
             startActivity(intentTeam)
-            finish()
         }
 
         initBottomNav()

@@ -11,12 +11,14 @@ import androidx.core.content.ContextCompat
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
-import com.apx5.apx5.constants.*
+import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrTeam
+import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.ActivityTeamBinding
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrefManager
-import com.apx5.apx5.ui.dashboard.DashBoardActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.MaterialTools
 import com.apx5.apx5.ui.utils.UiUtils
@@ -110,10 +112,7 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
      */
     private fun switchPageBySelectType() {
         when (teamSelectMode) {
-            PrTeamChangeMode.APPLY -> {
-                startActivity(DashBoardActivity.newIntent(this@TeamActivity))
-                finish()
-            }
+            PrTeamChangeMode.APPLY -> finish()
             PrTeamChangeMode.CHANGE -> restartApp()
             else -> restartApp()
         }
