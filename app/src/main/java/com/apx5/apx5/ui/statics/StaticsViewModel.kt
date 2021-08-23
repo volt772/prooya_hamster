@@ -31,7 +31,7 @@ class StaticsViewModel @Inject constructor(
                 val result = repository.getStatics(PtPostStatics(userEmail))
                 statics.postValue(PrResource.success(result.data))
             } catch (e: Exception) {
-                statics.postValue(PrResource.error("Fetch Statics Datum Error", null))
+                statics.postValue(PrResource.error("[FAIL] Load All Statics", null))
             }
         }
     }

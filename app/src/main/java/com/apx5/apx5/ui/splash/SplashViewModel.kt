@@ -36,7 +36,7 @@ class SplashViewModel @Inject constructor(
 
                 serverStatus.postValue(serverResult)
             } catch (e: Exception) {
-                serverStatus.postValue(PrResource.error("Server Check Error", null))
+                serverStatus.postValue(PrResource.error("[FAIL] Server Ping Check Error", null))
             }
         }
     }

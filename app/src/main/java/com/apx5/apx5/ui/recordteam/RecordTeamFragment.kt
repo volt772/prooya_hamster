@@ -7,18 +7,14 @@ import androidx.fragment.app.viewModels
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
-import com.apx5.apx5.constants.PrStatus
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordTeamBinding
 import com.apx5.apx5.datum.DtTeamRecord
 import com.apx5.apx5.datum.adapter.AdtTeamLists
-import com.apx5.apx5.datum.catcher.CtGetRecordDetail
 import com.apx5.apx5.datum.ops.OpsTeamDetail
 import com.apx5.apx5.datum.ops.OpsTeamRecords
 import com.apx5.apx5.datum.ops.OpsTeamSummary
-import com.apx5.apx5.navigator.PrNavigator
-import com.apx5.apx5.navigator.PrNavigatorImpl
-import com.apx5.apx5.network.operation.PrResource
+import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
@@ -26,7 +22,6 @@ import com.apx5.apx5.ui.dialogs.DialogTeamDetail
 import com.apx5.apx5.ui.utils.UiUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import javax.inject.Inject
 
 /**
  * RecordTeamFragment
@@ -35,7 +30,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RecordTeamFragment :
     BaseFragment<FragmentRecordTeamBinding>()
-//    RecordTeamNavigator
 {
 
     private var selectedYear: Int = 0
@@ -50,9 +44,6 @@ class RecordTeamFragment :
 
     lateinit var recordTeamAdapter: RecordTeamAdapter
 
-    @Inject lateinit var navigator: PrNavigator
-//    lateinit var recordTeamAdapter: RecordTeamAdapter
-
     init {
         teamCode = ""
         detailVersusTeam = ""
@@ -61,8 +52,6 @@ class RecordTeamFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         teamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
-
-//        rtvm.setNavigator(this)
 
         if (teamCode.isBlank()) {
             DialogActivity.dialogError(requireContext())
@@ -78,7 +67,6 @@ class RecordTeamFragment :
     /* UI 초기화*/
     private fun initView() {
         /* 팀리스트*/
-//        recordTeamAdapter = RecordTeamAdapter(this)
         recordTeamAdapter = RecordTeamAdapter(::getDetailLists)
         binding().lvTeamRecord.adapter = recordTeamAdapter
 
@@ -107,33 +95,10 @@ class RecordTeamFragment :
             detailVersusTeam = versus
             rtvm.fetchDetails(email, versus, year)
         }
-
-//        rtvm.getDetails().observe(viewLifecycleOwner, {
-        rtvm.getDetails().observe(requireActivity(), {
-            when (it.status) {
-                PrStatus.SUCCESS -> {
-                    println("probe : getDetails OBS : ${it.data?.games}")
-                    val games = it.data?.games ?: emptyList()
-                    showDetailLists(games)
-                }
-                PrStatus.LOADING,
-                PrStatus.ERROR -> {}
-            }
-        })
-
     }
 
-//    /* 상세정보 데이터*/
-//    override fun getDetailLists(year: Int, versus: String) {
-//        val email = PrefManager.getInstance(requireContext()).userEmail?: ""
-//        if (email.isNotBlank()) {
-//            detailVersusTeam = versus
-//            rtvm.fetchDetails(email, versus, year)
-//        }
-//    }
-//
     /* 상세정보 Dialog*/
-    fun showDetailLists(plays: List<OpsTeamDetail>) {
+    private fun showDetailLists(plays: List<OpsTeamDetail>) {
         if (plays.isNotEmpty()) {
             val detailDialog = DialogTeamDetail(plays, detailVersusTeam)
             detailDialog.show(childFragmentManager, "detailDialog")
@@ -197,30 +162,16 @@ class RecordTeamFragment :
     }
 
     private fun subscriber() {
-        rtvm.getTeams().observe(viewLifecycleOwner, {
-            when (it.status) {
-                PrStatus.SUCCESS -> {
-                    println("probe : getTeams OBS : ${it.data}")
-                    setTeamSummaryItems(it.data?.teams)
-                    setHeaderSummaryItems(it.data?.summary)
-                    cancelSpinKit()
-                }
-                PrStatus.LOADING,
-                PrStatus.ERROR -> {}
-            }
+        rtvm.getTeams().observe(viewLifecycleOwner, PrObserver {
+            setTeamSummaryItems(it.teams)
+            setHeaderSummaryItems(it.summary)
+            cancelSpinKit()
         })
-//
-//        rtvm.getDetails().observe(viewLifecycleOwner, {
-//            when (it.status) {
-//                PrStatus.SUCCESS -> {
-//                    println("probe : getDetails OBS : ${it.data?.games}")
-//                    val games = it.data?.games ?: emptyList()
-//                    navigator.showDetailLists(requireContext(), games)
-//                }
-//                PrStatus.LOADING,
-//                PrStatus.ERROR -> {}
-//            }
-//        })
+
+        rtvm.getDetails().observe(viewLifecycleOwner, PrObserver {
+            val games = it.games
+            showDetailLists(games)
+        })
     }
 
     private fun setTeamSummaryItems(teams: List<OpsTeamRecords>?) {

@@ -3,11 +3,11 @@ package com.apx5.apx5.ui.statics
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrPrefKeys
-import com.apx5.apx5.constants.PrStatus
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtStatics
@@ -15,11 +15,11 @@ import com.apx5.apx5.datum.adapter.AdtTeamWinningRate
 import com.apx5.apx5.datum.ops.OpsAllStatics
 import com.apx5.apx5.datum.ops.OpsTeamWinningRate
 import com.apx5.apx5.datum.ops.OpsUser
+import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.adapter.TeamWinningRateAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.fragment.app.viewModels
 import javax.inject.Inject
 
 
@@ -116,17 +116,11 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
         }
 
         /* 통계자료 Display*/
-        svm.getStatics().observe(viewLifecycleOwner, {
-            when (it.status) {
-                PrStatus.SUCCESS -> {
-                    cancelSpinKit()
-                    setTeamCode(it.data?.user)
-                    setStaticItem(it.data?.allStatics)
-                    setTeamAllPercentageItem(it.data?.teamWinningRate)
-                }
-                PrStatus.LOADING,
-                PrStatus.ERROR -> {}
-            }
+        svm.getStatics().observe(viewLifecycleOwner, PrObserver {
+            cancelSpinKit()
+            setTeamCode(it.user)
+            setStaticItem(it.allStatics)
+            setTeamAllPercentageItem(it.teamWinningRate)
         })
     }
 

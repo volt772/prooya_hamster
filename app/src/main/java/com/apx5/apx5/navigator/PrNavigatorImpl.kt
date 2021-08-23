@@ -42,7 +42,6 @@ class PrNavigatorImpl @Inject constructor(@ApplicationContext context: Context) 
 //            detailDialog.show(context.applicationContext.supportFragmentManager, "detailDialog")
 //            detailDialog.show(supportFragmentManager, "detailDialog")
         } else {
-            println("probe : false ")
             DialogActivity.dialogNoRecordDetail(context)
         }
     }

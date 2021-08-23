@@ -8,8 +8,8 @@ import androidx.databinding.library.baseAdapters.BR
 import com.apx5.apx5.ProoyaClient
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
-import com.apx5.apx5.constants.PrStatus
 import com.apx5.apx5.databinding.ActivitySplashBinding
+import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dashboard.DashBoardActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity
@@ -37,15 +37,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     private fun subscriber() {
-        svm.getServerStatus().observe(this, {
-            when (it.status) {
-                PrStatus.SUCCESS -> {
-                    getServerWorkResult(it.data?.status?: 0 > 0)
-                    cancelSpinKit()
-                }
-                PrStatus.LOADING -> {}
-                PrStatus.ERROR -> getServerWorkResult(false)
-            }
+        svm.getServerStatus().observe(this, PrObserver {
+            getServerWorkResult(it.status > 0)
+            cancelSpinKit()
         })
     }
 
