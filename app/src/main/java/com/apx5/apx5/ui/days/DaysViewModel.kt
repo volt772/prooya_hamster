@@ -4,36 +4,27 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.constants.PrGameStatus
-import com.apx5.apx5.constants.PrStadium
-import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.catcher.CtGetPlay
-import com.apx5.apx5.datum.ops.OpsDailyPlay
+import com.apx5.apx5.datum.catcher.CtPostPlay
 import com.apx5.apx5.datum.pitcher.PtGetPlay
 import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.network.operation.PrResource
 import com.apx5.apx5.repository.PrRepository
-import com.apx5.apx5.ui.utils.UiUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * DaysViewModel
  */
 
-class DaysViewModel(
+@HiltViewModel
+class DaysViewModel @Inject constructor(
     private val prRepository: PrRepository
-) : BaseViewModel<DaysNavigator>()  {
+) : BaseViewModel<Any>()  {
 
     private val todayGame = MutableLiveData<PrResource<CtGetPlay>>()
-
-    private var playList = mutableListOf<DtDailyGame>()
-    private lateinit var _game: DtDailyGame
-
-    val dailyGame: DtDailyGame
-        get() = _game
-
-    fun getTodayGame(): LiveData<PrResource<CtGetPlay>> = todayGame
+    private val newGame = MutableLiveData<PrResource<CtPostPlay>>()
 
     /* 경기정보*/
     fun getMyPlay(play: PtGetPlay) {
@@ -43,70 +34,24 @@ class DaysViewModel(
                 val result = prRepository.getDayPlay(play)
                 todayGame.postValue(PrResource.success(result.data))
             } catch (e: Exception) {
-                todayGame.postValue(PrResource.error("Fetch Today Game Error", null))
+                todayGame.postValue(PrResource.error("[FAIL] Load Today Game", null))
             }
-        }
-    }
-
-    fun makePlayBoard(dailyPlays: List<OpsDailyPlay>) {
-        playList.clear()
-        for (play in dailyPlays) {
-            if (play.id == 0) {
-                getNavigator()?.setRemoteGameData(false)
-                return
-            }
-
-            play.run {
-                playList.add(
-                    DtDailyGame(
-                        gameId = id,
-                        awayScore = awayscore,
-                        homeScore = homescore,
-                        awayTeam = PrTeam.getTeamByCode(awayteam),
-                        homeTeam = PrTeam.getTeamByCode(hometeam),
-                        playDate = playdate,
-                        startTime = UiUtils.getTime(starttime.toString()),
-                        stadium = PrStadium.getStadiumByCode(stadium),
-                        status = PrGameStatus.getStatsByCode(getPlayStatusCode(awayscore)),
-                        additionalInfo = "",
-                        registedGame = registedId > 0
-                    )
-                )
-            }
-        }
-
-        if (playList.size > 1) {
-            /* 더블헤더 선택*/
-            getNavigator()?.showDialogForDoubleHeader()
-        } else {
-            /* 일반*/
-            setMainGameData()
         }
     }
 
     /* 새기록 저장*/
     fun saveNewPlay(play: PtPostPlay) {
         viewModelScope.launch {
+            newGame.postValue(PrResource.loading(null))
             try {
                 val result = prRepository.postNewGame(play)
-
-                result.data?.let { _res ->
-                    if (_res.result > 0) getNavigator()?.showSuccessDialog()
-                }
+                newGame.postValue(PrResource.success(result.data))
             } catch (e: Exception) {
-                //
+                newGame.postValue(PrResource.error("[FAIL] Save New Game", null))
             }
         }
     }
 
-    /* 주 게임선택*/
-    fun setMainGameData(gameNum: Int = 0) {
-        _game = playList[gameNum]
-        getNavigator()?.setRemoteGameData(true)
-    }
-
-    /* 경기 상태 코드*/
-    private fun getPlayStatusCode(code: Int): Int {
-        return PrGameStatus.getStatsByCode(code).code
-    }
+    fun getTodayGame(): LiveData<PrResource<CtGetPlay>> = todayGame
+    fun postNewGame(): LiveData<PrResource<CtPostPlay>> = newGame
 }

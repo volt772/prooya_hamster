@@ -21,7 +21,7 @@ class DaysCalendar {
          * @return DatePickerDialog.OnDateSetListener
          */
         fun datePickerListener(
-            searchPlay:(String) -> Unit
+            searchPlay : (String) -> Unit
         ) : DatePickerDialog.OnDateSetListener {
             return DatePickerDialog.OnDateSetListener {
                 _, year, monthOfYear, dayOfMonth ->

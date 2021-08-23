@@ -4,51 +4,57 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.viewModels
 import com.apx5.apx5.ProoyaClient
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrResultCode
-import com.apx5.apx5.constants.PrStatus
+import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentDaysBinding
+import com.apx5.apx5.datum.DtDailyGame
+import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.pitcher.PtGetPlay
 import com.apx5.apx5.datum.pitcher.PtPostPlay
+import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * DaysFragment
  */
 
-class DaysFragment :
-    BaseFragment<FragmentDaysBinding>(),
-    DaysNavigator {
+@AndroidEntryPoint
+class DaysFragment : BaseFragment<FragmentDaysBinding>() {
 
     private var selectedDate: String = ""
 
     private var email: String = ""
     private var teamCode: String = ""
 
+    private lateinit var dailyGame: DtDailyGame
+
+    private var playList = mutableListOf<DtDailyGame>()
+
     /* 캘린더 핸들러 */
     private val calListener = DaysCalendar.datePickerListener(searchPlay = ::searchPlayByDate)
 
-    private val dvm: DaysViewModel by viewModel()
+    private val dvm: DaysViewModel by viewModels()
     override fun getLayoutId() = R.layout.fragment_days
     override fun getBindingVariable() = BR.viewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dvm.setNavigator(this)
-
         initView()
 
+        println("probe : selected Date : ${selectedDate}")
         val queryDate = if (selectedDate.isBlank()) UiUtils.today else selectedDate
         searchPlayByDate(queryDate)
 
@@ -56,18 +62,17 @@ class DaysFragment :
     }
 
     /* 다른 경기 검색 (캘린더)*/
-    override fun searchOtherGame() {
+    private fun searchOtherGame() {
         DaysCalendar.datePickerDialog(requireActivity(), calListener).show()
     }
 
     /* SpinKit 제거*/
-    override fun cancelSpinKit() {
+    private fun cancelSpinKit() {
         binding().skLoading.visibility = View.GONE
     }
 
     /* 경기저장(Remote)*/
-    override fun saveGameToRemote() {
-        val dailyGame = dvm.dailyGame
+    private fun saveGameToRemote() {
         val gameResult = getPlayResultByTeamSide()
         val myTeamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
 
@@ -89,7 +94,6 @@ class DaysFragment :
      * 홈/원정 결과 구분
      */
     private fun getPlayResultByTeamSide(): ResultBySide {
-        val dailyGame = dvm.dailyGame
         val isAwayTeam = teamCode.equalsExt(dailyGame.awayTeam.code)
 
         val awayScore = dailyGame.awayScore
@@ -123,16 +127,16 @@ class DaysFragment :
     }
 
     /* 경기 가져오기(From Remote)*/
-    override fun setRemoteGameData(show: Boolean) {
+    private fun setRemoteGameData(show: Boolean) {
         showScoreBoard(show)
 
         if (show) {
             /* 저장버튼 노출유무*/
-            showSaveButton(dvm.dailyGame.status)
+            showSaveButton(dailyGame.status)
 
             /* 팀 엠블럼*/
-            val awayTeam = dvm.dailyGame.awayTeam
-            val homeTeam = dvm.dailyGame.homeTeam
+            val awayTeam = dailyGame.awayTeam
+            val homeTeam = dailyGame.homeTeam
             showTeamEmblem(awayTeam, homeTeam)
 
             makeGameItem()
@@ -140,20 +144,17 @@ class DaysFragment :
     }
 
     /* 더블헤더 선택 Dialog*/
-    override fun showDialogForDoubleHeader() {
-        DialogActivity.dialogSelectDoubleHeader(
-            requireContext(),
-            ::selectMainGameOfDoubleHeader
-        )
+    private fun showDialogForDoubleHeader() {
+        DialogActivity.dialogSelectDoubleHeader(requireContext(), ::selectMainGameOfDoubleHeader)
     }
 
     /* 더블헤더 선택*/
     private fun selectMainGameOfDoubleHeader(gameNum: Int) {
-        dvm.setMainGameData(gameNum)
+        setMainGameData(gameNum)
     }
 
     /* 완료 Dialog*/
-    override fun showSuccessDialog() {
+    private fun showSuccessDialog() {
         DialogActivity.dialogSaveDailyHistory(requireContext())
     }
 
@@ -172,8 +173,10 @@ class DaysFragment :
             }
         }
 
-        binding().btnChangeSeason.setOnClickListener { searchOtherGame() }
-        binding().btSavePlay.setOnClickListener { saveGameToRemote() }
+        binding().apply {
+            btnChangeSeason.setOnClickListener { searchOtherGame() }
+            btSavePlay.setOnClickListener { saveGameToRemote() }
+        }
     }
 
     /* 경기검색(캘린더)*/
@@ -185,8 +188,7 @@ class DaysFragment :
 
     /* 저장버튼노출 (경기종료시에만 저장)*/
     private fun showSaveButton(status: PrGameStatus) {
-        binding().btSavePlay.visibility =
-            CommonUtils.setVisibility(status == PrGameStatus.FINE)
+        binding().btSavePlay.visibility = CommonUtils.setVisibility(status == PrGameStatus.FINE)
     }
 
     /* 스코어 보드*/
@@ -201,10 +203,8 @@ class DaysFragment :
     private fun showTeamEmblem(away: PrTeam, home: PrTeam) {
         binding().apply {
             /* 엠블럼*/
-            ivTeamAway.setImageResource(
-                    resources.getIdentifier(away.emblem, "drawable", requireContext().packageName))
-            ivTeamHome.setImageResource(
-                    resources.getIdentifier(home.emblem, "drawable", requireContext().packageName))
+            ivTeamAway.setImageResource(resources.getIdentifier(away.emblem, "drawable", requireContext().packageName))
+            ivTeamHome.setImageResource(resources.getIdentifier(home.emblem, "drawable", requireContext().packageName))
 
             /* 팀컬러*/
             tvTeamAway.setBackgroundColor(Color.parseColor(away.mainColor))
@@ -213,57 +213,92 @@ class DaysFragment :
     }
 
     private fun subscriber() {
-        dvm.getTodayGame().observe(viewLifecycleOwner, {
-            when (it.status) {
-                PrStatus.SUCCESS -> {
-                    dvm.makePlayBoard(it.data?.games?: emptyList())
-                }
-                PrStatus.LOADING,
-                PrStatus.ERROR -> { cancelSpinKit() }
-            }
+        dvm.getTodayGame().observe(viewLifecycleOwner, PrObserver {
+            makePlayBoard(it.games)
+            cancelSpinKit()
         })
+
+        dvm.postNewGame().observe(viewLifecycleOwner, PrObserver {
+            if (it.result > 0) showSuccessDialog()
+        })
+    }
+
+    private fun makePlayBoard(dailyPlays: List<OpsDailyPlay>) {
+        playList.clear()
+        for (play in dailyPlays) {
+            if (play.id == 0) {
+                setRemoteGameData(false)
+                return
+            }
+
+            play.run {
+                playList.add(
+                    DtDailyGame(
+                        gameId = id,
+                        awayScore = awayscore,
+                        homeScore = homescore,
+                        awayTeam = PrTeam.getTeamByCode(awayteam),
+                        homeTeam = PrTeam.getTeamByCode(hometeam),
+                        playDate = playdate,
+                        startTime = UiUtils.getTime(starttime.toString()),
+                        stadium = PrStadium.getStadiumByCode(stadium),
+                        status = PrGameStatus.getStatsByCode(getPlayStatusCode(awayscore)),
+                        additionalInfo = "",
+                        registedGame = registedId > 0
+                    )
+                )
+            }
+        }
+
+        if (playList.size > 1) {
+            /* 더블헤더 선택*/
+            showDialogForDoubleHeader()
+        } else {
+            /* 일반*/
+            setMainGameData()
+        }
+    }
+
+    /* 경기 상태 코드*/
+    private fun getPlayStatusCode(code: Int) = PrGameStatus.getStatsByCode(code).code
+
+    /* 주 게임선택*/
+    private fun setMainGameData(gameNum: Int = 0) {
+        dailyGame = playList[gameNum]
+        setRemoteGameData(true)
     }
 
     /* 경기 데이터*/
     private fun makeGameItem() {
-        /* 원정팀명*/
-        binding().tvTeamAway.text = dvm.dailyGame.awayTeam.fullName
+        binding().apply {
+            /* 원정팀명*/
+            tvTeamAway.text = dailyGame.awayTeam.fullName
 
-        /* 홈팀명*/
-        binding().tvTeamHome.text = dvm.dailyGame.homeTeam.fullName
+            /* 홈팀명*/
+            tvTeamHome.text = dailyGame.homeTeam.fullName
 
-        /* 게임상태*/
-        if (dvm.dailyGame.status == PrGameStatus.FINE) {
-            binding().tvScore.text =
-                String.format(
-                    Locale.getDefault(),
-                    ProoyaClient.appContext.resources.getString(R.string.day_game_score),
-                    dvm.dailyGame.awayScore,
-                    dvm.dailyGame.homeScore)
-        } else {
-            binding().tvScore.text = dvm.dailyGame.status.displayCode
+            /* 게임상태*/
+            if (dailyGame.status == PrGameStatus.FINE) {
+                tvScore.text =
+                    String.format(Locale.getDefault(), ProoyaClient.appContext.resources.getString(R.string.day_game_score), dailyGame.awayScore, dailyGame.homeScore)
+            } else {
+                tvScore.text = dailyGame.status.displayCode
+            }
+
+            /* 게임일자*/
+            val playDate = UiUtils.getDateToFull(dailyGame.playDate.toString())
+
+            if (dailyGame.startTime == "0") {
+                tvPlayDate.text =
+                    String.format(Locale.getDefault(), ProoyaClient.appContext.resources.getString(R.string.day_game_date_single), playDate)
+            } else {
+                tvPlayDate.text =
+                    String.format(Locale.getDefault(), ProoyaClient.appContext.resources.getString(R.string.day_game_date_with_starttime), playDate, UiUtils.getTime(dailyGame.startTime))
+            }
+
+            /* 게임장소*/
+            tvStadium.text = dailyGame.stadium.displayName
         }
-
-        /* 게임일자*/
-        val playDate = UiUtils.getDateToFull(dvm.dailyGame.playDate.toString())
-
-        if (dvm.dailyGame.startTime == "0") {
-            binding().tvPlayDate.text =
-                String.format(
-                    Locale.getDefault(),
-                    ProoyaClient.appContext.resources.getString(R.string.day_game_date_single), playDate)
-        } else {
-            binding().tvPlayDate.text =
-                String.format(
-                    Locale.getDefault(),
-                    ProoyaClient.appContext.resources.getString(R.string.day_game_date_with_starttime),
-                    playDate,
-                    UiUtils.getTime(dvm.dailyGame.startTime)
-                )
-        }
-
-        /* 게임장소*/
-        binding().tvStadium.text = dvm.dailyGame.stadium.displayName
     }
 
 
