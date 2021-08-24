@@ -12,25 +12,28 @@ import com.apx5.apx5.R
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrPrefKeys
 import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.splash.SplashActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import java.util.*
+import javax.inject.Inject
 
 /**
  * FireBase
  */
 
-class MyFirebaseMessagingService : FirebaseMessagingService() {
+class PrFirebaseMessagingService : FirebaseMessagingService() {
+
+    @Inject lateinit var prPreference: PrPreference
 
     private val fcmData: HashMap<String, String> = hashMapOf()
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         val data = remoteMessage.data
 
-        val myTeamCode = PrefManager.getInstance(this).userTeam?: ""
-        val userEmail = PrefManager.getInstance(this).userEmail?: ""
+        val myTeamCode = prPreference.userTeam?: ""
+        val userEmail = prPreference.userEmail?: ""
 
         messageKeys.forEach {
             fcmData[it] = data[it].toString()
@@ -39,9 +42,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         fcmData["myTeam"] = myTeamCode
         fcmData["userEmail"] = userEmail
 
-        if (PrefManager.getInstance(this).getBoolean(PrPrefKeys.NOTIFICATION, true)) {
-            sendNotification(fcmData)
-        }
+        if (prPreference.getBoolean(PrPrefKeys.NOTIFICATION, true)) sendNotification(fcmData)
     }
 
     /* 알림발송*/
@@ -88,6 +89,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationManager.cancelAll()
         notificationManager.notify(1, notificationBuilder.build())
     }
+
+    override fun onNewToken(p0: String) {
+        super.onNewToken(p0)
+    }
+
 
     companion object {
         /* 메세지 데이터 키*/

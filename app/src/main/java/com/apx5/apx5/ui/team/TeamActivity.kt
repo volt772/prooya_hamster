@@ -18,11 +18,12 @@ import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.ActivityTeamBinding
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.network.operation.PrObserver
-import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.MaterialTools
 import com.apx5.apx5.ui.utils.UiUtils
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * TeamActivity
@@ -30,6 +31,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TeamActivity : BaseActivity<ActivityTeamBinding>() {
+
+    @Inject
+    lateinit var prPreference: PrPreference
 
     private var teamSelectMode: PrTeamChangeMode?= null
     private lateinit var teamListAdapter: TeamListAdapter
@@ -78,7 +82,7 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
 
     /* 사용자 팀선택완료*/
     private fun finishSetMyTeam(code: String) {
-        PrefManager.getInstance(this).setString(PrPrefKeys.MY_TEAM, code)
+        prPreference.setString(PrPrefKeys.MY_TEAM, code)
         tvm.saveTeam(code)
     }
 
@@ -116,12 +120,6 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
             PrTeamChangeMode.CHANGE -> restartApp()
             else -> restartApp()
         }
-    }
-
-    /* 계정삭제후, 앱재시작*/
-    private fun vectoredRestart() {
-        PrefManager.getInstance(this).setString(PrPrefKeys.MY_TEAM, "")
-        restartApp()
     }
 
     /* 앱재시작 (등록실패 or 팀변경)*/

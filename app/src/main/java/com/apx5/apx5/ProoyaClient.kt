@@ -20,8 +20,7 @@ class ProoyaClient : Application() {
      * 이미지 로더를 반환한다.
      * @return 이미지 로더
      */
-    var imageLoader: ImageLoader? = null
-        private set
+    private var imageLoader: ImageLoader? = null
 
     override fun onCreate() {
         super.onCreate()

@@ -14,13 +14,6 @@ import java.util.*
 
 class UiUtils {
     companion object {
-        data class ResultBySide(
-            val versus: String,
-            val getScore: String,
-            val lostScore: String,
-            val result: String
-        )
-
         /**
          * 날자 변환
          * @param dateString
@@ -39,9 +32,7 @@ class UiUtils {
         }
 
         fun getTime(time: String): String {
-            if (time.equalsExt("")) {
-                return ""
-            }
+            if (time.isBlank()) return ""
 
             /* 경기시작시간 없는경우*/
             return if (time.equalsExt("0")) {
@@ -68,18 +59,14 @@ class UiUtils {
          * 연도
          */
         fun getYear(dateString: String): String {
-            return if (dateString.equalsExt("")) {
-                ""
-            } else dateString.substring(0, 4)
+            return if (dateString.isBlank()) "" else dateString.substring(0, 4)
         }
 
         /**
          * 날자변환(yyyy.mm.dd)
          */
         fun getDateToAbbr(dateString: String, divider: String): String {
-            if (dateString.equalsExt("")) {
-                return ""
-            }
+            if (dateString.isBlank()) return ""
 
             val year = dateString.substring(2, 4)
             val month = dateString.substring(4, 6)

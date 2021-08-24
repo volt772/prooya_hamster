@@ -22,62 +22,59 @@ class GameAllViewHolder(
 ): RecyclerView.ViewHolder(view) {
 
     fun bind(game: AdtGames) {
-        /* 팀 스코어*/
-        itemView.tv_away_score.text = game.awayScore.toString()
-        itemView.tv_home_score.text = game.homeScore.toString()
-
         /* 경기일*/
         val playDate = UiUtils.getDateToReadableMonthDay(game.playDate)
         val stadium = game.stadium
 
-        itemView.tv_play_date.text = "${playDate}\n${stadium}"
-
         /* 경기결과 구분처리*/
         val (awayStyle, homeStyle) = when {
-            game.awayScore > game.homeScore -> {
-                /* 원정팀승*/
-                R.style.TeamScoreWinTeam to R.style.TeamScoreLoseTeam
-            }
-            game.awayScore < game.homeScore -> {
-                /* 홈팀승*/
-                R.style.TeamScoreLoseTeam to R.style.TeamScoreWinTeam
-            }
-            else -> {
-                /* 양팀 무승부*/
-                R.style.TeamScoreLoseTeam to R.style.TeamScoreLoseTeam
-            }
+            /* 원정팀승*/
+            game.awayScore > game.homeScore -> R.style.TeamScoreWinTeam to R.style.TeamScoreLoseTeam
+            /* 홈팀승*/
+            game.awayScore < game.homeScore -> R.style.TeamScoreLoseTeam to R.style.TeamScoreWinTeam
+            /* 양팀 무승부*/
+            else -> R.style.TeamScoreLoseTeam to R.style.TeamScoreLoseTeam
         }
 
-        itemView.tv_away_score.setTextAppearance(awayStyle)
-        itemView.tv_home_score.setTextAppearance(homeStyle)
+        itemView.apply {
+            /* 팀 스코어*/
+            tv_away_score.text = game.awayScore.toString()
+            tv_home_score.text = game.homeScore.toString()
 
-        itemView.iv_team_emblem_away.setImageResource(
-            UiUtils.getDrawableByName(context, game.awayEmblem.emblem)
-        )
+            /* 경기일*/
+            tv_play_date.text = "${playDate}\n${stadium}"
 
-        itemView.iv_team_emblem_home.setImageResource(
-            UiUtils.getDrawableByName(context, game.homeEmblem.emblem)
-        )
+            tv_away_score.setTextAppearance(awayStyle)
+            tv_home_score.setTextAppearance(homeStyle)
 
-        /* 경기결과*/
-        itemView.tv_game_result.apply {
-            backgroundTintList =  context.getColorStateList(game.playResult.color)
-            text = game.playResult.displayCodeEn
-        }
+            iv_team_emblem_away.setImageResource(
+                UiUtils.getDrawableByName(context, game.awayEmblem.emblem)
+            )
 
-        /* 기록삭제 (Long Press)*/
-        itemView.setOnLongClickListener {
-            delGame?.let { _callback ->
-                _callback(
-                    AdtPlayDelTarget(
-                        id = game.playId?: 0,
-                        season = game.playSeason?: 0,
-                        versus = game.playVersus?: "",
-                        result = game.playResult.codeAbbr
+            iv_team_emblem_home.setImageResource(
+                UiUtils.getDrawableByName(context, game.homeEmblem.emblem)
+            )
+
+            /* 경기결과*/
+            tv_game_result.apply {
+                backgroundTintList =  context.getColorStateList(game.playResult.color)
+                text = game.playResult.displayCodeEn
+            }
+
+            /* 기록삭제 (Long Press)*/
+            setOnLongClickListener {
+                delGame?.let { _callback ->
+                    _callback(
+                        AdtPlayDelTarget(
+                            id = game.playId?: 0,
+                            season = game.playSeason?: 0,
+                            versus = game.playVersus?: "",
+                            result = game.playResult.codeAbbr
+                        )
                     )
-                )
+                }
+                true
             }
-            true
         }
     }
 

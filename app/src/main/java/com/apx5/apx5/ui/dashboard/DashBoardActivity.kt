@@ -12,10 +12,11 @@ import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrTabMenu
 import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.ActivityDashboardBinding
-import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.team.TeamActivity
 import com.apx5.apx5.ui.utils.MaterialTools
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * DashBoardActivity
@@ -23,6 +24,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DashBoardActivity : BaseActivity<ActivityDashboardBinding>() {
+
+    @Inject
+    lateinit var prPreference: PrPreference
 
     override fun getLayoutId() = R.layout.activity_dashboard
     override fun getBindingVariable() = BR.viewModel
@@ -38,7 +42,7 @@ class DashBoardActivity : BaseActivity<ActivityDashboardBinding>() {
      * @desc 선택 팀 없는경우, 팀을 먼저 선픽하고 온다.
      */
     private fun seedToStart() {
-        val team = PrefManager.getInstance(this).userTeam
+        val team = prPreference.userTeam
         if (team.isNullOrBlank()) {
             val intentTeam = TeamActivity.newIntent(this)
             intentTeam.putExtra(PrConstants.Teams.TEAM_CHANGE_MODE, PrTeamChangeMode.APPLY)

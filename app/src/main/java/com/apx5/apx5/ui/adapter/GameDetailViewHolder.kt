@@ -19,23 +19,26 @@ class GameDetailViewHolder(
 ): RecyclerView.ViewHolder(view) {
 
     fun bind(game: AdtGames) {
-        /* 팀 스코어*/
-        itemView.tv_away_score.text = game.awayScore.toString()
-        itemView.tv_home_score.text = game.homeScore.toString()
-
         /* 경기일*/
         val playDate = UiUtils.getDateToReadableMonthDay(game.playDate)
         val stadium = game.stadium
 
-        itemView.tv_play_date.text = "${playDate}\n${stadium}"
+        itemView.apply {
+            /* 팀 스코어*/
+            tv_away_score.text = game.awayScore.toString()
+            tv_home_score.text = game.homeScore.toString()
 
-        itemView.iv_team_emblem_away.setImageResource(UiUtils.getDrawableByName(context, game.awayEmblem.emblem))
-        itemView.iv_team_emblem_home.setImageResource(UiUtils.getDrawableByName(context, game.homeEmblem.emblem))
+            /* 경기일*/
+            tv_play_date.text = "${playDate}\n${stadium}"
 
-        /* 경기결과*/
-        itemView.tv_game_result.apply {
-            backgroundTintList = context.getColorStateList(game.playResult.color)
-            text = game.playResult.displayCodeEn
+            iv_team_emblem_away.setImageResource(UiUtils.getDrawableByName(context, game.awayEmblem.emblem))
+            iv_team_emblem_home.setImageResource(UiUtils.getDrawableByName(context, game.homeEmblem.emblem))
+
+            /* 경기결과*/
+            tv_game_result.apply {
+                backgroundTintList = context.getColorStateList(game.playResult.color)
+                text = game.playResult.displayCodeEn
+            }
         }
     }
 

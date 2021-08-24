@@ -18,13 +18,14 @@ import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.pitcher.PtGetPlay
 import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.network.operation.PrObserver
-import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 /**
  * DaysFragment
@@ -32,6 +33,9 @@ import java.util.*
 
 @AndroidEntryPoint
 class DaysFragment : BaseFragment<FragmentDaysBinding>() {
+
+    @Inject
+    lateinit var prPreference: PrPreference
 
     private var selectedDate: String = ""
 
@@ -73,7 +77,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
     /* 경기저장(Remote)*/
     private fun saveGameToRemote() {
         val gameResult = getPlayResultByTeamSide()
-        val myTeamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
+        val myTeamCode = prPreference.userTeam?: ""
 
         dvm.saveNewPlay(
             PtPostPlay(
@@ -159,8 +163,8 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
 
     /* UI 초기화*/
     private fun initView() {
-        email = PrefManager.getInstance(requireContext()).userEmail?: ""
-        teamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
+        email = prPreference.userEmail?: ""
+        teamCode = prPreference.userTeam?: ""
 
         if (email.isEmpty() || teamCode.isEmpty()) {
             DialogActivity.dialogError(requireContext())

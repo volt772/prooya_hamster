@@ -16,7 +16,7 @@ import com.apx5.apx5.datum.ops.OpsAllStatics
 import com.apx5.apx5.datum.ops.OpsTeamWinningRate
 import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.network.operation.PrObserver
-import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.adapter.TeamWinningRateAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,13 +30,16 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
 
+    @Inject
+    lateinit var prPreference: PrPreference
+
+    @Inject
+    lateinit var teamWinningRateAdapter: TeamWinningRateAdapter
+
     private val svm: StaticsViewModel by viewModels()
 
     private var userEmail: String = ""
     private var teamCode: String = ""
-
-    @Inject
-    lateinit var teamWinningRateAdapter: TeamWinningRateAdapter
 
     override fun getLayoutId() = R.layout.fragment_statics
     override fun getBindingVariable() = BR.viewModel
@@ -44,8 +47,8 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userEmail = PrefManager.getInstance(requireContext()).userEmail?: ""
-        teamCode = PrefManager.getInstance(requireContext()).userTeam ?: ""
+        userEmail = prPreference.userEmail?: ""
+        teamCode = prPreference.userTeam?: ""
 
         initView()
         subscriber()
@@ -66,8 +69,10 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
     /* 사용자 정보 저장*/
     private fun saveUserInfo(user: OpsUser) {
         user.run {
-            PrefManager.getInstance(requireActivity()).setString(PrPrefKeys.MY_TEAM, team)
-            PrefManager.getInstance(requireActivity()).setInt(PrPrefKeys.MY_ID, userId)
+            prPreference.run {
+                setString(PrPrefKeys.MY_TEAM, team)
+                setInt(PrPrefKeys.MY_ID, userId)
+            }
         }
     }
 

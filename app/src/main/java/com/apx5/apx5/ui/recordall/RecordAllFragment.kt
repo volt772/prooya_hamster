@@ -19,15 +19,15 @@ import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.datum.ops.OpsHistories
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.network.operation.PrObserver
-import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.adapter.PlayItemsAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
-import com.apx5.apx5.utils.equalsExt
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 /**
  * RecordAllFragment
@@ -35,6 +35,9 @@ import java.util.*
 
 @AndroidEntryPoint
 class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
+
+    @Inject
+    lateinit var prPreference: PrPreference
 
     private var selectedYear: Int = 0
 
@@ -90,9 +93,9 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
 
     /* 기록삭제*/
     private fun delHistoryItem(delPlay: AdtPlayDelTarget) {
-        val email = PrefManager.getInstance(requireContext()).userEmail?: ""
+        val email = prPreference.userEmail?: ""
 
-        if (!email.equalsExt("")) {
+        if (email.isNotBlank()) {
             DialogActivity.dialogHistoryDelete(
                 requireContext(),
                 PtDelHistory(
@@ -156,8 +159,7 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
     }
 
     private fun fetchHistories(year: Int) {
-        val email = PrefManager.getInstance(requireContext()).userEmail
-        email?.let { ravm.getAllPlayLists(it, year) }
+        prPreference.userEmail?.let { ravm.getAllPlayLists(it, year) }
     }
 
     /* Observers*/

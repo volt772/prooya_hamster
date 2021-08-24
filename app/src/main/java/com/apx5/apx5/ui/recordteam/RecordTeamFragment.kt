@@ -15,13 +15,14 @@ import com.apx5.apx5.datum.ops.OpsTeamDetail
 import com.apx5.apx5.datum.ops.OpsTeamRecords
 import com.apx5.apx5.datum.ops.OpsTeamSummary
 import com.apx5.apx5.network.operation.PrObserver
-import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.dialogs.DialogTeamDetail
 import com.apx5.apx5.ui.utils.UiUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 /**
  * RecordTeamFragment
@@ -29,6 +30,9 @@ import java.util.*
 
 @AndroidEntryPoint
 class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
+
+    @Inject
+    lateinit var prPreference: PrPreference
 
     private var selectedYear: Int = 0
 
@@ -40,7 +44,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
     private var teamCode: String
     private var detailVersusTeam: String
 
-    lateinit var recordTeamAdapter: RecordTeamAdapter
+    private lateinit var recordTeamAdapter: RecordTeamAdapter
 
     init {
         teamCode = ""
@@ -49,7 +53,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        teamCode = PrefManager.getInstance(requireContext()).userTeam?: ""
+        teamCode = prPreference.userTeam?: ""
 
         if (teamCode.isBlank()) {
             DialogActivity.dialogError(requireContext())
@@ -88,7 +92,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
 
     /* 상세기록 선택*/
     private fun getDetailLists(year: Int, versus: String) {
-        val email = PrefManager.getInstance(requireContext()).userEmail?: ""
+        val email = prPreference.userEmail?: ""
         if (email.isNotBlank()) {
             detailVersusTeam = versus
             rtvm.fetchDetails(email, versus, year)
@@ -150,7 +154,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
     }
 
     private fun recordByYear(year: Int) {
-        val email = PrefManager.getInstance(requireContext()).userEmail?: ""
+        val email = prPreference.userEmail?: ""
 
         if (email.isBlank()) {
             DialogActivity.dialogError(requireContext())

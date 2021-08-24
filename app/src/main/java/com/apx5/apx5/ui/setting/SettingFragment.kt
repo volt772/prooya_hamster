@@ -11,10 +11,11 @@ import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentSettingBinding
 import com.apx5.apx5.datum.pitcher.PtDelUser
-import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.team.TeamActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * SettingFragment
@@ -24,6 +25,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class SettingFragment :
     BaseFragment<FragmentSettingBinding>(),
     View.OnClickListener {
+
+    @Inject
+    lateinit var prPreference: PrPreference
 
     private val svm: SettingViewModel by viewModels()
     override fun getLayoutId() = R.layout.fragment_setting
@@ -45,8 +49,7 @@ class SettingFragment :
         val viewLicense = binding().lytLicense
 
         /* 팀명*/
-        val teamCode = PrefManager.getInstance(requireContext()).getString(PrPrefKeys.MY_TEAM, "")
-        teamCode?.let { code ->
+        prPreference.getString(PrPrefKeys.MY_TEAM, "")?.let { code ->
             viewTeam.text = PrTeam.team(code).fullName
         }
 
@@ -78,7 +81,7 @@ class SettingFragment :
 
     /* 로컬 데이터 초기화*/
     private fun clearSharedPreferences() {
-        PrefManager.getInstance(requireContext()).removePref(requireContext())
+        prPreference.removePref(requireContext())
     }
 
     override fun onClick(v: View) {
@@ -102,9 +105,7 @@ class SettingFragment :
 
     /* 사용자 원격삭제*/
     private fun delUserRemote() {
-        val email = PrefManager.getInstance(requireContext()).userEmail
-
-        email?.let {
+        prPreference.userEmail?.let {
             if (it.isNotBlank()) {
                 val delUser = PtDelUser(it)
                 svm.delRemoteUser(delUser)

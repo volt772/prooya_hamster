@@ -5,17 +5,17 @@ import android.os.Handler
 import android.view.View
 import androidx.activity.viewModels
 import androidx.databinding.library.baseAdapters.BR
-import com.apx5.apx5.ProoyaClient
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
 import com.apx5.apx5.databinding.ActivitySplashBinding
 import com.apx5.apx5.network.operation.PrObserver
-import com.apx5.apx5.storage.PrefManager
+import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dashboard.DashBoardActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.login.LoginActivity
 import com.apx5.apx5.ui.utils.MaterialTools
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * SplashActivity
@@ -23,6 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
+
+    @Inject
+    lateinit var prPreference: PrPreference
 
     private val svm: SplashViewModel by viewModels()
 
@@ -63,9 +66,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     /* Next Activity 검사*/
     private fun checkAccountAndDecideNextActivity() {
-        val email = PrefManager.getInstance(ProoyaClient.appContext).userEmail
-
-        email?.let { _email ->
+        prPreference.userEmail?.let { _email ->
             if (_email.isNotBlank() && _email.contains("@")) {
                 switchToDashBoard()
             } else {

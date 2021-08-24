@@ -1,7 +1,5 @@
 package com.apx5.apx5.ui.templates
 
-import android.content.Context
-
 /**
  * TemplatesBindingModel
  */

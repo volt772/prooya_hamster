@@ -8,9 +8,8 @@ package com.apx5.apx5.ui.login.kakao
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import com.apx5.apx5.constants.PrPrefKeys
-
-import com.apx5.apx5.storage.PrefManager
 import com.apx5.apx5.ui.dashboard.DashBoardActivity
 import com.apx5.apx5.ui.login.LoginActivity
 import com.kakao.network.ErrorResult
@@ -59,12 +58,16 @@ class KakaoSignupActivity : Activity() {
                 if (result.hasSignedUp() == OptionalBoolean.FALSE) {
                     //
                 } else {
-                    val userEmail = result.kakaoAccount.email
-                    PrefManager.getInstance(this@KakaoSignupActivity).setString(PrPrefKeys.MY_EMAIL, userEmail)
+                    setEmailToPref(result.kakaoAccount.email)
                     redirectDashBoard() // 로그인 성공시 MainActivity로
                 }
             }
         })
+    }
+
+    private fun setEmailToPref(userEmail: String) {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        preferences.edit().putString(PrPrefKeys.MY_EMAIL, userEmail).commit()
     }
 
     private fun redirectDashBoard() {

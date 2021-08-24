@@ -1,6 +1,5 @@
 package com.apx5.apx5.network.response
 
-import com.apx5.apx5.constants.PrNetworkKeys
 import com.apx5.apx5.constants.PrNetworks
 import com.apx5.apx5.network.operation.PrOpsCallBack
 import com.apx5.apx5.network.operation.PrOpsError
@@ -11,6 +10,7 @@ import retrofit2.Response
 /**
  * PrResponseHandler
  * @desc Response Handler
+ * @Deprecated
  */
 
 class PrResponseHandler private constructor() {

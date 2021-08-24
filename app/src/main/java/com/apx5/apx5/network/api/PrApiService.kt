@@ -1,10 +1,8 @@
 package com.apx5.apx5.network.api
 
-import com.apx5.apx5.datum.pitcher.*
 import com.apx5.apx5.datum.catcher.*
+import com.apx5.apx5.datum.pitcher.*
 import com.apx5.apx5.network.response.MkResponse
-import com.apx5.apx5.network.response.PrResponse
-import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 

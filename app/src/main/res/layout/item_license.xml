@@ -31,8 +31,8 @@
             android:layout_height="@dimen/md_4"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/md_5"
-            android:tint="@color/red_700"
-            android:src="@drawable/swipe_up_handle" />
+            android:src="@drawable/swipe_up_handle"
+            app:tint="@color/red_700" />
 
         <TextView
             android:id="@+id/tv_license_content"
