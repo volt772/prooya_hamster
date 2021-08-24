@@ -12,7 +12,6 @@ import dagger.hilt.components.SingletonComponent
  */
 @Module
 @InstallIn(SingletonComponent::class)
-//@InstallIn(ViewModelComponent::class)
 abstract class NavigationModule {
 
     @Binds

@@ -26,7 +26,7 @@ enum class PrTeam(
     OTHER("", "", "", "", "");
 
     companion object {
-        fun teamByCode(code: String) =
+        fun team(code: String) =
             when (code) {
                 "kat" -> KAT
                 "dsb" -> DSB

@@ -11,7 +11,3 @@ data class CtPing(
     @SerializedName(PrNetworkKeys.STATUS)
     val status: Int
 )
-//open class CtPing {
-//    @SerializedName(PrNetworkKeys.STATUS)
-//    val status: Int = 0
-//}

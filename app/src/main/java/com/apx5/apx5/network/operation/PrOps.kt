@@ -1,16 +1,9 @@
 package com.apx5.apx5.network.operation
 
-import com.apx5.apx5.datum.pitcher.*
-import com.apx5.apx5.datum.catcher.*
-import com.apx5.apx5.network.api.PrApi
-import com.apx5.apx5.network.api.PrApiService
-import com.apx5.apx5.network.response.PrResponse
-import com.apx5.apx5.network.response.PrResponseHandler
-import retrofit2.Call
-
 /**
  * PrOps
  * @desc 데이터 Operations
+ * @Deprecated
  */
 
 class PrOps {

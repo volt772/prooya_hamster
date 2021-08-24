@@ -71,7 +71,7 @@ class RecordTeamAdapter constructor(
             teamEmblem.setImageResource(teamItems.teamEmblem)
 
             /* 팀 이름*/
-            teamName.text = PrTeam.teamByCode(teamItems.team).fullName
+            teamName.text = PrTeam.team(teamItems.team).fullName
 
             /* 승*/
             winCount.text = teamItems.win.toString()

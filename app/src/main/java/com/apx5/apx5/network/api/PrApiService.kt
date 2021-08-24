@@ -13,87 +13,45 @@ import retrofit2.http.POST
  */
 
 interface PrApiService {
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /* 서버 사용 검사 */
     @POST(URL_PING)
     suspend fun getServerStatus(): MkResponse<CtPing>
 
     /* 요약데이터 */
     @POST(URL_STATICS)
-    suspend fun getStatics2(@Body statics: PtPostStatics): MkResponse<CtPostStatics>
+    suspend fun getStatics(@Body statics: PtPostStatics): MkResponse<CtPostStatics>
 
     /* 팀 간단데이터 */
     @POST(URL_TEAMS_ALL)
-    suspend fun getRecordByTeams2(@Body teams: PtPostTeams): MkResponse<CtPostTeams>
+    suspend fun getRecordByTeams(@Body teams: PtPostTeams): MkResponse<CtPostTeams>
 
     /* 팀 경기상세*/
     @POST(URL_TEAMS_DETAIL)
-    suspend fun getRecordDetail2(@Body play: PtGetRecordDetail): MkResponse<CtGetRecordDetail>
+    suspend fun getRecordDetail(@Body play: PtGetRecordDetail): MkResponse<CtGetRecordDetail>
 
     /* 전체 간단데이터 */
     @POST(URL_HISTORIES_ALL)
-    suspend fun getHistories2(@Body play: PtPostTeams): MkResponse<CtHistories>
+    suspend fun getHistories(@Body play: PtPostTeams): MkResponse<CtHistories>
 
     /* 경기삭제*/
     @POST(URL_HISTORIES_DELETE)
-    suspend fun delHistory2(@Body play: PtDelHistory): MkResponse<CtDelHistory>
+    suspend fun delHistory(@Body play: PtDelHistory): MkResponse<CtDelHistory>
 
     /* 오늘 내팀 경기목록*/
     @POST(URL_SCORES_GET)
-    suspend fun getDayPlay2(@Body play: PtGetPlay): MkResponse<CtGetPlay>
+    suspend fun getDayPlay(@Body play: PtGetPlay): MkResponse<CtGetPlay>
 
     /* 오늘 내팀 경기저장*/
     @POST(URL_HISTORIES_POST)
-    suspend fun saveNewGame2(@Body play: PtPostPlay): MkResponse<CtPostPlay>
+    suspend fun saveNewGame(@Body play: PtPostPlay): MkResponse<CtPostPlay>
 
     /* 사용자삭제 */
     @POST(URL_USER_DELETE)
-    suspend fun delUser2(@Body user: PtDelUser): MkResponse<CtDelUser>
+    suspend fun delUser(@Body user: PtDelUser): MkResponse<CtDelUser>
 
     /* 신규사용자등록 */
     @POST(URL_USER_POST)
-    suspend fun postUser2(@Body user: PtPostUser): MkResponse<CtPostUser>
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /* 서버 사용 검사 */
-    @POST(URL_PING)
-    fun appPing(): Call<PrResponse<CtPing>>
-
-    /* 신규사용자등록 */
-    @POST(URL_USER_POST)
-    fun postUser(@Body user: PtPostUser): Call<PrResponse<CtPostUser>>
-
-    /* 사용자삭제 */
-    @POST(URL_USER_DELETE)
-    fun delUser(@Body user: PtDelUser): Call<PrResponse<CtDelUser>>
-
-    /* 요약데이터 */
-    @POST(URL_STATICS)
-    fun getStatics(@Body statics: PtPostStatics): Call<PrResponse<CtPostStatics>>
-
-    /* 팀 간단데이터 */
-    @POST(URL_TEAMS_ALL)
-    fun getRecordByTeams(@Body teams: PtPostTeams): Call<PrResponse<CtPostTeams>>
-
-    /* 팀 경기상세*/
-    @POST(URL_TEAMS_DETAIL)
-    fun getRecordDetail(@Body play: PtGetRecordDetail): Call<PrResponse<CtGetRecordDetail>>
-
-    /* 전체 간단데이터 */
-    @POST(URL_HISTORIES_ALL)
-    fun getHistories(@Body play: PtPostTeams): Call<PrResponse<CtHistories>>
-
-    /* 경기삭제*/
-    @POST(URL_HISTORIES_DELETE)
-    fun delHistory(@Body play: PtDelHistory): Call<PrResponse<CtDelHistory>>
-
-    /* 오늘 내팀 경기저장*/
-    @POST(URL_HISTORIES_POST)
-    fun saveNewGame(@Body play: PtPostPlay): Call<PrResponse<CtPostPlay>>
-
-    /* 오늘 내팀 경기목록*/
-    @POST(URL_SCORES_GET)
-    fun getDayPlay(@Body play: PtGetPlay): Call<PrResponse<CtGetPlay>>
+    suspend fun postUser(@Body user: PtPostUser): MkResponse<CtPostUser>
 
 
     companion object {

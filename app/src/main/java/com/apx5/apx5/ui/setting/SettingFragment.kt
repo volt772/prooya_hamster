@@ -47,7 +47,7 @@ class SettingFragment :
         /* 팀명*/
         val teamCode = PrefManager.getInstance(requireContext()).getString(PrPrefKeys.MY_TEAM, "")
         teamCode?.let { code ->
-            viewTeam.text = PrTeam.teamByCode(code).fullName
+            viewTeam.text = PrTeam.team(code).fullName
         }
 
         /* 버전*/

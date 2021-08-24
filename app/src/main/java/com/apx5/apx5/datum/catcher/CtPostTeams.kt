@@ -10,9 +10,9 @@ import com.google.gson.annotations.SerializedName
  */
 
 open class CtPostTeams {
-        @SerializedName(PrNetworkKeys.TEAMS)
-        val teams: List<OpsTeamRecords> = emptyList()
+    @SerializedName(PrNetworkKeys.TEAMS)
+    val teams: List<OpsTeamRecords> = emptyList()
 
-        @SerializedName(PrNetworkKeys.SUMMARY)
-        val summary: OpsTeamSummary?= null
+    @SerializedName(PrNetworkKeys.SUMMARY)
+    val summary: OpsTeamSummary?= null
 }

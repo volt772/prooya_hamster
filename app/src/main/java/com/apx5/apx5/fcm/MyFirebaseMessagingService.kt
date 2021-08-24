@@ -22,8 +22,7 @@ import java.util.*
  * FireBase
  */
 
-class MyFirebaseMessagingService :
-    FirebaseMessagingService() {
+class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private val fcmData: HashMap<String, String> = hashMapOf()
 
@@ -52,8 +51,8 @@ class MyFirebaseMessagingService :
         /* 메시지 형식 : 07월01일 - 기아(4) vs 두산(5) */
         val fcmMsg = String.format(resources.getString(R.string.notification_format),
             fcmData[PrConstants.Fcm.DATE].toString(),
-            PrTeam.teamByCode(fcmData[PrConstants.Fcm.AWAY_CODE].toString()).abbrName,
-            PrTeam.teamByCode(fcmData[PrConstants.Fcm.HOME_CODE].toString()).abbrName,
+            PrTeam.team(fcmData[PrConstants.Fcm.AWAY_CODE].toString()).abbrName,
+            PrTeam.team(fcmData[PrConstants.Fcm.HOME_CODE].toString()).abbrName,
             fcmData[PrConstants.Fcm.AWAY_SCORE].toString(),
             fcmData[PrConstants.Fcm.HOME_SCORE].toString()
         )

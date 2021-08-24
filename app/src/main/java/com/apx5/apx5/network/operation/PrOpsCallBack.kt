@@ -5,6 +5,7 @@ import com.apx5.apx5.network.response.PrResponse
 /**
  * PrOpsCallBack
  * @desc operation callback 함수
+ * @Deprecated
  */
 
 interface PrOpsCallBack<T> {

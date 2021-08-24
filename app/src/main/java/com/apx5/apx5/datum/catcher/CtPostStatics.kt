@@ -19,15 +19,3 @@ data class CtPostStatics(
     @SerializedName(PrNetworkKeys.TEAM_WINNING_RATE)
     val teamWinningRate: OpsTeamWinningRate?= null
 )
-
-
-//open class CtPostStatics {
-//    @SerializedName(PrNetworkKeys.USER)
-//    val user: OpsUser?= null
-//
-//    @SerializedName(PrNetworkKeys.ALL_STATICS)
-//    val allStatics: OpsAllStatics?= null
-//
-//    @SerializedName(PrNetworkKeys.TEAM_WINNING_RATE)
-//    val teamWinningRate: OpsTeamWinningRate?= null
-//}

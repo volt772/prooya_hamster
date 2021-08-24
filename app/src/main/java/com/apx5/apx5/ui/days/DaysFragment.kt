@@ -236,12 +236,12 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
                         gameId = id,
                         awayScore = awayscore,
                         homeScore = homescore,
-                        awayTeam = PrTeam.teamByCode(awayteam),
-                        homeTeam = PrTeam.teamByCode(hometeam),
+                        awayTeam = PrTeam.team(awayteam),
+                        homeTeam = PrTeam.team(hometeam),
                         playDate = playdate,
                         startTime = UiUtils.getTime(starttime.toString()),
-                        stadium = PrStadium.getStadiumByCode(stadium),
-                        status = PrGameStatus.getStatsByCode(getPlayStatusCode(awayscore)),
+                        stadium = PrStadium.stadium(stadium),
+                        status = PrGameStatus.status(getPlayStatusCode(awayscore)),
                         additionalInfo = "",
                         registedGame = registedId > 0
                     )
@@ -259,7 +259,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
     }
 
     /* 경기 상태 코드*/
-    private fun getPlayStatusCode(code: Int) = PrGameStatus.getStatsByCode(code).code
+    private fun getPlayStatusCode(code: Int) = PrGameStatus.status(code).code
 
     /* 주 게임선택*/
     private fun setMainGameData(gameNum: Int = 0) {

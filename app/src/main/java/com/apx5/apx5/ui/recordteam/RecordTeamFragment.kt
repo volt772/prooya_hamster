@@ -140,7 +140,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
                 resources.getString(R.string.w_d_l), summary.win, summary.draw, summary.lose
             )
 
-        binding().tvTeamName.text = PrTeam.teamByCode(teamCode).fullName
+        binding().tvTeamName.text = PrTeam.team(teamCode).fullName
         binding().ivTeamEmblem.setImageResource(
             UiUtils.getDrawableByName(
                 requireContext(),

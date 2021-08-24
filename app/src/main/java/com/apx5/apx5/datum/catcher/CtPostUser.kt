@@ -8,9 +8,9 @@ import com.google.gson.annotations.SerializedName
  */
 
 open class CtPostUser {
-        @SerializedName(PrNetworkKeys.ID)
-        val id: Int = 0
+    @SerializedName(PrNetworkKeys.ID)
+    val id: Int = 0
 
-        @SerializedName(PrNetworkKeys.TEAM)
-        val team: String = ""
+    @SerializedName(PrNetworkKeys.TEAM)
+    val team: String = ""
 }

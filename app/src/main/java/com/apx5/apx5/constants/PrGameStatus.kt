@@ -17,7 +17,7 @@ enum class PrGameStatus(
     FINE(1000, "경기종료", "#64B5F6");
 
     companion object {
-        fun getStatsByCode(code: Int): PrGameStatus {
+        fun status(code: Int): PrGameStatus {
             return when (code) {
                 997 -> ONPLAY
                 998 -> STANDBY
