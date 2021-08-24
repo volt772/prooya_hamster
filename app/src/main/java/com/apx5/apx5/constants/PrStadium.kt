@@ -9,18 +9,18 @@ enum class PrStadium(
     val displayName: String
 ) {
 
-    SEOUL_JAMSIL("서울잠실"),
-    SEOUL_GOCHUK("서울고척"),
-    KWANGJU("광주"),
-    BUSAN("부산"),
-    CHANGWON("창원"),
-    INCHEON("인천"),
-    DAEJEON("대전"),
-    DAEGU("대구"),
-    SUWON("수원"),
-    CHUNGJU("청주"),
-    POHANG("포항"),
-    ULSAN("울산"),
+    SEOUL_JAMSIL("서울 잠실종합운동장 야구장"),
+    SEOUL_GOCHUK("서울 고척스카이돔"),
+    KWANGJU("광주 기아챔피언스필드"),
+    BUSAN("부산 사직야구장"),
+    CHANGWON("창원 NC파크"),
+    INCHEON("인천 문학경기장"),
+    DAEJEON("대전 한화생명 이글스파크"),
+    DAEGU("대구 삼성라이온즈파크"),
+    SUWON("수원 KT위즈파크"),
+    CHUNGJU("청주 종합운동장 야구장"),
+    POHANG("포항 야구장"),
+    ULSAN("울산 문수야구장"),
     OTHER("알수없음");
 
     companion object {
