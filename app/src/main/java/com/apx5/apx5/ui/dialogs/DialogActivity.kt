@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.datum.pitcher.PtDelHistory
+import com.apx5.apx5.ui.utils.OnSingleClickListener
 
 /**
  * DialogActivity
@@ -58,9 +59,9 @@ class DialogActivity : AppCompatActivity() {
             val dialog = prDialog(context, R.layout.dialog_no_internet)
             val lp = prLayoutParams(dialog)
 
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener {
-                func()
-            }
+            dialog.findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(view: View) { func() }
+            })
 
             dialog.show()
             dialog.window?.attributes = lp
@@ -73,9 +74,9 @@ class DialogActivity : AppCompatActivity() {
             val dialog = prDialog(context, R.layout.dialog_comm_error)
             val lp = prLayoutParams(dialog)
 
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener {
-                dialog.dismiss()
-            }
+            dialog.findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(view: View) { dialog.dismiss() }
+            })
 
             dialog.show()
             dialog.window?.attributes = lp
@@ -96,24 +97,30 @@ class DialogActivity : AppCompatActivity() {
 
             /* 팀컬러*/
             val lytTeamInfo = dialog.findViewById<LinearLayout>(R.id.lyt_team_info)
-            val lytAcion = dialog.findViewById<LinearLayout>(R.id.lyt_action)
+            val lytAction = dialog.findViewById<LinearLayout>(R.id.lyt_action)
             lytTeamInfo.setBackgroundColor(team.teamColor)
-            lytAcion.setBackgroundColor(team.teamColor)
+            lytAction.setBackgroundColor(team.teamColor)
 
             /* 팀코드*/
             val teamCode = team.teamCode
 
             /* 취소버튼*/
-            dialog.findViewById<View>(R.id.bt_cancel).setOnClickListener { dialog.dismiss() }
+            dialog.apply {
+                findViewById<View>(R.id.bt_cancel).setOnClickListener(object : OnSingleClickListener() {
+                    override fun onSingleClick(view: View) { dialog.dismiss() }
+                })
 
-            /* 진행버튼*/
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener {
-                func(teamCode)
-                dialog.dismiss()
+                /* 진행버튼*/
+                findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+                    override fun onSingleClick(view: View) {
+                        func(teamCode)
+                        dismiss()
+                    }
+                })
+
+                show()
+                window?.attributes = lp
             }
-
-            dialog.show()
-            dialog.window?.attributes = lp
         }
 
         /* Dialog - 기록삭제*/
@@ -125,17 +132,23 @@ class DialogActivity : AppCompatActivity() {
             val dialog = prDialog(context, R.layout.dialog_history_delete)
             val lp = prLayoutParams(dialog)
 
-            /* 취소버튼*/
-            dialog.findViewById<View>(R.id.bt_cancel).setOnClickListener { dialog.dismiss() }
+            dialog.apply {
+                /* 취소버튼*/
+                findViewById<View>(R.id.bt_cancel).setOnClickListener(object : OnSingleClickListener() {
+                    override fun onSingleClick(view: View) { dialog.dismiss() }
+                })
 
-            /* 계속버튼*/
-            dialog.findViewById<View>(R.id.bt_continue).setOnClickListener {
-                func(delHistory)
-                dialog.dismiss()
+                /* 계속버튼*/
+                findViewById<View>(R.id.bt_continue).setOnClickListener(object : OnSingleClickListener() {
+                    override fun onSingleClick(view: View) {
+                        func(delHistory)
+                        dismiss()
+                    }
+                })
+
+                show()
+                window?.attributes = lp
             }
-
-            dialog.show()
-            dialog.window?.attributes = lp
         }
 
         /* Dialog - 사용자삭제*/
@@ -146,17 +159,23 @@ class DialogActivity : AppCompatActivity() {
             val dialog = prDialog(context, R.layout.dialog_del_user)
             val lp = prLayoutParams(dialog)
 
-            /* 취소버튼*/
-            dialog.findViewById<View>(R.id.bt_cancel).setOnClickListener { dialog.dismiss() }
+            dialog.apply {
+                /* 취소버튼*/
+                findViewById<View>(R.id.bt_cancel).setOnClickListener(object : OnSingleClickListener() {
+                    override fun onSingleClick(view: View) { dialog.dismiss() }
+                })
 
-            /* 진행버튼*/
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener {
-                func()
-                dialog.dismiss()
+                /* 진행버튼*/
+                findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+                    override fun onSingleClick(view: View) {
+                        func()
+                        dismiss()
+                    }
+                })
+
+                show()
+                window?.attributes = lp
             }
-
-            dialog.show()
-            dialog.window?.attributes = lp
         }
 
         /* Dialog - 기록없음*/
@@ -166,10 +185,14 @@ class DialogActivity : AppCompatActivity() {
             val dialog = prDialog(context, R.layout.dialog_record_no_detail)
             val lp = prLayoutParams(dialog)
 
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener { dialog.dismiss() }
+            dialog.apply {
+                findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+                    override fun onSingleClick(view: View) { dialog.dismiss() }
+                })
 
-            dialog.show()
-            dialog.window?.attributes = lp
+                show()
+                window?.attributes = lp
+            }
         }
 
         /* Dialog - 경기없음*/
@@ -179,10 +202,14 @@ class DialogActivity : AppCompatActivity() {
             val dialog = prDialog(context, R.layout.dialog_save_success)
             val lp = prLayoutParams(dialog)
 
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener { dialog.dismiss() }
+            dialog.apply {
+                findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+                    override fun onSingleClick(view: View) { dialog.dismiss() }
+                })
 
-            dialog.show()
-            dialog.window?.attributes = lp
+                show()
+                window?.attributes = lp
+            }
         }
 
         /* Dialog - 더블헤더선택*/
@@ -193,20 +220,26 @@ class DialogActivity : AppCompatActivity() {
             val dialog = prDialog(context, R.layout.dialog_select_double_header)
             val lp = prLayoutParams(dialog)
 
-            /* 선택 : 1경기*/
-            dialog.findViewById<View>(R.id.bt_first_game).setOnClickListener {
-                selectGame(0)
-                dialog.dismiss()
-            }
+            dialog.apply {
+                /* 선택 : 1경기*/
+                findViewById<View>(R.id.bt_first_game).setOnClickListener(object : OnSingleClickListener() {
+                    override fun onSingleClick(view: View) {
+                        selectGame(0)
+                        dismiss()
+                    }
+                })
 
-            /* 선택 : 2경기*/
-            dialog.findViewById<View>(R.id.bt_second_game).setOnClickListener {
-                selectGame(1)
-                dialog.dismiss()
-            }
+                /* 선택 : 2경기*/
+                findViewById<View>(R.id.bt_second_game).setOnClickListener(object : OnSingleClickListener() {
+                    override fun onSingleClick(view: View) {
+                        selectGame(1)
+                        dismiss()
+                    }
+                })
 
-            dialog.show()
-            dialog.window?.attributes = lp
+                show()
+                window?.attributes = lp
+            }
         }
     }
 }

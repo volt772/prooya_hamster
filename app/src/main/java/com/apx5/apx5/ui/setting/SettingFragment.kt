@@ -15,6 +15,7 @@ import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.team.TeamActivity
+import com.apx5.apx5.ui.utils.OnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -60,13 +61,24 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         /* Click Events*/
         binding().apply {
             /* 팀변경*/
-            clSettingGeneralMyTeam.setOnClickListener { setForChangeTeam() }
+            clSettingGeneralMyTeam.setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(view: View) { setForChangeTeam() }
+            })
 
             /* 사용자 삭제*/
-            clSettingGeneralInitHistories.setOnClickListener { setForUserDelete() }
+            clSettingGeneralInitHistories.setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(view: View) { setForUserDelete() }
+            })
 
             /* 라이선스*/
-            clSettingAppLicense.setOnClickListener { setForOpenLicense() }
+            clSettingAppLicense.setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(view: View) { setForOpenLicense() }
+            })
+
+            /* 기본 조회연도 선택*/
+            clDefaultYearInfo.setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(view: View) { setDefaultYear() }
+            })
         }
     }
 
@@ -92,6 +104,13 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     private fun setForOpenLicense() {
         val intentLicense = LicenseActivity.newIntent(requireContext())
         startActivity(intentLicense)
+    }
+
+    /**
+     * 기본 조회연도 선택
+     */
+    private fun setDefaultYear() {
+
     }
 
     /* 계정삭제후, 앱재시작*/

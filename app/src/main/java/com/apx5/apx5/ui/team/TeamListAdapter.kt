@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.ui.utils.MaterialTools
+import com.apx5.apx5.ui.utils.OnSingleClickListener
 import kotlinx.android.synthetic.main.item_team.view.*
 
 /**
@@ -57,9 +58,10 @@ class TeamListAdapter internal constructor(
         val teamItems = teamList[position]
         holder.tvTeamName.text = teamItems.teamName
         MaterialTools.displayImageRound(ctx, holder.ivTeamEmblem, teamItems.teamImage)
-        holder.lytParent.setOnClickListener {
-            selectFunc.invoke(teamItems)
-        }
+
+        holder.lytParent.setOnClickListener(object : OnSingleClickListener() {
+            override fun onSingleClick(view: View) { selectFunc.invoke(teamItems) }
+        })
 
         return cv
     }

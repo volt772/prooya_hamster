@@ -9,4 +9,5 @@ object PrPrefKeys {
     const val MY_TEAM = "myTeam"
     const val MY_EMAIL = "myEmail"
     const val MY_ID = "myId"
+    const val DEFAULT_SEASON_YEAR = "defaultSeasonYear"
 }

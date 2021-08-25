@@ -23,6 +23,7 @@ import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.adapter.PlayItemsAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
+import com.apx5.apx5.ui.utils.OnSingleClickListener
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,16 +79,20 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
         val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         playItemsAdapter = PlayItemsAdapter(requireContext(), PrAdapterViewType.ALL, ::delHistoryItem)
 
-        binding().rvAllList.apply {
-            addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-            layoutManager = linearLayoutManager
-            adapter = playItemsAdapter
-        }
+        binding().apply {
+            rvAllList.apply {
+                addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+                layoutManager = linearLayoutManager
+                adapter = playItemsAdapter
+            }
 
-        /* 시즌 변경*/
-        binding().btnChangeSeason.setOnClickListener {
-            val seasonSelectDialog = DialogSeasonChange(::selectYear, selectedYear)
-            seasonSelectDialog.show(childFragmentManager, "selectSeason")
+            /* 시즌 변경*/
+            btnChangeSeason.setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(view: View) {
+                    val seasonSelectDialog = DialogSeasonChange(::selectYear, selectedYear)
+                    seasonSelectDialog.show(childFragmentManager, "selectSeason")
+                }
+            })
         }
     }
 

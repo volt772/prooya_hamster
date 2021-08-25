@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.NumberPicker
 import androidx.fragment.app.DialogFragment
 import com.apx5.apx5.R
+import com.apx5.apx5.ui.utils.OnSingleClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
@@ -47,10 +48,12 @@ class DialogSeasonChange(
             value = selectedYear
         }
 
-        btnSelect.setOnClickListener {
-            callback(npYear.value)
-            dismiss()
-        }
+        btnSelect.setOnClickListener(object : OnSingleClickListener() {
+            override fun onSingleClick(view: View) {
+                callback(npYear.value)
+                dismiss()
+            }
+        })
 
         return view
     }

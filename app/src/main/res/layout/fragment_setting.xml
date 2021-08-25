@@ -26,7 +26,6 @@
                     android:id="@+id/cl_setting_general"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/md_0"
-                    android:paddingHorizontal="@dimen/md_16"
                     android:background="@drawable/btn_rounded_white_setting"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +37,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingVertical="@dimen/md_24"
+                        android:paddingHorizontal="@dimen/md_16"
+                        style="@style/SelectableItemBackground"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintRight_toRightOf="parent" >
@@ -86,7 +87,7 @@
                             android:id="@+id/tv_team"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textAppearance="@style/SettingLabelDesc"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -106,6 +107,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingVertical="@dimen/md_24"
+                        android:paddingHorizontal="@dimen/md_16"
+                        style="@style/SelectableItemBackground"
                         app:layout_constraintTop_toBottomOf="@id/cl_setting_general_my_team"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintRight_toRightOf="parent" >
@@ -148,8 +151,80 @@
                                 app:layout_constraintBottom_toBottomOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <View
+                        android:id="@+id/vw_line_init_histories"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/md_1"
+                        app:layout_constraintTop_toBottomOf="@id/cl_setting_general_init_histories"
+                        android:background="@color/grey_300" />
+
+                    <!-- Default Year-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_setting_general_default_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="@dimen/md_24"
+                        android:paddingHorizontal="@dimen/md_16"
+                        style="@style/SelectableItemBackground"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/cl_setting_general_init_histories"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" >
+
+                        <!-- Default Year : Subject + Detail-->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/cl_default_year_info"
+                            android:layout_width="@dimen/md_0"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/md_10"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/iv_default_year_more" >
+
+                            <!-- Default Year : Subject-->
+                            <TextView
+                                android:id="@+id/tv_default_year_subject"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/default_season"
+                                android:textAppearance="@style/SettingLabelSubject"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:textColor="@color/blue_grey_900"
+                                android:textStyle="bold"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintRight_toRightOf="parent" />
+
+                            <!-- Default Year : Detail-->
+                            <TextView
+                                android:id="@+id/tv_default_year_detail"
+                                android:layout_width="@dimen/md_0"
+                                android:layout_height="wrap_content"
+                                android:text="@string/set_for_default_year"
+                                android:layout_marginTop="@dimen/md_5"
+                                android:textAppearance="@style/SettingLabelDesc"
+                                android:textColor="@color/grey_500"
+                                app:layout_constraintTop_toBottomOf="@id/tv_default_year_subject"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <!-- Default Year : More-->
+                        <ImageView
+                            android:id="@+id/iv_default_year_more"
+                            android:layout_width="@dimen/md_16"
+                            android:layout_height="@dimen/md_16"
+                            android:src="@drawable/ic_chevron_right"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:contentDescription="Default Year More" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!-- App Level Const-->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -157,7 +232,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/md_0"
                     android:layout_marginTop="@dimen/md_16"
-                    android:paddingHorizontal="@dimen/md_16"
                     android:background="@drawable/btn_rounded_white_setting"
                     app:layout_constraintTop_toBottomOf="@id/cl_setting_general"
                     app:layout_constraintStart_toStartOf="parent"
@@ -169,6 +243,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingVertical="@dimen/md_24"
+                        android:paddingHorizontal="@dimen/md_16"
+                        style="@style/SelectableItemBackground"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintRight_toRightOf="parent" >
@@ -215,6 +291,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingVertical="@dimen/md_24"
+                        android:paddingHorizontal="@dimen/md_16"
+                        style="@style/SelectableItemBackground"
                         app:layout_constraintTop_toBottomOf="@id/cl_setting_app_version"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintRight_toRightOf="parent" >

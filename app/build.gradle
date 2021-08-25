@@ -43,7 +43,6 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayout"
     implementation "androidx.browser:browser:$rootProject.browser"
     implementation "androidx.legacy:legacy-support-v4:$rootProject.legacy_support_v4"
-//    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerview"
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle"
 
     /* FCM*/

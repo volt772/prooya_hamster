@@ -19,6 +19,7 @@ import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.dialogs.DialogTeamDetail
+import com.apx5.apx5.ui.utils.OnSingleClickListener
 import com.apx5.apx5.ui.utils.UiUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -70,12 +71,17 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
     private fun initView() {
         /* 팀리스트*/
         recordTeamAdapter = RecordTeamAdapter(::getDetailLists)
-        binding().lvTeamRecord.adapter = recordTeamAdapter
 
-        /* 시즌변경 버튼*/
-        binding().btnChangeSeason.setOnClickListener {
-            val seasonSelectDialog = DialogSeasonChange(::selectSeasonYear, selectedYear)
-            seasonSelectDialog.show(childFragmentManager, "selectSeason")
+        binding().apply {
+            lvTeamRecord.adapter = recordTeamAdapter
+
+            /* 시즌변경 버튼*/
+            btnChangeSeason.setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(view: View) {
+                    val seasonSelectDialog = DialogSeasonChange(::selectSeasonYear, selectedYear)
+                    seasonSelectDialog.show(childFragmentManager, "selectSeason")
+                }
+            })
         }
     }
 

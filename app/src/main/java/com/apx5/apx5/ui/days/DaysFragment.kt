@@ -20,6 +20,7 @@ import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
+import com.apx5.apx5.ui.utils.OnSingleClickListener
 import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import com.apx5.apx5.utils.equalsExt
@@ -177,8 +178,13 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
         }
 
         binding().apply {
-            btnChangeSeason.setOnClickListener { searchOtherGame() }
-            btSavePlay.setOnClickListener { saveGameToRemote() }
+            btnChangeSeason.setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(view: View) { searchOtherGame() }
+            })
+
+            btSavePlay.setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(view: View) { saveGameToRemote() }
+            })
         }
     }
 
