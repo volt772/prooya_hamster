@@ -8,7 +8,9 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.*
+import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.FragmentSettingBinding
 import com.apx5.apx5.datum.pitcher.PtDelUser
 import com.apx5.apx5.network.operation.PrObserver
@@ -16,6 +18,7 @@ import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.team.TeamActivity
 import com.apx5.apx5.ui.utils.OnSingleClickListener
+import com.apx5.apx5.ui.utils.UiUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -42,11 +45,14 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
 
     /* UI 초기화*/
     private fun initView() {
-        val viewTeam = binding().tvTeam
-
-        /* 팀명*/
+        /* 팀엠블럼*/
         prPreference.getString(PrPrefKeys.MY_TEAM, "")?.let { code ->
-            viewTeam.text = PrTeam.team(code).fullName
+            binding().ivTeam.setImageResource(
+                UiUtils.getDrawableByName(
+                    requireContext(),
+                    PrConstants.Teams.EMBLEM_PREFIX.plus(code)
+                )
+            )
         }
 
         /* 버전*/
