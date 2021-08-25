@@ -232,6 +232,21 @@
         <item name="android:colorForeground">#42221f1f</item>
     </style>
 
+    <style name="SettingLabelSubject">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/blue_grey_900</item>
+    </style>
+
+    <style name="SettingLabelDesc">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/grey_500</item>
+    </style>
+
+    <style name="SettingLabelAppDesc">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/grey_500</item>
+    </style>
+
     <!-- Bottom Sheet(YearSelection) -->
     <style name="BottomSheetYearSelection" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bg_season_select_rounded</item>

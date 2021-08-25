@@ -11,6 +11,7 @@ import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentSettingBinding
 import com.apx5.apx5.datum.pitcher.PtDelUser
+import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.team.TeamActivity
@@ -22,9 +23,7 @@ import javax.inject.Inject
  */
 
 @AndroidEntryPoint
-class SettingFragment :
-    BaseFragment<FragmentSettingBinding>(),
-    View.OnClickListener {
+class SettingFragment : BaseFragment<FragmentSettingBinding>() {
 
     @Inject
     lateinit var prPreference: PrPreference
@@ -43,10 +42,6 @@ class SettingFragment :
     /* UI 초기화*/
     private fun initView() {
         val viewTeam = binding().tvTeam
-        val viewVersion = binding().tvVersion
-        val viewChangeTeam = binding().lytChangeTeam
-        val viewDelUser = binding().lytDelUser
-        val viewLicense = binding().lytLicense
 
         /* 팀명*/
         prPreference.getString(PrPrefKeys.MY_TEAM, "")?.let { code ->
@@ -57,16 +52,46 @@ class SettingFragment :
         try {
             val manager = requireActivity().packageManager
             val info = manager.getPackageInfo(requireActivity().packageName, 0)
-            viewVersion.text = info.versionName
+            binding().tvSettingAppVersion.text = info.versionName
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
 
-        /* Click Listener*/
-        viewTeam.setOnClickListener(this)
-        viewLicense.setOnClickListener(this)
-        viewChangeTeam.setOnClickListener(this)
-        viewDelUser.setOnClickListener(this)
+        /* Click Events*/
+        binding().apply {
+            /* 팀변경*/
+            clSettingGeneralMyTeam.setOnClickListener { setForChangeTeam() }
+
+            /* 사용자 삭제*/
+            clSettingGeneralInitHistories.setOnClickListener { setForUserDelete() }
+
+            /* 라이선스*/
+            clSettingAppLicense.setOnClickListener { setForOpenLicense() }
+        }
+    }
+
+    /**
+     * 팀변경
+     */
+    private fun setForChangeTeam() {
+        val intentTeam = TeamActivity.newIntent(requireContext())
+        intentTeam.putExtra(PrConstants.Teams.TEAM_CHANGE_MODE, PrTeamChangeMode.CHANGE)
+        startActivity(intentTeam)
+    }
+
+    /**
+     * 사용자 삭제
+     */
+    private fun setForUserDelete() {
+        showDelUserDialog()
+    }
+
+    /**
+     * 라이선스
+     */
+    private fun setForOpenLicense() {
+        val intentLicense = LicenseActivity.newIntent(requireContext())
+        startActivity(intentLicense)
     }
 
     /* 계정삭제후, 앱재시작*/
@@ -82,25 +107,6 @@ class SettingFragment :
     /* 로컬 데이터 초기화*/
     private fun clearSharedPreferences() {
         prPreference.removePref(requireContext())
-    }
-
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.lyt_change_team -> {
-                /* 팀변경*/
-                val intentTeam = TeamActivity.newIntent(requireContext())
-                intentTeam.putExtra(PrConstants.Teams.TEAM_CHANGE_MODE, PrTeamChangeMode.CHANGE)
-                startActivity(intentTeam)
-            }
-            R.id.lyt_del_user ->
-                /* 사용자 삭제*/
-                showDelUserDialog()
-            R.id.lyt_license -> {
-                /* 오픈라이선스*/
-                val intentLicense = LicenseActivity.newIntent(requireContext())
-                startActivity(intentLicense)
-            }
-        }
     }
 
     /* 사용자 원격삭제*/
@@ -119,15 +125,9 @@ class SettingFragment :
     }
 
     private fun subscriber() {
-        svm.getDelUserResult().observe(viewLifecycleOwner, {
-            when (it.status) {
-                PrStatus.SUCCESS -> {
-                    clearSharedPreferences()
-                    vectoredRestart()
-                }
-                PrStatus.LOADING,
-                PrStatus.ERROR -> {  }
-            }
+        svm.getDelUserResult().observe(viewLifecycleOwner, PrObserver {
+            clearSharedPreferences()
+            vectoredRestart()
         })
     }
 

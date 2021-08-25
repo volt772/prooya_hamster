@@ -305,6 +305,8 @@
 
     <color name="p_white_10">#FFFFFF</color>
 
+    <color name="p_black_10">#000000</color>
+
     <!-- Prooya Main-->
     <color name="p_main_first">#353866</color>
     <color name="p_main_second">#F8FAFF</color>
