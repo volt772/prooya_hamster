@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrDialogYearSelectType
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordTeamBinding
 import com.apx5.apx5.datum.DtTeamRecord
@@ -63,9 +64,15 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
         initView()
         subscriber()
 
-        val queryYear = if (selectedYear == 0) UiUtils.currentYear else selectedYear
-        recordByYear(queryYear)
+        selectedYear = getDefaultYearOnLoad()
+        recordByYear(selectedYear)
     }
+
+    /**
+     * 초기 시즌연도 선택
+     */
+    private fun getDefaultYearOnLoad() =
+        if (selectedYear == 0) prPreference.defaultYear else selectedYear
 
     /* UI 초기화*/
     private fun initView() {
@@ -78,7 +85,12 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
             /* 시즌변경 버튼*/
             btnChangeSeason.setOnClickListener(object : OnSingleClickListener() {
                 override fun onSingleClick(view: View) {
-                    val seasonSelectDialog = DialogSeasonChange(::selectSeasonYear, selectedYear)
+                    val seasonSelectDialog = DialogSeasonChange(
+                        callback = ::selectSeasonYear,
+                        selectedYear = selectedYear,
+                        selectType = PrDialogYearSelectType.RECORD_TEAM
+                    )
+
                     seasonSelectDialog.show(childFragmentManager, "selectSeason")
                 }
             })
@@ -143,20 +155,22 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
 
     /* 상단 헤더 요약*/
     private fun setHeaderSummary(summary: OpsTeamSummary) {
-        binding().tvBoxTitle.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), summary.year)
-        binding().tvSeasonStatic.text =
-            String.format(
-                Locale.getDefault(),
-                resources.getString(R.string.w_d_l), summary.win, summary.draw, summary.lose
-            )
+        binding().apply {
+            tvBoxTitle.text = String.format(Locale.getDefault(), resources.getString(R.string.season_label), summary.year)
+            tvSeasonStatic.text =
+                String.format(
+                    Locale.getDefault(),
+                    resources.getString(R.string.w_d_l), summary.win, summary.draw, summary.lose
+                )
 
-        binding().tvTeamName.text = PrTeam.team(teamCode).fullName
-        binding().ivTeamEmblem.setImageResource(
-            UiUtils.getDrawableByName(
-                requireContext(),
-                PrConstants.Teams.EMBLEM_PREFIX.plus(teamCode)
+            tvTeamName.text = PrTeam.team(teamCode).fullName
+            ivTeamEmblem.setImageResource(
+                UiUtils.getDrawableByName(
+                    requireContext(),
+                    PrConstants.Teams.EMBLEM_PREFIX.plus(teamCode)
+                )
             )
-        )
+        }
     }
 
     private fun recordByYear(year: Int) {

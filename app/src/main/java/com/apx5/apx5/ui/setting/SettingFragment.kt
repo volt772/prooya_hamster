@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrDialogYearSelectType
 import com.apx5.apx5.constants.PrPrefKeys
 import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.FragmentSettingBinding
@@ -16,6 +17,7 @@ import com.apx5.apx5.datum.pitcher.PtDelUser
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
+import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.team.TeamActivity
 import com.apx5.apx5.ui.utils.OnSingleClickListener
 import com.apx5.apx5.ui.utils.UiUtils
@@ -54,6 +56,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
                 )
             )
         }
+        /* 기본 시즌연도*/
+        binding().acbDefaultYearMore.text = String.format("%d년", getDefaultYearFromPref())
 
         /* 버전*/
         try {
@@ -81,8 +85,13 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
                 override fun onSingleClick(view: View) { setForOpenLicense() }
             })
 
-            /* 기본 조회연도 선택*/
-            clDefaultYearInfo.setOnClickListener(object : OnSingleClickListener() {
+            /* 기본 조회연도 선택(Const)*/
+            clSettingGeneralDefaultYear.setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(view: View) { setDefaultYear() }
+            })
+
+            /* 기본 조회연도 선택(Btn)*/
+            acbDefaultYearMore.setOnClickListener(object : OnSingleClickListener() {
                 override fun onSingleClick(view: View) { setDefaultYear() }
             })
         }
@@ -116,7 +125,33 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
      * 기본 조회연도 선택
      */
     private fun setDefaultYear() {
+        val seasonSelectDialog = DialogSeasonChange(
+            callback = ::selectSeasonYear,
+            selectedYear = getDefaultYearFromPref(),
+            selectType = PrDialogYearSelectType.SETTING
+        )
 
+        seasonSelectDialog.show(childFragmentManager, "selectSeason")
+    }
+
+    /**
+     * 시즌선택 (From BottomDialog)
+     */
+    private fun selectSeasonYear(year: Int) {
+        setDefaultYearFromPref(year)
+        binding().acbDefaultYearMore.text = String.format("%d년", year)
+    }
+
+    /**
+     * 시즌로딩 (From Prefs)
+     */
+    private fun getDefaultYearFromPref() = prPreference.defaultYear
+
+    /**
+     * 시즌저장 (To Prefs)
+     */
+    private fun setDefaultYearFromPref(year: Int) {
+        prPreference.setInt(PrPrefKeys.DEFAULT_SEASON_YEAR, year)
     }
 
     /* 계정삭제후, 앱재시작*/

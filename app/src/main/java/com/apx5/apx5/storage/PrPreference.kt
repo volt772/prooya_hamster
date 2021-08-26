@@ -11,6 +11,8 @@ interface PrPreference {
 
     val userTeam: String?
 
+    val defaultYear: Int
+
     fun setInt(key: String, value: Int)
 
     fun getInt(key: String, defaultValue: Int): Int?

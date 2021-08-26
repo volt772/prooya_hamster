@@ -8,10 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.PrAdapterViewType
-import com.apx5.apx5.constants.PrResultCode
-import com.apx5.apx5.constants.PrStadium
-import com.apx5.apx5.constants.PrTeam
+import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentRecordAllBinding
 import com.apx5.apx5.datum.DtAllGames
 import com.apx5.apx5.datum.adapter.AdtGames
@@ -52,15 +49,19 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        ravm.setNavigator(this)
-
         initView()
 
-        selectedYear = if (selectedYear == 0) UiUtils.currentYear else selectedYear
+        selectedYear = getDefaultYearOnLoad()
         fetchHistories(selectedYear)
 
         subscriber()
     }
+
+    /**
+     * 초기 시즌연도 선택
+     */
+    private fun getDefaultYearOnLoad() =
+        if (selectedYear == 0) prPreference.defaultYear else selectedYear
 
     /* 연도선택*/
     private fun selectYear(year: Int) {
@@ -89,7 +90,12 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
             /* 시즌 변경*/
             btnChangeSeason.setOnClickListener(object : OnSingleClickListener() {
                 override fun onSingleClick(view: View) {
-                    val seasonSelectDialog = DialogSeasonChange(::selectYear, selectedYear)
+                    val seasonSelectDialog = DialogSeasonChange(
+                        callback = ::selectYear,
+                        selectedYear = selectedYear,
+                        selectType = PrDialogYearSelectType.RECORD_ALL
+                    )
+
                     seasonSelectDialog.show(childFragmentManager, "selectSeason")
                 }
             })

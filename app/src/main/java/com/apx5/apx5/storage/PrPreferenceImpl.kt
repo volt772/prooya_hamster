@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.ui.utils.UiUtils
 import java.io.File
 import javax.inject.Inject
 
@@ -15,6 +16,9 @@ class PrPreferenceImpl @Inject constructor(context: Context): PrPreference {
 
     override val userTeam: String?
         get() = preferences.getString(PrPrefKeys.MY_TEAM, "")
+
+    override val defaultYear: Int
+        get() = preferences.getInt(PrPrefKeys.DEFAULT_SEASON_YEAR, UiUtils.currentYear)
 
     init {
         val context = context.applicationContext

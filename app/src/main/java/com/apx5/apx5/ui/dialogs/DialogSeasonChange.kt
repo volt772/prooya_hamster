@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.NumberPicker
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.apx5.apx5.R
+import com.apx5.apx5.constants.PrDialogYearSelectType
 import com.apx5.apx5.ui.utils.OnSingleClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -17,7 +19,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class DialogSeasonChange(
     val callback: (Int) -> Unit,
-    private val selectedYear: Int
+    private val selectedYear: Int,
+    private val selectType: PrDialogYearSelectType
 ): BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,20 +37,22 @@ class DialogSeasonChange(
 
         val npYear = view.findViewById<NumberPicker>(R.id.np_year)
         val btnSelect = view.findViewById<Button>(R.id.btn_select)
+        val tvTitle = view.findViewById<TextView>(R.id.tv_title)
 
-        npYear.setDividerHeight(2)
-
-        npYear.minValue = MIN_YEAR
-        npYear.maxValue = MAX_YEAR
-        npYear.wrapSelectorWheel = true
-
+        /* 연도*/
         npYear.apply {
+            setDividerHeight(2)
+
             minValue = MIN_YEAR
             maxValue = MAX_YEAR
             wrapSelectorWheel = true
             value = selectedYear
         }
 
+        /* 타이틀*/
+        tvTitle.text = selectType.displayName
+
+        /* 시즌선택*/
         btnSelect.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
                 callback(npYear.value)
