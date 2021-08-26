@@ -8,6 +8,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 /**
  * AppModule
@@ -17,8 +18,10 @@ import dagger.hilt.components.SingletonComponent
 abstract class AppModule {
 
     @Binds
+    @Singleton
     abstract fun bindContext(application: Application): Context
 
     @Binds
+    @Singleton
     abstract fun bindPrPreferences(impl: PrPreferenceImpl): PrPreference
 }

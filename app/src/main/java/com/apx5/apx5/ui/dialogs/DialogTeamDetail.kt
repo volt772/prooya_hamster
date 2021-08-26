@@ -66,7 +66,7 @@ class DialogTeamDetail(
                     homeEmblem = PrTeam.team(play.homeTeam),
                     playResult = PrResultCode.getResultByDisplayCode(play.playResult),
                     playDate = "${play.playDate}",
-                    stadium = PrStadium.stadium(play.stadium).displayName
+                    stadium = PrStadium.stadium(play.stadium).abbrName
                 )
             )
         }

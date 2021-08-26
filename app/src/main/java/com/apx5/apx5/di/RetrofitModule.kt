@@ -12,6 +12,7 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 
 /**
@@ -27,16 +28,19 @@ private const val READ_TIMEOUT = 15L
 object RetrofitModule {
 
     @Provides
+    @Singleton
     fun provideBaseUrl(): String {
         return PrConstants.App.FLK_HOST
     }
 
     @Provides
+    @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
     @Provides
+    @Singleton
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder().apply {
             connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
@@ -48,11 +52,13 @@ object RetrofitModule {
     }
 
     @Provides
+    @Singleton
     fun provideConverterFactory(): Converter.Factory {
         return GsonConverterFactory.create()
     }
 
     @Provides
+    @Singleton
     fun provideRetrofitClient(baseUrl: String, okHttpClient: OkHttpClient, converterFactory: Converter.Factory): Retrofit {
         return Retrofit.Builder()
         .baseUrl(baseUrl)
@@ -62,6 +68,7 @@ object RetrofitModule {
     }
 
     @Provides
+    @Singleton
     fun providePrApiService(retrofit: Retrofit): PrApiService {
         return retrofit.create(PrApiService::class.java)
     }
