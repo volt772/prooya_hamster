@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.apx5.apx5.R
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.adapter.AdtTeamLists
-import com.apx5.apx5.ui.utils.OnSingleClickListener
+import com.apx5.apx5.ui.listener.OnSingleClickListener
 import kotlinx.android.synthetic.main.item_team_record.view.*
 
 /**

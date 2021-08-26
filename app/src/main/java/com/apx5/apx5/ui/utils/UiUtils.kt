@@ -2,8 +2,8 @@ package com.apx5.apx5.ui.utils
 
 import android.content.Context
 import android.text.TextUtils
-import com.apx5.apx5.utils.equalsExt
-import com.apx5.apx5.utils.splitExt
+import com.apx5.apx5.ext.equalsExt
+import com.apx5.apx5.ext.splitExt
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import java.util.*

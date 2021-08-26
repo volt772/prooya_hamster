@@ -17,10 +17,10 @@ import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.ActivityTeamBinding
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
+import com.apx5.apx5.ext.setSystemBarColor
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
-import com.apx5.apx5.ui.utils.MaterialTools
 import com.apx5.apx5.ui.utils.UiUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -66,7 +66,7 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
             setHomeAsUpIndicator(R.drawable.ic_back)
         }
 
-        MaterialTools.setSystemBarColor(this, R.color.p_main_first)
+        setSystemBarColor(this, R.color.p_main_first)
     }
 
     /* Components*/

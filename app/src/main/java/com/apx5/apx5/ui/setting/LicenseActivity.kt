@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtLicenseLists
-import com.apx5.apx5.ui.utils.MaterialTools
+import com.apx5.apx5.ext.setSystemBarColor
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
@@ -54,7 +54,7 @@ class LicenseActivity : AppCompatActivity() {
             setHomeAsUpIndicator(R.drawable.ic_back)
         }
 
-        MaterialTools.setSystemBarColor(this, R.color.p_main_first)
+        setSystemBarColor(this, R.color.p_main_first)
     }
 
     private fun initComponent() {

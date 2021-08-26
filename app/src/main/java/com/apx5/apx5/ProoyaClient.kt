@@ -2,10 +2,6 @@ package com.apx5.apx5
 
 import android.app.Application
 import android.content.Context
-import android.graphics.Bitmap
-import androidx.collection.LruCache
-import com.android.volley.toolbox.ImageLoader
-import com.android.volley.toolbox.Volley
 import com.apx5.apx5.ui.login.kakao.KakaoSDKAdapter
 import com.kakao.auth.KakaoSDK
 import dagger.hilt.android.HiltAndroidApp
@@ -20,8 +16,6 @@ class ProoyaClient : Application() {
      * 이미지 로더를 반환한다.
      * @return 이미지 로더
      */
-    private var imageLoader: ImageLoader? = null
-
     override fun onCreate() {
         super.onCreate()
 
@@ -29,33 +23,6 @@ class ProoyaClient : Application() {
 
         instance = this
         KakaoSDK.init(KakaoSDKAdapter())
-
-        val requestQueue = Volley.newRequestQueue(this)
-
-        val imageCache = object : ImageLoader.ImageCache {
-            val imageCache = LruCache<String, Bitmap>(30)
-
-            override fun putBitmap(key: String, value: Bitmap) {
-                imageCache.put(key, value)
-            }
-
-            override fun getBitmap(key: String): Bitmap? {
-                return imageCache.get(key)
-            }
-        }
-
-        imageLoader = ImageLoader(requestQueue, imageCache)
-
-//        startKoin {
-//            androidContext(this@ProoyaClient)
-//            modules(listOf(
-//                apiModule,
-//                repositoryModule,
-//                retrofitModule,
-//                viewModelModule
-//            ))
-//        }
-
     }
 
     /**

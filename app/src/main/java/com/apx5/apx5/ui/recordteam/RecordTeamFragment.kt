@@ -20,7 +20,7 @@ import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.dialogs.DialogTeamDetail
-import com.apx5.apx5.ui.utils.OnSingleClickListener
+import com.apx5.apx5.ui.listener.OnSingleClickListener
 import com.apx5.apx5.ui.utils.UiUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*

@@ -8,8 +8,16 @@ import com.apx5.apx5.ui.utils.UiUtils
 import java.io.File
 import javax.inject.Inject
 
+/**
+ * PrPreferenceImpl
+ */
 class PrPreferenceImpl @Inject constructor(context: Context): PrPreference {
     private val preferences: SharedPreferences
+
+    init {
+        val context = context.applicationContext
+        preferences = PreferenceManager.getDefaultSharedPreferences(context)
+    }
 
     override val userEmail: String?
         get() = preferences.getString(PrPrefKeys.MY_EMAIL, "")
@@ -19,11 +27,6 @@ class PrPreferenceImpl @Inject constructor(context: Context): PrPreference {
 
     override val defaultYear: Int
         get() = preferences.getInt(PrPrefKeys.DEFAULT_SEASON_YEAR, UiUtils.currentYear)
-
-    init {
-        val context = context.applicationContext
-        preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    }
 
     override fun setInt(key: String, value: Int) {
         preferences.edit().putInt(key, value).commit()

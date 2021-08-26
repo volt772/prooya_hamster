@@ -17,13 +17,13 @@ import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.pitcher.PtGetPlay
 import com.apx5.apx5.datum.pitcher.PtPostPlay
+import com.apx5.apx5.ext.equalsExt
+import com.apx5.apx5.ext.setVisibility
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
-import com.apx5.apx5.ui.utils.OnSingleClickListener
+import com.apx5.apx5.ui.listener.OnSingleClickListener
 import com.apx5.apx5.ui.utils.UiUtils
-import com.apx5.apx5.utils.CommonUtils
-import com.apx5.apx5.utils.equalsExt
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -197,14 +197,14 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
 
     /* 저장버튼노출 (경기종료시에만 저장)*/
     private fun showSaveButton(status: PrGameStatus) {
-        binding().btSavePlay.visibility = CommonUtils.setVisibility(status == PrGameStatus.FINE)
+        binding().btSavePlay.visibility = setVisibility(status == PrGameStatus.FINE)
     }
 
     /* 스코어 보드*/
     private fun showScoreBoard(gameExist: Boolean) {
         binding().apply {
-            clScoreBoard.visibility = CommonUtils.setVisibility(gameExist)
-            clNoGame.visibility = CommonUtils.setVisibility(!gameExist)
+            clScoreBoard.visibility = setVisibility(gameExist)
+            clNoGame.visibility = setVisibility(!gameExist)
         }
     }
 

@@ -15,13 +15,13 @@ import com.apx5.apx5.datum.adapter.AdtGames
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.datum.ops.OpsHistories
 import com.apx5.apx5.datum.pitcher.PtDelHistory
+import com.apx5.apx5.ext.setVisibility
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.adapter.PlayItemsAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
-import com.apx5.apx5.ui.utils.OnSingleClickListener
-import com.apx5.apx5.utils.CommonUtils
+import com.apx5.apx5.ui.listener.OnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -129,8 +129,8 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
     /* 리스트 분기*/
     private fun isListExists(exists: Boolean) {
         binding().apply {
-            clAllList.visibility = CommonUtils.setVisibility(exists)
-            clEmptyList.visibility = CommonUtils.setVisibility(!exists)
+            clAllList.visibility = setVisibility(exists)
+            clEmptyList.visibility = setVisibility(!exists)
         }
     }
 

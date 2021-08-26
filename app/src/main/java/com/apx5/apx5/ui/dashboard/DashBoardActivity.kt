@@ -12,9 +12,9 @@ import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrTabMenu
 import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.ActivityDashboardBinding
+import com.apx5.apx5.ext.setSystemBarColor
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.team.TeamActivity
-import com.apx5.apx5.ui.utils.MaterialTools
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -63,7 +63,7 @@ class DashBoardActivity : BaseActivity<ActivityDashboardBinding>() {
             setDisplayShowTitleEnabled(false)
         }
 
-        MaterialTools.setSystemBarColor(this, R.color.p_main_first)
+        setSystemBarColor(this, R.color.p_main_first)
     }
 
     /**

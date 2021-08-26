@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.apx5.apx5.ProoyaClient
-import com.apx5.apx5.utils.CommonUtils
+import com.apx5.apx5.ext.showProgressDialog
 
 
 /**
@@ -39,7 +39,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     fun showLoading() {
         hideLoading()
-        progressDialog = CommonUtils.showProgressDialog(this)
+        progressDialog = showProgressDialog(this)
     }
 
     private fun performDataBinding() {
