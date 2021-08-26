@@ -21,7 +21,6 @@ import com.apx5.apx5.ui.adapter.PlayItemsAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.utils.OnSingleClickListener
-import com.apx5.apx5.ui.utils.UiUtils
 import com.apx5.apx5.utils.CommonUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -175,16 +174,18 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
 
     /* Observers*/
     private fun subscriber() {
-        ravm.getHistories().observe(viewLifecycleOwner, PrObserver {
-            setPlayHistoryItems(it.games)
-            cancelSpinKit()
-        })
+        ravm.apply {
+            getHistories().observe(viewLifecycleOwner, PrObserver {
+                setPlayHistoryItems(it.games)
+                cancelSpinKit()
+            })
 
-        ravm.getDelResult().observe(viewLifecycleOwner, PrObserver {
-            if (it.count == 1) {
-                selectYear(selectedYear)
-            }
-        })
+            getDelResult().observe(viewLifecycleOwner, PrObserver {
+                if (it.count == 1) {
+                    selectYear(selectedYear)
+                }
+            })
+        }
     }
 
     private fun setPlayHistoryItems(games: List<OpsHistories>) {
@@ -211,11 +212,6 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
     }
 
     companion object {
-        fun newInstance(): RecordAllFragment {
-            val args = Bundle()
-            val fragment = RecordAllFragment()
-            fragment.arguments = args
-            return fragment
-        }
+        fun newInstance() = RecordAllFragment().apply { }
     }
 }

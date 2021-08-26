@@ -192,11 +192,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     }
 
     companion object {
-        fun newInstance(): SettingFragment {
-            val args = Bundle()
-            val fragment = SettingFragment()
-            fragment.arguments = args
-            return fragment
-        }
+        fun newInstance() = SettingFragment().apply {  }
     }
 }

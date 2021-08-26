@@ -222,14 +222,16 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
     }
 
     private fun subscriber() {
-        dvm.getTodayGame().observe(viewLifecycleOwner, PrObserver {
-            makePlayBoard(it.games)
-            cancelSpinKit()
-        })
+        dvm.apply {
+            getTodayGame().observe(viewLifecycleOwner, PrObserver {
+                makePlayBoard(it.games)
+                cancelSpinKit()
+            })
 
-        dvm.postNewGame().observe(viewLifecycleOwner, PrObserver {
-            if (it.result > 0) showSuccessDialog()
-        })
+            postNewGame().observe(viewLifecycleOwner, PrObserver {
+                if (it.result > 0) showSuccessDialog()
+            })
+        }
     }
 
     private fun makePlayBoard(dailyPlays: List<OpsDailyPlay>) {
@@ -319,11 +321,6 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
             val result: String
         )
 
-        fun newInstance(): DaysFragment {
-            val args = Bundle()
-            val fragment = DaysFragment()
-            fragment.arguments = args
-            return fragment
-        }
+        fun newInstance() = DaysFragment().apply {  }
     }
 }

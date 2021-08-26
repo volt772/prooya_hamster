@@ -184,16 +184,18 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
     }
 
     private fun subscriber() {
-        rtvm.getTeams().observe(viewLifecycleOwner, PrObserver {
-            setTeamSummaryItems(it.teams)
-            setHeaderSummaryItems(it.summary)
-            cancelSpinKit()
-        })
+        rtvm.apply {
+            getTeams().observe(viewLifecycleOwner, PrObserver {
+                setTeamSummaryItems(it.teams)
+                setHeaderSummaryItems(it.summary)
+                cancelSpinKit()
+            })
 
-        rtvm.getDetails().observe(viewLifecycleOwner, PrObserver {
-            val games = it.games
-            showDetailLists(games)
-        })
+            getDetails().observe(viewLifecycleOwner, PrObserver {
+                val games = it.games
+                showDetailLists(games)
+            })
+        }
     }
 
     private fun setTeamSummaryItems(teams: List<OpsTeamRecords>?) {
@@ -223,11 +225,6 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
     }
 
     companion object {
-        fun newInstance(): RecordTeamFragment {
-            val args = Bundle()
-            val fragment = RecordTeamFragment()
-            fragment.arguments = args
-            return fragment
-        }
+        fun newInstance() = RecordTeamFragment().apply {  }
     }
 }

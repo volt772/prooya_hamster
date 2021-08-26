@@ -173,11 +173,6 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
     }
 
     companion object {
-        fun newInstance(): StaticsFragment {
-            val args = Bundle()
-            val fragment = StaticsFragment()
-            fragment.arguments = args
-            return fragment
-        }
+        fun newInstance() = StaticsFragment().apply {  }
     }
 }
