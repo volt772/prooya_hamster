@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
+import com.apx5.apx5.constants.PrWinningStatus
 import com.apx5.apx5.datum.adapter.AdtPlays
 import com.apx5.apx5.ui.utilities.PrUtils
 import kotlinx.android.synthetic.main.item_game_recent.view.*
@@ -32,13 +33,11 @@ class GameRecentViewHolder(
             tv_play_date.text = String.format("%s\n%s", playDate, stadium)
 
             /* 경기결과 구분처리*/
-            val (awayStyle, homeStyle) = when {
-                /* 원정팀승*/
-                game.awayScore > game.homeScore -> R.style.TeamScoreWinTeam to R.style.TeamScoreLoseTeam
-                /* 홈팀승*/
-                game.awayScore < game.homeScore -> R.style.TeamScoreLoseTeam to R.style.TeamScoreWinTeam
-                /* 양팀 무승부*/
-                else -> R.style.TeamScoreLoseTeam to R.style.TeamScoreLoseTeam
+            val distinguishWinning = prUtils.distinguishWinning(game.awayScore, game.homeScore)
+            val (awayStyle, homeStyle) = when (distinguishWinning) {
+                PrWinningStatus.AWAY -> R.style.TeamScoreWinTeam to R.style.TeamScoreLoseTeam
+                PrWinningStatus.HOME -> R.style.TeamScoreLoseTeam to R.style.TeamScoreWinTeam
+                PrWinningStatus.BOTH -> R.style.TeamScoreLoseTeam to R.style.TeamScoreLoseTeam
             }
 
             tv_away_score.setTextAppearance(awayStyle)

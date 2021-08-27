@@ -2,6 +2,7 @@ package com.apx5.apx5.ui.utilities
 
 import android.content.Context
 import android.text.TextUtils
+import com.apx5.apx5.constants.PrWinningStatus
 import com.apx5.apx5.ext.equalsExt
 import com.apx5.apx5.ext.splitExt
 import org.joda.time.DateTime
@@ -129,5 +130,15 @@ class PrUtilsImpl @Inject constructor() : PrUtils {
      */
     override fun getDrawableByName(context: Context, name: String): Int {
         return context.resources.getIdentifier(name, "drawable", context.packageName)
+    }
+
+    /**
+     * 승팀 사이드 구분
+     * @desc 원정팀승, 홈팀승, 무승부
+     */
+    override fun distinguishWinning(away: Int, home: Int) = when {
+        away > home -> PrWinningStatus.AWAY
+        away < home -> PrWinningStatus.HOME
+        else -> PrWinningStatus.BOTH
     }
 }

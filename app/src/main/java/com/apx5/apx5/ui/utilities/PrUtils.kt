@@ -1,6 +1,7 @@
 package com.apx5.apx5.ui.utilities
 
 import android.content.Context
+import com.apx5.apx5.constants.PrWinningStatus
 
 /**
  * PrUtils
@@ -24,4 +25,6 @@ interface PrUtils {
     fun getTodaySeparate(type: String): Int
 
     fun getDrawableByName(context: Context, name: String): Int
+
+    fun distinguishWinning(away: Int, home: Int): PrWinningStatus
 }

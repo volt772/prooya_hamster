@@ -14,6 +14,7 @@ import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentDaysBinding
 import com.apx5.apx5.datum.DtDailyGame
+import com.apx5.apx5.datum.DtResultBySide
 import com.apx5.apx5.datum.ops.OpsDailyPlay
 import com.apx5.apx5.datum.pitcher.PtGetPlay
 import com.apx5.apx5.datum.pitcher.PtPostPlay
@@ -100,7 +101,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
     /**
      * 홈/원정 결과 구분
      */
-    private fun getPlayResultByTeamSide(): ResultBySide {
+    private fun getPlayResultByTeamSide(): DtResultBySide {
         val isAwayTeam = teamCode.equalsExt(dailyGame.awayTeam.code)
 
         val awayScore = dailyGame.awayScore
@@ -108,7 +109,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
 
         if (isAwayTeam) {
             /* 원정경기*/
-            return ResultBySide(
+            return DtResultBySide(
                 versus = dailyGame.homeTeam.code,
                 getScore = awayScore.toString(),
                 lostScore = homeScore.toString(),
@@ -120,7 +121,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
             )
         } else {
             /* 홈경기*/
-            return ResultBySide(
+            return DtResultBySide(
                 versus = dailyGame.awayTeam.code,
                 getScore = homeScore.toString(),
                 lostScore = awayScore.toString(),
@@ -315,15 +316,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
         }
     }
 
-
     companion object {
-        data class ResultBySide(
-            val versus: String,
-            val getScore: String,
-            val lostScore: String,
-            val result: String
-        )
-
         fun newInstance() = DaysFragment().apply {  }
     }
 }
