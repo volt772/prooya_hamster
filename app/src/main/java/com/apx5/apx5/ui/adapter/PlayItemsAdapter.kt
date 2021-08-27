@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.constants.PrAdapterViewType
 import com.apx5.apx5.datum.adapter.AdtGames
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
+import com.apx5.apx5.ui.utilities.PrUtils
+import javax.inject.Inject
 
 /**
  * PlayItemsAdapter
@@ -20,9 +22,9 @@ class PlayItemsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
-            VIEW_TYPE_RECENT -> GameRecentViewHolder.create(context, parent)
-            VIEW_TYPE_DETAIL -> GameDetailViewHolder.create(context, parent)
-            VIEW_TYPE_ALL -> GameAllViewHolder.create(context, parent, delGame)
+            VIEW_TYPE_RECENT -> GameRecentViewHolder.create(parent)
+            VIEW_TYPE_DETAIL -> GameDetailViewHolder.create(parent)
+            VIEW_TYPE_ALL -> GameAllViewHolder.create(parent, delGame)
             else ->  throw IllegalArgumentException("unknown view type")
         }
     }

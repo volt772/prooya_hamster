@@ -19,9 +19,11 @@ import com.apx5.apx5.ext.setVisibility
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.adapter.PlayItemsAdapter
+import com.apx5.apx5.ui.adapter.TeamWinningRateAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
-import com.apx5.apx5.ui.listener.OnSingleClickListener
+import com.apx5.apx5.ui.listener.PrSingleClickListener
+import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -35,6 +37,9 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
 
     @Inject
     lateinit var prPreference: PrPreference
+
+    @Inject
+    lateinit var prUtils: PrUtils
 
     private var selectedYear: Int = 0
 
@@ -87,7 +92,7 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
             }
 
             /* 시즌 변경*/
-            btnChangeSeason.setOnClickListener(object : OnSingleClickListener() {
+            btnChangeSeason.setOnClickListener(object : PrSingleClickListener() {
                 override fun onSingleClick(view: View) {
                     val seasonSelectDialog = DialogSeasonChange(
                         callback = ::selectYear,

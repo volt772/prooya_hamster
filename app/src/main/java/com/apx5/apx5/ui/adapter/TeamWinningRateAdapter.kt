@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtTeamWinningRate
-import com.apx5.apx5.ui.utils.UiUtils
+import com.apx5.apx5.ui.utilities.PrUtils
 import kotlinx.android.synthetic.main.item_team_winning_rate.view.*
 import javax.inject.Inject
 
@@ -14,6 +14,7 @@ import javax.inject.Inject
  * TeamWinningRateAdapter
  */
 class TeamWinningRateAdapter @Inject constructor(
+    val prUtils: PrUtils
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val teams = mutableListOf<AdtTeamWinningRate>()
@@ -33,7 +34,7 @@ class TeamWinningRateAdapter @Inject constructor(
     inner class TeamPercViewHolder(view: View): RecyclerView.ViewHolder(view) {
         fun bind(team: AdtTeamWinningRate) {
             itemView.apply {
-                iv_team_emblem.setImageResource(UiUtils.getDrawableByName(context, team.team.emblem))
+                iv_team_emblem.setImageResource(prUtils.getDrawableByName(context, team.team.emblem))
 
                 val percentage = if (team.winningRate == 0) { 1f } else { team.winningRate.toFloat() }
 

@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.datum.pitcher.PtDelHistory
-import com.apx5.apx5.ui.listener.OnSingleClickListener
+import com.apx5.apx5.ui.listener.PrSingleClickListener
 
 /**
  * DialogActivity
@@ -59,7 +59,7 @@ class DialogActivity : AppCompatActivity() {
             val dialog = prDialog(context, R.layout.dialog_no_internet)
             val lp = prLayoutParams(dialog)
 
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+            dialog.findViewById<View>(R.id.bt_close).setOnClickListener(object : PrSingleClickListener() {
                 override fun onSingleClick(view: View) { func() }
             })
 
@@ -74,7 +74,7 @@ class DialogActivity : AppCompatActivity() {
             val dialog = prDialog(context, R.layout.dialog_comm_error)
             val lp = prLayoutParams(dialog)
 
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+            dialog.findViewById<View>(R.id.bt_close).setOnClickListener(object : PrSingleClickListener() {
                 override fun onSingleClick(view: View) { dialog.dismiss() }
             })
 
@@ -106,12 +106,12 @@ class DialogActivity : AppCompatActivity() {
 
             /* 취소버튼*/
             dialog.apply {
-                findViewById<View>(R.id.bt_cancel).setOnClickListener(object : OnSingleClickListener() {
+                findViewById<View>(R.id.bt_cancel).setOnClickListener(object : PrSingleClickListener() {
                     override fun onSingleClick(view: View) { dialog.dismiss() }
                 })
 
                 /* 진행버튼*/
-                findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+                findViewById<View>(R.id.bt_close).setOnClickListener(object : PrSingleClickListener() {
                     override fun onSingleClick(view: View) {
                         func(teamCode)
                         dismiss()
@@ -134,12 +134,12 @@ class DialogActivity : AppCompatActivity() {
 
             dialog.apply {
                 /* 취소버튼*/
-                findViewById<View>(R.id.bt_cancel).setOnClickListener(object : OnSingleClickListener() {
+                findViewById<View>(R.id.bt_cancel).setOnClickListener(object : PrSingleClickListener() {
                     override fun onSingleClick(view: View) { dialog.dismiss() }
                 })
 
                 /* 계속버튼*/
-                findViewById<View>(R.id.bt_continue).setOnClickListener(object : OnSingleClickListener() {
+                findViewById<View>(R.id.bt_continue).setOnClickListener(object : PrSingleClickListener() {
                     override fun onSingleClick(view: View) {
                         func(delHistory)
                         dismiss()
@@ -161,12 +161,12 @@ class DialogActivity : AppCompatActivity() {
 
             dialog.apply {
                 /* 취소버튼*/
-                findViewById<View>(R.id.bt_cancel).setOnClickListener(object : OnSingleClickListener() {
+                findViewById<View>(R.id.bt_cancel).setOnClickListener(object : PrSingleClickListener() {
                     override fun onSingleClick(view: View) { dialog.dismiss() }
                 })
 
                 /* 진행버튼*/
-                findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+                findViewById<View>(R.id.bt_close).setOnClickListener(object : PrSingleClickListener() {
                     override fun onSingleClick(view: View) {
                         func()
                         dismiss()
@@ -186,7 +186,7 @@ class DialogActivity : AppCompatActivity() {
             val lp = prLayoutParams(dialog)
 
             dialog.apply {
-                findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+                findViewById<View>(R.id.bt_close).setOnClickListener(object : PrSingleClickListener() {
                     override fun onSingleClick(view: View) { dialog.dismiss() }
                 })
 
@@ -203,7 +203,7 @@ class DialogActivity : AppCompatActivity() {
             val lp = prLayoutParams(dialog)
 
             dialog.apply {
-                findViewById<View>(R.id.bt_close).setOnClickListener(object : OnSingleClickListener() {
+                findViewById<View>(R.id.bt_close).setOnClickListener(object : PrSingleClickListener() {
                     override fun onSingleClick(view: View) { dialog.dismiss() }
                 })
 
@@ -222,7 +222,7 @@ class DialogActivity : AppCompatActivity() {
 
             dialog.apply {
                 /* 선택 : 1경기*/
-                findViewById<View>(R.id.bt_first_game).setOnClickListener(object : OnSingleClickListener() {
+                findViewById<View>(R.id.bt_first_game).setOnClickListener(object : PrSingleClickListener() {
                     override fun onSingleClick(view: View) {
                         selectGame(0)
                         dismiss()
@@ -230,7 +230,7 @@ class DialogActivity : AppCompatActivity() {
                 })
 
                 /* 선택 : 2경기*/
-                findViewById<View>(R.id.bt_second_game).setOnClickListener(object : OnSingleClickListener() {
+                findViewById<View>(R.id.bt_second_game).setOnClickListener(object : PrSingleClickListener() {
                     override fun onSingleClick(view: View) {
                         selectGame(1)
                         dismiss()

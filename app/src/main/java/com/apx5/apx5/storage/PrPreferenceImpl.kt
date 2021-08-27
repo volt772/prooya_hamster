@@ -4,14 +4,17 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.apx5.apx5.constants.PrPrefKeys
-import com.apx5.apx5.ui.utils.UiUtils
+import com.apx5.apx5.ui.utilities.PrUtils
 import java.io.File
 import javax.inject.Inject
 
 /**
  * PrPreferenceImpl
  */
-class PrPreferenceImpl @Inject constructor(context: Context): PrPreference {
+class PrPreferenceImpl @Inject constructor(
+    context: Context,
+    val prUtils: PrUtils
+): PrPreference {
     private val preferences: SharedPreferences
 
     init {
@@ -26,7 +29,7 @@ class PrPreferenceImpl @Inject constructor(context: Context): PrPreference {
         get() = preferences.getString(PrPrefKeys.MY_TEAM, "")
 
     override val defaultYear: Int
-        get() = preferences.getInt(PrPrefKeys.DEFAULT_SEASON_YEAR, UiUtils.currentYear)
+        get() = preferences.getInt(PrPrefKeys.DEFAULT_SEASON_YEAR, prUtils.currentYear)
 
     override fun setInt(key: String, value: Int) {
         preferences.edit().putInt(key, value).commit()

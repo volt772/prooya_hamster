@@ -22,8 +22,8 @@ import com.apx5.apx5.ext.setVisibility
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
-import com.apx5.apx5.ui.listener.OnSingleClickListener
-import com.apx5.apx5.ui.utils.UiUtils
+import com.apx5.apx5.ui.listener.PrSingleClickListener
+import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -37,6 +37,9 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
 
     @Inject
     lateinit var prPreference: PrPreference
+
+    @Inject
+    lateinit var prUtils: PrUtils
 
     private var selectedDate: String = ""
 
@@ -59,7 +62,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
 
         initView()
 
-        val queryDate = if (selectedDate.isBlank()) UiUtils.today else selectedDate
+        val queryDate = if (selectedDate.isBlank()) prUtils.today else selectedDate
         searchPlayByDate(queryDate)
 
         subscriber()
@@ -83,8 +86,8 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
         dvm.saveNewPlay(
             PtPostPlay(
                 result = gameResult.result,
-                year = UiUtils.getYear(dailyGame.playDate.toString()),
-                regdate = UiUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
+                year = prUtils.getYear(dailyGame.playDate.toString()),
+                regdate = prUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
                 pid = email,
                 lostscore = gameResult.lostScore,
                 versus = gameResult.versus,
@@ -171,18 +174,18 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
             DialogActivity.dialogError(requireContext())
         } else {
             DaysCalendar.apply {
-                todayYear = UiUtils.getTodaySeparate("year")
-                todayMonth = UiUtils.getTodaySeparate("month")
-                todayDay = UiUtils.getTodaySeparate("day")
+                todayYear = prUtils.getTodaySeparate("year")
+                todayMonth = prUtils.getTodaySeparate("month")
+                todayDay = prUtils.getTodaySeparate("day")
             }
         }
 
         binding().apply {
-            btnChangeSeason.setOnClickListener(object : OnSingleClickListener() {
+            btnChangeSeason.setOnClickListener(object : PrSingleClickListener() {
                 override fun onSingleClick(view: View) { searchOtherGame() }
             })
 
-            btSavePlay.setOnClickListener(object : OnSingleClickListener() {
+            btSavePlay.setOnClickListener(object : PrSingleClickListener() {
                 override fun onSingleClick(view: View) { saveGameToRemote() }
             })
         }
@@ -251,7 +254,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
                         awayTeam = PrTeam.team(awayteam),
                         homeTeam = PrTeam.team(hometeam),
                         playDate = playdate,
-                        startTime = UiUtils.getTime(starttime.toString()),
+                        startTime = prUtils.getTime(starttime.toString()),
                         stadium = PrStadium.stadium(stadium),
                         status = PrGameStatus.status(getPlayStatusCode(awayscore)),
                         additionalInfo = "",
@@ -297,14 +300,14 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
             }
 
             /* 게임일자*/
-            val playDate = UiUtils.getDateToFull(dailyGame.playDate.toString())
+            val playDate = prUtils.getDateToFull(dailyGame.playDate.toString())
 
             if (dailyGame.startTime == "0") {
                 tvPlayDate.text =
                     String.format(Locale.getDefault(), ProoyaClient.appContext.resources.getString(R.string.day_game_date_single), playDate)
             } else {
                 tvPlayDate.text =
-                    String.format(Locale.getDefault(), ProoyaClient.appContext.resources.getString(R.string.day_game_date_with_starttime), playDate, UiUtils.getTime(dailyGame.startTime))
+                    String.format(Locale.getDefault(), ProoyaClient.appContext.resources.getString(R.string.day_game_date_with_starttime), playDate, prUtils.getTime(dailyGame.startTime))
             }
 
             /* 게임장소*/

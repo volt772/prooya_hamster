@@ -8,22 +8,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtGames
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
-import com.apx5.apx5.ui.utils.UiUtils
+import com.apx5.apx5.ui.utilities.PrUtils
+import com.apx5.apx5.ui.utilities.PrUtilsImpl
 import kotlinx.android.synthetic.main.item_game_all.view.*
+import javax.inject.Inject
 
 /**
  * GameAllViewHolder
  * @desc 게임관련 List 통합 Adapter
  */
 class GameAllViewHolder(
-    private val context: Context,
     view: View,
     private val delGame: ((AdtPlayDelTarget) -> Unit)?= null
 ): RecyclerView.ViewHolder(view) {
 
+    var prUtils: PrUtils = PrUtilsImpl()
+
     fun bind(game: AdtGames) {
         /* 경기일*/
-        val playDate = UiUtils.getDateToReadableMonthDay(game.playDate)
+        val playDate = prUtils.getDateToReadableMonthDay(game.playDate)
         val stadium = game.stadium
 
         /* 경기결과 구분처리*/
@@ -48,11 +51,11 @@ class GameAllViewHolder(
             tv_home_score.setTextAppearance(homeStyle)
 
             iv_team_emblem_away.setImageResource(
-                UiUtils.getDrawableByName(context, game.awayEmblem.emblem)
+                prUtils.getDrawableByName(context, game.awayEmblem.emblem)
             )
 
             iv_team_emblem_home.setImageResource(
-                UiUtils.getDrawableByName(context, game.homeEmblem.emblem)
+                prUtils.getDrawableByName(context, game.homeEmblem.emblem)
             )
 
             /* 경기결과*/
@@ -80,13 +83,12 @@ class GameAllViewHolder(
 
     companion object {
         fun create(
-            context: Context,
             parent: ViewGroup,
             delGame: ((AdtPlayDelTarget) -> Unit)?= null
         ): GameAllViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val view = layoutInflater.inflate(R.layout.item_game_all, parent, false)
-            return GameAllViewHolder(context, view, delGame)
+            return GameAllViewHolder(view, delGame)
         }
     }
 }

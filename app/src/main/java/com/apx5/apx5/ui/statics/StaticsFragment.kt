@@ -19,6 +19,7 @@ import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.adapter.TeamWinningRateAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
+import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -32,6 +33,9 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
 
     @Inject
     lateinit var prPreference: PrPreference
+
+    @Inject
+    lateinit var prUtils: PrUtils
 
     @Inject
     lateinit var teamWinningRateAdapter: TeamWinningRateAdapter
@@ -58,7 +62,7 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
     private fun initView() {
         /* Adapter*/
         val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        teamWinningRateAdapter = TeamWinningRateAdapter()
+        teamWinningRateAdapter = TeamWinningRateAdapter(prUtils)
 
         binding().rvTeamPerList.apply {
             layoutManager = linearLayoutManager

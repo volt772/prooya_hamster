@@ -20,8 +20,8 @@ import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.dialogs.DialogTeamDetail
-import com.apx5.apx5.ui.listener.OnSingleClickListener
-import com.apx5.apx5.ui.utils.UiUtils
+import com.apx5.apx5.ui.listener.PrSingleClickListener
+import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -35,6 +35,9 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
 
     @Inject
     lateinit var prPreference: PrPreference
+
+    @Inject
+    lateinit var prUtils: PrUtils
 
     private var selectedYear: Int = 0
 
@@ -83,7 +86,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
             lvTeamRecord.adapter = recordTeamAdapter
 
             /* 시즌변경 버튼*/
-            btnChangeSeason.setOnClickListener(object : OnSingleClickListener() {
+            btnChangeSeason.setOnClickListener(object : PrSingleClickListener() {
                 override fun onSingleClick(view: View) {
                     val seasonSelectDialog = DialogSeasonChange(
                         callback = ::selectSeasonYear,
@@ -141,7 +144,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
                         draw = team.draw,
                         lose = team.lose,
                         rate = team.rate,
-                        teamEmblem = UiUtils.getDrawableByName(
+                        teamEmblem = prUtils.getDrawableByName(
                             requireContext(),
                             PrConstants.Teams.EMBLEM_PREFIX.plus(team.team)
                         )
@@ -165,7 +168,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
 
             tvTeamName.text = PrTeam.team(teamCode).fullName
             ivTeamEmblem.setImageResource(
-                UiUtils.getDrawableByName(
+                prUtils.getDrawableByName(
                     requireContext(),
                     PrConstants.Teams.EMBLEM_PREFIX.plus(teamCode)
                 )

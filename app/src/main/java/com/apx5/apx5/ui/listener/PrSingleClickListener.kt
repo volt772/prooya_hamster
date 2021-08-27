@@ -6,7 +6,7 @@ import android.view.View
 /**
  * OnSingleClickListener
  */
-abstract class OnSingleClickListener : View.OnClickListener {
+abstract class PrSingleClickListener : View.OnClickListener {
     private var lastClickTime = 0L
 
     abstract fun onSingleClick(view: View)

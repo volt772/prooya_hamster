@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.apx5.apx5.R
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.adapter.AdtTeamLists
-import com.apx5.apx5.ui.listener.OnSingleClickListener
+import com.apx5.apx5.ui.listener.PrSingleClickListener
 import kotlinx.android.synthetic.main.item_team_record.view.*
 
 /**
@@ -88,7 +88,7 @@ class RecordTeamAdapter constructor(
         }
 
         /* 상세보기*/
-        cv.setOnClickListener(object : OnSingleClickListener() {
+        cv.setOnClickListener(object : PrSingleClickListener() {
             override fun onSingleClick(view: View) { selectFunc.invoke(teamItems.year, teamItems.team) }
         })
 

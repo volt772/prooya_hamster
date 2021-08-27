@@ -18,9 +18,9 @@ import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
+import com.apx5.apx5.ui.listener.PrSingleClickListener
 import com.apx5.apx5.ui.team.TeamActivity
-import com.apx5.apx5.ui.listener.OnSingleClickListener
-import com.apx5.apx5.ui.utils.UiUtils
+import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,6 +33,9 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
 
     @Inject
     lateinit var prPreference: PrPreference
+
+    @Inject
+    lateinit var prUtils: PrUtils
 
     private val svm: SettingViewModel by viewModels()
     override fun getLayoutId() = R.layout.fragment_setting
@@ -50,7 +53,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         /* 팀엠블럼*/
         prPreference.getString(PrPrefKeys.MY_TEAM, "")?.let { code ->
             binding().ivTeam.setImageResource(
-                UiUtils.getDrawableByName(
+                prUtils.getDrawableByName(
                     requireContext(),
                     PrConstants.Teams.EMBLEM_PREFIX.plus(code)
                 )
@@ -71,27 +74,27 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         /* Click Events*/
         binding().apply {
             /* 팀변경*/
-            clSettingGeneralMyTeam.setOnClickListener(object : OnSingleClickListener() {
+            clSettingGeneralMyTeam.setOnClickListener(object : PrSingleClickListener() {
                 override fun onSingleClick(view: View) { setForChangeTeam() }
             })
 
             /* 사용자 삭제*/
-            clSettingGeneralInitHistories.setOnClickListener(object : OnSingleClickListener() {
+            clSettingGeneralInitHistories.setOnClickListener(object : PrSingleClickListener() {
                 override fun onSingleClick(view: View) { setForUserDelete() }
             })
 
             /* 라이선스*/
-            clSettingAppLicense.setOnClickListener(object : OnSingleClickListener() {
+            clSettingAppLicense.setOnClickListener(object : PrSingleClickListener() {
                 override fun onSingleClick(view: View) { setForOpenLicense() }
             })
 
             /* 기본 조회연도 선택(Const)*/
-            clSettingGeneralDefaultYear.setOnClickListener(object : OnSingleClickListener() {
+            clSettingGeneralDefaultYear.setOnClickListener(object : PrSingleClickListener() {
                 override fun onSingleClick(view: View) { setDefaultYear() }
             })
 
             /* 기본 조회연도 선택(Btn)*/
-            acbDefaultYearMore.setOnClickListener(object : OnSingleClickListener() {
+            acbDefaultYearMore.setOnClickListener(object : PrSingleClickListener() {
                 override fun onSingleClick(view: View) { setDefaultYear() }
             })
         }

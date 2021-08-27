@@ -7,20 +7,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtGames
-import com.apx5.apx5.ui.utils.UiUtils
+import com.apx5.apx5.ui.utilities.PrUtils
+import com.apx5.apx5.ui.utilities.PrUtilsImpl
 import kotlinx.android.synthetic.main.item_game_recent.view.*
+import javax.inject.Inject
 
 /**
  * GameRecentViewHolder
  */
 class GameRecentViewHolder(
-    private val context: Context,
     view: View
 ): RecyclerView.ViewHolder(view) {
 
+    var prUtils: PrUtils = PrUtilsImpl()
+
     fun bind(game: AdtGames) {
         /* 경기일*/
-        val playDate = UiUtils.getDateToReadableMonthDay(game.playDate)
+        val playDate = prUtils.getDateToReadableMonthDay(game.playDate)
         val stadium = game.stadium
 
         itemView.apply {
@@ -44,16 +47,16 @@ class GameRecentViewHolder(
             tv_away_score.setTextAppearance(awayStyle)
             tv_home_score.setTextAppearance(homeStyle)
 
-            iv_team_emblem_away.setImageResource(UiUtils.getDrawableByName(context, game.awayEmblem.emblem))
-            iv_team_emblem_home.setImageResource(UiUtils.getDrawableByName(context, game.homeEmblem.emblem))
+            iv_team_emblem_away.setImageResource(prUtils.getDrawableByName(context, game.awayEmblem.emblem))
+            iv_team_emblem_home.setImageResource(prUtils.getDrawableByName(context, game.homeEmblem.emblem))
         }
     }
 
     companion object {
-        fun create(context: Context, parent: ViewGroup): GameRecentViewHolder {
+        fun create(parent: ViewGroup): GameRecentViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val view = layoutInflater.inflate(R.layout.item_game_recent, parent, false)
-            return GameRecentViewHolder(context, view)
+            return GameRecentViewHolder(view)
         }
     }
 }

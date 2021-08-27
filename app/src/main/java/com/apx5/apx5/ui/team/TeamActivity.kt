@@ -21,7 +21,7 @@ import com.apx5.apx5.ext.setSystemBarColor
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
-import com.apx5.apx5.ui.utils.UiUtils
+import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,6 +34,9 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
 
     @Inject
     lateinit var prPreference: PrPreference
+
+    @Inject
+    lateinit var prUtils: PrUtils
 
     private var teamSelectMode: PrTeamChangeMode?= null
     private lateinit var teamListAdapter: TeamListAdapter
@@ -95,7 +98,7 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
     private fun setTeamList(ctx: Context) {
         PrTeam.values().forEach { team ->
             if (team != PrTeam.OTHER) {
-                val teamImage = UiUtils.getDrawableByName(this, team.emblem)
+                val teamImage = prUtils.getDrawableByName(this, team.emblem)
                 teamListAdapter.addItem(
                     AdtTeamSelection(
                         teamImage = teamImage,
