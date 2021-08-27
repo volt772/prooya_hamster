@@ -5,51 +5,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.apx5.apx5.ui.splash.SplashActivity" >
 
-    <RelativeLayout
+    <!-- Const : Root-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_splash_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_10" >
+        android:background="@color/p_white_10" >
 
-        <!-- 로그인 이미지-->
-        <RelativeLayout
-            android:id="@+id/ryt_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" >
+        <!-- Const : Logo-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_splash_logo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/md_0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cl_splash_app_name"
+            app:layout_constraintEnd_toEndOf="parent" >
 
+            <!-- Image : Logo-->
             <ImageView
                 android:id="@+id/iv_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_info_type_d" />
-        </RelativeLayout>
+                app:srcCompat="@drawable/ic_info_type_d"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- 로딩중-->
-        <RelativeLayout
-            android:id="@+id/ryt_loading"
-            android:layout_width="wrap_content"
+        <!-- Const : App Name-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_splash_app_name"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_below="@id/ryt_logo" >
+            app:layout_constraintTop_toBottomOf="@id/cl_splash_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
 
-            <com.github.ybq.android.spinkit.SpinKitView
-                android:id="@+id/sk_loading"
-                style="@style/SpinKitView.Large.ThreeBounce"
-                android:layout_width="@dimen/md_40"
-                android:layout_height="@dimen/md_40"
-                android:layout_gravity="center"
-                app:SpinKit_Color="@color/red_400" />
-        </RelativeLayout>
-
-        <!-- 앱이름-->
-        <RelativeLayout
-            android:id="@+id/ryt_appname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@id/ryt_loading" >
-
+            <!-- Image : App Name 'PROOYA'-->
             <ImageView
                 android:id="@+id/iv_app_name"
                 android:layout_width="match_parent"
@@ -57,8 +52,24 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="@dimen/md_50"
-                app:srcCompat="@drawable/txt_appname" />
-        </RelativeLayout>
-    </RelativeLayout>
-</layout>
+                app:srcCompat="@drawable/txt_appname"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/sk_loading"
+            style="@style/SpinKitView.Large.ThreeBounce"
+            android:layout_width="@dimen/md_40"
+            android:layout_height="@dimen/md_40"
+            android:layout_gravity="center"
+            app:SpinKit_Color="@color/red_400"
+            android:layout_marginTop="@dimen/md_150"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

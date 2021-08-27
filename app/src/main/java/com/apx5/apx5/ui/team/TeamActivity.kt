@@ -8,15 +8,16 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
-import com.apx5.apx5.constants.PrConstants
-import com.apx5.apx5.constants.PrPrefKeys
-import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.constants.PrTeamChangeMode
+import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.ActivityTeamBinding
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
+import com.apx5.apx5.ext.DividerItemDecorator
+import com.apx5.apx5.ext.drawableRes
+import com.apx5.apx5.ext.itemDecorationExt
 import com.apx5.apx5.ext.setSystemBarColor
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
@@ -74,13 +75,47 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
 
     /* Components*/
     private fun initComponent() {
-        val teamView = binding().rvTeam
+        val teams = getTeamList()
+        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        teamListAdapter = TeamListAdapter(getAppContext(), teams, ::selectMyTeam)
 
-        teamListAdapter = TeamListAdapter(getAppContext(), ::selectMyTeam)
-        teamView.adapter = teamListAdapter
+        binding().rvTeam.apply {
+            layoutManager = linearLayoutManager
+            adapter = teamListAdapter
 
-        /* 팀정보리스트 생성*/
-        setTeamList(this)
+            itemDecorationExt(
+                listOf(
+                    DividerItemDecorator(
+                        drawableRes(R.drawable.divider),
+                        prUtils.dpToPx(16)
+                    ),
+//                    MpPaddingItemDecoration(
+//                        prUtils = prUtils,
+//                        allHorizontalPadding = 2,
+//                        additionalVerticalPadding = 8,
+//                        defaultVerticalPadding = 16
+//                    )
+                )
+            )
+        }
+    }
+
+    /* 팀리스트 생성*/
+    private fun getTeamList() =  mutableListOf<AdtTeamSelection>().also { _list ->
+        PrTeam.values().forEach { team ->
+            if (team != PrTeam.OTHER) {
+                val teamImage = prUtils.getDrawableByName(this, team.emblem)
+                _list.add(
+                    AdtTeamSelection(
+                        teamImage = teamImage,
+                        teamEmblem = ContextCompat.getDrawable(this, teamImage),
+                        teamName = team.fullName,
+                        teamCode = team.code,
+                        teamColor = Color.parseColor(team.mainColor)
+                    )
+                )
+            }
+        }
     }
 
     /* 사용자 팀선택완료*/
@@ -92,25 +127,6 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
     /* 팀선택 최종 확인*/
     private fun selectMyTeam(team: AdtTeamSelection) {
         DialogActivity.dialogTeamSelect(this, team, ::finishSetMyTeam)
-    }
-
-    /* 팀리스트 생성*/
-    private fun setTeamList(ctx: Context) {
-        PrTeam.values().forEach { team ->
-            if (team != PrTeam.OTHER) {
-                val teamImage = prUtils.getDrawableByName(this, team.emblem)
-                teamListAdapter.addItem(
-                    AdtTeamSelection(
-                        teamImage = teamImage,
-                        teamEmblem = ContextCompat.getDrawable(ctx, teamImage),
-                        teamName = team.fullName,
-                        teamCode = team.code,
-                        teamColor = Color.parseColor(team.mainColor)
-                    )
-
-                )
-            }
-        }
     }
 
     /**

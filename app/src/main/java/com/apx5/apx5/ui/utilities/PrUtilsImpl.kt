@@ -2,6 +2,8 @@ package com.apx5.apx5.ui.utilities
 
 import android.content.Context
 import android.text.TextUtils
+import android.util.TypedValue
+import com.apx5.apx5.ProoyaClient.Companion.appContext
 import com.apx5.apx5.constants.PrWinningStatus
 import com.apx5.apx5.ext.equalsExt
 import com.apx5.apx5.ext.splitExt
@@ -141,4 +143,12 @@ class PrUtilsImpl @Inject constructor() : PrUtils {
         away < home -> PrWinningStatus.HOME
         else -> PrWinningStatus.BOTH
     }
+
+    /**
+     * Dp To Px
+     * @desc DP convert to Pixel
+     */
+    override fun dpToPx(dp: Int) = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), appContext.resources.displayMetrics
+    ).toInt()
 }

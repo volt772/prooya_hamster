@@ -9,6 +9,9 @@ import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.apx5.apx5.ProoyaClient.Companion.appContext
 import com.apx5.apx5.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -52,3 +55,8 @@ fun displayImageRound(ctx: Context, img: ImageView, @DrawableRes drawable: Int) 
         .apply(RequestOptions.circleCropTransform())
         .into(img)
 }
+
+/**
+ * Get Drawable
+ */
+fun drawableRes(drawable: Int) = ContextCompat.getDrawable(appContext, drawable)

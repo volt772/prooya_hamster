@@ -4,70 +4,59 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
+import com.apx5.apx5.databinding.ItemTeamBinding
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.ext.displayImageRound
 import com.apx5.apx5.ui.listener.PrSingleClickListener
-import kotlinx.android.synthetic.main.item_team.view.*
 
 /**
  * TeamListAdapter
  */
 
 class TeamListAdapter internal constructor(
-    private val ctx: Context,
+    private val context: Context,
+    private val teams: List<AdtTeamSelection>,
     private val selectFunc: (AdtTeamSelection) -> Unit
-) : BaseAdapter() {
+): RecyclerView.Adapter<TeamListAdapter.TeamListViewHolder>() {
 
-    private val teamList = mutableListOf<AdtTeamSelection>()
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ) = TeamListViewHolder(
+        DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.item_team,
+            parent,
+            false
+        )
+    )
 
-    override fun getCount() = teamList.size
-    override fun getItemId(position: Int) = position.toLong()
-    override fun getItem(position: Int) = teamList[position]
-
-    private class TeamHolder {
-        lateinit var lytParent: View
-        lateinit var ivTeamEmblem: ImageView
-        lateinit var tvTeamName: TextView
+    override fun onBindViewHolder(
+        holder: TeamListViewHolder,
+        position: Int
+    ) {
+        holder.bind(teams, position)
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val cv: View
-        val context = parent.context
-        val holder: TeamHolder
+    override fun getItemCount() = teams.size
 
-        if (convertView == null) {
-            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            cv = inflater.inflate(R.layout.item_team, parent, false)
+    inner class TeamListViewHolder(
+        val binding: ItemTeamBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(teamList: List<AdtTeamSelection>, position: Int) {
+            val team = teamList[position]
 
-            holder = TeamHolder().apply {
-                lytParent = cv.lyt_parent
-                ivTeamEmblem = cv.iv_team_emblem
-                tvTeamName = cv.tv_team_name
-            }
+            binding.tvTeamName.text = team.teamName
+            displayImageRound(context, binding.ivTeamEmblem, team.teamImage)
 
-            cv.tag = holder
-        } else {
-            holder = convertView.tag as TeamHolder
-            cv = convertView
+            binding.clTeamRoot.setOnClickListener(object : PrSingleClickListener() {
+                override fun onSingleClick(view: View) {
+                    selectFunc.invoke(team)
+                }
+            })
         }
-
-        val teamItems = teamList[position]
-        holder.tvTeamName.text = teamItems.teamName
-        displayImageRound(ctx, holder.ivTeamEmblem, teamItems.teamImage)
-
-        holder.lytParent.setOnClickListener(object : PrSingleClickListener() {
-            override fun onSingleClick(view: View) { selectFunc.invoke(teamItems) }
-        })
-
-        return cv
-    }
-
-    /* 아이템 추가*/
-    internal fun addItem(team: AdtTeamSelection) {
-        teamList.add(team)
     }
 }

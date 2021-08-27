@@ -27,4 +27,6 @@ interface PrUtils {
     fun getDrawableByName(context: Context, name: String): Int
 
     fun distinguishWinning(away: Int, home: Int): PrWinningStatus
+
+    fun dpToPx(dp: Int): Int
 }

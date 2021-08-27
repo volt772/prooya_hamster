@@ -1,53 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.apx5.apx5.ui.team.TeamActivity">
 
-    <data>
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="com.apx5.apx5.ui.team.TeamViewModel"/>
-    </data>
-
-    <!-- Toolbar-->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_team_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
+        <!-- Toolbar-->
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/abl_team"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
 
             <include layout="@layout/team_toolbar" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- 안내문구-->
-        <LinearLayout
-            android:id="@+id/lyt_info"
+        <!-- Const : 문구 + 팀리스트-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_team_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/md_10" >
+            android:layout_height="@dimen/md_0"
+            android:background="@color/grey_200"
+            app:layout_constraintTop_toBottomOf="@id/abl_team"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" >
 
-            <TextView
-                android:id="@+id/tv_info"
+            <!-- Const : 안내문구-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_team_selection_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/grey_400"
-                android:textSize="@dimen/md_15"
-                android:text="@string/team_info" />
-        </LinearLayout>
+                android:layout_marginTop="@dimen/md_16"
+                android:layout_marginStart="@dimen/md_16"
+                android:layout_marginEnd="@dimen/md_16"
+                android:paddingVertical="@dimen/md_14"
+                android:paddingHorizontal="@dimen/md_16"
+                android:background="@drawable/btn_rounded_white_setting"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" >
 
-        <!-- 팀 리스트-->
-        <ListView
-            android:id="@+id/rv_team"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:layout_marginBottom="@dimen/md_10"
-            android:scrollingCache="true" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_400"
+                    android:textSize="@dimen/md_15"
+                    android:text="@string/team_info"
+                    android:textAppearance="@style/SettingLabelDesc"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 팀 리스트-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_team_selection_list"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/md_0"
+                android:layout_marginTop="@dimen/md_16"
+                android:layout_marginStart="@dimen/md_16"
+                android:layout_marginEnd="@dimen/md_16"
+                android:layout_marginBottom="@dimen/md_16"
+                android:paddingVertical="@dimen/md_6"
+                android:paddingHorizontal="@dimen/md_6"
+                android:background="@drawable/btn_rounded_white_setting"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_team_selection_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_team"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none"
+                    android:scrollingCache="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
