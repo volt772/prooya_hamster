@@ -7,9 +7,11 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
+import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.ui.listener.PrSingleClickListener
@@ -86,10 +88,15 @@ class DialogActivity : AppCompatActivity() {
         fun dialogTeamSelect(
             context: Context,
             team: AdtTeamSelection,
+            msg: String,
             func:(String) -> Unit) {
 
             val dialog = prDialog(context, R.layout.dialog_team_select)
             val lp = prLayoutParams(dialog)
+
+            /* 안내문구*/
+            val tvMsg = dialog.findViewById<TextView>(R.id.tv_content)
+            tvMsg.text = msg
 
             /* 팀이미지*/
             val ivIcon = dialog.findViewById<ImageView>(R.id.iv_icon)

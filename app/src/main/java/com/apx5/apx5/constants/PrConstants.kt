@@ -7,7 +7,7 @@ package com.apx5.apx5.constants
 
 object PrConstants {
     object App {
-        const val FLK_HOST = "http://apx-prooya.co.kr:6100"
+        const val FLK_HOST = "http://apx-prooya.co.kr:2772"
     }
 
     object Fcm {

@@ -6,7 +6,8 @@
 
     <string name="team_select">팀선택</string>
     <string name="team_info">prooya는 자신의 팀을 기준으로 기록을 계산합니다.\n응원하는 팀을 선택해 주세요.</string>
-    <string name="team_select_dialog">팀 수정시, 올해 기록은 초기화\n됩니다. 진행하시겠습니까?</string>
+    <string name="team_select_dialog_change">팀 수정시, 올해 기록은 초기화\n됩니다. 진행하시겠습니까?</string>
+    <string name="team_select_dialog_apply">%s\n진행하시겠습니까?</string>
 
     <string name="dlg_continue">계속</string>
     <string name="dlg_close">닫기</string>

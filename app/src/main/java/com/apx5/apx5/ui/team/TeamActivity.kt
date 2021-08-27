@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
-import com.apx5.apx5.constants.*
+import com.apx5.apx5.constants.PrConstants
+import com.apx5.apx5.constants.PrPrefKeys
+import com.apx5.apx5.constants.PrTeam
+import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.ActivityTeamBinding
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.ext.DividerItemDecorator
@@ -126,7 +129,15 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
 
     /* 팀선택 최종 확인*/
     private fun selectMyTeam(team: AdtTeamSelection) {
-        DialogActivity.dialogTeamSelect(this, team, ::finishSetMyTeam)
+        teamSelectMode?.let { _mode ->
+            val msg = if (teamSelectMode == PrTeamChangeMode.APPLY) {
+                String.format(resources.getString(R.string.team_select_dialog_apply), team.teamName)
+            } else {
+                resources.getString(R.string.team_select_dialog_change)
+            }
+
+            DialogActivity.dialogTeamSelect(this, team, msg, ::finishSetMyTeam)
+        }
     }
 
     /**
