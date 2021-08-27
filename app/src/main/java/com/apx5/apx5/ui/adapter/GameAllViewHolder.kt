@@ -1,30 +1,27 @@
 package com.apx5.apx5.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
-import com.apx5.apx5.datum.adapter.AdtGames
+import com.apx5.apx5.datum.adapter.AdtPlays
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.ui.utilities.PrUtils
-import com.apx5.apx5.ui.utilities.PrUtilsImpl
 import kotlinx.android.synthetic.main.item_game_all.view.*
 import javax.inject.Inject
 
 /**
  * GameAllViewHolder
- * @desc 게임관련 List 통합 Adapter
+ * @desc RecordAll, 시즌별 전체기록
  */
-class GameAllViewHolder(
+class GameAllViewHolder @Inject constructor(
     view: View,
-    private val delGame: ((AdtPlayDelTarget) -> Unit)?= null
+    val prUtils: PrUtils,
+    private val delGame: ((AdtPlayDelTarget) -> Unit)?= null,
 ): RecyclerView.ViewHolder(view) {
 
-    var prUtils: PrUtils = PrUtilsImpl()
-
-    fun bind(game: AdtGames) {
+    fun bind(game: AdtPlays) {
         /* 경기일*/
         val playDate = prUtils.getDateToReadableMonthDay(game.playDate)
         val stadium = game.stadium
@@ -45,7 +42,7 @@ class GameAllViewHolder(
             tv_home_score.text = game.homeScore.toString()
 
             /* 경기일*/
-            tv_play_date.text = "${playDate}\n${stadium}"
+            tv_play_date.text = String.format("%s\n%s", playDate, stadium)
 
             tv_away_score.setTextAppearance(awayStyle)
             tv_home_score.setTextAppearance(homeStyle)
@@ -84,11 +81,12 @@ class GameAllViewHolder(
     companion object {
         fun create(
             parent: ViewGroup,
-            delGame: ((AdtPlayDelTarget) -> Unit)?= null
+            prUtils: PrUtils,
+            delGame: ((AdtPlayDelTarget) -> Unit)?= null,
         ): GameAllViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val view = layoutInflater.inflate(R.layout.item_game_all, parent, false)
-            return GameAllViewHolder(view, delGame)
+            return GameAllViewHolder(view, prUtils, delGame)
         }
     }
 }

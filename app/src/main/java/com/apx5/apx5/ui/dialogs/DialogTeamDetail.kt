@@ -13,21 +13,28 @@ import com.apx5.apx5.constants.PrAdapterViewType
 import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.datum.adapter.AdtGames
+import com.apx5.apx5.datum.adapter.AdtPlays
 import com.apx5.apx5.datum.ops.OpsTeamDetail
-import com.apx5.apx5.ui.adapter.PlayItemsAdapter
+import com.apx5.apx5.ui.adapter.PrCentralAdapter
+import com.apx5.apx5.ui.utilities.PrUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * DialogSeasonChange
  */
 
+@AndroidEntryPoint
 class DialogTeamDetail(
     private val plays: List<OpsTeamDetail>,
     val versus: String
 ): BottomSheetDialogFragment() {
 
-    private lateinit var playItemsAdapter: PlayItemsAdapter
+    @Inject
+    lateinit var prUtils: PrUtils
+
+    private lateinit var prCentralAdapter: PrCentralAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,32 +53,38 @@ class DialogTeamDetail(
         val tvVersusTitle = view.findViewById<TextView>(R.id.tv_versus_title)
 
         /* 상대팀명*/
-        tvVersusTitle.text = "vs ${PrTeam.team(versus).fullName}"
+        tvVersusTitle.text = String.format("vs %s", PrTeam.team(versus).fullName)
 
         /* 상세내역 리스트*/
         val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        playItemsAdapter = PlayItemsAdapter(requireContext(), PrAdapterViewType.DETAIL)
+        prCentralAdapter = PrCentralAdapter(requireContext(), PrAdapterViewType.DETAIL, prUtils)
 
         rvList?.apply {
             layoutManager = linearLayoutManager
-            adapter = playItemsAdapter
+            adapter = prCentralAdapter
         }
 
-        for (play in plays) {
-            playItemsAdapter.addItem(
-                AdtGames(
-                    awayScore = play.awayScore,
-                    awayEmblem = PrTeam.team(play.awayTeam),
-                    homeScore = play.homeScore,
-                    homeEmblem = PrTeam.team(play.homeTeam),
-                    playResult = PrResultCode.getResultByDisplayCode(play.playResult),
-                    playDate = "${play.playDate}",
-                    stadium = PrStadium.stadium(play.stadium).abbrName
+        val playList = mutableListOf<AdtPlays>().also { list ->
+            for (play in plays) {
+                list.add(
+                    AdtPlays(
+                        awayScore = play.awayScore,
+                        awayEmblem = PrTeam.team(play.awayTeam),
+                        homeScore = play.homeScore,
+                        homeEmblem = PrTeam.team(play.homeTeam),
+                        playResult = PrResultCode.getResultByDisplayCode(play.playResult),
+                        playDate = "${play.playDate}",
+                        stadium = PrStadium.stadium(play.stadium).abbrName
+                    )
                 )
-            )
+            }
         }
 
-        playItemsAdapter.notifyDataSetChanged()
+        prCentralAdapter.apply {
+            addPlays(playList)
+            notifyDataSetChanged()
+        }
+
         return view
     }
 }

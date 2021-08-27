@@ -1,27 +1,24 @@
 package com.apx5.apx5.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
-import com.apx5.apx5.datum.adapter.AdtGames
+import com.apx5.apx5.datum.adapter.AdtPlays
 import com.apx5.apx5.ui.utilities.PrUtils
-import com.apx5.apx5.ui.utilities.PrUtilsImpl
 import kotlinx.android.synthetic.main.item_game_recent.view.*
-import javax.inject.Inject
 
 /**
  * GameRecentViewHolder
+ * @desc Statics, 최근 경기
  */
 class GameRecentViewHolder(
-    view: View
+    view: View,
+    val prUtils: PrUtils
 ): RecyclerView.ViewHolder(view) {
 
-    var prUtils: PrUtils = PrUtilsImpl()
-
-    fun bind(game: AdtGames) {
+    fun bind(game: AdtPlays) {
         /* 경기일*/
         val playDate = prUtils.getDateToReadableMonthDay(game.playDate)
         val stadium = game.stadium
@@ -32,7 +29,7 @@ class GameRecentViewHolder(
             tv_home_score.text = game.homeScore.toString()
 
             /* 경기일*/
-            tv_play_date.text = "${playDate}\n${stadium}"
+            tv_play_date.text = String.format("%s\n%s", playDate, stadium)
 
             /* 경기결과 구분처리*/
             val (awayStyle, homeStyle) = when {
@@ -53,10 +50,13 @@ class GameRecentViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup): GameRecentViewHolder {
+        fun create(
+            parent: ViewGroup,
+            prUtils: PrUtils
+        ): GameRecentViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val view = layoutInflater.inflate(R.layout.item_game_recent, parent, false)
-            return GameRecentViewHolder(view)
+            return GameRecentViewHolder(view, prUtils)
         }
     }
 }

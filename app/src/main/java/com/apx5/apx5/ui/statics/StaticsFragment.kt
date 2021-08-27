@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
+import com.apx5.apx5.constants.PrAdapterViewType
 import com.apx5.apx5.constants.PrPrefKeys
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
@@ -17,7 +18,7 @@ import com.apx5.apx5.datum.ops.OpsTeamWinningRate
 import com.apx5.apx5.datum.ops.OpsUser
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
-import com.apx5.apx5.ui.adapter.TeamWinningRateAdapter
+import com.apx5.apx5.ui.adapter.PrCentralAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,8 +38,8 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
     @Inject
     lateinit var prUtils: PrUtils
 
-    @Inject
-    lateinit var teamWinningRateAdapter: TeamWinningRateAdapter
+//    @Inject
+    private lateinit var prCentralAdapter: PrCentralAdapter
 
     private val svm: StaticsViewModel by viewModels()
 
@@ -62,11 +63,11 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
     private fun initView() {
         /* Adapter*/
         val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        teamWinningRateAdapter = TeamWinningRateAdapter(prUtils)
+        prCentralAdapter = PrCentralAdapter(requireContext(), PrAdapterViewType.WINNING_RATE, prUtils)
 
         binding().rvTeamPerList.apply {
             layoutManager = linearLayoutManager
-            adapter = teamWinningRateAdapter
+            adapter = prCentralAdapter
         }
     }
 
@@ -108,11 +109,18 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
      * 팀통산승률 그래프 처리
      */
     private fun setTeamWinningRate(teams: List<AdtTeamWinningRate>) {
-        teamWinningRateAdapter.clearItems()
-        teams.forEach { _team ->
-            if (_team.team.code != teamCode) {
-                teamWinningRateAdapter.addItem(_team)
+
+        val teamList = mutableListOf<AdtTeamWinningRate>().also { _list ->
+            teams.forEach { _team ->
+                if (_team.team.code != teamCode) {
+                    _list.add(_team)
+                }
             }
+        }
+
+        prCentralAdapter.apply {
+            addTeamRate(teamList)
+            notifyDataSetChanged()
         }
     }
 

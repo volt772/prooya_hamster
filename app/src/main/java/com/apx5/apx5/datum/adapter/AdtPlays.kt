@@ -8,7 +8,7 @@ import com.apx5.apx5.constants.PrTeam
  * @desc 게임리스트 Adapter
  */
 
-data class AdtGames (
+data class AdtPlays (
     val awayScore: Int,
     val awayTeam: String?= "",
     val awayEmblem: PrTeam,

@@ -11,15 +11,14 @@ import com.apx5.apx5.base.BaseFragment
 import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.FragmentRecordAllBinding
 import com.apx5.apx5.datum.DtAllGames
-import com.apx5.apx5.datum.adapter.AdtGames
+import com.apx5.apx5.datum.adapter.AdtPlays
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.datum.ops.OpsHistories
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.ext.setVisibility
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
-import com.apx5.apx5.ui.adapter.PlayItemsAdapter
-import com.apx5.apx5.ui.adapter.TeamWinningRateAdapter
+import com.apx5.apx5.ui.adapter.PrCentralAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.listener.PrSingleClickListener
@@ -48,7 +47,7 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
     override fun getLayoutId() = R.layout.fragment_record_all
     override fun getBindingVariable() = BR.viewModel
 
-    private lateinit var playItemsAdapter: PlayItemsAdapter
+    private lateinit var prCentralAdapter: PrCentralAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,13 +81,13 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
     private fun initView() {
         /* Adapter*/
         val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        playItemsAdapter = PlayItemsAdapter(requireContext(), PrAdapterViewType.ALL, ::delHistoryItem)
+        prCentralAdapter = PrCentralAdapter(requireContext(), PrAdapterViewType.ALL, prUtils, ::delHistoryItem)
 
         binding().apply {
             rvAllList.apply {
                 addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
                 layoutManager = linearLayoutManager
-                adapter = playItemsAdapter
+                adapter = prCentralAdapter
             }
 
             /* 시즌 변경*/
@@ -123,7 +122,7 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
                 ::delHistory)
         }
 
-        playItemsAdapter.notifyDataSetChanged()
+        prCentralAdapter.notifyDataSetChanged()
     }
 
     /* 기록 삭제*/
@@ -147,30 +146,33 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
             year
         )
 
-        playItemsAdapter.clearItems()
-
         isListExists(plays.isNotEmpty())
 
-        for (play in plays) {
-            playItemsAdapter.addItem(
-                AdtGames(
-                    awayScore = play.awayScore,
-                    awayTeam = play.awayTeam,
-                    awayEmblem = PrTeam.team(play.awayTeam),
-                    homeScore = play.homeScore,
-                    homeTeam = play.homeTeam,
-                    homeEmblem = PrTeam.team(play.homeTeam),
-                    playDate = "${play.playDate}",
-                    playId = play.playId,
-                    playResult =  PrResultCode.getResultByDisplayCode(play.playResult),
-                    playSeason = play.playSeason,
-                    playVersus = play.playVs,
-                    stadium = PrStadium.stadium(play.stadium).abbrName
+        val playList = mutableListOf<AdtPlays>().also { list ->
+            for (play in plays) {
+                list.add(
+                    AdtPlays(
+                        awayScore = play.awayScore,
+                        awayTeam = play.awayTeam,
+                        awayEmblem = PrTeam.team(play.awayTeam),
+                        homeScore = play.homeScore,
+                        homeTeam = play.homeTeam,
+                        homeEmblem = PrTeam.team(play.homeTeam),
+                        playDate = "${play.playDate}",
+                        playId = play.playId,
+                        playResult =  PrResultCode.getResultByDisplayCode(play.playResult),
+                        playSeason = play.playSeason,
+                        playVersus = play.playVs,
+                        stadium = PrStadium.stadium(play.stadium).abbrName
+                    )
                 )
-            )
+            }
         }
 
-        playItemsAdapter.notifyDataSetChanged()
+        prCentralAdapter.apply {
+            addPlays(playList)
+            notifyDataSetChanged()
+        }
     }
 
     private fun fetchHistories(year: Int) {

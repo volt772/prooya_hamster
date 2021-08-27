@@ -1,27 +1,24 @@
 package com.apx5.apx5.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.R
-import com.apx5.apx5.datum.adapter.AdtGames
+import com.apx5.apx5.datum.adapter.AdtPlays
 import com.apx5.apx5.ui.utilities.PrUtils
-import com.apx5.apx5.ui.utilities.PrUtilsImpl
 import kotlinx.android.synthetic.main.item_game_detail.view.*
-import javax.inject.Inject
 
 /**
  * GameDetailViewHolder
+ * @desc RecordTeam, 팀별상세기록
  */
 class GameDetailViewHolder(
-    view: View
+    view: View,
+    val prUtils: PrUtils
 ): RecyclerView.ViewHolder(view) {
 
-    var prUtils: PrUtils = PrUtilsImpl()
-
-    fun bind(game: AdtGames) {
+    fun bind(game: AdtPlays) {
         /* 경기일*/
         val playDate = prUtils.getDateToReadableMonthDay(game.playDate)
         val stadium = game.stadium
@@ -32,7 +29,7 @@ class GameDetailViewHolder(
             tv_home_score.text = game.homeScore.toString()
 
             /* 경기일*/
-            tv_play_date.text = "${playDate}\n${stadium}"
+            tv_play_date.text = String.format("%s\n%s", playDate, stadium)
 
             iv_team_emblem_away.setImageResource(prUtils.getDrawableByName(context, game.awayEmblem.emblem))
             iv_team_emblem_home.setImageResource(prUtils.getDrawableByName(context, game.homeEmblem.emblem))
@@ -46,10 +43,13 @@ class GameDetailViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup): GameDetailViewHolder {
+        fun create(
+            parent: ViewGroup,
+            prUtils: PrUtils
+        ): GameDetailViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val view = layoutInflater.inflate(R.layout.item_game_detail, parent, false)
-            return GameDetailViewHolder(view)
+            return GameDetailViewHolder(view, prUtils)
         }
     }
 }

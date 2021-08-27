@@ -7,5 +7,6 @@ package com.apx5.apx5.constants
 enum class PrAdapterViewType {
     RECENT,
     DETAIL,
-    ALL;
+    ALL,
+    WINNING_RATE
 }
