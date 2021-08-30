@@ -9,5 +9,6 @@ enum class PrAdapterViewType {
     DETAIL,
     ALL,
     WINNING_RATE,
-    TEAM
+    TEAM,
+    LICENSE
 }

@@ -151,4 +151,19 @@ class PrUtilsImpl @Inject constructor() : PrUtils {
     override fun dpToPx(dp: Int) = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), appContext.resources.displayMetrics
     ).toInt()
+
+    /**
+     * getFileContents
+     * @desc Read File Content using Builder
+     */
+    override fun getFileContents(dir: String, fileName: String): String {
+        val contents = StringBuilder().apply {
+            val filePath = String.format("%s/%s", dir, fileName)
+            appContext.assets.open(filePath).bufferedReader().use {
+                append(it.readText())
+            }
+        }
+
+        return contents.toString()
+    }
 }

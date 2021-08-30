@@ -219,24 +219,24 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
     }
 
     private fun setTeamSummaryItems(teams: List<OpsTeamRecords>?) {
-        val listTeam = ArrayList<DtTeamRecord>()
+        val listTeam = mutableListOf<DtTeamRecord>().also { _list ->
+            teams?.let { _team ->
+                _team.forEach {
+                    val teamEntity = DtTeamRecord(
+                        year = it.year,
+                        team = it.team,
+                        win = it.win,
+                        lose = it.lose,
+                        draw = it.draw,
+                        rate = it.rate
+                    )
 
-        teams?.let { _team ->
-            _team.forEach {
-                val teamEntity = DtTeamRecord(
-                    year = it.year,
-                    team = it.team,
-                    win = it.win,
-                    lose = it.lose,
-                    draw = it.draw,
-                    rate = it.rate
-                )
-
-                listTeam.add(teamEntity)
-            }
-
-            setTeamRecord(listTeam)
+                    _list.add(teamEntity)
+                }
+            } ?: emptyArray<DtTeamRecord>()
         }
+
+        setTeamRecord(listTeam)
     }
 
     /* 팀헤더 요약정보*/

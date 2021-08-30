@@ -6,34 +6,46 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.apx5.apx5.BR
 import com.apx5.apx5.R
+import com.apx5.apx5.base.BaseActivity
+import com.apx5.apx5.constants.PrAdapterViewType
+import com.apx5.apx5.databinding.ActivityLicenseBinding
 import com.apx5.apx5.datum.adapter.AdtLicenseLists
 import com.apx5.apx5.ext.setSystemBarColor
+import com.apx5.apx5.ui.adapter.PrCentralAdapter
+import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.IOException
+import javax.inject.Inject
 
 /**
  * LicenseActivity
  */
 
 @AndroidEntryPoint
-class LicenseActivity : AppCompatActivity() {
+class LicenseActivity : BaseActivity<ActivityLicenseBinding>() {
+
+    @Inject
+    lateinit var prUtils: PrUtils
+
+    override fun getLayoutId() = R.layout.activity_license
+    override fun getBindingVariable() = BR.viewModel
+
+    private lateinit var prCentralAdapter: PrCentralAdapter
 
     /* 라이센스 데이터 조합 (이름 / 내용)*/
-    private val licenseData: List<AdtLicenseLists>
+    private val licenseList: List<AdtLicenseLists>
         get() {
-            val items = arrayListOf<AdtLicenseLists>()
             val licenses = resources.getStringArray(R.array.licenses)
 
-            for (lic in licenses) {
-                val obj = AdtLicenseLists()
-                obj.name = lic
-                obj.content = getLicenseContent(lic)
-                items.add(obj)
+            return arrayListOf<AdtLicenseLists>().also { _list ->
+                licenses.forEach { _lic ->
+                    _list.add(AdtLicenseLists(name = _lic, content = prUtils.getFileContents("licenses", _lic)))
+                }
             }
-            return items
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,29 +70,33 @@ class LicenseActivity : AppCompatActivity() {
     }
 
     private fun initComponent() {
-        val licenseView = findViewById<RecyclerView>(R.id.rcv_license)
-        licenseView.layoutManager = LinearLayoutManager(this)
-        licenseView.setHasFixedSize(true)
-        val licenseItems = licenseData
+        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        prCentralAdapter = PrCentralAdapter(
+            context = this,
+            viewType = PrAdapterViewType.LICENSE,
+            prUtils = prUtils
+        )
 
-        val licenseListAdapter = LicenseListAdapter(licenseItems)
-        licenseView.adapter = licenseListAdapter
-    }
-
-    /* 조항 내용 생성*/
-    private fun getLicenseContent(licenseName: String): String {
-        val licenseRes = StringBuilder()
-        try {
-            val filePath = "licenses/$licenseName"
-            application.assets.open(filePath).bufferedReader().use {
-                val line = it.readText()
-                licenseRes.append(line)
+        binding().apply {
+            rcvLicense.apply {
+                addItemDecoration(DividerItemDecoration(this@LicenseActivity, DividerItemDecoration.VERTICAL))
+                layoutManager = linearLayoutManager
+                adapter = prCentralAdapter
             }
-        } catch (e: IOException) {
-            return ""
         }
 
-        return licenseRes.toString()
+        prCentralAdapter.apply {
+            addLicenses(licenseList)
+            notifyDataSetChanged()
+        }
+
+//        val licenseView = findViewById<RecyclerView>(R.id.rcv_license)
+//        licenseView.layoutManager = LinearLayoutManager(this)
+//        licenseView.setHasFixedSize(true)
+//        val licenseItems = licenseData
+//
+//        val licenseListAdapter = LicenseListAdapter(licenseItems)
+//        licenseView.adapter = licenseListAdapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

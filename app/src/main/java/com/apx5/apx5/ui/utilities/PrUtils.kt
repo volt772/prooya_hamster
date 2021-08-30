@@ -29,4 +29,6 @@ interface PrUtils {
     fun distinguishWinning(away: Int, home: Int): PrWinningStatus
 
     fun dpToPx(dp: Int): Int
+
+    fun getFileContents(dir: String, fileName: String): String
 }
