@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.apx5.apx5.R
-import com.apx5.apx5.constants.PrTeamChangeMode
+import com.apx5.apx5.constants.PrDialogs
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.ui.listener.PrSingleClickListener
@@ -41,7 +41,8 @@ class DialogActivity : AppCompatActivity() {
 
         /* Layout Params 생성*/
         private fun prLayoutParams(
-            dialog: Dialog): WindowManager.LayoutParams {
+            dialog: Dialog
+        ): WindowManager.LayoutParams {
 
             val lp = WindowManager.LayoutParams()
             lp.apply {
@@ -56,32 +57,38 @@ class DialogActivity : AppCompatActivity() {
         /* Dialog - 서버사용불가*/
         fun dialogNoInternet(
             context: Context,
-            func:() -> Unit) {
+            func:() -> Unit
+        ) {
 
-            val dialog = prDialog(context, R.layout.dialog_no_internet)
+            val dialog = prDialog(context, PrDialogs.NO_INTERNET.layout)
             val lp = prLayoutParams(dialog)
 
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener(object : PrSingleClickListener() {
-                override fun onSingleClick(view: View) { func() }
-            })
+            dialog.apply {
+                findViewById<View>(R.id.bt_close).setOnClickListener(object : PrSingleClickListener() {
+                    override fun onSingleClick(view: View) { func() }
+                })
 
-            dialog.show()
-            dialog.window?.attributes = lp
+                show()
+                window?.attributes = lp
+            }
         }
 
         /* Dialog - 일반에러*/
         fun dialogError(
-            context: Context) {
+            context: Context
+        ) {
 
-            val dialog = prDialog(context, R.layout.dialog_comm_error)
+            val dialog = prDialog(context, PrDialogs.COMM_ERROR.layout)
             val lp = prLayoutParams(dialog)
 
-            dialog.findViewById<View>(R.id.bt_close).setOnClickListener(object : PrSingleClickListener() {
-                override fun onSingleClick(view: View) { dialog.dismiss() }
-            })
+            dialog.apply {
+                findViewById<View>(R.id.bt_close).setOnClickListener(object : PrSingleClickListener() {
+                    override fun onSingleClick(view: View) { dialog.dismiss() }
+                })
 
-            dialog.show()
-            dialog.window?.attributes = lp
+                show()
+                window?.attributes = lp
+            }
         }
 
         /* Dialog - 팀선택*/
@@ -89,9 +96,10 @@ class DialogActivity : AppCompatActivity() {
             context: Context,
             team: AdtTeamSelection,
             msg: String,
-            func:(String) -> Unit) {
+            func:(String) -> Unit
+        ) {
 
-            val dialog = prDialog(context, R.layout.dialog_team_select)
+            val dialog = prDialog(context, PrDialogs.TEAM_SELECT.layout)
             val lp = prLayoutParams(dialog)
 
             /* 안내문구*/
@@ -134,9 +142,10 @@ class DialogActivity : AppCompatActivity() {
         fun dialogHistoryDelete(
             context: Context,
             delHistory: PtDelHistory,
-            func:(PtDelHistory) -> Unit) {
+            func:(PtDelHistory) -> Unit
+        ) {
 
-            val dialog = prDialog(context, R.layout.dialog_history_delete)
+            val dialog = prDialog(context, PrDialogs.DELETE_HISTORY.layout)
             val lp = prLayoutParams(dialog)
 
             dialog.apply {
@@ -161,9 +170,10 @@ class DialogActivity : AppCompatActivity() {
         /* Dialog - 사용자삭제*/
         fun dialogUserDelete(
             context: Context,
-            func:() -> Unit) {
+            func:() -> Unit
+        ) {
 
-            val dialog = prDialog(context, R.layout.dialog_del_user)
+            val dialog = prDialog(context, PrDialogs.DELETE_USER.layout)
             val lp = prLayoutParams(dialog)
 
             dialog.apply {
@@ -187,9 +197,10 @@ class DialogActivity : AppCompatActivity() {
 
         /* Dialog - 기록없음*/
         fun dialogNoRecordDetail(
-            context: Context) {
+            context: Context
+        ) {
 
-            val dialog = prDialog(context, R.layout.dialog_record_no_detail)
+            val dialog = prDialog(context, PrDialogs.NO_DETAIL.layout)
             val lp = prLayoutParams(dialog)
 
             dialog.apply {
@@ -204,9 +215,10 @@ class DialogActivity : AppCompatActivity() {
 
         /* Dialog - 경기없음*/
         fun dialogSaveDailyHistory(
-            context: Context) {
+            context: Context
+        ) {
 
-            val dialog = prDialog(context, R.layout.dialog_save_success)
+            val dialog = prDialog(context, PrDialogs.SAVE_SUCCESS.layout)
             val lp = prLayoutParams(dialog)
 
             dialog.apply {
@@ -222,9 +234,10 @@ class DialogActivity : AppCompatActivity() {
         /* Dialog - 더블헤더선택*/
         fun dialogSelectDoubleHeader(
                 context: Context,
-                selectGame:(Int) -> Unit) {
+                selectGame:(Int) -> Unit
+        ) {
 
-            val dialog = prDialog(context, R.layout.dialog_select_double_header)
+            val dialog = prDialog(context, PrDialogs.TEAM_SELECT_DOUBLE_HEADER.layout)
             val lp = prLayoutParams(dialog)
 
             dialog.apply {

@@ -22,7 +22,7 @@ class TeamWinningRateViewHolder(
         itemView.apply {
             iv_team_emblem.setImageResource(prUtils.getDrawableByName(context, team.team.emblem))
 
-            val percentage = if (team.winningRate == 0) { 1f } else { team.winningRate.toFloat() }
+            val percentage = if (team.winningRate == 0) 1f else team.winningRate.toFloat()
 
             pv_percentage.progress = percentage
             tv_percentage.text = String.format("%d%%", team.winningRate)

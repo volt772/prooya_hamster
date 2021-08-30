@@ -130,7 +130,7 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
     /* 팀선택 최종 확인*/
     private fun selectMyTeam(team: AdtTeamSelection) {
         teamSelectMode?.let { _mode ->
-            val msg = if (teamSelectMode == PrTeamChangeMode.APPLY) {
+            val msg = if (_mode == PrTeamChangeMode.APPLY) {
                 String.format(resources.getString(R.string.team_select_dialog_apply), team.teamName)
             } else {
                 resources.getString(R.string.team_select_dialog_change)

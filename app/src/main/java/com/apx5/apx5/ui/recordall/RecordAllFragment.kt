@@ -81,7 +81,12 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
     private fun initView() {
         /* Adapter*/
         val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        prCentralAdapter = PrCentralAdapter(requireContext(), PrAdapterViewType.ALL, prUtils, ::delHistoryItem)
+        prCentralAdapter = PrCentralAdapter(
+            context = requireContext(),
+            viewType = PrAdapterViewType.ALL,
+            prUtils = prUtils,
+            delGame = ::delHistoryItem
+        )
 
         binding().apply {
             rvAllList.apply {

@@ -9,7 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
  * @desc 탭메뉴
  */
 
-class DashBoardNav {
+class DashBoardBotNavigator {
     companion object {
         /**
          * Bottom Navigation
@@ -20,7 +20,7 @@ class DashBoardNav {
             view: BottomNavigationView,
             switchPage: (PrTabMenu) -> Unit
         ) {
-            view.setOnNavigationItemSelectedListener { item ->
+            view.setOnItemSelectedListener { item ->
                 item.isChecked = true
                 val menuSelect = when (item.itemId) {
                     R.id.nav_statics -> PrTabMenu.STATICS

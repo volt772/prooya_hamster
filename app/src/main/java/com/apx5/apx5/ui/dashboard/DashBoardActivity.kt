@@ -72,7 +72,7 @@ class DashBoardActivity : BaseActivity<ActivityDashboardBinding>() {
     private fun initBottomNav() {
         switchPage(PrTabMenu.STATICS)
 
-        DashBoardNav.bottomNavLayout(
+        DashBoardBotNavigator.bottomNavLayout(
             view = binding().navDashboard,
             switchPage = ::switchPage
         )

@@ -21,5 +21,5 @@ data class DtDailyGame(
     val stadium: PrStadium,
     val status: PrGameStatus,
     val additionalInfo: String,
-    val registedGame: Boolean
+    val registeredGame: Boolean
 )

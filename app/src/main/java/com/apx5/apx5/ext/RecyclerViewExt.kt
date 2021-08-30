@@ -1,7 +1,6 @@
 package com.apx5.apx5.ext
 
 import android.graphics.Canvas
-import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

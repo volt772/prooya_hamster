@@ -10,7 +10,6 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.ProoyaClient.Companion.appContext
 import com.apx5.apx5.R
 import com.bumptech.glide.Glide

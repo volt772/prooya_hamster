@@ -8,5 +8,6 @@ enum class PrAdapterViewType {
     RECENT,
     DETAIL,
     ALL,
-    WINNING_RATE
+    WINNING_RATE,
+    TEAM
 }

@@ -6,6 +6,12 @@ package com.apx5.apx5.constants
  */
 
 object PrConstants {
+    const val DRAWABLE = "drawable"
+
+    const val YEAR = "year"
+    const val MONTH = "month"
+    const val DAY = "day"
+
     object App {
         const val FLK_HOST = "http://apx-prooya.co.kr:2772"
     }

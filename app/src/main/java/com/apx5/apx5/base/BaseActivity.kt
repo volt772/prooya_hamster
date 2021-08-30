@@ -44,8 +44,10 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     private fun performDataBinding() {
         viewDataBinding = DataBindingUtil.setContentView(this, getLayoutId())
-        viewDataBinding.lifecycleOwner = this
-        viewDataBinding.executePendingBindings()
+        viewDataBinding.apply {
+            lifecycleOwner = this@BaseActivity
+            executePendingBindings()
+        }
     }
 
     fun binding() = viewDataBinding

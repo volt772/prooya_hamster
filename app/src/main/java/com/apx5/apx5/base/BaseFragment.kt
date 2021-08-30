@@ -43,8 +43,10 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
-        viewDataBinding.executePendingBindings()
+        viewDataBinding.apply {
+            lifecycleOwner = this@BaseFragment.viewLifecycleOwner
+            executePendingBindings()
+        }
     }
 
     fun binding() = viewDataBinding

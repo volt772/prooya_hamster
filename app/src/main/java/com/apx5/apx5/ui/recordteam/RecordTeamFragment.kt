@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
+import com.apx5.apx5.constants.PrAdapterViewType
 import com.apx5.apx5.constants.PrConstants
 import com.apx5.apx5.constants.PrDialogYearSelectType
 import com.apx5.apx5.constants.PrTeam
@@ -17,6 +20,7 @@ import com.apx5.apx5.datum.ops.OpsTeamRecords
 import com.apx5.apx5.datum.ops.OpsTeamSummary
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
+import com.apx5.apx5.ui.adapter.PrCentralAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.dialogs.DialogTeamDetail
@@ -49,7 +53,7 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
     private var teamCode: String
     private var detailVersusTeam: String
 
-    private lateinit var recordTeamAdapter: RecordTeamAdapter
+    private lateinit var prCentralAdapter: PrCentralAdapter
 
     init {
         teamCode = ""
@@ -80,10 +84,20 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
     /* UI 초기화*/
     private fun initView() {
         /* 팀리스트*/
-        recordTeamAdapter = RecordTeamAdapter(::getDetailLists)
+        val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        prCentralAdapter = PrCentralAdapter(
+            context = requireContext(),
+            viewType = PrAdapterViewType.TEAM,
+            prUtils = prUtils,
+            selectGame = ::getDetailLists
+        )
 
         binding().apply {
-            lvTeamRecord.adapter = recordTeamAdapter
+            rvTeamRecord.apply {
+                addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+                layoutManager = linearLayoutManager
+                adapter = prCentralAdapter
+            }
 
             /* 시즌변경 버튼*/
             btnChangeSeason.setOnClickListener(object : PrSingleClickListener() {
@@ -132,28 +146,31 @@ class RecordTeamFragment : BaseFragment<FragmentRecordTeamBinding>() {
 
     /* 팀 기록 리스트*/
     private fun setTeamRecord(teams: List<DtTeamRecord>) {
-        recordTeamAdapter.clearItems()
-
-        for (team in teams) {
-            if (teamCode != team.team) {
-                recordTeamAdapter.addItem(
-                    AdtTeamLists(
-                        year = team.year,
-                        team = team.team,
-                        win = team.win,
-                        draw = team.draw,
-                        lose = team.lose,
-                        rate = team.rate,
-                        teamEmblem = prUtils.getDrawableByName(
-                            requireContext(),
-                            PrConstants.Teams.EMBLEM_PREFIX.plus(team.team)
+        val teamSummaries = mutableListOf<AdtTeamLists>().also { list ->
+            for (team in teams) {
+                if (teamCode != team.team) {
+                    list.add(
+                        AdtTeamLists(
+                            year = team.year,
+                            team = team.team,
+                            win = team.win,
+                            draw = team.draw,
+                            lose = team.lose,
+                            rate = team.rate,
+                            teamEmblem = prUtils.getDrawableByName(
+                                requireContext(),
+                                PrConstants.Teams.EMBLEM_PREFIX.plus(team.team)
+                            )
                         )
                     )
-                )
+                }
             }
         }
 
-        recordTeamAdapter.notifyDataSetChanged()
+        prCentralAdapter.apply {
+            addTeamSummary(teamSummaries)
+            notifyDataSetChanged()
+        }
     }
 
     /* 상단 헤더 요약*/

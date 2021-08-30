@@ -8,6 +8,10 @@ import androidx.fragment.app.viewModels
 import com.apx5.apx5.ProoyaClient
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
+import com.apx5.apx5.constants.PrConstants.DAY
+import com.apx5.apx5.constants.PrConstants.DRAWABLE
+import com.apx5.apx5.constants.PrConstants.MONTH
+import com.apx5.apx5.constants.PrConstants.YEAR
 import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrStadium
@@ -175,9 +179,9 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
             DialogActivity.dialogError(requireContext())
         } else {
             DaysCalendar.apply {
-                todayYear = prUtils.getTodaySeparate("year")
-                todayMonth = prUtils.getTodaySeparate("month")
-                todayDay = prUtils.getTodaySeparate("day")
+                todayYear = prUtils.getTodaySeparate(YEAR)
+                todayMonth = prUtils.getTodaySeparate(MONTH)
+                todayDay = prUtils.getTodaySeparate(DAY)
             }
         }
 
@@ -216,8 +220,8 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
     private fun showTeamEmblem(away: PrTeam, home: PrTeam) {
         binding().apply {
             /* 엠블럼*/
-            ivTeamAway.setImageResource(resources.getIdentifier(away.emblem, "drawable", requireContext().packageName))
-            ivTeamHome.setImageResource(resources.getIdentifier(home.emblem, "drawable", requireContext().packageName))
+            ivTeamAway.setImageResource(resources.getIdentifier(away.emblem, DRAWABLE, requireContext().packageName))
+            ivTeamHome.setImageResource(resources.getIdentifier(home.emblem, DRAWABLE, requireContext().packageName))
 
             /* 팀컬러*/
             tvTeamAway.setBackgroundColor(Color.parseColor(away.mainColor))
@@ -259,7 +263,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
                         stadium = PrStadium.stadium(stadium),
                         status = PrGameStatus.status(getPlayStatusCode(awayscore)),
                         additionalInfo = "",
-                        registedGame = registedId > 0
+                        registeredGame = registedId > 0
                     )
                 )
             }
