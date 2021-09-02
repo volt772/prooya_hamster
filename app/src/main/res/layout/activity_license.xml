@@ -6,6 +6,7 @@
     tools:context="com.apx5.apx5.ui.setting.LicenseActivity" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_license_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
@@ -23,16 +24,29 @@
             <include layout="@layout/team_toolbar" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- License List-->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_license"
+        <!-- 라이센스 리스트-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_license_list"
             android:layout_width="match_parent"
             android:layout_height="@dimen/md_0"
-            android:scrollbars="vertical"
-            android:scrollingCache="true"
-            app:layout_constraintTop_toBottomOf="@id/abl_license"
+            android:paddingHorizontal="@dimen/md_16"
+            android:paddingTop="@dimen/md_16"
+            android:background="@color/grey_200"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/abl_license"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" >
+
+            <!-- License List-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_license"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:scrollingCache="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

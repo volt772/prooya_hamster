@@ -11,13 +11,16 @@
         android:focusable="false"
         android:descendantFocusability="blocksDescendants">
 
-        <ImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/iv_team_emblem"
-            android:layout_width="@dimen/md_35"
-            android:layout_height="@dimen/md_35"
+            android:layout_width="@dimen/md_45"
+            android:layout_height="@dimen/md_45"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_info_type_b"
+            android:src="@drawable/ic_info_type_c"
             android:layout_marginStart="@dimen/md_16"
+            app:civ_border="false"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="0"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

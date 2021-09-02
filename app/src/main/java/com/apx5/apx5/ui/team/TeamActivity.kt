@@ -12,10 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
-import com.apx5.apx5.constants.PrConstants
-import com.apx5.apx5.constants.PrPrefKeys
-import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.constants.PrTeamChangeMode
+import com.apx5.apx5.constants.*
 import com.apx5.apx5.databinding.ActivityTeamBinding
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.ext.DividerItemDecorator
@@ -24,6 +21,7 @@ import com.apx5.apx5.ext.itemDecorationExt
 import com.apx5.apx5.ext.setSystemBarColor
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
+import com.apx5.apx5.ui.adapter.PrCentralAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +41,7 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
     lateinit var prUtils: PrUtils
 
     private var teamSelectMode: PrTeamChangeMode?= null
-    private lateinit var teamListAdapter: TeamListAdapter
+    private lateinit var prCentralAdapter: PrCentralAdapter
 
     private val tvm: TeamViewModel by viewModels()
     override fun getLayoutId() = R.layout.activity_team
@@ -80,26 +78,38 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
     private fun initComponent() {
         val teams = getTeamList()
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        teamListAdapter = TeamListAdapter(getAppContext(), teams, ::selectMyTeam)
 
-        binding().rvTeam.apply {
-            layoutManager = linearLayoutManager
-            adapter = teamListAdapter
+        prCentralAdapter = PrCentralAdapter(
+            context = this,
+            viewType = PrAdapterViewType.TEAM_SELECTION,
+            prUtils = prUtils,
+            selectTeam = ::selectMyTeam
+        )
 
-            itemDecorationExt(
-                listOf(
-                    DividerItemDecorator(
-                        drawableRes(R.drawable.divider),
-                        prUtils.dpToPx(16)
-                    ),
-//                    MpPaddingItemDecoration(
-//                        prUtils = prUtils,
-//                        allHorizontalPadding = 2,
-//                        additionalVerticalPadding = 8,
-//                        defaultVerticalPadding = 16
-//                    )
+        binding().apply {
+            rvTeam.apply {
+                layoutManager = linearLayoutManager
+                adapter = prCentralAdapter
+                itemDecorationExt(
+                    listOf(
+                        DividerItemDecorator(
+                            drawableRes(R.drawable.divider),
+                            prUtils.dpToPx(16)
+                        ),
+    //                    MpPaddingItemDecoration(
+    //                        prUtils = prUtils,
+    //                        allHorizontalPadding = 2,
+    //                        additionalVerticalPadding = 8,
+    //                        defaultVerticalPadding = 16
+    //                    )
+                    )
                 )
-            )
+            }
+        }
+
+        prCentralAdapter.apply {
+            addTeamSelection(teams)
+            notifyDataSetChanged()
         }
     }
 

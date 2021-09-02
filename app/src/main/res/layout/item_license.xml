@@ -1,46 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/md_2"
-    app:cardElevation="@dimen/md_2"
-    app:cardUseCompatPadding="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_lic_card_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/md_15"
-        android:paddingLeft="@dimen/md_20"
-        android:paddingRight="@dimen/md_20"
-        android:paddingTop="@dimen/md_15">
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_rounded_white_setting"
+        android:padding="@dimen/md_16"
+        android:layout_marginBottom="@dimen/md_16" >
 
+        <!-- License Subject-->
         <TextView
             android:id="@+id/tv_license_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/blue_grey_900" />
+            android:textAppearance="@style/LicenseSubject"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Divider-->
         <ImageView
+            android:id="@+id/iv_license_divider"
             android:layout_width="@dimen/md_25"
             android:layout_height="@dimen/md_4"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/md_5"
             android:src="@drawable/swipe_up_handle"
-            app:tint="@color/red_700" />
+            app:tint="@color/red_700"
+            app:layout_constraintTop_toBottomOf="@id/tv_license_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- License Content-->
         <TextView
             android:id="@+id/tv_license_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/md_15"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="@color/grey_700" />
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
-
+            android:textAppearance="@style/LicenseContent"
+            app:layout_constraintTop_toBottomOf="@id/iv_license_divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

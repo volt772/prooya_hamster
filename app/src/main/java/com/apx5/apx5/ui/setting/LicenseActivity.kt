@@ -4,11 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
@@ -19,6 +17,7 @@ import com.apx5.apx5.ext.setSystemBarColor
 import com.apx5.apx5.ui.adapter.PrCentralAdapter
 import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_setting.*
 import javax.inject.Inject
 
 /**
@@ -50,7 +49,6 @@ class LicenseActivity : BaseActivity<ActivityLicenseBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_license)
 
         initToolbar()
         initComponent()
@@ -71,32 +69,24 @@ class LicenseActivity : BaseActivity<ActivityLicenseBinding>() {
 
     private fun initComponent() {
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//        prCentralAdapter = PrCentralAdapter(
-//            context = this,
-//            viewType = PrAdapterViewType.LICENSE,
-//            prUtils = prUtils
-//        )
 
-//        binding().apply {
-//            rcvLicense.apply {
-//                addItemDecoration(DividerItemDecoration(this@LicenseActivity, DividerItemDecoration.VERTICAL))
-//                layoutManager = linearLayoutManager
-//                adapter = prCentralAdapter
-//            }
-//        }
-//
-//        prCentralAdapter.apply {
-//            addLicenses(licenseList)
-//            notifyDataSetChanged()
-//        }
+        prCentralAdapter = PrCentralAdapter(
+            context = this,
+            viewType = PrAdapterViewType.LICENSE,
+            prUtils = prUtils
+        )
 
-//        val licenseView = findViewById<RecyclerView>(R.id.rcv_license)
-//        licenseView.layoutManager = LinearLayoutManager(this)
-//        licenseView.setHasFixedSize(true)
-//        val licenseItems = licenseData
-//
-//        val licenseListAdapter = LicenseListAdapter(licenseItems)
-//        licenseView.adapter = licenseListAdapter
+        binding().apply {
+            rvLicense.apply {
+                layoutManager = linearLayoutManager
+                adapter = prCentralAdapter
+            }
+        }
+
+        prCentralAdapter.apply {
+            addLicenses(licenseList)
+            notifyDataSetChanged()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

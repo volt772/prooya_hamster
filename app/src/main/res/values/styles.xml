@@ -256,6 +256,16 @@
         <item name="android:textColor">@color/grey_500</item>
     </style>
 
+    <style name="LicenseSubject">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/blue_grey_900</item>
+    </style>
+
+    <style name="LicenseContent">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/grey_700</item>
+    </style>
+
     <!-- Bottom Sheet(YearSelection) -->
     <style name="BottomSheetYearSelection" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bg_season_select_rounded</item>
