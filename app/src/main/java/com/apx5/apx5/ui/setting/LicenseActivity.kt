@@ -71,24 +71,24 @@ class LicenseActivity : BaseActivity<ActivityLicenseBinding>() {
 
     private fun initComponent() {
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        prCentralAdapter = PrCentralAdapter(
-            context = this,
-            viewType = PrAdapterViewType.LICENSE,
-            prUtils = prUtils
-        )
+//        prCentralAdapter = PrCentralAdapter(
+//            context = this,
+//            viewType = PrAdapterViewType.LICENSE,
+//            prUtils = prUtils
+//        )
 
-        binding().apply {
-            rcvLicense.apply {
-                addItemDecoration(DividerItemDecoration(this@LicenseActivity, DividerItemDecoration.VERTICAL))
-                layoutManager = linearLayoutManager
-                adapter = prCentralAdapter
-            }
-        }
-
-        prCentralAdapter.apply {
-            addLicenses(licenseList)
-            notifyDataSetChanged()
-        }
+//        binding().apply {
+//            rcvLicense.apply {
+//                addItemDecoration(DividerItemDecoration(this@LicenseActivity, DividerItemDecoration.VERTICAL))
+//                layoutManager = linearLayoutManager
+//                adapter = prCentralAdapter
+//            }
+//        }
+//
+//        prCentralAdapter.apply {
+//            addLicenses(licenseList)
+//            notifyDataSetChanged()
+//        }
 
 //        val licenseView = findViewById<RecyclerView>(R.id.rcv_license)
 //        licenseView.layoutManager = LinearLayoutManager(this)
