@@ -2,7 +2,9 @@ package com.apx5.apx5.network.api
 
 import com.apx5.apx5.datum.catcher.*
 import com.apx5.apx5.datum.pitcher.*
+import com.apx5.apx5.network.response.MkPagingResponse
 import com.apx5.apx5.network.response.MkResponse
+import com.apx5.apx5.paging.datum.HistoriesResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -30,6 +32,10 @@ interface PrApiService {
     /* 전체 간단데이터 */
     @POST(URL_HISTORIES_ALL)
     suspend fun getHistories(@Body play: PtPostTeams): MkResponse<CtHistories>
+
+    /* 전체 Paging데이터 */
+    @POST(URL_HISTORIES_ALL)
+    suspend fun getPagingHistories(@Body play: PtPostTeams): MkPagingResponse<HistoriesResponse>
 
     /* 경기삭제*/
     @POST(URL_HISTORIES_DELETE)

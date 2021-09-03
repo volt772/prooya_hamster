@@ -42,6 +42,9 @@ buildscript {
         gms_version = '4.3.9'
 
         dagger_hilt_version = '2.38.1'
+        paging_version = '3.0.1'
+        paging_compose = '1.0.0-alpha02'
+        moshi = '1.12.0'
     }
 
     repositories {

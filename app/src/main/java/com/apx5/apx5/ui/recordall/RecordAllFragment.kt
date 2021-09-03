@@ -3,6 +3,7 @@ package com.apx5.apx5.ui.recordall
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
@@ -24,6 +25,8 @@ import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.listener.PrSingleClickListener
 import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -58,6 +61,16 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
         fetchHistories(selectedYear)
 
         subscriber()
+
+        collectUiState()
+    }
+
+    private fun collectUiState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            ravm.getAllHistories().collectLatest { histories ->
+//                adapter?.submitData(movies)
+            }
+        }
     }
 
     /**
