@@ -4,6 +4,9 @@ import com.apx5.apx5.paging.datum.Histories
 import com.apx5.apx5.paging.datum.HistoriesResponse
 import com.apx5.apx5.paging.datum.HistoriesUi
 
+/**
+ * HistoriesMapper
+ */
 interface HistoriesMapper {
 
     suspend fun mapRemoteHistoriesListToDomain(remoteHistories: List<HistoriesResponse>): List<Histories>

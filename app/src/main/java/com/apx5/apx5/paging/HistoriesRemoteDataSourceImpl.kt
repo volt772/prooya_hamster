@@ -9,14 +9,9 @@ import com.apx5.apx5.repository.PrRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-/*
- * Created by Christopher Elias on 26/04/2021
- * christopher.mike.96@gmail.com
- *
- * Loop Ideas
- * Lima, Peru.
+/**
+ * HistoriesRemoteDataSourceImpl
  */
-
 
 const val NETWORK_PAGE_SIZE = 10
 

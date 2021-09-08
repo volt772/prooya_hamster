@@ -2,6 +2,9 @@ package com.apx5.apx5.paging.datum
 
 import com.squareup.moshi.Json
 
+/**
+ * HistoriesResponse
+ */
 data class HistoriesResponse (
     @field:Json(name = "awayScore") val awayScore: Int,
     @field:Json(name = "awayTeam") val awayTeam: String,

@@ -8,14 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-/*
- * Created by Christopher Elias on 26/04/2021
- * christopher.mike.96@gmail.com
- *
- * Loop Ideas
- * Lima, Peru.
+/**
+ * HistoriesRepositoryImpl
  */
-
 class HistoriesRepositoryImpl @Inject constructor(
     private val historiesDataSource: HistoriesRemoteDataSource,
     private val mapper: HistoriesMapper

@@ -3,6 +3,9 @@ package com.apx5.apx5.paging.datum
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * HistoriesUi
+ */
 @Parcelize
 data class HistoriesUi (
     val awayScore: Int,

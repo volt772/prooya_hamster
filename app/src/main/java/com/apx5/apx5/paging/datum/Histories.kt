@@ -1,7 +1,8 @@
 package com.apx5.apx5.paging.datum
 
-import com.squareup.moshi.Json
-
+/**
+ * Histories
+ */
 data class Histories (
     val awayScore: Int,
     val awayTeam: String,

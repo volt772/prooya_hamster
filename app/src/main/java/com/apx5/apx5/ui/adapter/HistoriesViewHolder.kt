@@ -11,16 +11,8 @@ import com.apx5.apx5.paging.datum.HistoriesUi
 import com.apx5.apx5.ui.utilities.PrUtils
 import kotlinx.android.synthetic.main.item_game_all.view.*
 
-/*
- * Created by Christopher Elias on 5/05/2021
- * christopher.mike.96@gmail.com
- *
- * Loop Ideas
- * Lima, Peru.
- */
-
 /**
- * @see [https://developers.themoviedb.org/3/configuration/get-api-configuration]
+ * HistoriesViewHolder
  */
 class HistoriesViewHolder(
     val binding: ItemHistoriesAllBinding
@@ -64,23 +56,8 @@ class HistoriesViewHolder(
                 val gameResult = PrResultCode.getResultByDisplayCode(game.playResult)
                 tv_game_result.apply {
                     backgroundTintList =  context.getColorStateList(gameResult.color)
-                    text = gameResult.displayCodeEn
+                    text = prUtils.getYear(game.playDate.toString())
                 }
-
-//                /* 기록삭제 (Long Press)*/
-//                setOnLongClickListener {
-//                    delGame?.let { _callback ->
-//                        _callback(
-//                            AdtPlayDelTarget(
-//                                id = game.playId?: 0,
-//                                season = game.playSeason?: 0,
-//                                versus = game.playVersus?: "",
-//                                result = game.playResult.codeAbbr
-//                            )
-//                        )
-//                    }
-//                    true
-//                }
             }
         }
     }

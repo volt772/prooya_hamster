@@ -8,17 +8,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-/*
- * Created by Christopher Elias on 26/04/2021
- * christopher.mike.96@gmail.com
- *
- * Loop Ideas
- * Lima, Peru.
+/**
+ * HistoriesMapperImpl
  */
-
 class HistoriesMapperImpl @Inject constructor(
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
-//    private val defaultDispatcher: CoroutineDispatcher
 ) : HistoriesMapper {
 
     override suspend fun mapRemoteHistoriesListToDomain(
