@@ -6,7 +6,9 @@ import com.apx5.apx5.network.response.MkPagingResponse
 import com.apx5.apx5.network.response.MkResponse
 import com.apx5.apx5.paging.datum.HistoriesResponse
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 /**
  * PrApi
@@ -35,7 +37,7 @@ interface PrApiService {
 
     /* 전체 Paging데이터 */
     @POST(URL_HISTORIES_ALL)
-    suspend fun getPagingHistories(@Body play: PtPostTeams): MkPagingResponse<HistoriesResponse>
+    suspend fun getPagingHistories(@Body play: PtPostTeams, @Query("page") page: Int): MkPagingResponse<HistoriesResponse>
 
     /* 경기삭제*/
     @POST(URL_HISTORIES_DELETE)

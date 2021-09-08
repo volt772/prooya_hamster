@@ -9,17 +9,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseFragment
-import com.apx5.apx5.constants.*
+import com.apx5.apx5.constants.PrDialogYearSelectType
+import com.apx5.apx5.constants.PrResultCode
+import com.apx5.apx5.constants.PrStadium
+import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentRecordAllBinding
 import com.apx5.apx5.datum.DtAllGames
-import com.apx5.apx5.datum.adapter.AdtPlays
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
+import com.apx5.apx5.datum.adapter.AdtPlays
 import com.apx5.apx5.datum.ops.OpsHistories
 import com.apx5.apx5.datum.pitcher.PtDelHistory
+import com.apx5.apx5.datum.pitcher.PtPostTeams
 import com.apx5.apx5.ext.setVisibility
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
-import com.apx5.apx5.ui.adapter.PrCentralAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.listener.PrSingleClickListener
@@ -50,7 +53,7 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
     override fun getLayoutId() = R.layout.fragment_record_all
     override fun getBindingVariable() = BR.viewModel
 
-    private lateinit var prCentralAdapter: PrCentralAdapter
+    private var historiesPagingAdapter: HistoriesPagingAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,11 +69,14 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
     }
 
     private fun collectUiState() {
+        val email = prPreference.userEmail?: ""
+
         viewLifecycleOwner.lifecycleScope.launch {
-            ravm.getAllHistories().collectLatest { histories ->
-//                adapter?.submitData(movies)
+            ravm.getAllHistories(PtPostTeams(email, 0)).collectLatest { histories ->
+                historiesPagingAdapter?.submitData(histories)
             }
         }
+        cancelSpinKit()
     }
 
     /**
@@ -92,20 +98,14 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
 
     /* UI 초기화*/
     private fun initView() {
-        /* Adapter*/
-        val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        prCentralAdapter = PrCentralAdapter(
-            context = requireContext(),
-            viewType = PrAdapterViewType.ALL,
-            prUtils = prUtils,
-            delGame = ::delHistoryItem
-        )
+        historiesPagingAdapter = HistoriesPagingAdapter(prUtils, ::delHistoryItem)
 
+        val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         binding().apply {
             rvAllList.apply {
                 addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
                 layoutManager = linearLayoutManager
-                adapter = prCentralAdapter
+                adapter = historiesPagingAdapter
             }
 
             /* 시즌 변경*/
@@ -121,6 +121,49 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
                 }
             })
         }
+
+
+
+//        binding().rvAllList.adapter = historiesPagingAdapter?.withLoadStateHeaderAndFooter(
+//            header = MovieLoadStateAdapter { adapter?.retry() },
+//            footer = MovieLoadStateAdapter { adapter?.retry() }
+//        )
+
+//        adapter?.addLoadStateListener { loadState -> renderUi(loadState) }
+
+//        binding.btnMoviesRetry.setOnClickListener { adapter?.retry() }
+
+        /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..*/
+
+//        /* Adapter*/
+//        val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+//        prCentralAdapter = PrCentralAdapter(
+//            context = requireContext(),
+//            viewType = PrAdapterViewType.ALL,
+//            prUtils = prUtils,
+//            delGame = ::delHistoryItem
+//        )
+//
+//        binding().apply {
+//            rvAllList.apply {
+//                addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+//                layoutManager = linearLayoutManager
+//                adapter = prCentralAdapter
+//            }
+//
+//            /* 시즌 변경*/
+//            btnChangeSeason.setOnClickListener(object : PrSingleClickListener() {
+//                override fun onSingleClick(view: View) {
+//                    val seasonSelectDialog = DialogSeasonChange(
+//                        callback = ::selectYear,
+//                        selectedYear = selectedYear,
+//                        selectType = PrDialogYearSelectType.RECORD_ALL
+//                    )
+//
+//                    seasonSelectDialog.show(childFragmentManager, "selectSeason")
+//                }
+//            })
+//        }
     }
 
     /* 기록삭제*/
@@ -139,8 +182,6 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
                 ),
                 ::delHistory)
         }
-
-        prCentralAdapter.notifyDataSetChanged()
     }
 
     /* 기록 삭제*/
@@ -186,11 +227,6 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
                 )
             }
         }
-
-        prCentralAdapter.apply {
-            addPlays(playList)
-            notifyDataSetChanged()
-        }
     }
 
     private fun fetchHistories(year: Int) {
@@ -200,14 +236,9 @@ class RecordAllFragment : BaseFragment<FragmentRecordAllBinding>() {
     /* Observers*/
     private fun subscriber() {
         ravm.apply {
-            getHistories().observe(viewLifecycleOwner, PrObserver {
-                setPlayHistoryItems(it.games)
-                cancelSpinKit()
-            })
-
             getDelResult().observe(viewLifecycleOwner, PrObserver {
                 if (it.count == 1) {
-                    selectYear(selectedYear)
+                    historiesPagingAdapter?.refresh()
                 }
             })
         }

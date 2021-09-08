@@ -37,9 +37,8 @@ class RecordAllViewModel @Inject constructor(
     private val delResult = MutableLiveData<PrResource<CtDelHistory>>()
 
     /* Paging Test >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    fun getAllHistories(): Flow<PagingData<HistoriesUi>> {
-        println("probe : getAllHistories")
-        return historiesRepository.getHistories()
+    fun getAllHistories(ptPostTeams: PtPostTeams): Flow<PagingData<HistoriesUi>> {
+        return historiesRepository.getHistories(ptPostTeams)
             .map { pagingData ->
                 pagingData.map {
                     mapper.mapDomainHistoriesToUi(domainHistories = it)
@@ -51,15 +50,15 @@ class RecordAllViewModel @Inject constructor(
 
     /* 전체 데이터*/
     fun getAllPlayLists(email: String, year: Int) {
-        viewModelScope.launch {
-            histories.postValue(PrResource.loading(null))
-            try {
-                val result = prRepository.getHistories(PtPostTeams(email, year))
-                histories.postValue(PrResource.success(result.data))
-            } catch (e: Exception) {
-                histories.postValue(PrResource.error("[FAIL] Load All Histories", null))
-            }
-        }
+//        viewModelScope.launch {
+//            histories.postValue(PrResource.loading(null))
+//            try {
+//                val result = prRepository.getHistories(PtPostTeams(email, year))
+//                histories.postValue(PrResource.success(result.data))
+//            } catch (e: Exception) {
+//                histories.postValue(PrResource.error("[FAIL] Load All Histories", null))
+//            }
+//        }
     }
 
     /* 기록 삭제*/

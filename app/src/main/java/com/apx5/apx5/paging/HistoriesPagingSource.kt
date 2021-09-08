@@ -7,7 +7,6 @@ import com.apx5.apx5.paging.datum.HistoriesResponse
 import com.apx5.apx5.repository.PrRepository
 import retrofit2.HttpException
 import java.io.IOException
-import java.lang.Exception
 
 /*
  * Created by Christopher Elias on 7/05/2021
@@ -22,21 +21,14 @@ private const val TMDB_STARTING_PAGE_INDEX = 1
 
 class HistoriesPagingSource(
     private val prRepository: PrRepository,
+    val ptPostTeams: PtPostTeams
 ) : PagingSource<Int, HistoriesResponse>() {
-
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, HistoriesResponse> {
         val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
-        println("probe : HistoriesPagingSource")
         return try {
-            val response = prRepository.getPagingHistories(PtPostTeams(email = "volt772@naver.com", year = 0))
+            val response = prRepository.getPagingHistories(ptPostTeams, pageIndex)
             val histories = response.games
-            println("probe : histories : ${histories}")
-//            val response = service.getTopRatedMovies(
-//                language = "en-US",
-//                page = pageIndex
-//            )
-//            val movies = response.results
             val nextKey =
                 if (histories.isEmpty()) {
                     null
@@ -45,10 +37,17 @@ class HistoriesPagingSource(
                     // ensure we're not requesting duplicating items at the 2nd request
                     pageIndex + (params.loadSize / NETWORK_PAGE_SIZE)
                 }
+
+//            LoadResult.Page(
+//                data = histories,
+//                prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex,
+//                nextKey = nextKey
+//            )
+
             LoadResult.Page(
                 data = histories,
-                prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex,
-                nextKey = nextKey
+                prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex - 1,
+                nextKey = if (histories.isEmpty()) null else pageIndex + 1
             )
         } catch (exception: IOException) {
             println("probe : IOException : ${exception}")

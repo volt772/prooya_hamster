@@ -110,8 +110,8 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.dagger_hilt_version"
 
     /* Paging3*/
-    implementation "androidx.paging:paging-runtime-ktx:$rootProject.paging_version"
-    testImplementation "androidx.paging:paging-common-ktx:$rootProject.paging_version"
+    implementation "androidx.paging:paging-runtime:$rootProject.paging_version"
+    testImplementation "androidx.paging:paging-common:$rootProject.paging_version"
     implementation "androidx.paging:paging-rxjava2:$rootProject.paging_version"
     implementation "androidx.paging:paging-rxjava3:$rootProject.paging_version"
     implementation "androidx.paging:paging-guava:$rootProject.paging_version"
