@@ -1,4 +1,4 @@
-package com.apx5.apx5.ui.days
+package com.apx5.apx5.ui.scheduled
 
 import android.graphics.Color
 import android.os.Bundle
@@ -16,7 +16,7 @@ import com.apx5.apx5.constants.PrGameStatus
 import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
-import com.apx5.apx5.databinding.FragmentDaysBinding
+import com.apx5.apx5.databinding.FragmentScheduledBinding
 import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.DtResultBySide
 import com.apx5.apx5.datum.ops.OpsDailyPlay
@@ -34,17 +34,22 @@ import java.util.*
 import javax.inject.Inject
 
 /**
- * DaysFragment
+ * ScheduledFragment
  */
 
 @AndroidEntryPoint
-class DaysFragment : BaseFragment<FragmentDaysBinding>() {
+class ScheduledFragment : BaseFragment<FragmentScheduledBinding>() {
 
     @Inject
     lateinit var prPreference: PrPreference
 
     @Inject
     lateinit var prUtils: PrUtils
+
+    private val svm: ScheduledViewModel by viewModels()
+
+    override fun getLayoutId() = R.layout.fragment_scheduled
+    override fun getBindingVariable() = BR.viewModel
 
     private var selectedDate: String = ""
 
@@ -53,14 +58,10 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
 
     private lateinit var dailyGame: DtDailyGame
 
-    private var playList = mutableListOf<DtDailyGame>()
+    private var gameList = mutableListOf<DtDailyGame>()
 
     /* 캘린더 핸들러 */
     private val calListener = DaysCalendar.datePickerListener(searchPlay = ::searchPlayByDate)
-
-    private val dvm: DaysViewModel by viewModels()
-    override fun getLayoutId() = R.layout.fragment_days
-    override fun getBindingVariable() = BR.viewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,22 +74,31 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
         subscriber()
     }
 
-    /* 다른 경기 검색 (캘린더)*/
+    /**
+     * searchOtherGame
+     * @desc 다른 경기 검색 (캘린더)
+     */
     private fun searchOtherGame() {
         DaysCalendar.datePickerDialog(requireActivity(), calListener).show()
     }
 
-    /* SpinKit 제거*/
+    /**
+     * cancelSpinKit
+     * @desc 로딩중 SpinkKit 제거
+     */
     private fun cancelSpinKit() {
         binding().skLoading.visibility = View.GONE
     }
 
-    /* 경기저장(Remote)*/
+    /**
+     * saveGameToRemote
+     * @desc 경기저장 / POST
+     */
     private fun saveGameToRemote() {
         val gameResult = getPlayResultByTeamSide()
         val myTeamCode = prPreference.userTeam?: ""
 
-        dvm.saveNewPlay(
+        svm.saveNewPlay(
             PtPostPlay(
                 result = gameResult.result,
                 year = prUtils.getYear(dailyGame.playDate.toString()),
@@ -103,7 +113,8 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
     }
 
     /**
-     * 홈/원정 결과 구분
+     * getPlayResultByTeamSide
+     * @desc 홈/원정 결과 구분
      */
     private fun getPlayResultByTeamSide(): DtResultBySide {
         val isAwayTeam = teamCode.equalsExt(dailyGame.awayTeam.code)
@@ -138,8 +149,11 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
         }
     }
 
-    /* 경기 가져오기(From Remote)*/
-    private fun setRemoteGameData(show: Boolean) {
+    /**
+     * fetchGames
+     * @desc 경기 가져오기
+     */
+    private fun fetchGames(show: Boolean) {
         showScoreBoard(show)
 
         if (show) {
@@ -155,22 +169,33 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
         }
     }
 
-    /* 더블헤더 선택 Dialog*/
+    /**
+     * showDialogForDoubleHeader
+     * @desc (Dialog) 더블헤더 선택
+     */
     private fun showDialogForDoubleHeader() {
         DialogActivity.dialogSelectDoubleHeader(requireContext(), ::selectMainGameOfDoubleHeader)
     }
 
-    /* 더블헤더 선택*/
+    /**
+     * selectMainGameOfDoubleHeader
+     * @desc 더블헤더 선택
+     */
     private fun selectMainGameOfDoubleHeader(gameNum: Int) {
         setMainGameData(gameNum)
     }
 
-    /* 완료 Dialog*/
+    /**
+     * showSuccessDialog
+     * @desc 완료 Dialog
+     */
     private fun showSuccessDialog() {
         DialogActivity.dialogSaveDailyHistory(requireContext())
     }
 
-    /* UI 초기화*/
+    /**
+     * initView
+     */
     private fun initView() {
         email = prPreference.userEmail?: ""
         teamCode = prPreference.userTeam?: ""
@@ -196,19 +221,28 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
         }
     }
 
-    /* 경기검색(캘린더)*/
+    /**
+     * searchPlayByDate
+     * @desc (캘린더) 경기검색
+     */
     private fun searchPlayByDate(playDate: String) {
         selectedDate = playDate
         val play = PtGetPlay(playDate, teamCode)
-        dvm.getMyPlay(play)
+        svm.fetchMyGame(play)
     }
 
-    /* 저장버튼노출 (경기종료시에만 저장)*/
+    /**
+     * showSaveButton
+     * @desc 저장버튼노출 (경기종료시에만 저장)
+     */
     private fun showSaveButton(status: PrGameStatus) {
         binding().btSavePlay.visibility = setVisibility(status == PrGameStatus.FINE)
     }
 
-    /* 스코어 보드*/
+    /**
+     * showScoreBoard
+     * @desc 스코어 보드
+     */
     private fun showScoreBoard(gameExist: Boolean) {
         binding().apply {
             clScoreBoard.visibility = setVisibility(gameExist)
@@ -216,7 +250,10 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
         }
     }
 
-    /* 팀 엠블럼 및 팀컬러*/
+    /**
+     * showTeamEmblem
+     * @desc 팀 엠블럼 및 팀컬러
+     */
     private fun showTeamEmblem(away: PrTeam, home: PrTeam) {
         binding().apply {
             /* 엠블럼*/
@@ -229,10 +266,13 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
         }
     }
 
+    /**
+     * Subscriber
+     */
     private fun subscriber() {
-        dvm.apply {
+        svm.apply {
             getTodayGame().observe(viewLifecycleOwner, PrObserver {
-                makePlayBoard(it.games)
+                makeGameBoard(it.games)
                 cancelSpinKit()
             })
 
@@ -242,16 +282,20 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
         }
     }
 
-    private fun makePlayBoard(dailyPlays: List<OpsDailyPlay>) {
-        playList.clear()
+    /**
+     * makeGameBoard
+     * @desc 게임현황
+     */
+    private fun makeGameBoard(dailyPlays: List<OpsDailyPlay>) {
+        gameList.clear()
         for (play in dailyPlays) {
             if (play.id == 0) {
-                setRemoteGameData(false)
+                fetchGames(false)
                 return
             }
 
             play.run {
-                playList.add(
+                gameList.add(
                     DtDailyGame(
                         gameId = id,
                         awayScore = awayscore,
@@ -269,7 +313,7 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
             }
         }
 
-        if (playList.size > 1) {
+        if (gameList.size > 1) {
             /* 더블헤더 선택*/
             showDialogForDoubleHeader()
         } else {
@@ -278,16 +322,25 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
         }
     }
 
-    /* 경기 상태 코드*/
+    /**
+     * getPlayStatusCode
+     * @desc 경기 상태 코드
+     */
     private fun getPlayStatusCode(code: Int) = PrGameStatus.status(code).code
 
-    /* 주 게임선택*/
+    /**
+     * setMainGameData
+     * @desc 주 게임선택
+     */
     private fun setMainGameData(gameNum: Int = 0) {
-        dailyGame = playList[gameNum]
-        setRemoteGameData(true)
+        dailyGame = gameList[gameNum]
+        fetchGames(true)
     }
 
-    /* 경기 데이터*/
+    /**
+     * makeGameItem
+     * @desc 경기 데이터
+     */
     private fun makeGameItem() {
         binding().apply {
             /* 원정팀명*/
@@ -321,6 +374,6 @@ class DaysFragment : BaseFragment<FragmentDaysBinding>() {
     }
 
     companion object {
-        fun newInstance() = DaysFragment().apply {  }
+        fun newInstance() = ScheduledFragment().apply {  }
     }
 }

@@ -1,4 +1,4 @@
-package com.apx5.apx5.ui.recordall
+package com.apx5.apx5.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,8 +7,6 @@ import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.databinding.ItemHistoriesAllBinding
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.paging.datum.HistoriesUi
-import com.apx5.apx5.ui.adapter.HistoriesPagingDiffCallBack
-import com.apx5.apx5.ui.adapter.HistoriesViewHolder
 import com.apx5.apx5.ui.utilities.PrUtils
 import javax.inject.Inject
 

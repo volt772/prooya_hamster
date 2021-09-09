@@ -1,4 +1,4 @@
-package com.apx5.apx5.ui.recordteam
+package com.apx5.apx5.ui.seasons
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,14 +19,17 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class RecordTeamViewModel @Inject constructor(
+class SeasonsViewModel @Inject constructor(
     private val prRepository: PrRepository,
 ) : BaseViewModel<Any>() {
 
     private val details = MutableLiveData<PrResource<CtGetRecordDetail>>()
     private val teams = MutableLiveData<PrResource<CtPostTeams>>()
 
-    /* 팀간 상세 기록*/
+    /**
+     * fetchDetails
+     * @desc 팀간 상세 기록
+     */
     fun fetchDetails(email: String, versus: String, year: Int) {
         viewModelScope.launch {
             details.postValue(PrResource.loading(null))
@@ -39,7 +42,10 @@ class RecordTeamViewModel @Inject constructor(
         }
     }
 
-    /* 팀간 기록*/
+    /**
+     * fetchRecords
+     * @desc 팀간 기록
+     */
     fun fetchRecords(email: String, year: Int) {
         viewModelScope.launch {
             teams.postValue(PrResource.loading(null))

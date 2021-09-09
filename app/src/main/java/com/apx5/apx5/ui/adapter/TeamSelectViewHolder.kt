@@ -8,7 +8,7 @@ import com.apx5.apx5.R
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.ui.listener.PrSingleClickListener
 import com.apx5.apx5.ui.utilities.PrUtils
-import kotlinx.android.synthetic.main.item_team_record.view.*
+import kotlinx.android.synthetic.main.item_season_record.view.*
 
 /**
  * TeamSelectViewHolder

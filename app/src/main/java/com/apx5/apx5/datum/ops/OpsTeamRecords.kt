@@ -3,7 +3,7 @@ package com.apx5.apx5.datum.ops
 /**
  * Response
  * @desc Tab : 2
- * @desc 팀기록
+ * @desc 시즌기록
  */
 
 data class OpsTeamRecords(

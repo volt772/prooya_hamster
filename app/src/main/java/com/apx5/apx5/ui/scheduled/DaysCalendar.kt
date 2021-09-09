@@ -1,4 +1,4 @@
-package com.apx5.apx5.ui.days
+package com.apx5.apx5.ui.scheduled
 
 import android.app.Activity
 import android.app.DatePickerDialog

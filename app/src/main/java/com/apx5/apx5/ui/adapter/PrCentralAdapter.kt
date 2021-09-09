@@ -28,7 +28,7 @@ class PrCentralAdapter @Inject constructor(
     private val teams: ArrayList<AdtTeamWinningRate> = ArrayList()
 
     /* List : Team Summary*/
-    private val teamsSummary: ArrayList<AdtTeamLists> = ArrayList()
+    private val seasons: ArrayList<AdtTeamLists> = ArrayList()
 
     /* List : Licenses*/
     private val licenses: ArrayList<AdtLicenseLists> = ArrayList()
@@ -42,7 +42,7 @@ class PrCentralAdapter @Inject constructor(
             VIEW_TYPE_DETAIL -> GameDetailViewHolder.create(parent, prUtils)
             VIEW_TYPE_ALL -> GameAllViewHolder.create(parent, prUtils, delGame)
             VIEW_TYPE_WINNING_RATE -> TeamWinningRateViewHolder.create(parent, prUtils)
-            VIEW_TYPE_TEAM -> TeamSummaryViewHolder.create(parent, prUtils, selectGame)
+            VIEW_TYPE_SEASON -> SeasonViewHolder.create(parent, prUtils, selectGame)
             VIEW_TYPE_LICENSE -> LicensesViewHolder.create(parent, prUtils)
             VIEW_TYPE_TEAM_SELECT -> TeamSelectViewHolder.create(parent, prUtils, selectTeam)
             else ->  throw IllegalArgumentException("unknown view type")
@@ -55,7 +55,7 @@ class PrCentralAdapter @Inject constructor(
             VIEW_TYPE_DETAIL -> (holder as GameDetailViewHolder).bind(plays[position])
             VIEW_TYPE_ALL -> (holder as GameAllViewHolder).bind(plays[position])
             VIEW_TYPE_WINNING_RATE -> (holder as TeamWinningRateViewHolder).bind(teams[position])
-            VIEW_TYPE_TEAM -> (holder as TeamSummaryViewHolder).bind(teamsSummary[position])
+            VIEW_TYPE_SEASON -> (holder as SeasonViewHolder).bind(seasons[position])
             VIEW_TYPE_LICENSE -> (holder as LicensesViewHolder).bind(licenses[position])
             VIEW_TYPE_TEAM_SELECT -> (holder as TeamSelectViewHolder).bind(teamSelection[position])
         }
@@ -66,7 +66,7 @@ class PrCentralAdapter @Inject constructor(
         PrAdapterViewType.DETAIL -> VIEW_TYPE_DETAIL
         PrAdapterViewType.ALL -> VIEW_TYPE_ALL
         PrAdapterViewType.WINNING_RATE -> VIEW_TYPE_WINNING_RATE
-        PrAdapterViewType.TEAM -> VIEW_TYPE_TEAM
+        PrAdapterViewType.SEASON -> VIEW_TYPE_SEASON
         PrAdapterViewType.LICENSE -> VIEW_TYPE_LICENSE
         PrAdapterViewType.TEAM_SELECTION -> VIEW_TYPE_TEAM_SELECT
     }
@@ -74,7 +74,7 @@ class PrCentralAdapter @Inject constructor(
     override fun getItemCount() =
         when (viewType) {
             PrAdapterViewType.WINNING_RATE -> teams.size
-            PrAdapterViewType.TEAM -> teamsSummary.size
+            PrAdapterViewType.SEASON -> seasons.size
             PrAdapterViewType.LICENSE -> licenses.size
             PrAdapterViewType.TEAM_SELECTION -> teamSelection.size
 
@@ -100,10 +100,10 @@ class PrCentralAdapter @Inject constructor(
     }
 
     /* 팀 기록 아이템 추가*/
-    fun addTeamSummary(teamSummary: List<AdtTeamLists>) {
-        this.teamsSummary.apply {
+    fun addSeasons(seasons: List<AdtTeamLists>) {
+        this.seasons.apply {
             clear()
-            addAll(teamSummary)
+            addAll(seasons)
         }
     }
 
@@ -128,7 +128,7 @@ class PrCentralAdapter @Inject constructor(
         const val VIEW_TYPE_DETAIL = 2
         const val VIEW_TYPE_ALL = 3
         const val VIEW_TYPE_WINNING_RATE = 4
-        const val VIEW_TYPE_TEAM = 5
+        const val VIEW_TYPE_SEASON = 5
         const val VIEW_TYPE_LICENSE = 6
         const val VIEW_TYPE_TEAM_SELECT = 7
     }

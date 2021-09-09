@@ -2,9 +2,9 @@ package com.apx5.apx5.constants
 
 import androidx.fragment.app.Fragment
 import com.apx5.apx5.R
-import com.apx5.apx5.ui.days.DaysFragment
-import com.apx5.apx5.ui.recordall.RecordAllFragment
-import com.apx5.apx5.ui.recordteam.RecordTeamFragment
+import com.apx5.apx5.ui.scheduled.ScheduledFragment
+import com.apx5.apx5.ui.histories.HistoriesFragment
+import com.apx5.apx5.ui.seasons.SeasonsFragment
 import com.apx5.apx5.ui.setting.SettingFragment
 import com.apx5.apx5.ui.statics.StaticsFragment
 
@@ -22,20 +22,20 @@ enum class PrTabMenu(
         R.color.red_85,
         StaticsFragment.newInstance()
     ),
-    /* 팀기록*/
-    RECORD_TEAM(
+    /* 시즌기록*/
+   SEASON(
         R.color.grey_300,
-        RecordTeamFragment.newInstance()
+        SeasonsFragment.newInstance()
     ),
     /* 전체기록*/
     RECORD_ALL(
         R.color.grey_300,
-        RecordAllFragment.newInstance()
+        HistoriesFragment.newInstance()
     ),
     /* 일정*/
     DAYS(
         R.color.grey_300,
-        DaysFragment.newInstance()
+        ScheduledFragment.newInstance()
     ),
     /* 설정*/
     SETTING(

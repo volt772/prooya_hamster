@@ -4,7 +4,6 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.apx5.apx5.ui.utilities.PrUtils
-import javax.inject.Inject
 
 /**
  * MpPaddingItemDecoration

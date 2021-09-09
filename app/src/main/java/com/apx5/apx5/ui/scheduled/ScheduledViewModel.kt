@@ -1,4 +1,4 @@
-package com.apx5.apx5.ui.days
+package com.apx5.apx5.ui.scheduled
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,19 +15,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * DaysViewModel
+ * ScheduledViewModel
  */
 
 @HiltViewModel
-class DaysViewModel @Inject constructor(
+class ScheduledViewModel @Inject constructor(
     private val prRepository: PrRepository
 ) : BaseViewModel<Any>()  {
 
     private val todayGame = MutableLiveData<PrResource<CtGetPlay>>()
     private val newGame = MutableLiveData<PrResource<CtPostPlay>>()
 
-    /* 경기정보*/
-    fun getMyPlay(play: PtGetPlay) {
+    /**
+     * fetchMyGame
+     * @desc 경기정보
+     */
+    fun fetchMyGame(play: PtGetPlay) {
         viewModelScope.launch {
             todayGame.postValue(PrResource.loading(null))
             try {
@@ -39,7 +42,10 @@ class DaysViewModel @Inject constructor(
         }
     }
 
-    /* 새기록 저장*/
+    /**
+     * saveNewPlay
+     * @desc 새기록 저장
+     */
     fun saveNewPlay(play: PtPostPlay) {
         viewModelScope.launch {
             newGame.postValue(PrResource.loading(null))

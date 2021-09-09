@@ -17,7 +17,7 @@
     <string name="day_game_date_single">%s</string>
     <string name="day_game_date_with_starttime">%s</string>
 
-    <string name="season_label">%d시즌 팀기록</string>
+    <string name="season_label">%d시즌기록</string>
     <string name="all_label">%d시즌 전체기록</string>
 
     <string name="w_d_l">%d승%d무%d패</string>
@@ -59,7 +59,7 @@
     <string name="search_other_game">다른게임</string>
 
     <string name="tab_menu_0">통계</string>
-    <string name="tab_menu_1">팀기록</string>
+    <string name="tab_menu_1">시즌기록</string>
     <string name="tab_menu_2">전체기록</string>
     <string name="tab_menu_3">일정</string>
     <string name="tab_menu_4">설정</string>

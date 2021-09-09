@@ -9,14 +9,14 @@ import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.adapter.AdtTeamLists
 import com.apx5.apx5.ui.listener.PrSingleClickListener
 import com.apx5.apx5.ui.utilities.PrUtils
-import kotlinx.android.synthetic.main.item_team_record.view.*
+import kotlinx.android.synthetic.main.item_season_record.view.*
 import kotlinx.android.synthetic.main.item_team_winning_rate.view.iv_team_emblem
 
 /**
- * TeamSummaryViewHolder
- * @desc RecordAll, 팀별요약정보
+ * SeasonViewHolder
+ * @desc Season, 시즌기록
  */
-class TeamSummaryViewHolder(
+class SeasonViewHolder(
     view: View,
     val prUtils: PrUtils,
     private val selectGame: ((Int, String) -> Unit)?= null
@@ -53,10 +53,10 @@ class TeamSummaryViewHolder(
             parent: ViewGroup,
             prUtils: PrUtils,
             selectGame: ((Int, String) -> Unit)?= null
-        ): TeamSummaryViewHolder {
+        ): SeasonViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val view = layoutInflater.inflate(R.layout.item_team_record, parent, false)
-            return TeamSummaryViewHolder(view, prUtils, selectGame)
+            val view = layoutInflater.inflate(R.layout.item_season_record, parent, false)
+            return SeasonViewHolder(view, prUtils, selectGame)
         }
     }
 }

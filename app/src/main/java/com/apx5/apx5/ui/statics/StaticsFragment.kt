@@ -38,16 +38,15 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
     @Inject
     lateinit var prUtils: PrUtils
 
-//    @Inject
-    private lateinit var prCentralAdapter: PrCentralAdapter
-
     private val svm: StaticsViewModel by viewModels()
-
-    private var userEmail: String = ""
-    private var teamCode: String = ""
 
     override fun getLayoutId() = R.layout.fragment_statics
     override fun getBindingVariable() = BR.viewModel
+
+    private lateinit var prCentralAdapter: PrCentralAdapter
+
+    private var userEmail: String = ""
+    private var teamCode: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,7 +58,9 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
         subscriber()
     }
 
-    /* UI 초기화*/
+    /**
+     * initView
+     */
     private fun initView() {
         /* Adapter*/
         val linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -71,7 +72,10 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
         }
     }
 
-    /* 사용자 정보 저장*/
+    /**
+     * saveUserInfo
+     * @desc 사용자 정보 저장
+     */
     private fun saveUserInfo(user: OpsUser) {
         user.run {
             prPreference.run {
@@ -81,13 +85,17 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
         }
     }
 
-    /* SpinKit 제거*/
+    /**
+     * cancelSpinKit
+     * @desc 로딩중 SpinKit 제거
+     */
     private fun cancelSpinKit() {
         binding().clLoading.visibility = View.GONE
     }
 
     /**
-     * 통계 수치값 지정
+     * setDatumChart
+     * @desc 통계 수치값 지정
      */
     private fun setDatumChart(statics: DtStatics) {
         binding().apply {
@@ -106,7 +114,8 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
     }
 
     /**
-     * 팀통산승률 그래프 처리
+     * setTeamWinningRate
+     * @desc 팀통산승률 그래프 처리
      */
     private fun setTeamWinningRate(teams: List<AdtTeamWinningRate>) {
 
@@ -124,6 +133,9 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
         }
     }
 
+    /**
+     * subscriber
+     */
     private fun subscriber() {
         /* 통계자료 Fetch*/
         if (userEmail.isNotBlank()) {
@@ -141,12 +153,18 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
         })
     }
 
-    /* 팀코드 저장*/
+    /**
+     * setTeamCode
+     * @desc 팀코드 저장
+     */
     private fun setTeamCode(user: OpsUser?) {
         user?.let { _user -> saveUserInfo(_user) }
     }
 
-    /* 통계수치지정*/
+    /**
+     * setStaticItem
+     * @desc 통계수치지정
+     */
     private fun setStaticItem(statics: OpsAllStatics?) {
         statics?.let { _statics ->
             setDatumChart(
@@ -161,6 +179,10 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>() {
         }
     }
 
+    /**
+     * setTeamAllPercentageItem
+     * @desc 각팀수치지정
+     */
     private fun setTeamAllPercentageItem(teamData: OpsTeamWinningRate?) {
         val teams = mutableListOf<AdtTeamWinningRate>()
         teamData?.let { _teamData ->
