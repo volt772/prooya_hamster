@@ -26,7 +26,10 @@ class SplashViewModel @Inject constructor(
         fetchServerStatus()
     }
 
-    /* 서버 검사*/
+    /**
+     * fetchServerStatus
+     * @desc 서버 검사
+     */
     private fun fetchServerStatus() {
         viewModelScope.launch {
             serverStatus.postValue(PrResource.loading(null))

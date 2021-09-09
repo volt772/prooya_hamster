@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
@@ -17,7 +16,6 @@ import com.apx5.apx5.ext.setSystemBarColor
 import com.apx5.apx5.ui.adapter.PrCentralAdapter
 import com.apx5.apx5.ui.utilities.PrUtils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_setting.*
 import javax.inject.Inject
 
 /**
@@ -54,6 +52,9 @@ class LicenseActivity : BaseActivity<ActivityLicenseBinding>() {
         initComponent()
     }
 
+    /**
+     * initToolbar
+     */
     private fun initToolbar() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -67,6 +68,9 @@ class LicenseActivity : BaseActivity<ActivityLicenseBinding>() {
         setSystemBarColor(this, R.color.p_main_first)
     }
 
+    /**
+     * initComponent
+     */
     private fun initComponent() {
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 

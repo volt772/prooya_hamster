@@ -38,6 +38,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     lateinit var prUtils: PrUtils
 
     private val svm: SettingViewModel by viewModels()
+
     override fun getLayoutId() = R.layout.fragment_setting
     override fun getBindingVariable() = BR.viewModel
 
@@ -48,7 +49,9 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         subscriber()
     }
 
-    /* UI 초기화*/
+    /**
+     * initView
+     */
     private fun initView() {
         /* 팀엠블럼*/
         prPreference.getString(PrPrefKeys.MY_TEAM, "")?.let { code ->
@@ -101,7 +104,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     }
 
     /**
-     * 팀변경
+     * setForChangeTeam
+     * @desc 팀변경
      */
     private fun setForChangeTeam() {
         val intentTeam = TeamActivity.newIntent(requireContext())
@@ -110,14 +114,16 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     }
 
     /**
-     * 사용자 삭제
+     * setForUserDelete
+     * @desc 사용자 삭제
      */
     private fun setForUserDelete() {
         showDelUserDialog()
     }
 
     /**
-     * 라이선스
+     * setForOpenLicense
+     * @desc 라이선스
      */
     private fun setForOpenLicense() {
         val intentLicense = LicenseActivity.newIntent(requireContext())
@@ -125,7 +131,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     }
 
     /**
-     * 기본 조회연도 선택
+     * setDefaultYear
+     * @desc 기본 조회연도 선택
      */
     private fun setDefaultYear() {
         val seasonSelectDialog = DialogSeasonChange(
@@ -138,7 +145,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     }
 
     /**
-     * 시즌선택 (From BottomDialog)
+     * selectSeasonYear
+     * @desc 시즌선택 (From BottomDialog)
      */
     private fun selectSeasonYear(year: Int) {
         setDefaultYearFromPref(year)
@@ -146,18 +154,23 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     }
 
     /**
-     * 시즌로딩 (From Prefs)
+     * getDefaultYearFromPref
+     * @desc 시즌로딩 (From Prefs)
      */
     private fun getDefaultYearFromPref() = prPreference.defaultYear
 
     /**
-     * 시즌저장 (To Prefs)
+     * setDefaultYearFromPref
+     * @desc 시즌저장 (To Prefs)
      */
     private fun setDefaultYearFromPref(year: Int) {
         prPreference.setInt(PrPrefKeys.DEFAULT_SEASON_YEAR, year)
     }
 
-    /* 계정삭제후, 앱재시작*/
+    /**
+     * vectoredRestart
+     * @desc 계정삭제후, 앱재시작
+     */
     private fun vectoredRestart() {
         val packageManager = requireActivity().packageManager
         val intent = packageManager.getLaunchIntentForPackage(requireActivity().packageName)
@@ -167,12 +180,18 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         Runtime.getRuntime().exit(0)
     }
 
-    /* 로컬 데이터 초기화*/
+    /**
+     * clearSharedPreferences
+     * @desc 로컬 데이터 초기화
+     */
     private fun clearSharedPreferences() {
         prPreference.removePref(requireContext())
     }
 
-    /* 사용자 원격삭제*/
+    /**
+     * delUserRemote
+     * @desc 사용자 원격삭제
+     */
     private fun delUserRemote() {
         prPreference.userEmail?.let {
             if (it.isNotBlank()) {
@@ -182,11 +201,17 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         }
     }
 
-    /* 계정삭제 다이얼로그*/
+    /**
+     * showDelUserDialog
+     * @desc 계정삭제 다이얼로그
+     */
     private fun showDelUserDialog() {
         DialogActivity.dialogUserDelete(requireContext(), ::delUserRemote)
     }
 
+    /**
+     * subscriber
+     */
     private fun subscriber() {
         svm.getDelUserResult().observe(viewLifecycleOwner, PrObserver {
             clearSharedPreferences()

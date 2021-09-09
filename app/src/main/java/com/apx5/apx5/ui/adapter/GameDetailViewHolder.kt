@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_game_detail.view.*
 
 /**
  * GameDetailViewHolder
- * @desc RecordTeam, 팀별상세기록
+ * @desc Seasons, 팀별상세기록
  */
 class GameDetailViewHolder(
     view: View,

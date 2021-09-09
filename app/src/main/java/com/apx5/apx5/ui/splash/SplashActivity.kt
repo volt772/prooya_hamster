@@ -39,6 +39,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         subscriber()
     }
 
+    /**
+     * subscriber
+     */
     private fun subscriber() {
         svm.getServerStatus().observe(this, PrObserver {
             getServerWorkResult(it.status > 0)
@@ -46,7 +49,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         })
     }
 
-    /* 서버 동작여부 검사*/
+    /**
+     * getServerWorkResult
+     * @desc 서버 동작여부 검사
+     */
     private fun getServerWorkResult(alive: Boolean) {
         if (alive) {
             /* 로그인, 메인분기*/
@@ -57,6 +63,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         }
     }
 
+    /**
+     * seedingNextView
+     * @desc Next View 설정
+     */
     private fun seedingNextView() {
         Handler().postDelayed({
             checkAccountAndDecideNextActivity()
@@ -64,7 +74,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
 
-    /* Next Activity 검사*/
+    /**
+     * checkAccountAndDecideNextActivity
+     * @desc Next View 검사
+     */
     private fun checkAccountAndDecideNextActivity() {
         prPreference.userEmail?.let { _email ->
             if (_email.isNotBlank() && _email.contains("@")) {
@@ -77,12 +90,18 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         }
     }
 
-    /* SpinKit 제거*/
+    /**
+     * cancelSpinKit
+     * @desc 로딩중 SpinKit 제거
+     */
     private fun cancelSpinKit() {
         binding().skLoading.visibility = View.GONE
     }
 
-    /* 로그인 > DashBoard*/
+    /**
+     * switchToLogin
+     * @desc 이동 > 로그인
+     */
     private fun switchToLogin() {
         val intentLogin = LoginActivity.newIntent(this@SplashActivity)
         startActivity(intentLogin)
@@ -90,25 +109,36 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         finish()
     }
 
-    /* DashBoard*/
+    /**
+     * switchToDashBoard
+     * @desc 이동 > DashBoard
+     */
     private fun switchToDashBoard() {
         val intentStatics = DashBoardActivity.newIntent(this@SplashActivity)
         startActivity(intentStatics)
         finish()
     }
 
-    /* Components*/
+    /**
+     * initComponent
+     * @desc 상단상태바 색상강제적용
+     */
     private fun initComponent() {
-        /* 상단상태바 색상강제적용*/
         setSystemBarColor(this, R.color.p_white_10)
     }
 
-    /* APP 종료*/
+    /**
+     * onFinish
+     * @desc APP 종료
+     */
     private fun onFinish() {
         finish()
     }
 
-    /* 서버 미작동 다이얼로그*/
+    /**
+     * dialogForServerIsDead
+     * @desc 서버 미작동 다이얼로그
+     */
     private fun dialogForServerIsDead() {
         DialogActivity.dialogNoInternet(this, ::onFinish)
     }

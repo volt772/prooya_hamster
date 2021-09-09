@@ -25,7 +25,10 @@ class SettingViewModel @Inject constructor(
 
     fun getDelUserResult(): LiveData<PrResource<CtDelUser>> = delUserResult
 
-    /* 사용자 삭제 (Remote)*/
+    /**
+     * delRemoteUser
+     * @desc 사용자 삭제 (Remote)
+     */
     fun delRemoteUser(delUser: PtDelUser) {
         viewModelScope.launch {
             delUserResult.postValue(PrResource.loading(null))

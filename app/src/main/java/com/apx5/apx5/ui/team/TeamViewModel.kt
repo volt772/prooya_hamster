@@ -30,7 +30,8 @@ class TeamViewModel @Inject constructor(
     fun getTeamPostResult(): LiveData<PrResource<CtPostUser>> = teamPostResult
 
     /**
-     * 사용자 정보 서버 저장
+     * saveTeam
+     * @desc 사용자 정보 서버 저장
      */
     fun saveTeam(teamCode: String) {
         prPreference.userEmail?.let { _email ->

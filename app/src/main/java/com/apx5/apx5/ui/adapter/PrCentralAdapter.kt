@@ -16,7 +16,6 @@ class PrCentralAdapter @Inject constructor(
     val context: Context,
     private val viewType: PrAdapterViewType,
     val prUtils: PrUtils,
-    private val delGame: ((AdtPlayDelTarget) -> Unit)?= null,
     private val selectGame: ((Int, String) -> Unit)?= null,
     private val selectTeam: ((AdtTeamSelection) -> Unit)?= null
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -40,7 +39,6 @@ class PrCentralAdapter @Inject constructor(
         return when(viewType) {
             VIEW_TYPE_RECENT -> GameRecentViewHolder.create(parent, prUtils)
             VIEW_TYPE_DETAIL -> GameDetailViewHolder.create(parent, prUtils)
-            VIEW_TYPE_ALL -> GameAllViewHolder.create(parent, prUtils, delGame)
             VIEW_TYPE_WINNING_RATE -> TeamWinningRateViewHolder.create(parent, prUtils)
             VIEW_TYPE_SEASON -> SeasonViewHolder.create(parent, prUtils, selectGame)
             VIEW_TYPE_LICENSE -> LicensesViewHolder.create(parent, prUtils)
@@ -53,7 +51,6 @@ class PrCentralAdapter @Inject constructor(
         when (getItemViewType(position)) {
             VIEW_TYPE_RECENT -> (holder as GameRecentViewHolder).bind(plays[position])
             VIEW_TYPE_DETAIL -> (holder as GameDetailViewHolder).bind(plays[position])
-            VIEW_TYPE_ALL -> (holder as GameAllViewHolder).bind(plays[position])
             VIEW_TYPE_WINNING_RATE -> (holder as TeamWinningRateViewHolder).bind(teams[position])
             VIEW_TYPE_SEASON -> (holder as SeasonViewHolder).bind(seasons[position])
             VIEW_TYPE_LICENSE -> (holder as LicensesViewHolder).bind(licenses[position])
@@ -64,7 +61,6 @@ class PrCentralAdapter @Inject constructor(
     override fun getItemViewType(position: Int) = when(viewType) {
         PrAdapterViewType.RECENT -> VIEW_TYPE_RECENT
         PrAdapterViewType.DETAIL -> VIEW_TYPE_DETAIL
-        PrAdapterViewType.ALL -> VIEW_TYPE_ALL
         PrAdapterViewType.WINNING_RATE -> VIEW_TYPE_WINNING_RATE
         PrAdapterViewType.SEASON -> VIEW_TYPE_SEASON
         PrAdapterViewType.LICENSE -> VIEW_TYPE_LICENSE
@@ -79,8 +75,7 @@ class PrCentralAdapter @Inject constructor(
             PrAdapterViewType.TEAM_SELECTION -> teamSelection.size
 
             PrAdapterViewType.RECENT,
-            PrAdapterViewType.DETAIL,
-            PrAdapterViewType.ALL -> plays.size
+            PrAdapterViewType.DETAIL -> plays.size
         }
 
     /* 경기 아이템 추가*/
@@ -126,10 +121,9 @@ class PrCentralAdapter @Inject constructor(
     companion object {
         const val VIEW_TYPE_RECENT = 1
         const val VIEW_TYPE_DETAIL = 2
-        const val VIEW_TYPE_ALL = 3
-        const val VIEW_TYPE_WINNING_RATE = 4
-        const val VIEW_TYPE_SEASON = 5
-        const val VIEW_TYPE_LICENSE = 6
-        const val VIEW_TYPE_TEAM_SELECT = 7
+        const val VIEW_TYPE_WINNING_RATE = 3
+        const val VIEW_TYPE_SEASON = 4
+        const val VIEW_TYPE_LICENSE = 5
+        const val VIEW_TYPE_TEAM_SELECT = 6
     }
 }

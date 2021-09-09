@@ -40,12 +40,13 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
     @Inject
     lateinit var prUtils: PrUtils
 
-    private var teamSelectMode: PrTeamChangeMode?= null
-    private lateinit var prCentralAdapter: PrCentralAdapter
-
     private val tvm: TeamViewModel by viewModels()
+
     override fun getLayoutId() = R.layout.activity_team
     override fun getBindingVariable() = BR.viewModel
+
+    private var teamSelectMode: PrTeamChangeMode?= null
+    private lateinit var prCentralAdapter: PrCentralAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +61,9 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
         subscriber()
     }
 
-    /* Toolbar*/
+    /**
+     * initToolbar
+     */
     private fun initToolbar() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -74,7 +77,9 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
         setSystemBarColor(this, R.color.p_main_first)
     }
 
-    /* Components*/
+    /**
+     * initComponent
+     */
     private fun initComponent() {
         val teams = getTeamList()
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -96,12 +101,6 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
                             drawableRes(R.drawable.divider),
                             prUtils.dpToPx(16)
                         ),
-    //                    MpPaddingItemDecoration(
-    //                        prUtils = prUtils,
-    //                        allHorizontalPadding = 2,
-    //                        additionalVerticalPadding = 8,
-    //                        defaultVerticalPadding = 16
-    //                    )
                     )
                 )
             }
@@ -113,7 +112,10 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
         }
     }
 
-    /* 팀리스트 생성*/
+    /**
+     * getTeamList
+     * @desc 팀리스트 생성
+     */
     private fun getTeamList() =  mutableListOf<AdtTeamSelection>().also { _list ->
         PrTeam.values().forEach { team ->
             if (team != PrTeam.OTHER) {
@@ -131,13 +133,19 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
         }
     }
 
-    /* 사용자 팀선택완료*/
+    /**
+     * finishSetMyTeam
+     * @desc 사용자 팀선택완료
+     */
     private fun finishSetMyTeam(code: String) {
         prPreference.setString(PrPrefKeys.MY_TEAM, code)
         tvm.saveTeam(code)
     }
 
-    /* 팀선택 최종 확인*/
+    /**
+     * selectMyTeam
+     * @desc 팀선택 최종 확인
+     */
     private fun selectMyTeam(team: AdtTeamSelection) {
         teamSelectMode?.let { _mode ->
             val msg = if (_mode == PrTeamChangeMode.APPLY) {
@@ -151,8 +159,9 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
     }
 
     /**
-     * 신규선택 : DashBoardActivity
-     * 기존변경 : 앱재시작
+     * switchPageBySelectType
+     * @desc 신규선택 : DashBoardActivity
+     * @desc 기존변경 : 앱재시작
      */
     private fun switchPageBySelectType() {
         when (teamSelectMode) {
@@ -162,7 +171,10 @@ class TeamActivity : BaseActivity<ActivityTeamBinding>() {
         }
     }
 
-    /* 앱재시작 (등록실패 or 팀변경)*/
+    /**
+     * restartApp
+     * @desc 앱재시작 (등록실패 or 팀변경)
+     */
     private fun restartApp() {
         val packageManager = application.packageManager
         val intent = packageManager.getLaunchIntentForPackage(application.packageName)
