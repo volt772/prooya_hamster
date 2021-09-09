@@ -23,7 +23,10 @@ class StaticsViewModel @Inject constructor(
 
     private val statics = MutableLiveData<PrResource<CtPostStatics>>()
 
-    /* 통계데이터 다운로드*/
+    /**
+     * fetchStatics
+     * @desc 통계데이터 다운로드
+     */
     fun fetchStatics(userEmail: String) {
         viewModelScope.launch {
             statics.postValue(PrResource.loading(null))
