@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import com.apx5.apx5.constants.PrResultCode
-import com.apx5.apx5.databinding.ItemHistoriesAllBinding
+import com.apx5.apx5.databinding.ItemHistoriesBinding
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.paging.datum.HistoriesUi
 import com.apx5.apx5.ui.utilities.PrUtils
@@ -23,7 +23,7 @@ class HistoriesPagingAdapter @Inject constructor(
         viewType: Int
     ): HistoriesViewHolder {
         val holder = HistoriesViewHolder(
-            ItemHistoriesAllBinding.inflate(
+            ItemHistoriesBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )

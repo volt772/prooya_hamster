@@ -55,9 +55,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey_400"
-                    android:textSize="@dimen/md_15"
                     android:text="@string/team_info"
-                    android:textAppearance="@style/SettingLabelDesc"
+                    android:textAppearance="@style/TeamSelectLabelDesc"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />

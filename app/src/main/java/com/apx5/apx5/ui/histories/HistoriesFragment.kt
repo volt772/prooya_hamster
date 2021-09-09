@@ -15,6 +15,9 @@ import com.apx5.apx5.databinding.FragmentHistoriesBinding
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.datum.pitcher.PtPostTeams
+import com.apx5.apx5.ext.DividerItemDecorator
+import com.apx5.apx5.ext.drawableRes
+import com.apx5.apx5.ext.itemDecorationExt
 import com.apx5.apx5.ext.setVisibility
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
@@ -87,6 +90,14 @@ class HistoriesFragment : BaseFragment<FragmentHistoriesBinding>() {
                 addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
                 layoutManager = linearLayoutManager
                 adapter = historiesPagingAdapter
+                itemDecorationExt(
+                    listOf(
+                        DividerItemDecorator(
+                            drawableRes(R.drawable.divider),
+                            prUtils.dpToPx(16)
+                        ),
+                    )
+                )
             }
         }
 
