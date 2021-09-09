@@ -13,7 +13,7 @@ import javax.inject.Inject
  * HistoriesRemoteDataSourceImpl
  */
 
-const val NETWORK_PAGE_SIZE = 10
+const val NETWORK_PAGE_SIZE = 20
 
 class HistoriesRemoteDataSourceImpl @Inject constructor(
     private val prRepository: PrRepository,

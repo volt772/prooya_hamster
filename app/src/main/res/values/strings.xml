@@ -2,7 +2,8 @@
     <string name="app_name">Prooya\n직관기록</string>
     <string name="app_name_title">Prooya 직관기록</string>
     <string name="errorServerIsOff">연결상태가 좋지 않습니다.\n잠시후 다시 시도해 주시기 바랍니다.</string>
-    <string name="errorComm">오류가 발생했습니다.\n앱을 다시 실행해 주세요.</string>
+    <string name="errorComm">오류가 발생했습니다.\n잠시후 다시 시도해 주세요.</string>
+    <string name="error_background">오류가 발생했어요.\n잠시후 다시 시도해 주세요.</string>
 
     <string name="team_select">팀선택</string>
     <string name="team_info">prooya는 자신의 팀을 기준으로 기록을 계산합니다.\n응원하는 팀을 선택해 주세요.</string>

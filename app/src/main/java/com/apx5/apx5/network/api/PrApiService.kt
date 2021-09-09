@@ -37,7 +37,7 @@ interface PrApiService {
 
     /* 전체 Paging데이터 */
     @POST(URL_HISTORIES_ALL)
-    suspend fun getPagingHistories(@Body play: PtPostTeams, @Query("page") page: Int): MkPagingResponse<HistoriesResponse>
+    suspend fun getPagingHistories(@Body play: PtPostTeams, @Query("page") page: Int, @Query("size") size: Int): MkPagingResponse<HistoriesResponse>
 
     /* 경기삭제*/
     @POST(URL_HISTORIES_DELETE)

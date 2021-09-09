@@ -19,7 +19,7 @@ class PrRepository @Inject constructor(private val prApi: PrApiService) {
 
     suspend fun getHistories(param: PtPostTeams) = prApi.getHistories(param)
 
-    suspend fun getPagingHistories(param: PtPostTeams, page: Int) = prApi.getPagingHistories(param, page)
+    suspend fun getPagingHistories(param: PtPostTeams, page: Int, size: Int) = prApi.getPagingHistories(param, page, size)
 
     suspend fun delHistory(param: PtDelHistory) = prApi.delHistory(param)
 

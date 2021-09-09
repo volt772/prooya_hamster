@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apx5.apx5.BR
@@ -13,6 +15,7 @@ import com.apx5.apx5.databinding.FragmentHistoriesBinding
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.datum.pitcher.PtPostTeams
+import com.apx5.apx5.ext.setVisibility
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.adapter.HistoriesPagingAdapter
@@ -62,7 +65,6 @@ class HistoriesFragment : BaseFragment<FragmentHistoriesBinding>() {
                 historiesPagingAdapter?.submitData(histories)
             }
         }
-        cancelSpinKit()
     }
 
     /**
@@ -86,6 +88,27 @@ class HistoriesFragment : BaseFragment<FragmentHistoriesBinding>() {
                 layoutManager = linearLayoutManager
                 adapter = historiesPagingAdapter
             }
+        }
+
+        historiesPagingAdapter?.addLoadStateListener { loadState -> renderHistories(loadState) }
+    }
+
+    /**
+     * renderHistories
+     */
+    private fun renderHistories(loadState: CombinedLoadStates) {
+        val isListEmpty = loadState.refresh is LoadState.NotLoading && historiesPagingAdapter?.itemCount == 0
+
+        binding().apply {
+            clError.visibility = setVisibility(false)
+            clEmptyList.visibility = setVisibility(isListEmpty)
+            rvAllList.visibility = setVisibility(!isListEmpty)
+        }
+
+        cancelSpinKit()
+        if (loadState.source.refresh is LoadState.Error) {
+            DialogActivity.dialogError(requireContext())
+            binding().clError.visibility = setVisibility(true)
         }
     }
 

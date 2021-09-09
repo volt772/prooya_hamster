@@ -21,37 +21,25 @@ class HistoriesPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, HistoriesResponse> {
         val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
         return try {
-            val response = prRepository.getPagingHistories(ptPostTeams, pageIndex)
+            val response = prRepository.getPagingHistories(ptPostTeams, pageIndex, NETWORK_PAGE_SIZE)
             val histories = response.games
 
-//            val nextKey =
-//                if (histories.isEmpty()) {
-//                    null
-//                } else {
-//                    // By default, initial load size = 3 * NETWORK PAGE SIZE
-//                    // ensure we're not requesting duplicating items at the 2nd request
-//                    pageIndex + (params.loadSize / NETWORK_PAGE_SIZE)
-//                }
-//
-////            LoadResult.Page(
-////                data = histories,
-////                prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex,
-////                nextKey = nextKey
-////            )
+            val nextKey = if (histories.isNullOrEmpty() || histories.size < NETWORK_PAGE_SIZE) {
+                null
+            } else {
+                pageIndex + 1
+            }
 
             LoadResult.Page(
                 data = histories,
                 prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex - 1,
-                nextKey = if (histories.isEmpty()) null else pageIndex + 1
+                nextKey = nextKey
             )
         } catch (exception: IOException) {
-            println("probe : IOException : ${exception}")
             return LoadResult.Error(exception)
         } catch (exception: HttpException) {
-            println("probe : HttpException : ${exception}")
             return LoadResult.Error(exception)
         } catch (exception: Exception) {
-            println("probe : Exception : ${exception}")
             return LoadResult.Error(exception)
         }
     }
@@ -69,3 +57,23 @@ class HistoriesPagingSource(
         }
     }
 }
+
+
+/**
+ * SAMPLE
+ *
+ * val nextKey =
+ * if (histories.isEmpty()) {
+ * null
+ * } else {
+ * // By default, initial load size = 3 * NETWORK PAGE SIZE
+ * // ensure we're not requesting duplicating items at the 2nd request
+ * pageIndex + (params.loadSize / NETWORK_PAGE_SIZE)
+ * }
+ *
+ * LoadResult.Page(
+ * data = histories,
+ * prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex,
+ * nextKey = pageIndex + (params.loadSize / NETWORK_PAGE_SIZE)
+ * )
+ */
