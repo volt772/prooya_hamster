@@ -13,7 +13,7 @@ object PrConstants {
     const val DAY = "day"
 
     object App {
-        const val FLK_HOST = "http://apx-prooya.co.kr:2772"
+        const val FLK_HOST = "http://apx-prooya.co.kr:6100"
     }
 
     object Fcm {

@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.datum.catcher.CtPing
 import com.apx5.apx5.network.operation.PrResource
 import com.apx5.apx5.repository.PrRepository
+import com.apx5.domain.dto.ServerStatusVO
+import com.apx5.domain.usecase.CheckServerStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,10 +18,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val repository: PrRepository
+    private val repository: PrRepository,
+    private val hamsterServerStatus: CheckServerStatus
 ) : BaseViewModel<Any>() {
 
-    private val serverStatus = MutableLiveData<PrResource<CtPing>>()
+    private val serverStatus = MutableLiveData<PrResource<ServerStatusVO>>()
 
     init {
         fetchServerStatus()
@@ -34,8 +36,8 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             serverStatus.postValue(PrResource.loading(null))
             try {
-                val result = repository.getServerStatus()
-                val serverResult = PrResource.success(result.data)
+                val result = hamsterServerStatus.execute()
+                val serverResult = PrResource.success(result)
 
                 serverStatus.postValue(serverResult)
             } catch (e: Exception) {
@@ -44,5 +46,5 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    fun getServerStatus(): LiveData<PrResource<CtPing>> = serverStatus
+    fun getServerStatus(): LiveData<PrResource<ServerStatusVO>> = serverStatus
 }

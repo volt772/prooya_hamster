@@ -119,6 +119,9 @@ dependencies {
 
     /* Moshi*/
     implementation "com.squareup.moshi:moshi:$rootProject.moshi"
+
+    implementation project(path: ':domain')
+    implementation project(path: ':data')
 }
 
 apply plugin: 'com.google.gms.google-services'

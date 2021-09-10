@@ -7,13 +7,12 @@ import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.storage.PrPreferenceImpl
 import com.apx5.apx5.ui.utilities.PrUtils
 import com.apx5.apx5.ui.utilities.PrUtilsImpl
+import com.apx5.data.repository.PrRepositoryImpl
+import com.apx5.domain.repository.PrRepository2
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import okhttp3.Dispatcher
 import javax.inject.Singleton
 
 /**
@@ -46,4 +45,9 @@ abstract class AppModule {
     @Binds
     @Singleton
     abstract fun bindHistoriesRepository(impl: HistoriesRepositoryImpl): HistoriesRepository
+
+
+    @Binds
+    @Singleton
+    abstract fun bindPrRepository(impl: PrRepositoryImpl): PrRepository2
 }
