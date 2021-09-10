@@ -39,7 +39,7 @@ buildscript {
         progress_view = '1.1.1'
         percentage_chart_view = '0.3.1'
         circle_image_view = '3.2.0'
-        gms_version = '4.3.9'
+        gms_version = '4.3.10'
 
         dagger_hilt_version = '2.38.1'
         paging_version = '3.0.1'
