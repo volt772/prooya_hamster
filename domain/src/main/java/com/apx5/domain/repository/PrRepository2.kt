@@ -14,7 +14,7 @@ interface PrRepository2 {
 
     suspend fun getHistories(param: HistoriesParam): HistoriesDto
 
-    suspend fun getPagingHistories(param: HistoriesParam, page: Int, size: Int): HistoriesDto
+    suspend fun getPagingHistories(param: HistoriesParam, page: Int, size: Int): HistoriesPagingDto
 
     suspend fun delHistory(param: HistoryDelParam): HistoryDelDto
 

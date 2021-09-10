@@ -1,11 +1,10 @@
 package com.apx5.data.repository
 
-import com.apx5.apx5.datum.ops.OpsTeamSummary
 import com.apx5.data.network.PrApiService2
+import com.apx5.data.response.HistoriesResp
 import com.apx5.domain.dto.*
 import com.apx5.domain.param.*
 import com.apx5.domain.repository.PrRepository2
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PrRepositoryImpl @Inject constructor(private val prApiService: PrApiService2): PrRepository2 {
@@ -47,18 +46,7 @@ class PrRepositoryImpl @Inject constructor(private val prApiService: PrApiServic
     override suspend fun getHistories(param: HistoriesParam): HistoriesDto {
         val resp = prApiService.getHistories(param)
         return resp.data?.let {
-            HistoriesDto(
-                awayScore = it.awayScore,
-                awayTeam = it.awayTeam,
-                homeScore = it.homeScore,
-                homeTeam = it.homeTeam,
-                playDate = it.playDate,
-                playId = it.playId,
-                playResult = it.playResult,
-                playSeason = it.playSeason,
-                playVs = it.playVs,
-                stadium = it.stadium
-            )
+            historiesToDomain(it)
         } ?: HistoriesDto()
     }
 
@@ -68,42 +56,70 @@ class PrRepositoryImpl @Inject constructor(private val prApiService: PrApiServic
         return HistoriesPagingDto(
             games = mutableListOf<HistoriesDto>().also { list ->
                 resp.games.forEach{
-                    list.add(
-                        HistoriesDto(
-                            awayScore = it.awayScore,
-                            awayTeam = it.awayTeam,
-                            homeScore = it.homeScore,
-                            homeTeam = it.homeTeam,
-                            playDate = it.playDate,
-                            playId = it.playId,
-                            playResult = it.playResult,
-                            playSeason = it.playSeason,
-                            playVs = it.playVs,
-                            stadium = it.stadium
-                        )
-                    )
+                    list.add(historiesToDomain(it))
                 }
             }
         )
     }
 
     override suspend fun delHistory(param: HistoryDelParam): HistoryDelDto {
-        TODO("Not yet implemented")
+        val resp = prApiService.delHistory(param)
+        return resp.data?.let {
+            HistoryDelDto(
+                count = it.count
+            )
+        } ?: HistoryDelDto()
     }
 
     override suspend fun getDayPlay(param: GameParam): GameDto {
-        TODO("Not yet implemented")
+        val resp = prApiService.getDayPlay(param)
+        return resp.data?.let {
+            GameDto(
+                games = it.games
+            )
+        } ?: GameDto()
     }
 
     override suspend fun postNewGame(param: GameSaveParam): GameSaveDto {
-        TODO("Not yet implemented")
+        val resp = prApiService.saveNewGame(param)
+        return resp.data?.let {
+            GameSaveDto(
+                result = it.result
+            )
+        } ?: GameSaveDto()
     }
 
     override suspend fun delUser(param: UserDelParam): UserDelDto {
-        TODO("Not yet implemented")
+        val resp = prApiService.delUser(param)
+        return resp.data?.let {
+            UserDelDto(
+                count = it.count
+            )
+        } ?: UserDelDto()
     }
 
     override suspend fun postUser(param: UserRegisterParam): UserRegisterDto {
-        TODO("Not yet implemented")
+        val resp = prApiService.postUser(param)
+        return resp.data?.let {
+            UserRegisterDto(
+                id = it.id,
+                team = it.team
+            )
+        } ?: UserRegisterDto()
+    }
+
+    private fun historiesToDomain(history: HistoriesResp): HistoriesDto {
+        return HistoriesDto(
+            awayScore = history.awayScore,
+            awayTeam = history.awayTeam,
+            homeScore = history.homeScore,
+            homeTeam = history.homeTeam,
+            playDate = history.playDate,
+            playId = history.playId,
+            playResult = history.playResult,
+            playSeason = history.playSeason,
+            playVs = history.playVs,
+            stadium = history.stadium
+        )
     }
 }
