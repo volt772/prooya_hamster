@@ -1,5 +1,5 @@
 package com.apx5.domain.dto
 
-data class ServerStatusVO(
+data class ServerStatusDto(
     val status: Int
 )

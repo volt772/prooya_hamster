@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.network.operation.PrResource
 import com.apx5.apx5.repository.PrRepository
-import com.apx5.domain.dto.ServerStatusVO
+import com.apx5.domain.dto.ServerStatusDto
 import com.apx5.domain.usecase.CheckServerStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ class SplashViewModel @Inject constructor(
     private val hamsterServerStatus: CheckServerStatus
 ) : BaseViewModel<Any>() {
 
-    private val serverStatus = MutableLiveData<PrResource<ServerStatusVO>>()
+    private val serverStatus = MutableLiveData<PrResource<ServerStatusDto>>()
 
     init {
         fetchServerStatus()
@@ -46,5 +46,5 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    fun getServerStatus(): LiveData<PrResource<ServerStatusVO>> = serverStatus
+    fun getServerStatus(): LiveData<PrResource<ServerStatusDto>> = serverStatus
 }

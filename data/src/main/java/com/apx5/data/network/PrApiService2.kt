@@ -1,54 +1,55 @@
 package com.apx5.data.network
 
-import com.apx5.data.response.ServerStatusDO
-import com.apx5.data.response.PrResponse2
+import com.apx5.data.response.*
+import com.apx5.domain.param.*
+import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface PrApiService2 {
     /* 서버 사용 검사 */
     @POST(URL_PING)
-    suspend fun getServerStatus(): PrResponse2<ServerStatusDO>
+    suspend fun getServerStatus(): PrResponse2<ServerStatusResp>
 
-//    /* 요약데이터 */
-//    @POST(URL_STATICS)
-//    suspend fun getStatics(@Body statics: PtPostStatics): MkResponse<CtPostStatics>
-//
-//    /* 팀 간단데이터 */
-//    @POST(URL_TEAMS_ALL)
-//    suspend fun getRecordByTeams(@Body teams: PtPostTeams): MkResponse<CtPostTeams>
-//
-//    /* 팀 경기상세*/
-//    @POST(URL_TEAMS_DETAIL)
-//    suspend fun getRecordDetail(@Body play: PtGetRecordDetail): MkResponse<CtGetRecordDetail>
-//
-//    /* 전체 간단데이터 */
-//    @POST(URL_HISTORIES_ALL)
-//    suspend fun getHistories(@Body play: PtPostTeams): MkResponse<CtHistories>
-//
-//    /* 전체 Paging데이터 */
-//    @POST(URL_HISTORIES_ALL)
-//    suspend fun getPagingHistories(@Body play: PtPostTeams, @Query("page") page: Int, @Query("size") size: Int): MkPagingResponse<HistoriesResponse>
-//
-//    /* 경기삭제*/
-//    @POST(URL_HISTORIES_DELETE)
-//    suspend fun delHistory(@Body play: PtDelHistory): MkResponse<CtDelHistory>
-//
-//    /* 오늘 내팀 경기목록*/
-//    @POST(URL_SCORES_GET)
-//    suspend fun getDayPlay(@Body play: PtGetPlay): MkResponse<CtGetPlay>
-//
-//    /* 오늘 내팀 경기저장*/
-//    @POST(URL_HISTORIES_POST)
-//    suspend fun saveNewGame(@Body play: PtPostPlay): MkResponse<CtPostPlay>
-//
-//    /* 사용자삭제 */
-//    @POST(URL_USER_DELETE)
-//    suspend fun delUser(@Body user: PtDelUser): MkResponse<CtDelUser>
-//
-//    /* 신규사용자등록 */
-//    @POST(URL_USER_POST)
-//    suspend fun postUser(@Body user: PtPostUser): MkResponse<CtPostUser>
+    /* 요약데이터 */
+    @POST(URL_STATICS)
+    suspend fun getStatics(@Body statics: StaticsParam): PrResponse2<StaticsResp>
 
+    /* 팀 간단데이터 */
+    @POST(URL_TEAMS_ALL)
+    suspend fun getRecordByTeams(@Body teamSummary: TeamSummaryParam): PrResponse2<TeamSummaryResp>
+
+    /* 팀 경기상세*/
+    @POST(URL_TEAMS_DETAIL)
+    suspend fun getRecordDetail(@Body teamDetail: TeamDetailParam): PrResponse2<TeamDetailResp>
+
+    /* 전체 간단데이터 */
+    @POST(URL_HISTORIES_ALL)
+    suspend fun getHistories(@Body history: HistoriesParam): PrResponse2<HistoriesResp>
+
+    /* 전체 Paging데이터 */
+    @POST(URL_HISTORIES_ALL)
+    suspend fun getPagingHistories(@Body history: HistoriesParam, @Query("page") page: Int, @Query("size") size: Int): PrPagingResponse<HistoriesResp>
+
+    /* 경기삭제*/
+    @POST(URL_HISTORIES_DELETE)
+    suspend fun delHistory(@Body historyDelete: HistoryDelParam): PrResponse2<HistoryDelResp>
+
+    /* 오늘 내팀 경기목록*/
+    @POST(URL_SCORES_GET)
+    suspend fun getDayPlay(@Body game: GameParam): PrResponse2<GameResp>
+
+    /* 오늘 내팀 경기저장*/
+    @POST(URL_HISTORIES_POST)
+    suspend fun saveNewGame(@Body gameSave: GameSaveParam): PrResponse2<GameSaveResp>
+
+    /* 사용자삭제 */
+    @POST(URL_USER_DELETE)
+    suspend fun delUser(@Body userDelete: UserDelParam): PrResponse2<UserDelResp>
+
+    /* 신규사용자등록 */
+    @POST(URL_USER_POST)
+    suspend fun postUser(@Body userRegister: UserRegisterParam): PrResponse2<UserRegisterResp>
 
     companion object {
         private const val URL_BASE = "prooya/v1"
