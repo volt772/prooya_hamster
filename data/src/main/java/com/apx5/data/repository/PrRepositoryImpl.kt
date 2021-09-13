@@ -50,16 +50,8 @@ class PrRepositoryImpl @Inject constructor(private val prApiService: PrApiServic
         } ?: HistoriesDto()
     }
 
-    override suspend fun getPagingHistories(param: HistoriesParam, page: Int, size: Int): HistoriesPagingDto {
-        val resp = prApiService.getPagingHistories(param, page, size)
-
-        return HistoriesPagingDto(
-            games = mutableListOf<HistoriesDto>().also { list ->
-                resp.games.forEach{
-                    list.add(historiesToDomain(it))
-                }
-            }
-        )
+    override suspend fun getPagingHistories(param: HistoriesParam, page: Int, size: Int): PagingResponse<HistoriesResponse> {
+        return prApiService.getPagingHistories(param, page, size)
     }
 
     override suspend fun delHistory(param: HistoryDelParam): HistoryDelDto {
@@ -71,7 +63,7 @@ class PrRepositoryImpl @Inject constructor(private val prApiService: PrApiServic
         } ?: HistoryDelDto()
     }
 
-    override suspend fun getDayPlay(param: GameParam): GameDto {
+    override suspend fun getDayGame(param: GameParam): GameDto {
         val resp = prApiService.getDayPlay(param)
         return resp.data?.let {
             GameDto(

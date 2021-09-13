@@ -1,11 +1,11 @@
-package com.apx5.apx5.paging
+package com.apx5.data.data_source
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.apx5.apx5.datum.pitcher.PtPostTeams
-import com.apx5.apx5.paging.datum.HistoriesResponse
-import com.apx5.apx5.repository.PrRepository
+import com.apx5.domain.dto.HistoriesResponse
+import com.apx5.domain.param.HistoriesParam
+import com.apx5.domain.repository.PrRepository2
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -16,10 +16,10 @@ import javax.inject.Inject
 const val NETWORK_PAGE_SIZE = 20
 
 class HistoriesRemoteDataSourceImpl @Inject constructor(
-    private val prRepository: PrRepository,
+    private val prRepository: PrRepository2,
 ) : HistoriesRemoteDataSource {
 
-    override fun getHistories(ptPostTeams: PtPostTeams): Flow<PagingData<HistoriesResponse>> {
+    override fun getHistories(ptPostTeams: HistoriesParam): Flow<PagingData<HistoriesResponse>> {
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,

@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.datum.catcher.CtGetRecordDetail
-import com.apx5.apx5.datum.catcher.CtPostTeams
-import com.apx5.apx5.datum.pitcher.PtGetRecordDetail
-import com.apx5.apx5.datum.pitcher.PtPostTeams
 import com.apx5.apx5.network.operation.PrResource
-import com.apx5.apx5.repository.PrRepository
+import com.apx5.domain.dto.TeamDetailDto
+import com.apx5.domain.dto.TeamSummaryDto
+import com.apx5.domain.param.TeamDetailParam
+import com.apx5.domain.param.TeamSummaryParam
+import com.apx5.domain.usecase.SeasonsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,11 +20,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SeasonsViewModel @Inject constructor(
-    private val prRepository: PrRepository,
+    private val seasonsUseCase: SeasonsUseCase
 ) : BaseViewModel<Any>() {
 
-    private val details = MutableLiveData<PrResource<CtGetRecordDetail>>()
-    private val teams = MutableLiveData<PrResource<CtPostTeams>>()
+    private val details = MutableLiveData<PrResource<TeamDetailDto>>()
+    private val teams = MutableLiveData<PrResource<TeamSummaryDto>>()
 
     /**
      * fetchDetails
@@ -34,8 +34,8 @@ class SeasonsViewModel @Inject constructor(
         viewModelScope.launch {
             details.postValue(PrResource.loading(null))
             try {
-                val result = prRepository.getRecordDetail(PtGetRecordDetail(email, versus, year))
-                details.postValue(PrResource.success(result.data))
+                val result = seasonsUseCase.fetchRecordDetail(TeamDetailParam(email, versus, year))
+                details.postValue(PrResource.success(result))
             } catch (e: Exception) {
                 details.postValue(PrResource.error("[FAIL] Load Detail", null))
             }
@@ -50,14 +50,14 @@ class SeasonsViewModel @Inject constructor(
         viewModelScope.launch {
             teams.postValue(PrResource.loading(null))
             try {
-                val result = prRepository.getRecordByTeams(PtPostTeams(email, year))
-                teams.postValue(PrResource.success(result.data))
+                val result = seasonsUseCase.fetchRecordByTeams(TeamSummaryParam(email, year))
+                teams.postValue(PrResource.success(result))
             } catch (e: Exception) {
                 teams.postValue(PrResource.error("[FAIL] Load Records", null))
             }
         }
     }
 
-    fun getDetails(): LiveData<PrResource<CtGetRecordDetail>> = details
-    fun getTeams(): LiveData<PrResource<CtPostTeams>> = teams
+    fun getDetails(): LiveData<PrResource<TeamDetailDto>> = details
+    fun getTeams(): LiveData<PrResource<TeamSummaryDto>> = teams
 }

@@ -7,8 +7,8 @@ import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.constants.PrWinningStatus
 import com.apx5.apx5.databinding.ItemHistoriesBinding
-import com.apx5.apx5.paging.datum.HistoriesUi
 import com.apx5.apx5.ui.utilities.PrUtils
+import com.apx5.domain.dto.HistoriesUi
 import kotlinx.android.synthetic.main.item_game_all.view.*
 
 /**

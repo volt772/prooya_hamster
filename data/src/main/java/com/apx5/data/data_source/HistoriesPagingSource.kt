@@ -1,10 +1,10 @@
-package com.apx5.apx5.paging
+package com.apx5.data.data_source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.apx5.apx5.datum.pitcher.PtPostTeams
-import com.apx5.apx5.paging.datum.HistoriesResponse
-import com.apx5.apx5.repository.PrRepository
+import com.apx5.domain.dto.HistoriesResponse
+import com.apx5.domain.param.HistoriesParam
+import com.apx5.domain.repository.PrRepository2
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -14,8 +14,8 @@ import java.io.IOException
 private const val TMDB_STARTING_PAGE_INDEX = 1
 
 class HistoriesPagingSource(
-    private val prRepository: PrRepository,
-    val ptPostTeams: PtPostTeams
+    private val prRepository: PrRepository2,
+    val ptPostTeams: HistoriesParam
 ) : PagingSource<Int, HistoriesResponse>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, HistoriesResponse> {

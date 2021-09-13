@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.datum.catcher.CtDelUser
-import com.apx5.apx5.datum.pitcher.PtDelUser
 import com.apx5.apx5.network.operation.PrResource
-import com.apx5.apx5.repository.PrRepository
+import com.apx5.domain.dto.UserDelDto
+import com.apx5.domain.param.UserDelParam
+import com.apx5.domain.usecase.SettingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,26 +18,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingViewModel @Inject constructor(
-    private val prRepository: PrRepository
+    private val settingUseCase: SettingUseCase
 ) : BaseViewModel<Any>()  {
 
-    private val delUserResult = MutableLiveData<PrResource<CtDelUser>>()
-
-    fun getDelUserResult(): LiveData<PrResource<CtDelUser>> = delUserResult
+    private val delUserResult = MutableLiveData<PrResource<UserDelDto>>()
 
     /**
      * delRemoteUser
      * @desc 사용자 삭제 (Remote)
      */
-    fun delRemoteUser(delUser: PtDelUser) {
+    fun delRemoteUser(param: UserDelParam) {
         viewModelScope.launch {
             delUserResult.postValue(PrResource.loading(null))
             try {
-                val result = prRepository.delUser(delUser)
-                delUserResult.postValue(PrResource.success(result.data))
+                val result = settingUseCase.delUser(param)
+                delUserResult.postValue(PrResource.success(result))
             } catch (e: Exception) {
                 delUserResult.postValue(PrResource.error("[FAIL] Delete Remote User", null))
             }
         }
     }
+
+    fun getDelUserResult(): LiveData<PrResource<UserDelDto>> = delUserResult
 }

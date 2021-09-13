@@ -1,7 +1,7 @@
 package com.apx5.apx5.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.apx5.apx5.paging.datum.HistoriesUi
+import com.apx5.domain.dto.HistoriesUi
 
 /**
  * HistoriesPagingDiffCallBack

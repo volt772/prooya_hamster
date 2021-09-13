@@ -15,6 +15,7 @@ import com.apx5.apx5.constants.PrDialogs
 import com.apx5.apx5.datum.adapter.AdtTeamSelection
 import com.apx5.apx5.datum.pitcher.PtDelHistory
 import com.apx5.apx5.ui.listener.PrSingleClickListener
+import com.apx5.domain.param.HistoryDelParam
 
 /**
  * DialogActivity
@@ -141,8 +142,8 @@ class DialogActivity : AppCompatActivity() {
         /* Dialog - 기록삭제*/
         fun dialogHistoryDelete(
             context: Context,
-            delHistory: PtDelHistory,
-            func:(PtDelHistory) -> Unit
+            delHistory: HistoryDelParam,
+            func:(HistoryDelParam) -> Unit
         ) {
 
             val dialog = prDialog(context, PrDialogs.DELETE_HISTORY.layout)

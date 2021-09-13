@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.datum.catcher.CtPostStatics
-import com.apx5.apx5.datum.pitcher.PtPostStatics
 import com.apx5.apx5.network.operation.PrResource
-import com.apx5.apx5.repository.PrRepository
+import com.apx5.domain.dto.StaticsDto
+import com.apx5.domain.param.StaticsParam
+import com.apx5.domain.usecase.StaticsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,10 +18,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StaticsViewModel @Inject constructor(
-    private val repository: PrRepository
+    private val staticsUseCase: StaticsUseCase
 ) : BaseViewModel<Any>() {
 
-    private val statics = MutableLiveData<PrResource<CtPostStatics>>()
+    private val statics = MutableLiveData<PrResource<StaticsDto>>()
 
     /**
      * fetchStatics
@@ -31,13 +31,13 @@ class StaticsViewModel @Inject constructor(
         viewModelScope.launch {
             statics.postValue(PrResource.loading(null))
             try {
-                val result = repository.getStatics(PtPostStatics(userEmail))
-                statics.postValue(PrResource.success(result.data))
+                val result = staticsUseCase.fetchStatics(StaticsParam(userEmail))
+                statics.postValue(PrResource.success(result))
             } catch (e: Exception) {
                 statics.postValue(PrResource.error("[FAIL] Load All Statics", null))
             }
         }
     }
 
-    fun getStatics(): LiveData<PrResource<CtPostStatics>> = statics
+    fun getStatics(): LiveData<PrResource<StaticsDto>> = statics
 }

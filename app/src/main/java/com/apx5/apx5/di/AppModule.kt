@@ -2,12 +2,17 @@ package com.apx5.apx5.di
 
 import android.app.Application
 import android.content.Context
-import com.apx5.apx5.paging.*
+import com.apx5.apx5.mapper.HistoriesMapper
+import com.apx5.apx5.mapper.HistoriesMapperImpl
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.storage.PrPreferenceImpl
 import com.apx5.apx5.ui.utilities.PrUtils
 import com.apx5.apx5.ui.utilities.PrUtilsImpl
+import com.apx5.data.data_source.HistoriesRemoteDataSource
+import com.apx5.data.data_source.HistoriesRemoteDataSourceImpl
+import com.apx5.data.repository.PrHistoriesImpl
 import com.apx5.data.repository.PrRepositoryImpl
+import com.apx5.domain.repository.PrHistories
 import com.apx5.domain.repository.PrRepository2
 import dagger.Binds
 import dagger.Module
@@ -36,7 +41,11 @@ abstract class AppModule {
 
     @Binds
     @Singleton
-    abstract fun bindHistoriesMapper(impl: HistoriesMapperImpl): HistoriesMapper
+    abstract fun bindPrRepository(impl: PrRepositoryImpl): PrRepository2
+
+    @Binds
+    @Singleton
+    abstract fun bindPrHistories(impl: PrHistoriesImpl): PrHistories
 
     @Binds
     @Singleton
@@ -44,10 +53,5 @@ abstract class AppModule {
 
     @Binds
     @Singleton
-    abstract fun bindHistoriesRepository(impl: HistoriesRepositoryImpl): HistoriesRepository
-
-
-    @Binds
-    @Singleton
-    abstract fun bindPrRepository(impl: PrRepositoryImpl): PrRepository2
+    abstract fun bindHistoriesMapper(impl: HistoriesMapperImpl): HistoriesMapper
 }

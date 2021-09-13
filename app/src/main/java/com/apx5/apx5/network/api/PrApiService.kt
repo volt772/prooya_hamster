@@ -4,9 +4,8 @@ import com.apx5.apx5.datum.catcher.*
 import com.apx5.apx5.datum.pitcher.*
 import com.apx5.apx5.network.response.MkPagingResponse
 import com.apx5.apx5.network.response.MkResponse
-import com.apx5.apx5.paging.datum.HistoriesResponse
+import com.apx5.domain.dto.HistoriesResponse
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 

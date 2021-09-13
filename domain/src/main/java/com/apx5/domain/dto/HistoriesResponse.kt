@@ -1,4 +1,4 @@
-package com.apx5.apx5.paging.datum
+package com.apx5.domain.dto
 
 import com.squareup.moshi.Json
 

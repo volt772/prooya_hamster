@@ -13,7 +13,6 @@ import com.apx5.apx5.constants.PrDialogYearSelectType
 import com.apx5.apx5.constants.PrPrefKeys
 import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.FragmentSettingBinding
-import com.apx5.apx5.datum.pitcher.PtDelUser
 import com.apx5.apx5.network.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
@@ -21,6 +20,7 @@ import com.apx5.apx5.ui.dialogs.DialogSeasonChange
 import com.apx5.apx5.ui.listener.PrSingleClickListener
 import com.apx5.apx5.ui.team.TeamActivity
 import com.apx5.apx5.ui.utilities.PrUtils
+import com.apx5.domain.param.UserDelParam
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -195,7 +195,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     private fun delUserRemote() {
         prPreference.userEmail?.let {
             if (it.isNotBlank()) {
-                val delUser = PtDelUser(it)
+                val delUser = UserDelParam(it)
                 svm.delRemoteUser(delUser)
             }
         }

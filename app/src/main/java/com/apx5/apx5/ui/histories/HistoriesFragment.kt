@@ -24,6 +24,8 @@ import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.adapter.HistoriesPagingAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.utilities.PrUtils
+import com.apx5.domain.param.HistoriesParam
+import com.apx5.domain.param.HistoryDelParam
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -64,7 +66,7 @@ class HistoriesFragment : BaseFragment<FragmentHistoriesBinding>() {
     private fun collectUiState() {
         val email = prPreference.userEmail?: ""
         viewLifecycleOwner.lifecycleScope.launch {
-            hvm.getAllHistories(PtPostTeams(email, 0)).collectLatest { histories ->
+            hvm.getAllHistories(HistoriesParam(email, 0)).collectLatest { histories ->
                 historiesPagingAdapter?.submitData(histories)
             }
         }
@@ -133,7 +135,7 @@ class HistoriesFragment : BaseFragment<FragmentHistoriesBinding>() {
         if (email.isNotBlank()) {
             DialogActivity.dialogHistoryDelete(
                 requireContext(),
-                PtDelHistory(
+                HistoryDelParam(
                     pid = email,
                     rid = delPlay.id,
                     year = delPlay.season,
@@ -148,7 +150,7 @@ class HistoriesFragment : BaseFragment<FragmentHistoriesBinding>() {
      * delHistory
      * @desc 기록삭제 / POST
      */
-    private fun delHistory(delHistory: PtDelHistory) {
+    private fun delHistory(delHistory: HistoryDelParam) {
         hvm.requestDelHistory(delHistory)
     }
 

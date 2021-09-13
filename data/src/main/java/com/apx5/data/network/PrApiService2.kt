@@ -1,6 +1,8 @@
 package com.apx5.data.network
 
 import com.apx5.data.response.*
+import com.apx5.domain.dto.HistoriesResponse
+import com.apx5.domain.dto.PagingResponse
 import com.apx5.domain.param.*
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -29,7 +31,7 @@ interface PrApiService2 {
 
     /* 전체 Paging데이터 */
     @POST(URL_HISTORIES_ALL)
-    suspend fun getPagingHistories(@Body history: HistoriesParam, @Query("page") page: Int, @Query("size") size: Int): PrPagingResponse<HistoriesResp>
+    suspend fun getPagingHistories(@Body history: HistoriesParam, @Query("page") page: Int, @Query("size") size: Int): PagingResponse<HistoriesResponse>
 
     /* 경기삭제*/
     @POST(URL_HISTORIES_DELETE)

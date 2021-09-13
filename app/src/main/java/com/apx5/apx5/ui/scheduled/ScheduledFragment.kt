@@ -20,8 +20,6 @@ import com.apx5.apx5.databinding.FragmentScheduledBinding
 import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.DtResultBySide
 import com.apx5.apx5.datum.ops.OpsDailyPlay
-import com.apx5.apx5.datum.pitcher.PtGetPlay
-import com.apx5.apx5.datum.pitcher.PtPostPlay
 import com.apx5.apx5.ext.equalsExt
 import com.apx5.apx5.ext.setVisibility
 import com.apx5.apx5.network.operation.PrObserver
@@ -29,6 +27,8 @@ import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.listener.PrSingleClickListener
 import com.apx5.apx5.ui.utilities.PrUtils
+import com.apx5.domain.param.GameParam
+import com.apx5.domain.param.GameSaveParam
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -99,7 +99,7 @@ class ScheduledFragment : BaseFragment<FragmentScheduledBinding>() {
         val myTeamCode = prPreference.userTeam?: ""
 
         svm.saveNewPlay(
-            PtPostPlay(
+            GameSaveParam(
                 result = gameResult.result,
                 year = prUtils.getYear(dailyGame.playDate.toString()),
                 regdate = prUtils.getDateToAbbr(dailyGame.playDate.toString(), "-"),
@@ -227,7 +227,7 @@ class ScheduledFragment : BaseFragment<FragmentScheduledBinding>() {
      */
     private fun searchPlayByDate(playDate: String) {
         selectedDate = playDate
-        val play = PtGetPlay(playDate, teamCode)
+        val play = GameParam(playDate, teamCode)
         svm.fetchMyGame(play)
     }
 

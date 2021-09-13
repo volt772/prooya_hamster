@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.network.operation.PrResource
-import com.apx5.apx5.repository.PrRepository
 import com.apx5.domain.dto.ServerStatusDto
-import com.apx5.domain.usecase.CheckServerStatus
+import com.apx5.domain.usecase.SplashUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,8 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val repository: PrRepository,
-    private val hamsterServerStatus: CheckServerStatus
+    private val splashUseCase: SplashUseCase
 ) : BaseViewModel<Any>() {
 
     private val serverStatus = MutableLiveData<PrResource<ServerStatusDto>>()
@@ -36,7 +34,7 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             serverStatus.postValue(PrResource.loading(null))
             try {
-                val result = hamsterServerStatus.execute()
+                val result = splashUseCase.serverStatus()
                 val serverResult = PrResource.success(result)
 
                 serverStatus.postValue(serverResult)

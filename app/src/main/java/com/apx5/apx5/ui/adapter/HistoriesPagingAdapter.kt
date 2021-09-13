@@ -6,8 +6,8 @@ import androidx.paging.PagingDataAdapter
 import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.databinding.ItemHistoriesBinding
 import com.apx5.apx5.datum.adapter.AdtPlayDelTarget
-import com.apx5.apx5.paging.datum.HistoriesUi
 import com.apx5.apx5.ui.utilities.PrUtils
+import com.apx5.domain.dto.HistoriesUi
 import javax.inject.Inject
 
 /**
