@@ -10,7 +10,10 @@ import javax.inject.Inject
  * PrRepositoryImpl
  */
 
-class PrRepositoryImpl @Inject constructor(private val prApiService: PrApiService): PrRepository {
+class PrRepositoryImpl @Inject constructor(
+    private val prApiService: PrApiService
+    ): PrRepository {
+
     override suspend fun getServerStatus(): ServerStatusDto {
         val resp = prApiService.getServerStatus()
         return ServerStatusDto(resp.data?.status?: 0)
