@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.apx5.domain.dto.HistoriesResponse
 import com.apx5.domain.param.HistoriesParam
-import com.apx5.domain.repository.PrRepository2
+import com.apx5.domain.repository.PrRepository
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -14,7 +14,7 @@ import java.io.IOException
 private const val TMDB_STARTING_PAGE_INDEX = 1
 
 class HistoriesPagingSource(
-    private val prRepository: PrRepository2,
+    private val prRepository: PrRepository,
     val ptPostTeams: HistoriesParam
 ) : PagingSource<Int, HistoriesResponse>() {
 

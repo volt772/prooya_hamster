@@ -6,8 +6,9 @@ import com.apx5.domain.param.HistoriesParam
 import kotlinx.coroutines.flow.Flow
 
 /**
- * HistoriesRepository
+ * PrHistories
  */
+
 interface PrHistories {
 
     fun getHistories(ptPostTeams: HistoriesParam): Flow<PagingData<Histories>>

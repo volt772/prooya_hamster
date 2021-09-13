@@ -19,10 +19,10 @@ import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentScheduledBinding
 import com.apx5.apx5.datum.DtDailyGame
 import com.apx5.apx5.datum.DtResultBySide
-import com.apx5.apx5.datum.ops.OpsDailyPlay
+import com.apx5.domain.ops.OpsDailyPlay
 import com.apx5.apx5.ext.equalsExt
 import com.apx5.apx5.ext.setVisibility
-import com.apx5.apx5.network.operation.PrObserver
+import com.apx5.apx5.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.listener.PrSingleClickListener

@@ -6,6 +6,7 @@ import com.apx5.apx5.constants.PrWinningStatus
 /**
  * PrUtils
  */
+
 interface PrUtils {
 
     val currentYear: Int

@@ -9,7 +9,7 @@ import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
 import com.apx5.apx5.databinding.ActivitySplashBinding
 import com.apx5.apx5.ext.setSystemBarColor
-import com.apx5.apx5.network.operation.PrObserver
+import com.apx5.apx5.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dashboard.DashBoardActivity
 import com.apx5.apx5.ui.dialogs.DialogActivity

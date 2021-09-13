@@ -3,8 +3,10 @@ package com.apx5.domain.dto
 import com.squareup.moshi.Json
 
 /**
- * HistoriesResponse
+ * HistoriesDto
+ * @desc 전체 경기목록
  */
+
 data class HistoriesDto (
     val awayScore: Int?= 0,
     val awayTeam: String?= "",

@@ -19,7 +19,7 @@ import com.apx5.apx5.ext.DividerItemDecorator
 import com.apx5.apx5.ext.drawableRes
 import com.apx5.apx5.ext.itemDecorationExt
 import com.apx5.apx5.ext.setSystemBarColor
-import com.apx5.apx5.network.operation.PrObserver
+import com.apx5.apx5.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.adapter.PrCentralAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity

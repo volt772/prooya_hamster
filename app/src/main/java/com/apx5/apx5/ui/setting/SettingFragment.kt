@@ -13,7 +13,7 @@ import com.apx5.apx5.constants.PrDialogYearSelectType
 import com.apx5.apx5.constants.PrPrefKeys
 import com.apx5.apx5.constants.PrTeamChangeMode
 import com.apx5.apx5.databinding.FragmentSettingBinding
-import com.apx5.apx5.network.operation.PrObserver
+import com.apx5.apx5.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.dialogs.DialogActivity
 import com.apx5.apx5.ui.dialogs.DialogSeasonChange

@@ -1,10 +1,11 @@
 package com.apx5.domain.dto
 
-import com.apx5.apx5.datum.ops.OpsTeamRecords
-import com.apx5.apx5.datum.ops.OpsTeamSummary
+import com.apx5.domain.ops.OpsTeamRecords
+import com.apx5.domain.ops.OpsTeamSummary
 
 /**
- * 팀 간단데이터
+ * TeamSummaryDto
+ * @desc 팀 간단데이터
  */
 
 data class TeamSummaryDto(

@@ -4,7 +4,8 @@ import com.apx5.PrNetworkKeys
 import com.google.gson.annotations.SerializedName
 
 /**
- * 경기삭제
+ * HistoryDelResp
+ * @desc 경기삭제
  */
 
 data class HistoryDelResp(

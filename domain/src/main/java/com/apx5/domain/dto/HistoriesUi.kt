@@ -5,7 +5,9 @@ import kotlinx.android.parcel.Parcelize
 
 /**
  * HistoriesUi
+ * @desc Histories to UI
  */
+
 @Parcelize
 data class HistoriesUi (
     val awayScore: Int,

@@ -15,10 +15,10 @@ import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentSeasonBinding
 import com.apx5.apx5.datum.DtTeamRecord
 import com.apx5.apx5.datum.adapter.AdtTeamLists
-import com.apx5.apx5.datum.ops.OpsTeamDetail
-import com.apx5.apx5.datum.ops.OpsTeamRecords
-import com.apx5.apx5.datum.ops.OpsTeamSummary
-import com.apx5.apx5.network.operation.PrObserver
+import com.apx5.domain.ops.OpsTeamDetail
+import com.apx5.domain.ops.OpsTeamRecords
+import com.apx5.domain.ops.OpsTeamSummary
+import com.apx5.apx5.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.adapter.PrCentralAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity

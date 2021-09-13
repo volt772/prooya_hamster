@@ -1,7 +1,8 @@
 package com.apx5.domain.dto
 
 /**
- * 경기삭제
+ * HistoryDelDto
+ * @desc 경기삭제
  */
 
 data class HistoryDelDto(

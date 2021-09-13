@@ -1,7 +1,8 @@
 package com.apx5.domain.dto
 
 /**
- * 사용자삭제
+ * UserDelDto
+ * @desc 사용자삭제
  */
 
 data class UserDelDto(

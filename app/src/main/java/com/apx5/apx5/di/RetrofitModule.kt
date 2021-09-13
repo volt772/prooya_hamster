@@ -1,8 +1,7 @@
 package com.apx5.apx5.di
 
 import com.apx5.apx5.constants.PrConstants
-import com.apx5.apx5.network.api.PrApiService
-import com.apx5.data.network.PrApiService2
+import com.apx5.data.network.PrApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -68,15 +67,9 @@ object RetrofitModule {
         .build()
     }
 
-    @Provides
     @Singleton
+    @Provides
     fun providePrApiService(retrofit: Retrofit): PrApiService {
         return retrofit.create(PrApiService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun providePrApiService2(retrofit: Retrofit): PrApiService2 {
-        return retrofit.create(PrApiService2::class.java)
     }
 }

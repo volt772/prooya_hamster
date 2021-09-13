@@ -1,7 +1,14 @@
 package com.apx5.domain.usecase
 
-import com.apx5.domain.repository.PrRepository2
+import com.apx5.domain.repository.PrRepository
 
-class SplashUseCase(private val prRepository2: PrRepository2) {
-    suspend fun serverStatus() = prRepository2.getServerStatus()
+/**
+ * SplashUseCase
+ */
+
+class SplashUseCase(
+    private val prRepository: PrRepository
+    ) {
+
+    suspend fun serverStatus() = prRepository.getServerStatus()
 }

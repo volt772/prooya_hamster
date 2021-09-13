@@ -1,9 +1,10 @@
 package com.apx5.domain.dto
 
-import com.apx5.apx5.datum.ops.OpsTeamDetail
+import com.apx5.domain.ops.OpsTeamDetail
 
 /**
- * 팀 경기상세
+ * TeamDetailDto
+ * @desc 팀 경기상세
  */
 
 data class TeamDetailDto(

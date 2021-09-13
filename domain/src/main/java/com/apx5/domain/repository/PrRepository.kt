@@ -3,7 +3,12 @@ package com.apx5.domain.repository
 import com.apx5.domain.dto.*
 import com.apx5.domain.param.*
 
-interface PrRepository2 {
+/**
+ * PrRepository
+ */
+
+interface PrRepository {
+
     suspend fun getServerStatus(): ServerStatusDto
 
     suspend fun getStatics(param: StaticsParam): StaticsDto
@@ -11,8 +16,6 @@ interface PrRepository2 {
     suspend fun getRecordByTeams(param: TeamSummaryParam): TeamSummaryDto
 
     suspend fun getRecordDetail(param: TeamDetailParam): TeamDetailDto
-
-    suspend fun getHistories(param: HistoriesParam): HistoriesDto
 
     suspend fun getPagingHistories(param: HistoriesParam, page: Int, size: Int): PagingResponse<HistoriesResponse>
 

@@ -13,10 +13,10 @@ import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.databinding.FragmentStaticsBinding
 import com.apx5.apx5.datum.DtStatics
 import com.apx5.apx5.datum.adapter.AdtTeamWinningRate
-import com.apx5.apx5.datum.ops.OpsAllStatics
-import com.apx5.apx5.datum.ops.OpsTeamWinningRate
-import com.apx5.apx5.datum.ops.OpsUser
-import com.apx5.apx5.network.operation.PrObserver
+import com.apx5.domain.ops.OpsAllStatics
+import com.apx5.domain.ops.OpsTeamWinningRate
+import com.apx5.domain.ops.OpsUser
+import com.apx5.apx5.operation.PrObserver
 import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.adapter.PrCentralAdapter
 import com.apx5.apx5.ui.dialogs.DialogActivity

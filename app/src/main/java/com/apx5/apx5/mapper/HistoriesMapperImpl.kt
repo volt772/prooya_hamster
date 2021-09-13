@@ -53,19 +53,19 @@ class HistoriesMapperImpl @Inject constructor(
     }
 
     override suspend fun mapDomainHistoriesToUi(
-        domainHistories2: Histories
+        domainHistories: Histories
     ): HistoriesUi {
         return HistoriesUi(
-            awayScore = domainHistories2.awayScore,
-            awayTeam = domainHistories2.awayTeam,
-            homeScore = domainHistories2.homeScore,
-            homeTeam = domainHistories2.homeTeam,
-            playDate = domainHistories2.playDate,
-            playId = domainHistories2.playId,
-            playResult = domainHistories2.playResult,
-            playSeason = domainHistories2.playSeason,
-            playVs = domainHistories2.playVs,
-            stadium = domainHistories2.stadium
+            awayScore = domainHistories.awayScore,
+            awayTeam = domainHistories.awayTeam,
+            homeScore = domainHistories.homeScore,
+            homeTeam = domainHistories.homeTeam,
+            playDate = domainHistories.playDate,
+            playId = domainHistories.playId,
+            playResult = domainHistories.playResult,
+            playSeason = domainHistories.playSeason,
+            playVs = domainHistories.playVs,
+            stadium = domainHistories.stadium
         )
     }
 

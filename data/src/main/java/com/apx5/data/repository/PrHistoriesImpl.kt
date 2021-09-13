@@ -14,6 +14,7 @@ import javax.inject.Inject
 /**
  * HistoriesRepositoryImpl
  */
+
 class PrHistoriesImpl @Inject constructor(
     private val historiesDataSource: HistoriesRemoteDataSource
 ) : PrHistories {

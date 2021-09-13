@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
-import com.apx5.apx5.network.operation.PrResource
+import com.apx5.apx5.operation.PrResource
 import com.apx5.domain.dto.GameDto
 import com.apx5.domain.dto.GameSaveDto
 import com.apx5.domain.param.GameParam

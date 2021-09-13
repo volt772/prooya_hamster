@@ -1,13 +1,16 @@
 package com.apx5.data.repository
 
-import com.apx5.data.network.PrApiService2
-import com.apx5.data.response.HistoriesResp
+import com.apx5.data.network.PrApiService
 import com.apx5.domain.dto.*
 import com.apx5.domain.param.*
-import com.apx5.domain.repository.PrRepository2
+import com.apx5.domain.repository.PrRepository
 import javax.inject.Inject
 
-class PrRepositoryImpl @Inject constructor(private val prApiService: PrApiService2): PrRepository2 {
+/**
+ * PrRepositoryImpl
+ */
+
+class PrRepositoryImpl @Inject constructor(private val prApiService: PrApiService): PrRepository {
     override suspend fun getServerStatus(): ServerStatusDto {
         val resp = prApiService.getServerStatus()
         return ServerStatusDto(resp.data?.status?: 0)
@@ -41,13 +44,6 @@ class PrRepositoryImpl @Inject constructor(private val prApiService: PrApiServic
                 games = it.games
             )
         } ?: TeamDetailDto()
-    }
-
-    override suspend fun getHistories(param: HistoriesParam): HistoriesDto {
-        val resp = prApiService.getHistories(param)
-        return resp.data?.let {
-            historiesToDomain(it)
-        } ?: HistoriesDto()
     }
 
     override suspend fun getPagingHistories(param: HistoriesParam, page: Int, size: Int): PagingResponse<HistoriesResponse> {
@@ -98,20 +94,5 @@ class PrRepositoryImpl @Inject constructor(private val prApiService: PrApiServic
                 team = it.team
             )
         } ?: UserRegisterDto()
-    }
-
-    private fun historiesToDomain(history: HistoriesResp): HistoriesDto {
-        return HistoriesDto(
-            awayScore = history.awayScore,
-            awayTeam = history.awayTeam,
-            homeScore = history.homeScore,
-            homeTeam = history.homeTeam,
-            playDate = history.playDate,
-            playId = history.playId,
-            playResult = history.playResult,
-            playSeason = history.playSeason,
-            playVs = history.playVs,
-            stadium = history.stadium
-        )
     }
 }

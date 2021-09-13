@@ -4,7 +4,9 @@ import com.squareup.moshi.Json
 
 /**
  * HistoriesResponse
+ * @desc 전체기록 Resp
  */
+
 data class HistoriesResponse (
     @field:Json(name = "awayScore") val awayScore: Int,
     @field:Json(name = "awayTeam") val awayTeam: String,

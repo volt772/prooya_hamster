@@ -8,7 +8,7 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.mapper.HistoriesMapper
-import com.apx5.apx5.network.operation.PrResource
+import com.apx5.apx5.operation.PrResource
 import com.apx5.domain.dto.HistoriesUi
 import com.apx5.domain.dto.HistoryDelDto
 import com.apx5.domain.param.HistoriesParam

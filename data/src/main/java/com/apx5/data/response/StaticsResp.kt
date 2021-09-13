@@ -1,13 +1,14 @@
 package com.apx5.data.response
 
 import com.apx5.PrNetworkKeys
-import com.apx5.apx5.datum.ops.OpsAllStatics
-import com.apx5.apx5.datum.ops.OpsTeamWinningRate
-import com.apx5.apx5.datum.ops.OpsUser
+import com.apx5.domain.ops.OpsAllStatics
+import com.apx5.domain.ops.OpsTeamWinningRate
+import com.apx5.domain.ops.OpsUser
 import com.google.gson.annotations.SerializedName
 
 /**
- * 요약데이터
+ * StaticsResp
+ * @desc 요약데이터
  */
 data class StaticsResp(
     @SerializedName(PrNetworkKeys.USER)

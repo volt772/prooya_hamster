@@ -1,4 +1,4 @@
-package com.apx5.apx5.network.operation
+package com.apx5.apx5.operation
 
 import androidx.lifecycle.Observer
 import com.apx5.apx5.constants.PrStatus

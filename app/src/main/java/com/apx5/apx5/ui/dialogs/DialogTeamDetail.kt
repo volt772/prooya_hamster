@@ -14,7 +14,7 @@ import com.apx5.apx5.constants.PrResultCode
 import com.apx5.apx5.constants.PrStadium
 import com.apx5.apx5.constants.PrTeam
 import com.apx5.apx5.datum.adapter.AdtPlays
-import com.apx5.apx5.datum.ops.OpsTeamDetail
+import com.apx5.domain.ops.OpsTeamDetail
 import com.apx5.apx5.ui.adapter.PrCentralAdapter
 import com.apx5.apx5.ui.utilities.PrUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

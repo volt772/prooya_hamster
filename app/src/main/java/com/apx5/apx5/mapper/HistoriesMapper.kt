@@ -11,7 +11,7 @@ interface HistoriesMapper {
 
     suspend fun mapRemoteHistoriesListToDomain(remoteHistories: List<HistoriesResponse>): List<Histories>
 
-    suspend fun mapRemoteHistoriesToDomain(remoteHistories2: HistoriesResponse): Histories
+    suspend fun mapRemoteHistoriesToDomain(remoteHistories: HistoriesResponse): Histories
 
     suspend fun mapDomainHistoriesListToUi(domainHistories: List<Histories>): List<HistoriesUi>
 

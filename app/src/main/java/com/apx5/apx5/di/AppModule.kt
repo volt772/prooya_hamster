@@ -13,7 +13,7 @@ import com.apx5.data.data_source.HistoriesRemoteDataSourceImpl
 import com.apx5.data.repository.PrHistoriesImpl
 import com.apx5.data.repository.PrRepositoryImpl
 import com.apx5.domain.repository.PrHistories
-import com.apx5.domain.repository.PrRepository2
+import com.apx5.domain.repository.PrRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -41,7 +41,7 @@ abstract class AppModule {
 
     @Binds
     @Singleton
-    abstract fun bindPrRepository(impl: PrRepositoryImpl): PrRepository2
+    abstract fun bindPrRepository(impl: PrRepositoryImpl): PrRepository
 
     @Binds
     @Singleton

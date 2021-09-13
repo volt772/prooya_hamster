@@ -1,9 +1,10 @@
 package com.apx5.domain.dto
 
-import com.apx5.apx5.datum.ops.OpsDailyPlay
+import com.apx5.domain.ops.OpsDailyPlay
 
 /**
- * 오늘 내팀 경기목록
+ * GameDto
+ * @desc 오늘 내팀 경기목록
  */
 
 data class GameDto(

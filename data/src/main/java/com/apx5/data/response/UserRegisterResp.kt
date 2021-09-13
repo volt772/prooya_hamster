@@ -4,7 +4,8 @@ import com.apx5.PrNetworkKeys
 import com.google.gson.annotations.SerializedName
 
 /**
- * 신규사용자등록
+ * UserRegisterResp
+ * @desc 신규사용자등록
  */
 
 data class UserRegisterResp(

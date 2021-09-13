@@ -1,7 +1,8 @@
 package com.apx5.domain.dto
 
 /**
- * 신규사용자등록
+ * UserRegisterDto
+ * @desc 신규사용자등록
  */
 
 data class UserRegisterDto(

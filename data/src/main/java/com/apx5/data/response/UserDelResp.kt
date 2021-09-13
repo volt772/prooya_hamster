@@ -4,7 +4,8 @@ import com.apx5.PrNetworkKeys
 import com.google.gson.annotations.SerializedName
 
 /**
- * 사용자삭제
+ * UserDelResp
+ * @desc 사용자삭제
  */
 
 data class UserDelResp(
