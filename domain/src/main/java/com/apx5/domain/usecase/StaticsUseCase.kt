@@ -9,7 +9,7 @@ import com.apx5.domain.repository.PrRepository
 
 class StaticsUseCase(
     private val prRepository: PrRepository
-    ) {
+) {
 
     suspend fun fetchStatics(param: StaticsParam) = prRepository.getStatics(param)
 }

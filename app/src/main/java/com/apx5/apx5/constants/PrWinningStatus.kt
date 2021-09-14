@@ -6,10 +6,18 @@ package com.apx5.apx5.constants
  */
 
 enum class PrWinningStatus {
-    /* 원정팀승*/
+    /**
+     * 원정팀 승
+     */
     AWAY,
-    /* 홈팀승*/
+
+    /**
+     * 홈팀 승
+     */
     HOME,
-    /* 무승부*/
+
+    /**
+     * 무승부
+     */
     BOTH
 }

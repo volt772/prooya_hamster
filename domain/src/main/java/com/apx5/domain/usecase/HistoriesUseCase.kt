@@ -12,7 +12,7 @@ import com.apx5.domain.repository.PrRepository
 class HistoriesUseCase(
     private val prRepository: PrRepository,
     private val prHistories: PrHistories
-    ) {
+) {
 
     fun fetchHistories(param: HistoriesParam) = prHistories.getHistories(param)
 

@@ -36,7 +36,7 @@ interface PrApiService {
         @Body teamDetail: TeamDetailParam
     ): PrResponse<TeamDetailResp>
 
-    /* 전체 Paging데이터 */
+    /* 전체 Paging 데이터 */
     @POST(URL_HISTORIES_ALL)
     suspend fun getPagingHistories(
         @Body history: HistoriesParam,

@@ -9,7 +9,7 @@ import com.apx5.domain.repository.PrRepository
 
 class SettingUseCase(
     private val prRepository: PrRepository
-    ) {
+) {
 
     suspend fun delUser(param: UserDelParam) = prRepository.delUser(param)
 }

@@ -10,7 +10,7 @@ import com.apx5.domain.repository.PrRepository
 
 class ScheduledUseCase(
     private val prRepository: PrRepository
-    ) {
+) {
 
     suspend fun fetchDayGame(param: GameParam) = prRepository.getDayGame(param)
 

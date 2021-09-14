@@ -11,16 +11,13 @@ import javax.inject.Inject
 /**
  * PrPreferenceImpl
  */
+
 class PrPreferenceImpl @Inject constructor(
     context: Context,
     val prUtils: PrUtils
 ): PrPreference {
-    private val preferences: SharedPreferences
 
-    init {
-        val context = context.applicationContext
-        preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    }
+    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     override val userEmail: String?
         get() = preferences.getString(PrPrefKeys.MY_EMAIL, "")
@@ -32,7 +29,7 @@ class PrPreferenceImpl @Inject constructor(
         get() = preferences.getInt(PrPrefKeys.DEFAULT_SEASON_YEAR, prUtils.currentYear)
 
     override fun setInt(key: String, value: Int) {
-        preferences.edit().putInt(key, value).commit()
+        preferences.edit().putInt(key, value).apply()
     }
 
     override fun getInt(key: String, defaultValue: Int): Int {
@@ -40,7 +37,7 @@ class PrPreferenceImpl @Inject constructor(
     }
 
     override fun setString(key: String, value: String) {
-        preferences.edit().putString(key, value).commit()
+        preferences.edit().putString(key, value).apply()
     }
 
     override fun getString(key: String, defaultValue: String): String? {
@@ -48,7 +45,7 @@ class PrPreferenceImpl @Inject constructor(
     }
 
     override fun setBoolean(key: String, value: Boolean) {
-        preferences.edit().putBoolean(key, value).commit()
+        preferences.edit().putBoolean(key, value).apply()
     }
 
     override fun getBoolean(key: String, defaultValue: Boolean): Boolean {
@@ -61,7 +58,7 @@ class PrPreferenceImpl @Inject constructor(
         for (child in children) {
             context.getSharedPreferences(
                 child.replace(".xml", ""),
-                Context.MODE_PRIVATE).edit().clear().commit()
+                Context.MODE_PRIVATE).edit().clear().apply()
             File(dir, child).delete()
         }
     }

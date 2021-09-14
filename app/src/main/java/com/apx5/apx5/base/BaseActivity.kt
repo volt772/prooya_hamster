@@ -32,7 +32,6 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         performDataBinding()
     }
 
-
     private fun hideLoading() {
         if (progressDialog.isShowing) progressDialog.cancel()
     }

@@ -7,6 +7,7 @@ import com.apx5.domain.dto.HistoriesUi
 /**
  * HistoriesMapper
  */
+
 interface HistoriesMapper {
 
     suspend fun mapRemoteHistoriesListToDomain(remoteHistories: List<HistoriesResponse>): List<Histories>

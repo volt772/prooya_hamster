@@ -5,6 +5,7 @@ import android.content.Context
 /**
  * PrPreference
  */
+
 interface PrPreference {
 
     val userEmail: String?

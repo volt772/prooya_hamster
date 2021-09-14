@@ -10,7 +10,7 @@ import com.apx5.domain.repository.PrRepository
 
 class SeasonsUseCase(
     private val prRepository: PrRepository
-    ) {
+) {
 
     suspend fun fetchRecordByTeams(param: TeamSummaryParam) = prRepository.getRecordByTeams(param)
 

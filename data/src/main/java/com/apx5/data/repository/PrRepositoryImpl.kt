@@ -12,14 +12,17 @@ import javax.inject.Inject
 
 class PrRepositoryImpl @Inject constructor(
     private val prApiService: PrApiService
-    ): PrRepository {
+): PrRepository {
 
     override suspend fun getServerStatus(): ServerStatusDto {
         val resp = prApiService.getServerStatus()
         return ServerStatusDto(resp.data?.status?: 0)
     }
 
-    override suspend fun getStatics(param: StaticsParam): StaticsDto {
+    override suspend fun getStatics(
+        param: StaticsParam
+    ): StaticsDto {
+
         val resp = prApiService.getStatics(param)
         return resp.data?.let {
             StaticsDto(
@@ -30,7 +33,10 @@ class PrRepositoryImpl @Inject constructor(
         } ?: StaticsDto()
     }
 
-    override suspend fun getRecordByTeams(param: TeamSummaryParam): TeamSummaryDto {
+    override suspend fun getRecordByTeams(
+        param: TeamSummaryParam
+    ): TeamSummaryDto {
+
         val resp = prApiService.getRecordByTeams(param)
         return resp.data?.let {
             TeamSummaryDto(
@@ -40,7 +46,10 @@ class PrRepositoryImpl @Inject constructor(
         } ?: TeamSummaryDto()
     }
 
-    override suspend fun getRecordDetail(param: TeamDetailParam): TeamDetailDto {
+    override suspend fun getRecordDetail(
+        param: TeamDetailParam
+    ): TeamDetailDto {
+
         val resp = prApiService.getRecordDetail(param)
         return resp.data?.let {
             TeamDetailDto(
@@ -49,11 +58,19 @@ class PrRepositoryImpl @Inject constructor(
         } ?: TeamDetailDto()
     }
 
-    override suspend fun getPagingHistories(param: HistoriesParam, page: Int, size: Int): PagingResponse<HistoriesResponse> {
+    override suspend fun getPagingHistories(
+        param: HistoriesParam,
+        page: Int,
+        size: Int
+    ): PagingResponse<HistoriesResponse> {
+
         return prApiService.getPagingHistories(param, page, size)
     }
 
-    override suspend fun delHistory(param: HistoryDelParam): HistoryDelDto {
+    override suspend fun delHistory(
+        param: HistoryDelParam
+    ): HistoryDelDto {
+
         val resp = prApiService.delHistory(param)
         return resp.data?.let {
             HistoryDelDto(
@@ -62,7 +79,10 @@ class PrRepositoryImpl @Inject constructor(
         } ?: HistoryDelDto()
     }
 
-    override suspend fun getDayGame(param: GameParam): GameDto {
+    override suspend fun getDayGame(
+        param: GameParam
+    ): GameDto {
+
         val resp = prApiService.getDayPlay(param)
         return resp.data?.let {
             GameDto(
@@ -71,7 +91,10 @@ class PrRepositoryImpl @Inject constructor(
         } ?: GameDto()
     }
 
-    override suspend fun postNewGame(param: GameSaveParam): GameSaveDto {
+    override suspend fun postNewGame(
+        param: GameSaveParam
+    ): GameSaveDto {
+
         val resp = prApiService.saveNewGame(param)
         return resp.data?.let {
             GameSaveDto(
@@ -80,7 +103,10 @@ class PrRepositoryImpl @Inject constructor(
         } ?: GameSaveDto()
     }
 
-    override suspend fun delUser(param: UserDelParam): UserDelDto {
+    override suspend fun delUser(
+        param: UserDelParam
+    ): UserDelDto {
+
         val resp = prApiService.delUser(param)
         return resp.data?.let {
             UserDelDto(
@@ -89,7 +115,10 @@ class PrRepositoryImpl @Inject constructor(
         } ?: UserDelDto()
     }
 
-    override suspend fun postUser(param: UserRegisterParam): UserRegisterDto {
+    override suspend fun postUser(
+        param: UserRegisterParam
+    ): UserRegisterDto {
+
         val resp = prApiService.postUser(param)
         return resp.data?.let {
             UserRegisterDto(

@@ -11,6 +11,7 @@ import javax.inject.Inject
 /**
  * HistoriesMapperImpl
  */
+
 class HistoriesMapperImpl @Inject constructor(
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) : HistoriesMapper {
@@ -26,19 +27,19 @@ class HistoriesMapperImpl @Inject constructor(
     }
 
     override suspend fun mapRemoteHistoriesToDomain(
-        remoteHistories2: HistoriesResponse
+        remoteHistories: HistoriesResponse
     ): Histories {
         return Histories(
-            awayScore = remoteHistories2.awayScore,
-            awayTeam = remoteHistories2.awayTeam,
-            homeScore = remoteHistories2.homeScore,
-            homeTeam = remoteHistories2.homeTeam,
-            playDate = remoteHistories2.playDate,
-            playId = remoteHistories2.playId,
-            playResult = remoteHistories2.playResult,
-            playSeason = remoteHistories2.playSeason,
-            playVs = remoteHistories2.playVs,
-            stadium = remoteHistories2.stadium
+            awayScore = remoteHistories.awayScore,
+            awayTeam = remoteHistories.awayTeam,
+            homeScore = remoteHistories.homeScore,
+            homeTeam = remoteHistories.homeTeam,
+            playDate = remoteHistories.playDate,
+            playId = remoteHistories.playId,
+            playResult = remoteHistories.playResult,
+            playSeason = remoteHistories.playSeason,
+            playVs = remoteHistories.playVs,
+            stadium = remoteHistories.stadium
         )
     }
 
@@ -68,5 +69,4 @@ class HistoriesMapperImpl @Inject constructor(
             stadium = domainHistories.stadium
         )
     }
-
 }
