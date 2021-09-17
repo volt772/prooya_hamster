@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.apx5.apx5.BR
 import com.apx5.apx5.R
 import com.apx5.apx5.base.BaseActivity
@@ -17,6 +18,7 @@ import com.apx5.apx5.storage.PrPreference
 import com.apx5.apx5.ui.team.TeamActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlin.system.exitProcess
 
 /**
  * DashBoardActivity
@@ -30,6 +32,9 @@ class DashBoardActivity : BaseActivity<ActivityDashboardBinding>() {
 
     override fun getLayoutId() = R.layout.activity_dashboard
     override fun getBindingVariable() = BR.viewModel
+
+    private var backPressedTime: Long = 0
+    lateinit var backToast: Toast
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,11 +104,35 @@ class DashBoardActivity : BaseActivity<ActivityDashboardBinding>() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        this.finish()
+        backToast = Toast.makeText(this, resources.getString(R.string.back_exit), Toast.LENGTH_LONG)
+        if (backPressedTime + intervalTime > System.currentTimeMillis()) {
+            backToast.cancel()
+            super.onBackPressed()
+            exitApp()
+            return
+        } else {
+            backToast.show()
+        }
+        backPressedTime = System.currentTimeMillis()
+    }
+
+    /**
+     * 앱종료
+     */
+    private fun exitApp() {
+        val intent = Intent(Intent.ACTION_MAIN).apply {
+            addCategory(Intent.CATEGORY_HOME)
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+
+        startActivity(intent)
+        finish()
+        exitProcess(0)
     }
 
     companion object {
+        const val intervalTime = 2000
+
         fun newIntent(context: Context) = Intent(context, DashBoardActivity::class.java)
     }
 }
