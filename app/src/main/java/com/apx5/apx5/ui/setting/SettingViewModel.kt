@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val settingUseCase: SettingUseCase
-) : BaseViewModel<Any>()  {
+) : BaseViewModel()  {
 
     private val delUserResult = MutableLiveData<PrResource<UserDelDto>>()
 

@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val splashUseCase: SplashUseCase
-) : BaseViewModel<Any>() {
+) : BaseViewModel() {
 
     private val serverStatus = MutableLiveData<PrResource<ServerStatusDto>>()
 

@@ -6,4 +6,4 @@ import androidx.lifecycle.ViewModel
  * BaseViewModel
  */
 
-abstract class BaseViewModel<N> : ViewModel()
+abstract class BaseViewModel : ViewModel()

@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SeasonsViewModel @Inject constructor(
     private val seasonsUseCase: SeasonsUseCase
-) : BaseViewModel<Any>() {
+) : BaseViewModel() {
 
     private val details = MutableLiveData<PrResource<TeamDetailDto>>()
     private val teams = MutableLiveData<PrResource<TeamSummaryDto>>()

@@ -28,7 +28,7 @@ import javax.inject.Inject
 class HistoriesViewModel @Inject constructor(
     private val historiesUseCase: HistoriesUseCase,
     private val mapper: HistoriesMapper
-) : BaseViewModel<Any>() {
+) : BaseViewModel() {
 
     private val delResult = MutableLiveData<PrResource<HistoryDelDto>>()
 

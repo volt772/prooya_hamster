@@ -33,9 +33,9 @@ class HistoriesPagingAdapter @Inject constructor(
                 delGame?.let { _callback ->
                     _callback(
                         AdtPlayDelTarget(
-                            id = game.playId?: 0,
-                            season = game.playSeason?: 0,
-                            versus = game.playVs?: "",
+                            id = game.playId,
+                            season = game.playSeason,
+                            versus = game.playVs,
                             result = PrResultCode.getResultByDisplayCode(game.playResult).codeAbbr
                         )
                     )

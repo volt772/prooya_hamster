@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TeamViewModel @Inject constructor(
     private val teamUseCase: TeamUseCase
-) : BaseViewModel<Any>()  {
+) : BaseViewModel()  {
 
     @Inject
     lateinit var prPreference: PrPreference

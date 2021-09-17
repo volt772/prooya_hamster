@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class StaticsViewModel @Inject constructor(
     private val staticsUseCase: StaticsUseCase
-) : BaseViewModel<Any>() {
+) : BaseViewModel() {
 
     private val statics = MutableLiveData<PrResource<StaticsDto>>()
 

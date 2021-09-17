@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ScheduledViewModel @Inject constructor(
     private val scheduledUseCase: ScheduledUseCase
-) : BaseViewModel<Any>()  {
+) : BaseViewModel()  {
 
     private val todayGame = MutableLiveData<PrResource<GameDto>>()
     private val newGame = MutableLiveData<PrResource<GameSaveDto>>()
