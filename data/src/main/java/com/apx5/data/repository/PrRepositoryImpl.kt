@@ -2,6 +2,7 @@ package com.apx5.data.repository
 
 import com.apx5.data.network.PrApiService
 import com.apx5.domain.dto.*
+import com.apx5.domain.model.*
 import com.apx5.domain.param.*
 import com.apx5.domain.repository.PrRepository
 import javax.inject.Inject
@@ -14,48 +15,24 @@ class PrRepositoryImpl @Inject constructor(
     private val prApiService: PrApiService
 ): PrRepository {
 
-    override suspend fun getServerStatus(): ServerStatusDto {
+    override suspend fun getServerStatus(): PrServerStatus {
         val resp = prApiService.getServerStatus()
-        return ServerStatusDto(resp.data?.status?: 0)
+        return resp.data?: ServerStatusDto()
     }
 
-    override suspend fun getStatics(
-        param: StaticsParam
-    ): StaticsDto {
-
+    override suspend fun getStatics(param: StaticsParam): PrStatics {
         val resp = prApiService.getStatics(param)
-        return resp.data?.let {
-            StaticsDto(
-                user = it.user,
-                allStatics = it.allStatics,
-                teamWinningRate = it.teamWinningRate
-            )
-        } ?: StaticsDto()
+        return resp.data?: StaticsDto()
     }
 
-    override suspend fun getRecordByTeams(
-        param: TeamSummaryParam
-    ): TeamSummaryDto {
-
+    override suspend fun getRecordByTeams(param: TeamSummaryParam): PrTeamSummary {
         val resp = prApiService.getRecordByTeams(param)
-        return resp.data?.let {
-            TeamSummaryDto(
-                teams = it.teams,
-                summary = it.summary
-            )
-        } ?: TeamSummaryDto()
+        return resp.data?: TeamSummaryDto()
     }
 
-    override suspend fun getRecordDetail(
-        param: TeamDetailParam
-    ): TeamDetailDto {
-
+    override suspend fun getRecordDetail(param: TeamDetailParam): PrTeamDetail {
         val resp = prApiService.getRecordDetail(param)
-        return resp.data?.let {
-            TeamDetailDto(
-                games = it.games
-            )
-        } ?: TeamDetailDto()
+        return resp.data?: TeamDetailDto()
     }
 
     override suspend fun getPagingHistories(
@@ -67,64 +44,33 @@ class PrRepositoryImpl @Inject constructor(
         return prApiService.getPagingHistories(param, page, size)
     }
 
-    override suspend fun delHistory(
-        param: HistoryDelParam
-    ): HistoryDelDto {
+    override suspend fun delHistory(param: HistoryDelParam): PrDelHistory {
 
         val resp = prApiService.delHistory(param)
-        return resp.data?.let {
-            HistoryDelDto(
-                count = it.count
-            )
-        } ?: HistoryDelDto()
+        return resp.data ?: HistoryDelDto()
     }
 
-    override suspend fun getDayGame(
-        param: GameParam
-    ): GameDto {
+    override suspend fun getDayGame(param: GameParam): PrGame {
 
         val resp = prApiService.getDayPlay(param)
-        return resp.data?.let {
-            GameDto(
-                games = it.games
-            )
-        } ?: GameDto()
+        return resp.data ?: GameDto()
     }
 
-    override suspend fun postNewGame(
-        param: GameSaveParam
-    ): GameSaveDto {
+    override suspend fun postNewGame(param: GameSaveParam): PrGameSave {
 
         val resp = prApiService.saveNewGame(param)
-        return resp.data?.let {
-            GameSaveDto(
-                result = it.result
-            )
-        } ?: GameSaveDto()
+        return resp.data ?: GameSaveDto()
     }
 
-    override suspend fun delUser(
-        param: UserDelParam
-    ): UserDelDto {
+    override suspend fun delUser(param: UserDelParam): PrDelUser {
 
         val resp = prApiService.delUser(param)
-        return resp.data?.let {
-            UserDelDto(
-                count = it.count
-            )
-        } ?: UserDelDto()
+        return resp.data ?: UserDelDto()
     }
 
-    override suspend fun postUser(
-        param: UserRegisterParam
-    ): UserRegisterDto {
+    override suspend fun postUser(param: UserRegisterParam): PrUserRegister {
 
         val resp = prApiService.postUser(param)
-        return resp.data?.let {
-            UserRegisterDto(
-                id = it.id,
-                team = it.team
-            )
-        } ?: UserRegisterDto()
+        return resp.data ?: UserRegisterDto()
     }
 }

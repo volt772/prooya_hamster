@@ -1,6 +1,8 @@
 package com.apx5.domain.repository
 
-import com.apx5.domain.dto.*
+import com.apx5.domain.dto.HistoriesResponse
+import com.apx5.domain.dto.PagingResponse
+import com.apx5.domain.model.*
 import com.apx5.domain.param.*
 
 /**
@@ -9,23 +11,23 @@ import com.apx5.domain.param.*
 
 interface PrRepository {
 
-    suspend fun getServerStatus(): ServerStatusDto
+    suspend fun getServerStatus(): PrServerStatus
 
-    suspend fun getStatics(param: StaticsParam): StaticsDto
+    suspend fun getStatics(param: StaticsParam): PrStatics
 
-    suspend fun getRecordByTeams(param: TeamSummaryParam): TeamSummaryDto
+    suspend fun getRecordByTeams(param: TeamSummaryParam): PrTeamSummary
 
-    suspend fun getRecordDetail(param: TeamDetailParam): TeamDetailDto
+    suspend fun getRecordDetail(param: TeamDetailParam): PrTeamDetail
 
     suspend fun getPagingHistories(param: HistoriesParam, page: Int, size: Int): PagingResponse<HistoriesResponse>
 
-    suspend fun delHistory(param: HistoryDelParam): HistoryDelDto
+    suspend fun delHistory(param: HistoryDelParam): PrDelHistory
 
-    suspend fun getDayGame(param: GameParam): GameDto
+    suspend fun getDayGame(param: GameParam): PrGame
 
-    suspend fun postNewGame(param: GameSaveParam): GameSaveDto
+    suspend fun postNewGame(param: GameSaveParam): PrGameSave
 
-    suspend fun delUser(param: UserDelParam): UserDelDto
+    suspend fun delUser(param: UserDelParam): PrDelUser
 
-    suspend fun postUser(param: UserRegisterParam): UserRegisterDto
+    suspend fun postUser(param: UserRegisterParam): PrUserRegister
 }

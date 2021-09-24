@@ -1,9 +1,8 @@
 package com.apx5.data.network
 
-import com.apx5.PrNetworkKeys
-import com.apx5.data.response.*
-import com.apx5.domain.dto.HistoriesResponse
-import com.apx5.domain.dto.PagingResponse
+import com.apx5.data.response.PrResponse
+import com.apx5.domain.PrNetworkKeys
+import com.apx5.domain.dto.*
 import com.apx5.domain.param.*
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -14,27 +13,28 @@ import retrofit2.http.Query
  */
 
 interface PrApiService {
+
     /* 서버 사용 검사 */
     @POST(URL_PING)
-    suspend fun getServerStatus(): PrResponse<ServerStatusResp>
+    suspend fun getServerStatus(): PrResponse<ServerStatusDto>
 
     /* 요약데이터 */
     @POST(URL_STATICS)
     suspend fun getStatics(
         @Body statics: StaticsParam
-    ): PrResponse<StaticsResp>
+    ): PrResponse<StaticsDto>
 
     /* 팀 간단데이터 */
     @POST(URL_TEAMS_ALL)
     suspend fun getRecordByTeams(
         @Body teamSummary: TeamSummaryParam
-    ): PrResponse<TeamSummaryResp>
+    ): PrResponse<TeamSummaryDto>
 
     /* 팀 경기상세*/
     @POST(URL_TEAMS_DETAIL)
     suspend fun getRecordDetail(
         @Body teamDetail: TeamDetailParam
-    ): PrResponse<TeamDetailResp>
+    ): PrResponse<TeamDetailDto>
 
     /* 전체 Paging 데이터 */
     @POST(URL_HISTORIES_ALL)
@@ -48,31 +48,31 @@ interface PrApiService {
     @POST(URL_HISTORIES_DELETE)
     suspend fun delHistory(
         @Body historyDelete: HistoryDelParam
-    ): PrResponse<HistoryDelResp>
+    ): PrResponse<HistoryDelDto>
 
     /* 오늘 내팀 경기목록*/
     @POST(URL_SCORES_GET)
     suspend fun getDayPlay(
         @Body game: GameParam
-    ): PrResponse<GameResp>
+    ): PrResponse<GameDto>
 
     /* 오늘 내팀 경기저장*/
     @POST(URL_HISTORIES_POST)
     suspend fun saveNewGame(
         @Body gameSave: GameSaveParam
-    ): PrResponse<GameSaveResp>
+    ): PrResponse<GameSaveDto>
 
     /* 사용자삭제 */
     @POST(URL_USER_DELETE)
     suspend fun delUser(
         @Body userDelete: UserDelParam
-    ): PrResponse<UserDelResp>
+    ): PrResponse<UserDelDto>
 
     /* 신규사용자등록 */
     @POST(URL_USER_POST)
     suspend fun postUser(
         @Body userRegister: UserRegisterParam
-    ): PrResponse<UserRegisterResp>
+    ): PrResponse<UserRegisterDto>
 
     companion object {
         private const val URL_BASE = "prooya/v1"

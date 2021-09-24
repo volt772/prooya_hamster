@@ -10,7 +10,7 @@ import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.mapper.HistoriesMapper
 import com.apx5.apx5.operation.PrResource
 import com.apx5.domain.dto.HistoriesUi
-import com.apx5.domain.dto.HistoryDelDto
+import com.apx5.domain.model.PrDelHistory
 import com.apx5.domain.param.HistoriesParam
 import com.apx5.domain.param.HistoryDelParam
 import com.apx5.domain.usecase.HistoriesUseCase
@@ -30,7 +30,7 @@ class HistoriesViewModel @Inject constructor(
     private val mapper: HistoriesMapper
 ) : BaseViewModel() {
 
-    private val delResult = MutableLiveData<PrResource<HistoryDelDto>>()
+    private val delResult = MutableLiveData<PrResource<PrDelHistory>>()
 
     /**
      * getAllHistories
@@ -61,5 +61,5 @@ class HistoriesViewModel @Inject constructor(
         }
     }
 
-    fun getDelResult(): LiveData<PrResource<HistoryDelDto>> = delResult
+    fun getDelResult(): LiveData<PrResource<PrDelHistory>> = delResult
 }

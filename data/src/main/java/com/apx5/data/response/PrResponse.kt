@@ -1,6 +1,6 @@
 package com.apx5.data.response
 
-import com.apx5.PrNetworkKeys
+import com.apx5.domain.PrNetworkKeys
 import com.google.gson.annotations.SerializedName
 
 /**

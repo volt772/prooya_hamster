@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.operation.PrResource
-import com.apx5.domain.dto.UserDelDto
+import com.apx5.domain.model.PrDelUser
 import com.apx5.domain.param.UserDelParam
 import com.apx5.domain.usecase.SettingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,7 @@ class SettingViewModel @Inject constructor(
     private val settingUseCase: SettingUseCase
 ) : BaseViewModel()  {
 
-    private val delUserResult = MutableLiveData<PrResource<UserDelDto>>()
+    private val delUserResult = MutableLiveData<PrResource<PrDelUser>>()
 
     /**
      * delRemoteUser
@@ -39,5 +39,5 @@ class SettingViewModel @Inject constructor(
         }
     }
 
-    fun getDelUserResult(): LiveData<PrResource<UserDelDto>> = delUserResult
+    fun getDelUserResult(): LiveData<PrResource<PrDelUser>> = delUserResult
 }

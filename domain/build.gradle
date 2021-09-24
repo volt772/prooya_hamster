@@ -48,6 +48,12 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
 
+    /* API Access*/
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.converterGson"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.adapterRxjava"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.loggingInterceptor"
+
     /* Paging3*/
     implementation "androidx.paging:paging-runtime:$rootProject.paging_version"
     testImplementation "androidx.paging:paging-common:$rootProject.paging_version"

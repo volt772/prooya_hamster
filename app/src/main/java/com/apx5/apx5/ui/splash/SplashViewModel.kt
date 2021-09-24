@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.operation.PrResource
 import com.apx5.domain.dto.ServerStatusDto
+import com.apx5.domain.model.PrServerStatus
 import com.apx5.domain.usecase.SplashUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,7 +21,7 @@ class SplashViewModel @Inject constructor(
     private val splashUseCase: SplashUseCase
 ) : BaseViewModel() {
 
-    private val serverStatus = MutableLiveData<PrResource<ServerStatusDto>>()
+    private val serverStatus = MutableLiveData<PrResource<PrServerStatus>>()
 
     init {
         fetchServerStatus()
@@ -44,5 +45,5 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    fun getServerStatus(): LiveData<PrResource<ServerStatusDto>> = serverStatus
+    fun getServerStatus(): LiveData<PrResource<PrServerStatus>> = serverStatus
 }

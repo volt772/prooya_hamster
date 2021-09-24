@@ -1,4 +1,4 @@
-package com.apx5
+package com.apx5.domain
 
 import com.squareup.moshi.Json
 

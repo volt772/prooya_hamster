@@ -1,6 +1,9 @@
 package com.apx5.domain.dto
 
+import com.apx5.domain.PrNetworkKeys
+import com.apx5.domain.model.PrTeamDetail
 import com.apx5.domain.ops.OpsTeamDetail
+import com.google.gson.annotations.SerializedName
 
 /**
  * TeamDetailDto
@@ -8,5 +11,12 @@ import com.apx5.domain.ops.OpsTeamDetail
  */
 
 data class TeamDetailDto(
-    val games: List<OpsTeamDetail> = emptyList()
-)
+
+    @SerializedName(PrNetworkKeys.GAMES)
+    val _games: List<OpsTeamDetail> = emptyList()
+
+) : PrTeamDetail {
+
+    override val games: List<OpsTeamDetail>
+        get() = _games
+}

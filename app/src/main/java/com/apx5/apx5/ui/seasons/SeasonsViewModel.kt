@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.operation.PrResource
-import com.apx5.domain.dto.TeamDetailDto
-import com.apx5.domain.dto.TeamSummaryDto
+import com.apx5.domain.model.PrTeamDetail
+import com.apx5.domain.model.PrTeamSummary
 import com.apx5.domain.param.TeamDetailParam
 import com.apx5.domain.param.TeamSummaryParam
 import com.apx5.domain.usecase.SeasonsUseCase
@@ -23,8 +23,8 @@ class SeasonsViewModel @Inject constructor(
     private val seasonsUseCase: SeasonsUseCase
 ) : BaseViewModel() {
 
-    private val details = MutableLiveData<PrResource<TeamDetailDto>>()
-    private val teams = MutableLiveData<PrResource<TeamSummaryDto>>()
+    private val details = MutableLiveData<PrResource<PrTeamDetail>>()
+    private val teams = MutableLiveData<PrResource<PrTeamSummary>>()
 
     /**
      * fetchDetails
@@ -58,6 +58,6 @@ class SeasonsViewModel @Inject constructor(
         }
     }
 
-    fun getDetails(): LiveData<PrResource<TeamDetailDto>> = details
-    fun getTeams(): LiveData<PrResource<TeamSummaryDto>> = teams
+    fun getDetails(): LiveData<PrResource<PrTeamDetail>> = details
+    fun getTeams(): LiveData<PrResource<PrTeamSummary>> = teams
 }

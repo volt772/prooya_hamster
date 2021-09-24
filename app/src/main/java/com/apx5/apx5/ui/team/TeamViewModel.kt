@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.operation.PrResource
 import com.apx5.apx5.storage.PrPreference
-import com.apx5.domain.dto.UserRegisterDto
+import com.apx5.domain.model.PrUserRegister
 import com.apx5.domain.param.UserRegisterParam
 import com.apx5.domain.usecase.TeamUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +25,7 @@ class TeamViewModel @Inject constructor(
     @Inject
     lateinit var prPreference: PrPreference
 
-    private val teamRegisterResult = MutableLiveData<PrResource<UserRegisterDto>>()
+    private val teamRegisterResult = MutableLiveData<PrResource<PrUserRegister>>()
 
     /**
      * saveTeam
@@ -47,5 +47,5 @@ class TeamViewModel @Inject constructor(
         }
     }
 
-    fun getTeamPostResult(): LiveData<PrResource<UserRegisterDto>> = teamRegisterResult
+    fun getTeamPostResult(): LiveData<PrResource<PrUserRegister>> = teamRegisterResult
 }

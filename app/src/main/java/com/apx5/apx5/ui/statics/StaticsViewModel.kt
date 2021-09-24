@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.operation.PrResource
-import com.apx5.domain.dto.StaticsDto
+import com.apx5.domain.model.PrStatics
 import com.apx5.domain.param.StaticsParam
 import com.apx5.domain.usecase.StaticsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,7 @@ class StaticsViewModel @Inject constructor(
     private val staticsUseCase: StaticsUseCase
 ) : BaseViewModel() {
 
-    private val statics = MutableLiveData<PrResource<StaticsDto>>()
+    private val statics = MutableLiveData<PrResource<PrStatics>>()
 
     /**
      * fetchStatics
@@ -39,5 +39,5 @@ class StaticsViewModel @Inject constructor(
         }
     }
 
-    fun getStatics(): LiveData<PrResource<StaticsDto>> = statics
+    fun getStatics(): LiveData<PrResource<PrStatics>> = statics
 }

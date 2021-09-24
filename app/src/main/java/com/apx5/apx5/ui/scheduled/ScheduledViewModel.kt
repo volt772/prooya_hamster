@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.apx5.apx5.base.BaseViewModel
 import com.apx5.apx5.operation.PrResource
-import com.apx5.domain.dto.GameDto
-import com.apx5.domain.dto.GameSaveDto
+import com.apx5.domain.model.PrGame
+import com.apx5.domain.model.PrGameSave
 import com.apx5.domain.param.GameParam
 import com.apx5.domain.param.GameSaveParam
 import com.apx5.domain.usecase.ScheduledUseCase
@@ -23,8 +23,8 @@ class ScheduledViewModel @Inject constructor(
     private val scheduledUseCase: ScheduledUseCase
 ) : BaseViewModel()  {
 
-    private val todayGame = MutableLiveData<PrResource<GameDto>>()
-    private val newGame = MutableLiveData<PrResource<GameSaveDto>>()
+    private val todayGame = MutableLiveData<PrResource<PrGame>>()
+    private val newGame = MutableLiveData<PrResource<PrGameSave>>()
 
     /**
      * fetchMyGame
@@ -58,6 +58,6 @@ class ScheduledViewModel @Inject constructor(
         }
     }
 
-    fun getTodayGame(): LiveData<PrResource<GameDto>> = todayGame
-    fun postNewGame(): LiveData<PrResource<GameSaveDto>> = newGame
+    fun getTodayGame(): LiveData<PrResource<PrGame>> = todayGame
+    fun postNewGame(): LiveData<PrResource<PrGameSave>> = newGame
 }
