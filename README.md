@@ -59,6 +59,6 @@
 Allen Jeong - volt772@naver.com
 
 F/E Link: [https://github.com/volt772/prooya_hamster](https://github.com/volt772/prooya_hamster)<br/>
-B/E Link: [https://github.com/volt772/prooya_meerkat](https://github.com/volt772/prooya_meetkat)
+B/E Link: [https://github.com/volt772/prooya_meerkat](https://github.com/volt772/prooya_meerkat)
 
 
