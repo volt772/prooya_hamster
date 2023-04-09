@@ -2,7 +2,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-    <img src="https://user-images.githubusercontent.com/57861321/226219943-63cf2f8b-a94a-49cf-93b7-30dfcb18c45f.jpg" alt="Logo" width="300" height="500">
+    <img src="https://user-images.githubusercontent.com/57861321/230760539-dbeb6ae3-5837-4ec0-811d-ef599ffea222.png" alt="Logo">
  
   <h3 align="center">Prooya 프로야구 직관러</h3>
 
