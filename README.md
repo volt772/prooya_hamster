@@ -2,7 +2,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-    <img src="https://user-images.githubusercontent.com/57861321/230760539-dbeb6ae3-5837-4ec0-811d-ef599ffea222.png" alt="Logo">
+    <img src="https://github.com/volt772/prooya_hamster/blob/feature/v2/prooya_client.png" alt="Logo">
  
   <h3 align="center">Prooya 프로야구 직관러</h3>
 
@@ -23,17 +23,10 @@
 ### Built With
 
 #### Android : Kotlin / Jetpacks / Coroutine / Clean Architecture / Firebase
-#### Python : Ubuntu / Flask / Nginx / Gunicorn / PostgreSQL / Redis
 
 <a href="https://developer.android.com/jetpack?hl=ko"><img src="https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=Android&logoColor=FFFFFF"/></a>
 <a href="https://kotlinlang.org/"><img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=Kotlin&logoColor=FFFFFF"/></a>
 <a href="https://firebase.google.com/?hl=ko"><img src="https://img.shields.io/badge/firebase-FFCA28?style=flat-square&logo=firebase&logoColor=FFFFFF"/></a>
-<a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=FFFFFF"/></a>
-<a href="https://flask-docs-kr.readthedocs.io/ko/latest/index.html"><img src="https://img.shields.io/badge/Flask-000000?style=flat-square&logo=Flask&logoColor=FFFFFF"/></a>
-<a href="https://ubuntu.com/"><img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=Ubuntu&logoColor=FFFFFF"/></a>
-<a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=Redis&logoColor=FFFFFF"/></a>
-<a href="https://www.postgresql.org/"><img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=PostgreSQL&logoColor=FFFFFF"/></a>
-<a href="https://www.nginx.com/"><img src="https://img.shields.io/badge/NGINX-009639?style=flat-square&logo=NGINX&logoColor=FFFFFF"/></a>
 
 <!-- CONTACT -->
 ## Project Detail
